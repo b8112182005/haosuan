@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Noto_Sans_TC, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 
 const notoSansTC = Noto_Sans_TC({
   variable: "--font-sans",
@@ -38,7 +40,11 @@ export default function RootLayout({
       <body
         className={`${notoSansTC.variable} ${jetBrainsMono.variable} font-sans antialiased`}
       >
-        {children}
+        <Header />
+        <main className="min-h-screen">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   );
