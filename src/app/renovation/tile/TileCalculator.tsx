@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { calculateTile } from "@/lib/calculators/tile";
+import CopyButton from "@/components/common/CopyButton";
 
 // common tile sizes in cm
 const COMMON_SIZES = [
@@ -35,8 +36,10 @@ export default function TileCalculator() {
   const a = parseFloat(area);
   const l = parseFloat(tileLength);
   const w = parseFloat(tileWidth);
-  const wast = parseFloat(wastage) || 10;
-  const j = parseFloat(joint) || 3;
+  const wastParsed = parseFloat(wastage);
+  const jParsed = parseFloat(joint);
+  const wast = isNaN(wastParsed) ? 10 : wastParsed;
+  const j = isNaN(jParsed) ? 3 : jParsed;
 
   const isValid = !isNaN(a) && a > 0 && !isNaN(l) && l > 0 && !isNaN(w) && w > 0;
   const result = isValid
@@ -152,6 +155,15 @@ export default function TileCalculator() {
               <div className="text-sm text-muted-foreground">
                 基礎 {result.baseQuantity} 片 + 損耗 {result.wastageQuantity} 片
               </div>
+              <div className="flex items-center justify-center gap-3 pt-1">
+                <CopyButton value={result.totalQuantity.toString()} label="複製片數" />
+              </div>
+              <div className="text-sm text-amber-500 dark:text-amber-400 pt-1">
+                💡 建議多買 {Math.ceil(result.totalQuantity * 0.1)} 片備料（約 10%）以防破損補貼
+              </div>
+              <p className="text-xs text-muted-foreground mt-1">
+                建議多買 10% 備用 = 共 {result.totalQuantity + Math.ceil(result.totalQuantity * 0.1)} 片
+              </p>
             </div>
 
             {/* 詳細 */}

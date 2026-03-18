@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { convertTemperature, tempUnits, tempUnitLabels, type TempUnit } from "@/lib/calculators/temperature";
+import CopyButton from "@/components/common/CopyButton";
 
 export default function TemperatureCalculator() {
   const [value, setValue] = useState("25");
@@ -55,27 +56,49 @@ export default function TemperatureCalculator() {
         {result ? (
           <div className="space-y-3">
             <h3 className="text-sm font-medium text-muted-foreground">換算結果</h3>
+            <p className="text-xs text-muted-foreground">
+              體感：{result.celsius < 0
+                ? "🥶 冰凍"
+                : result.celsius < 10
+                ? "🧊 寒冷"
+                : result.celsius < 20
+                ? "🌬️ 涼爽"
+                : result.celsius <= 28
+                ? "😊 舒適"
+                : result.celsius <= 35
+                ? "🔥 炎熱"
+                : "🌡️ 酷熱"}（攝氏 {result.celsius}°C）
+            </p>
             <div className="space-y-2">
               {/* 攝氏 */}
               <div className={`flex items-center justify-between rounded-lg px-4 py-3 ${fromUnit === "celsius" ? "bg-primary/10 border border-primary/30" : "bg-muted/40"}`}>
                 <span className="text-sm text-muted-foreground">攝氏（°C）</span>
-                <span className={`font-mono font-semibold ${fromUnit === "celsius" ? "text-primary text-lg" : "text-sm"}`}>
-                  {result.celsius} °C
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className={`font-mono font-semibold ${fromUnit === "celsius" ? "text-primary text-lg" : "text-sm"}`}>
+                    {result.celsius} °C
+                  </span>
+                  <CopyButton value={result.celsius.toString()} label="複製" />
+                </div>
               </div>
               {/* 華氏 */}
               <div className={`flex items-center justify-between rounded-lg px-4 py-3 ${fromUnit === "fahrenheit" ? "bg-primary/10 border border-primary/30" : "bg-muted/40"}`}>
                 <span className="text-sm text-muted-foreground">華氏（°F）</span>
-                <span className={`font-mono font-semibold ${fromUnit === "fahrenheit" ? "text-primary text-lg" : "text-sm"}`}>
-                  {result.fahrenheit} °F
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className={`font-mono font-semibold ${fromUnit === "fahrenheit" ? "text-primary text-lg" : "text-sm"}`}>
+                    {result.fahrenheit} °F
+                  </span>
+                  <CopyButton value={result.fahrenheit.toString()} label="複製" />
+                </div>
               </div>
               {/* 克耳文 */}
               <div className={`flex items-center justify-between rounded-lg px-4 py-3 ${fromUnit === "kelvin" ? "bg-primary/10 border border-primary/30" : "bg-muted/40"}`}>
                 <span className="text-sm text-muted-foreground">克耳文（K）</span>
-                <span className={`font-mono font-semibold ${fromUnit === "kelvin" ? "text-primary text-lg" : "text-sm"}`}>
-                  {result.kelvin} K
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className={`font-mono font-semibold ${fromUnit === "kelvin" ? "text-primary text-lg" : "text-sm"}`}>
+                    {result.kelvin} K
+                  </span>
+                  <CopyButton value={result.kelvin.toString()} label="複製" />
+                </div>
               </div>
             </div>
           </div>

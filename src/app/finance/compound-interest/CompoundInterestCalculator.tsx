@@ -8,6 +8,7 @@ import {
   calculateCompoundInterest,
   type CompoundFrequency,
 } from "@/lib/calculators/compound-interest";
+import CopyButton from "@/components/common/CopyButton";
 
 function formatTWD(n: number) {
   return `NT$${n.toLocaleString("zh-TW")}`;
@@ -133,6 +134,15 @@ export default function CompoundInterestCalculator() {
               <div className="text-sm text-muted-foreground">
                 總報酬率 {result.returnRate}%
               </div>
+              <div className="flex items-center justify-center gap-3 pt-1">
+                <CopyButton value={result.finalAmount.toFixed(0)} label="複製金額" />
+              </div>
+              <div className="text-sm text-amber-500 dark:text-amber-400 pt-1">
+                💡 等同於 {y} 年後多了 {result.returnRate}% 的錢
+              </div>
+              <p className="text-xs text-muted-foreground mt-1">
+                比直接放活存（0.5% 年利率）多賺 {formatTWD(Math.round(result.finalAmount - (p * Math.pow(1 + 0.005 / 12, y * 12) + m * ((Math.pow(1 + 0.005 / 12, y * 12) - 1) / (0.005 / 12)))))}
+              </p>
             </div>
 
             {/* 三欄摘要 */}

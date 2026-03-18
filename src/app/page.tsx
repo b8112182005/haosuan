@@ -13,7 +13,7 @@ import { tools, categoryLabels, type ToolCategory } from "@/lib/tools-registry";
 export const metadata: Metadata = {
   title: "好算 HaoSuan — 台灣生活計算工具",
   description:
-    "免費線上計算工具，涵蓋 BMI、房貸試算、電費計算、面積換算等 20+ 實用計算機，專為台灣用戶設計，無廣告、手機友善。",
+    "免費線上計算工具，涵蓋 BMI、房貸試算、電費計算、面積換算等 30 種實用計算機，專為台灣用戶設計，無廣告、手機友善。",
 };
 
 const categoryConfig: Record<
@@ -76,10 +76,10 @@ export default function Home() {
           台灣人的<span className="text-primary">免費計算工具</span>
         </h1>
         <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-          20 種工具，即時計算，無廣告，手機友善
+          30 種工具，即時計算，無廣告，手機友善
         </p>
         <p className="text-sm text-muted-foreground mt-3">
-          20 個工具 · 5 大分類 · 完全免費
+          30 個工具 · 5 大分類 · 完全免費
         </p>
       </section>
 
@@ -146,9 +146,9 @@ export default function Home() {
 
       {/* Bottom CTA */}
       <section className="mt-16 text-center border border-border rounded-2xl p-8 bg-card/50">
-        <h2 className="text-xl font-semibold mb-2">📱 APP 版本即將上線</h2>
+        <h2 className="text-xl font-semibold mb-2">📱 APP 版本準備中</h2>
         <p className="text-sm text-muted-foreground">
-          工具陸續上線，目標 30 個工具後推出 APP 版本，讓你隨時隨地好算 🎉
+          30 個工具已全數上線！APP 版本即將推出，讓你隨時隨地好算 🎉
         </p>
         <p className="text-xs text-muted-foreground mt-2">
           ✅ 完全免費 · 🚫 無廣告 · 📱 手機友善

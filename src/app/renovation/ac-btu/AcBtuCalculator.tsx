@@ -10,6 +10,7 @@ import {
   type SunExposure,
   type RoomUsage,
 } from "@/lib/calculators/ac-btu";
+import CopyButton from "@/components/common/CopyButton";
 
 export default function AcBtuCalculator() {
   const [areaPing, setAreaPing] = useState("10");
@@ -151,6 +152,20 @@ export default function AcBtuCalculator() {
               <div className="text-sm text-muted-foreground">
                 {result.requiredBtu.toLocaleString()} BTU・{result.areaPing} 坪・{result.areaM2} m²
               </div>
+              <div className="flex items-center justify-center gap-3 pt-1">
+                <CopyButton value={result.requiredTons.toString()} label="複製噸數" />
+              </div>
+              <p className="text-xs text-muted-foreground mt-1">
+                {result.requiredTons <= 1
+                  ? "1 噸適合 4-6 坪小房間"
+                  : result.requiredTons <= 1.5
+                  ? "1.5 噸適合 6-8 坪臥室"
+                  : result.requiredTons <= 2
+                  ? "2 噸適合 8-12 坪中型房間"
+                  : result.requiredTons <= 2.8
+                  ? "2.8 噸適合 12-16 坪客廳"
+                  : "大坪數空間，建議分裝多台或選用商用機型"}
+              </p>
             </div>
 
             {/* 適合規格 */}

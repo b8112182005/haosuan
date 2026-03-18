@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { whatPercent, percentOf, percentChange } from "@/lib/calculators/percentage";
+import CopyButton from "@/components/common/CopyButton";
 
 export default function PercentageCalculator() {
   // Mode 1: X 是 Y 的幾%
@@ -65,6 +66,12 @@ export default function PercentageCalculator() {
                 <div className="text-5xl font-mono font-bold tracking-tight">
                   {result1}<span className="text-2xl font-normal ml-1">%</span>
                 </div>
+                <div className="flex items-center justify-center pt-1">
+                  <CopyButton value={result1.toString()} label="複製結果" />
+                </div>
+                <p className="text-xs text-muted-foreground mt-1">
+                  以月薪 5 萬為例 = {(50000 * result1 / 100).toLocaleString()} 元
+                </p>
               </div>
             )}
           </CardContent>
@@ -106,6 +113,12 @@ export default function PercentageCalculator() {
                 <div className="text-5xl font-mono font-bold tracking-tight">
                   {result2.toLocaleString()}
                 </div>
+                <div className="flex items-center justify-center pt-1">
+                  <CopyButton value={result2.toString()} label="複製結果" />
+                </div>
+                <p className="text-xs text-muted-foreground mt-1">
+                  以月薪 5 萬為例 = {(50000 * (parseFloat(m2y) || 0) / 100).toLocaleString()} 元
+                </p>
               </div>
             )}
           </CardContent>
@@ -158,6 +171,9 @@ export default function PercentageCalculator() {
                     <>{result3.direction === "increase" ? "+" : "-"}{result3.change}<span className="text-2xl font-normal ml-1">%</span></>
                   )}
                   {result3.direction === "same" && "0%"}
+                </div>
+                <div className="flex items-center justify-center pt-1">
+                  <CopyButton value={`${result3.direction === "increase" ? "+" : result3.direction === "decrease" ? "-" : ""}${result3.change}%`} label="複製結果" />
                 </div>
               </div>
             )}

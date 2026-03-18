@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { calculateElectricity, getCurrentSeason, type Season } from "@/lib/calculators/electricity";
+import CopyButton from "@/components/common/CopyButton";
 
 export default function ElectricityCalculator() {
   const [units, setUnits] = useState("");
@@ -56,6 +57,16 @@ export default function ElectricityCalculator() {
               <div className="text-sm text-muted-foreground">
                 平均 {result.avgPricePerUnit} 元 / 度
               </div>
+              <div className="flex items-center justify-center gap-3 pt-1">
+                <CopyButton value={result.totalCharge.toString()} label="複製金額" />
+              </div>
+              <div className="text-sm text-amber-500 dark:text-amber-400 pt-1">
+                💡 相當於每天 {(result.totalCharge / 30).toFixed(0)} 元電費
+              </div>
+              <p className="text-xs text-muted-foreground mt-1">
+                約等於 {Math.round(result.totalCharge / 60)} 杯珍珠奶茶的價格（以 60 元/杯計算）
+              </p>
+              <div className="text-xs text-muted-foreground">費率依台電 2024 年住宅累進費率計算，如有調整請以台電官網公告為準</div>
             </div>
 
             {/* 費用明細 */}

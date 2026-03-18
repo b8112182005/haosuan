@@ -1,0 +1,63 @@
+```
+═══════════════════════════════════════
+好算 Loop 回報
+═══════════════════════════════════════
+時間: 2026-03-18T02:00:00+08:00
+任務: 全站 Layout (Header, Footer, Breadcrumb)
+狀態: 完成
+異動檔案:
+  - src/components/layout/Header.tsx (新增)
+  - src/components/layout/Footer.tsx (新增)
+  - src/components/layout/Breadcrumb.tsx (新增)
+  - src/app/layout.tsx (修改)
+  - PROGRESS.md (修改)
+Commits:
+  - 6c3df59 feat: add global Layout components (Header, Footer, Breadcrumb)
+  - 719190b chore: update progress
+進度: 基礎建設 2/6 完成，工具 0/20
+下次建議: CalculatorLayout 通用元件 + 工具 Registry 系統
+═══════════════════════════════════════
+```
+
+**本次完成內容：**
+- **Header**: 含 Logo、四大分類導覽（生活/財務/裝潢/換算），sticky 定位
+- **Footer**: 三欄工具連結清單、版權資訊
+- **Breadcrumb**: Client 元件，自動解析路徑顯示麵包屑，含中文對照表
+- Build 驗證通過
+[2026/03/18 �g�T 19:29:39.34] Loop finished (exit code: 9009) 
+�t�Χ䤣����w�����|�C
+[2026/03/18 �g�T 19:30:41.11] Loop finished (exit code: 3) 
+[2026-03-18 19:36:23] Loop starting
+```
+═══════════════════════════════════════
+好算 Loop 回報
+═══════════════════════════════════════
+時間: 2026-03-18T03:00:00+08:00
+任務: CalculatorLayout 通用元件 + 工具 Registry 系統
+狀態: 完成
+異動檔案:
+  - src/components/layout/CalculatorLayout.tsx (新增)
+  - src/lib/tools-registry.ts (新增)
+  - PROGRESS.md (修改)
+Commits:
+  - 597c70c feat: add CalculatorLayout component and tools registry
+  - 9c51445 chore: update progress
+進度: 0/20 工具完成（基礎建設 4/6）
+下次建議: 建立首頁（工具分類卡片）
+═══════════════════════════════════════
+```
+
+**完成內容：**
+
+1. **`CalculatorLayout`** (`src/components/layout/CalculatorLayout.tsx`)
+   - 統一的計算工具頁框架：標題、說明、Breadcrumb
+   - FAQ 折疊區塊（`<details>` 實作，無額外依賴）
+   - 相關工具連結標籤
+   - 裝潢分類自動顯示 `YumoPromo`（瑀墨品牌區塊）
+   - 支援 JSON-LD schema inject
+
+2. **`tools-registry.ts`** (`src/lib/tools-registry.ts`)
+   - 完整 20 個工具的 metadata 定義
+   - 輔助函數：`getToolsByCategory`, `getToolBySlug`, `getEnabledTools`, `getSitemapPaths`
+   - `enabled` 欄位控制上線狀態，方便 sitemap 過濾
+[2026-03-18 19:40:32] Loop finished (exit code: 0)

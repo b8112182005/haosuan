@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { calculateIncomeTax } from "@/lib/calculators/income-tax";
+import CopyButton from "@/components/common/CopyButton";
 
 function formatTWD(n: number) {
   return `NT$${n.toLocaleString("zh-TW")}`;
@@ -113,6 +114,26 @@ export default function IncomeTaxCalculator() {
               <div className="text-sm text-muted-foreground">
                 月均稅額：{formatTWD(result.monthlyTax)}・有效稅率：{result.effectiveRate}%
               </div>
+              <div className="flex items-center justify-center gap-3 pt-1">
+                <CopyButton value={result.taxAmount.toString()} label="複製稅額" />
+              </div>
+              <div className="text-sm text-amber-500 dark:text-amber-400 pt-1">
+                相當於每月預繳 {formatTWD(result.monthlyTax)}
+              </div>
+              {result.effectiveRate > 0 && (
+                <div className="mt-3 space-y-1">
+                  <div className="flex items-center justify-between text-xs text-muted-foreground">
+                    <span>有效稅率</span>
+                    <span>{result.effectiveRate}%</span>
+                  </div>
+                  <div className="h-2 w-full rounded-full bg-muted overflow-hidden">
+                    <div
+                      className="h-full rounded-full bg-primary transition-all"
+                      style={{ width: `${Math.min(result.effectiveRate, 100)}%` }}
+                    />
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* 扣除明細 */}

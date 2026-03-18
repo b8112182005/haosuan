@@ -4,14 +4,15 @@ import { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { countWords } from "@/lib/calculators/word-count";
+import CopyButton from "@/components/common/CopyButton";
 
 export default function WordCountCalculator() {
   const [text, setText] = useState("");
   const result = countWords(text);
 
   const stats = [
-    { label: "中文字數", value: result.chineseChars.toLocaleString(), highlight: true },
-    { label: "英文單詞數", value: result.englishWords.toLocaleString(), highlight: true },
+    { label: "中文字數", value: result.chineseChars.toLocaleString(), highlight: true, rawValue: result.chineseChars },
+    { label: "英文單詞數", value: result.englishWords.toLocaleString(), highlight: true, rawValue: result.englishWords },
     { label: "總字元數（含空白）", value: result.totalCharsWithSpace.toLocaleString(), highlight: false },
     { label: "總字元數（不含空白）", value: result.totalCharsWithoutSpace.toLocaleString(), highlight: false },
     { label: "段落數", value: result.paragraphs.toLocaleString(), highlight: false },
@@ -52,10 +53,20 @@ export default function WordCountCalculator() {
                 {stat.value}
               </div>
               <div className="text-xs text-muted-foreground mt-1">{stat.label}</div>
+              {stat.highlight && (
+                <div className="mt-1">
+                  <CopyButton value={String(stat.rawValue ?? stat.value)} label="複製" />
+                </div>
+              )}
             </CardContent>
           </Card>
         ))}
       </div>
+      {result.totalCharsWithoutSpace > 0 && (
+        <p className="text-xs text-muted-foreground text-center">
+          ≈ {(result.totalCharsWithoutSpace / 500).toFixed(1)} 頁 A4（每頁約 500 中文字）
+        </p>
+      )}
     </div>
   );
 }
