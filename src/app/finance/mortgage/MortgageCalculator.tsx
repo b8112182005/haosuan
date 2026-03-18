@@ -8,6 +8,7 @@ import {
   calculateMortgage,
   type RepaymentType,
 } from "@/lib/calculators/mortgage";
+import CopyButton from "@/components/common/CopyButton";
 
 function formatTWD(n: number) {
   return `NT$${n.toLocaleString("zh-TW")}`;
@@ -109,6 +110,12 @@ export default function MortgageCalculator() {
                     最後一個月：{formatTWD(result.lastMonthPayment)}
                   </div>
                 )}
+                <div className="mt-2">
+                  <CopyButton value={String(result.firstMonthPayment)} label="複製月付金額" />
+                </div>
+                <p className="text-xs text-muted-foreground mt-1">
+                  💡 相當於每日支出 {Math.round(result.firstMonthPayment / 30).toLocaleString()} 元
+                </p>
               </div>
 
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 pt-2">
@@ -142,8 +149,8 @@ export default function MortgageCalculator() {
                   <thead>
                     <tr className="border-b border-border bg-muted/30">
                       <th className="px-3 py-2 text-left">月份</th>
-                      <th className="px-3 py-2 text-right">本金</th>
-                      <th className="px-3 py-2 text-right">利息</th>
+                      <th className="px-3 py-2 text-right hidden sm:table-cell">本金</th>
+                      <th className="px-3 py-2 text-right hidden sm:table-cell">利息</th>
                       <th className="px-3 py-2 text-right">月付</th>
                       <th className="px-3 py-2 text-right">餘額</th>
                     </tr>
@@ -152,10 +159,10 @@ export default function MortgageCalculator() {
                     {result.schedule.slice(0, 12).map((row) => (
                       <tr key={row.month}>
                         <td className="px-3 py-2">{row.month}</td>
-                        <td className="px-3 py-2 text-right font-mono">
+                        <td className="px-3 py-2 text-right font-mono hidden sm:table-cell">
                           {row.principal.toLocaleString("zh-TW")}
                         </td>
-                        <td className="px-3 py-2 text-right font-mono text-muted-foreground">
+                        <td className="px-3 py-2 text-right font-mono text-muted-foreground hidden sm:table-cell">
                           {row.interest.toLocaleString("zh-TW")}
                         </td>
                         <td className="px-3 py-2 text-right font-mono font-medium">
