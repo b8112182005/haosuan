@@ -73,10 +73,12 @@ export function calculateIncomeTax(input: IncomeTaxInput): IncomeTaxResult {
   const spouseExemption = hasSpouse ? DEDUCTIONS.personal : 0;
 
   // 4. 受撫養親屬免稅額（70 歲以上 1.5 倍，其餘 1 倍）
-  const regularDependents = Math.max(0, numDependents - numElderlyDependents);
+  // 防禦：70歲以上人數不可超過總親屬人數
+  const safeElderlyDependents = Math.min(numElderlyDependents, numDependents);
+  const regularDependents = Math.max(0, numDependents - safeElderlyDependents);
   const dependentExemption =
     regularDependents * DEDUCTIONS.personal +
-    numElderlyDependents * DEDUCTIONS.personalElderly;
+    safeElderlyDependents * DEDUCTIONS.personalElderly;
 
   // 5. 標準扣除額
   const standardDeduction = hasSpouse
@@ -109,7 +111,9 @@ export function calculateIncomeTax(input: IncomeTaxInput): IncomeTaxResult {
 
     if (taxableInBracket > 0) {
       breakdown.push({
-        bracket: `${(prevMax / 10000).toFixed(0)}～${bracket.max === Infinity ? "以上" : (bracket.max / 10000).toFixed(0)} 萬`,
+        bracket: bracket.max === Infinity
+          ? `${(prevMax / 10000).toFixed(0)} 萬以上`
+          : `${(prevMax / 10000).toFixed(0)}～${(bracket.max / 10000).toFixed(0)} 萬`,
         income: taxableInBracket,
         rate: bracket.rate * 100,
         tax: Math.round(tax),

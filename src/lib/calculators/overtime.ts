@@ -54,46 +54,44 @@ export function calculateOvertime(
       breakdown.push({ period: "第 3 小時以後", hours: t2, rate: 1 + 2 / 3, pay });
     }
   } else if (overtimeType === "rest-day") {
-    // 例假日（休息日）加班：前 2 小時 × 1/3，3～8 小時 × 2/3，超過 8 小時 × 另計
-    // 台灣勞基法：休息日至少給付「一日工資」，工作每小時再加給不足 2 小時以 2 小時計
-    // 簡化計算：2 小時以內按 2 小時計，每多 2 小時多算一個工資單位
-    const brackets = [
-      { max: 2, rate: dailyWage / 8 * (1 + 1/3) },
-      { max: 8, rate: dailyWage / 8 * (1 + 2/3) },
-      { max: Infinity, rate: dailyWage / 8 * (1 + 2/3) },
-    ];
+    // 休息日加班：勞基法第 24 條第 2 項
+    // 不足 2 小時以 2 小時計
+    // 前 2 小時：時薪 × 1.34（另加 1/3）
+    // 第 3～8 小時：時薪 × 1.67（另加 2/3）
+    // 超過 8 小時：時薪 × 1.67（同上，依勞動部實務）
+    // 另：至少給付一日工資（差額獨立列示）
+    const billableHours = Math.max(2, hours); // 不足 2 小時以 2 小時計
+    const t1 = Math.min(billableHours, 2);
+    const t2 = Math.min(Math.max(0, billableHours - 2), 6);
+    const t3 = Math.max(0, billableHours - 8);
 
-    let remaining = hours;
-    let prevMax = 0;
-    const labels = ["前 2 小時", "第 3～8 小時", "超過 8 小時"];
-
-    for (let i = 0; i < brackets.length; i++) {
-      if (remaining <= 0) break;
-      const { max, rate } = brackets[i];
-      const h = Math.min(remaining, max - prevMax);
-      if (h <= 0) { prevMax = max; continue; }
-      const pay = Math.round(rate * h * 100) / 100;
+    if (t1 > 0) {
+      const pay = Math.round(hourlyWage * (1 + 1 / 3) * t1 * 100) / 100;
       totalPay += pay;
-      breakdown.push({ period: labels[i], hours: h, rate: rate / (dailyWage / 8), pay });
-      remaining -= h;
-      prevMax = max;
+      breakdown.push({ period: "前 2 小時", hours: t1, rate: 1 + 1 / 3, pay });
+    }
+    if (t2 > 0) {
+      const pay = Math.round(hourlyWage * (1 + 2 / 3) * t2 * 100) / 100;
+      totalPay += pay;
+      breakdown.push({ period: "第 3～8 小時", hours: t2, rate: 1 + 2 / 3, pay });
+    }
+    if (t3 > 0) {
+      const pay = Math.round(hourlyWage * (1 + 2 / 3) * t3 * 100) / 100;
+      totalPay += pay;
+      breakdown.push({ period: "超過 8 小時", hours: t3, rate: 1 + 2 / 3, pay });
     }
 
-    // 加上「一日工資」差額（至少支付一日工資）
-    const minPay = dailyWage;
-    if (totalPay < minPay) {
-      // 補差額（不另列breakdown，直接補到最低）
-      const diff = minPay - totalPay;
-      totalPay = minPay;
-      if (breakdown.length > 0) {
-        breakdown[breakdown.length - 1].pay += Math.round(diff * 100) / 100;
-      }
+    // 保證最低一日工資（差額獨立列示，不隱藏）
+    if (totalPay < dailyWage) {
+      const diff = Math.round((dailyWage - totalPay) * 100) / 100;
+      totalPay = Math.round(dailyWage * 100) / 100;
+      breakdown.push({ period: "補足一日工資差額", hours: 0, rate: 0, pay: diff });
     }
   } else {
-    // 國定假日：給付雙薪（加班部分按正常工資加倍）
-    const pay = Math.round(dailyWage * 2 * 100) / 100;
+    // 國定假日：每工作時數按時薪加倍發給（勞基法第 39 條）
+    const pay = Math.round(hourlyWage * 2 * hours * 100) / 100;
     totalPay = pay;
-    breakdown.push({ period: `國定假日 ${hours} 小時`, hours, rate: 2, pay });
+    breakdown.push({ period: `國定假日`, hours, rate: 2, pay });
   }
 
   return {
