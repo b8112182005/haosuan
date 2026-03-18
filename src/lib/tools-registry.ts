@@ -25,7 +25,7 @@ export const tools: Tool[] = [
     description: "輸入身高體重，即時計算 BMI 值與健康狀態",
     category: "life",
     href: "/life/bmi",
-    enabled: false,
+    enabled: true,
     keywords: ["BMI", "身體質量指數", "體重", "健康"],
   },
   {
