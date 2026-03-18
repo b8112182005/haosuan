@@ -52,7 +52,7 @@ export const tools: Tool[] = [
     description: "依台電累進費率，估算每月電費",
     category: "life",
     href: "/life/electricity",
-    enabled: false,
+    enabled: true,
     keywords: ["電費", "台電", "度數", "累進"],
   },
   {
