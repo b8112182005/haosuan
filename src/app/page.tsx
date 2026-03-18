@@ -18,32 +18,37 @@ export const metadata: Metadata = {
 
 const categoryConfig: Record<
   ToolCategory,
-  { icon: React.ElementType; color: string; bgColor: string }
+  { icon: React.ElementType; color: string; bgColor: string; pillColor: string }
 > = {
   life: {
     icon: Heart,
     color: "text-rose-500",
     bgColor: "bg-rose-500/10",
+    pillColor: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
   },
   finance: {
     icon: Banknote,
     color: "text-emerald-500",
     bgColor: "bg-emerald-500/10",
+    pillColor: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
   },
   renovation: {
     icon: Hammer,
     color: "text-amber-500",
     bgColor: "bg-amber-500/10",
+    pillColor: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
   },
   convert: {
     icon: ArrowLeftRight,
     color: "text-blue-500",
     bgColor: "bg-blue-500/10",
+    pillColor: "bg-blue-500/10 text-blue-600 dark:text-blue-400",
   },
   math: {
     icon: Hash,
     color: "text-violet-500",
     bgColor: "bg-violet-500/10",
+    pillColor: "bg-violet-500/10 text-violet-600 dark:text-violet-400",
   },
 };
 
@@ -68,10 +73,13 @@ export default function Home() {
       {/* Hero */}
       <section className="mb-14 text-center">
         <h1 className="text-4xl font-bold tracking-tight mb-3">
-          台灣最實用的<span className="text-primary">計算工具站</span>
+          台灣人的<span className="text-primary">免費計算工具</span>
         </h1>
         <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-          生活、財務、裝潢、單位換算 — 20+ 種計算機，即時計算，手機友善，完全免費。
+          20 種工具，即時計算，無廣告，手機友善
+        </p>
+        <p className="text-sm text-muted-foreground mt-3">
+          20 個工具 · 5 大分類 · 完全免費
         </p>
       </section>
 
@@ -87,7 +95,7 @@ export default function Home() {
                   <Icon className={`h-4 w-4 ${config.color}`} />
                 </div>
                 <h2 className="text-base font-semibold">{label}</h2>
-                <span className="text-xs text-muted-foreground ml-1">
+                <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${config.pillColor}`}>
                   {catTools.length} 個工具
                 </span>
               </div>
@@ -99,7 +107,7 @@ export default function Home() {
                     <Link
                       key={tool.slug}
                       href={tool.href}
-                      className="group block rounded-2xl border border-border bg-card p-4 hover:border-primary/40 hover:bg-accent/30 transition-colors"
+                      className="group block rounded-2xl border border-border bg-card p-4 hover:border-primary/40 hover:bg-accent/30 hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-0.5 transition-all duration-200"
                     >
                       <div className="flex items-start justify-between gap-2">
                         <div>
@@ -108,7 +116,7 @@ export default function Home() {
                             {tool.description}
                           </p>
                         </div>
-                        <ChevronRight className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5 group-hover:text-primary transition-colors" />
+                        <ChevronRight className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5 group-hover:text-primary group-hover:translate-x-1 transition-all duration-200" />
                       </div>
                     </Link>
                   ) : (
@@ -138,9 +146,12 @@ export default function Home() {
 
       {/* Bottom CTA */}
       <section className="mt-16 text-center border border-border rounded-2xl p-8 bg-card/50">
-        <h2 className="text-xl font-semibold mb-2">持續更新中</h2>
+        <h2 className="text-xl font-semibold mb-2">📱 APP 版本即將上線</h2>
         <p className="text-sm text-muted-foreground">
-          工具陸續上線，目標 30 個工具後推出 APP 版本。
+          工具陸續上線，目標 30 個工具後推出 APP 版本，讓你隨時隨地好算 🎉
+        </p>
+        <p className="text-xs text-muted-foreground mt-2">
+          ✅ 完全免費 · 🚫 無廣告 · 📱 手機友善
         </p>
       </section>
     </div>
