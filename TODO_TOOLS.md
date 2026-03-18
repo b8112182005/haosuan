@@ -8,6 +8,16 @@
 - [ ] 首頁 (工具分類卡片)
 - [ ] SEO 基礎設施 (sitemap, robots.txt, metadata helpers)
 
+## Phase 1.5 — UI 升級（基礎建設完成後）
+- [ ] 安裝 motion (Framer Motion) 動畫庫
+- [ ] Dark/Light 模式切換（深色為預設）
+- [ ] 微互動動畫（按鈕 spring、hover scale、計算結果 fadeInUp + 數字跳動）
+- [ ] Bento Grid 首頁佈局（參考 Linear/Apple 風格）
+- [ ] 色彩系統升級（中性底色 + 單一強調色，LCH 色彩空間）
+- [ ] 計算結果一鍵複製（帶 toast 提示）
+- [ ] Command Palette (Cmd/Ctrl+K) 快速切換工具
+- [ ] 卡片圓角 16px + 1px border 分隔（無陰影）
+
 ## Phase 1 — 工具頁 (20 個)
 
 ### 生活計算
@@ -39,3 +49,8 @@
 ### 數學/文字
 - [ ] 百分比計算
 - [ ] 字數計算
+
+## Phase 2 — APP 化（工具達 30 個後啟動）
+- [ ] PWA 設定 (Service Worker + Web App Manifest + 離線支援)
+- [ ] Capacitor 包裝上架 Google Play / App Store
+- [ ] APP 推播通知（匯率更新、電費帳單提醒等）
