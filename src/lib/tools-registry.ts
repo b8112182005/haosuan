@@ -137,7 +137,7 @@ export const tools: Tool[] = [
     description: "依坪數與磁磚尺寸計算所需片數與耗料",
     category: "renovation",
     href: "/renovation/tile",
-    enabled: false,
+    enabled: true,
     keywords: ["磁磚", "數量", "地磚", "壁磚"],
   },
   {
