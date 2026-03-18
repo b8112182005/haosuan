@@ -3,6 +3,7 @@ import { Noto_Sans_TC, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import InstallPWA from "@/components/common/InstallPWA";
 
 const notoSansTC = Noto_Sans_TC({
   variable: "--font-sans",
@@ -28,6 +29,19 @@ export const metadata: Metadata = {
     locale: "zh_TW",
     type: "website",
   },
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "好算",
+  },
+  formatDetection: {
+    telephone: false,
+  },
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0f0f0f" },
+  ],
 };
 
 export default function RootLayout({
@@ -45,6 +59,7 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <InstallPWA />
       </body>
     </html>
   );
