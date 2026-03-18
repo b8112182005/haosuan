@@ -1,6 +1,8 @@
 import { MetadataRoute } from "next";
 import { getSitemapPaths } from "@/lib/tools-registry";
 
+export const dynamic = "force-static";
+
 const BASE_URL = "https://haosuan.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
