@@ -57,7 +57,7 @@ export default function CalculatorLayout({
         </div>
 
         {/* 計算機主體 */}
-        <div className="mb-12">{children}</div>
+        <div className="mb-12 animate-in fade-in duration-300">{children}</div>
 
         {/* YumoPromo — 裝潢分類 */}
         {showYumoPromo && <YumoPromo />}
