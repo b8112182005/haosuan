@@ -117,7 +117,7 @@ export const tools: Tool[] = [
     description: "含稅 / 未稅金額換算（5% 營業稅）",
     category: "finance",
     href: "/finance/invoice-tax",
-    enabled: false,
+    enabled: true,
     keywords: ["發票", "營業稅", "含稅", "未稅", "5%"],
   },
 
