@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { calculateBmi } from "@/lib/calculators/bmi";
+import CopyButton from "@/components/common/CopyButton";
 
 export default function BmiCalculator() {
   const [height, setHeight] = useState("");
@@ -59,10 +60,28 @@ export default function BmiCalculator() {
             <div className={`text-xl font-semibold ${result.labelColor}`}>
               {result.label}
             </div>
-            <div className="text-sm text-muted-foreground pt-2">
-              建議體重範圍：{result.idealWeightMin} ～ {result.idealWeightMax}{" "}
-              公斤
+            <div className="pt-1">
+              <CopyButton value={String(result.bmi)} label="複製 BMI 值" />
             </div>
+            <div className="text-sm text-muted-foreground pt-2">
+              理想體重範圍：{result.idealWeightMin} ～ {result.idealWeightMax} 公斤
+              （目前 {w} 公斤，差距 {Math.abs(w - (w < result.idealWeightMin ? result.idealWeightMin : result.idealWeightMax)).toFixed(1)} 公斤）
+            </div>
+            {result.category === "normal" && (
+              <p className="text-xs text-green-600 dark:text-green-400 mt-1">
+                ✅ 維持現有生活習慣就很棒！
+              </p>
+            )}
+            {result.category === "underweight" && (
+              <p className="text-xs text-blue-600 dark:text-blue-400 mt-1">
+                💪 均衡飲食、適度增加熱量攝取，可協助達到理想體重
+              </p>
+            )}
+            {(result.category === "overweight" || result.category === "obese_1" || result.category === "obese_2" || result.category === "obese_3") && (
+              <p className="text-xs text-amber-600 dark:text-amber-400 mt-1">
+                💪 每天多走 30 分鐘可協助改善，加油！
+              </p>
+            )}
           </div>
         )}
 
