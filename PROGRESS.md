@@ -1,14 +1,14 @@
 # 好算 HaoSuan — 開發進度
 
-## 最後更新: 2026-03-18T02:00:00+08:00
-## 最後任務: 全站 Layout (Header, Footer, Breadcrumb)
+## 最後更新: 2026-03-18T03:00:00+08:00
+## 最後任務: CalculatorLayout 通用元件 + 工具 Registry 系統
 ## 狀態: 完成
 
-### 基礎建設 (2/6)
+### 基礎建設 (4/6)
 - [x] 專案初始化 (Next.js + shadcn + Tailwind) (2026-03-16)
 - [x] 全站 Layout (Header, Footer, Breadcrumb) (2026-03-18)
-- [ ] CalculatorLayout 通用元件
-- [ ] 工具 Registry 系統
+- [x] CalculatorLayout 通用元件 (2026-03-18)
+- [x] 工具 Registry 系統 (2026-03-18)
 - [ ] 首頁 (工具分類卡片)
 - [ ] SEO 基礎設施 (sitemap, robots.txt, metadata helpers)
 
@@ -40,3 +40,4 @@
 |---|------|------|------|---------|
 | 1 | 2026-03-16 | 專案初始化 (Next.js 16 + shadcn/ui + Tailwind 4) | 完成 | feat: project init |
 | 2 | 2026-03-18 | 全站 Layout (Header, Footer, Breadcrumb) | 完成 | 6c3df59 |
+| 3 | 2026-03-18 | CalculatorLayout 通用元件 + 工具 Registry | 完成 | 597c70c |
