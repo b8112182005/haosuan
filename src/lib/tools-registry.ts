@@ -81,7 +81,7 @@ export const tools: Tool[] = [
     description: "台幣與各幣別即時換算",
     category: "finance",
     href: "/finance/exchange-rate",
-    enabled: false,
+    enabled: true,
     keywords: ["匯率", "換算", "外幣", "台幣"],
   },
   {
