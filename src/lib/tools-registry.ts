@@ -99,7 +99,7 @@ export const tools: Tool[] = [
     description: "計算複利終值、現值與年化報酬率",
     category: "finance",
     href: "/finance/compound-interest",
-    enabled: false,
+    enabled: true,
     keywords: ["複利", "投資", "報酬率", "終值"],
   },
   {
