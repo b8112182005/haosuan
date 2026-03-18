@@ -157,7 +157,7 @@ export const tools: Tool[] = [
     description: "坪、平方公尺、平方公分、坪互換",
     category: "convert",
     href: "/convert/area",
-    enabled: false,
+    enabled: true,
     keywords: ["面積", "坪", "平方公尺", "換算"],
   },
   {
