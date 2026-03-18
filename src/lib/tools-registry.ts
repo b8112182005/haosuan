@@ -43,7 +43,7 @@ export const tools: Tool[] = [
     description: "計算兩個日期之間相差的天數",
     category: "life",
     href: "/life/date-diff",
-    enabled: false,
+    enabled: true,
     keywords: ["日期", "天數", "幾天"],
   },
   {
