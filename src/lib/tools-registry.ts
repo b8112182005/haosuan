@@ -128,7 +128,7 @@ export const tools: Tool[] = [
     description: "依房間尺寸估算油漆桶數與費用（含瑀墨推薦）",
     category: "renovation",
     href: "/renovation/paint",
-    enabled: false,
+    enabled: true,
     keywords: ["油漆", "塗料", "用量", "裝潢"],
   },
   {
