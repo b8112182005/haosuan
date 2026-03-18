@@ -90,7 +90,7 @@ export const tools: Tool[] = [
     description: "依台灣 2024 年稅制試算年度所得稅",
     category: "finance",
     href: "/finance/income-tax",
-    enabled: false,
+    enabled: true,
     keywords: ["所得稅", "薪資", "報稅", "扣除額"],
   },
   {
