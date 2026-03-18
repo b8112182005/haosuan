@@ -34,7 +34,7 @@ export const tools: Tool[] = [
     description: "輸入生日，計算精確年齡（歲、月、日）",
     category: "life",
     href: "/life/age",
-    enabled: false,
+    enabled: true,
     keywords: ["年齡", "生日", "幾歲"],
   },
   {
