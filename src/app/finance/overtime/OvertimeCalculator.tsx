@@ -9,6 +9,7 @@ import {
   overtimeTypeLabels,
   type OvertimeType,
 } from "@/lib/calculators/overtime";
+import CopyButton from "@/components/common/CopyButton";
 
 function formatTWD(n: number) {
   return `NT$${n.toLocaleString("zh-TW", { maximumFractionDigits: 0 })}`;
@@ -96,6 +97,12 @@ export default function OvertimeCalculator() {
               <div className="text-sm text-muted-foreground">
                 {overtimeTypeLabels[result.overtimeType]} · {result.overtimeHours} 小時
               </div>
+              <div className="pt-1">
+                <CopyButton value={String(result.overtimePay)} label="複製金額" />
+              </div>
+              <p className="text-xs text-muted-foreground mt-2">
+                💡 相當於 {Math.floor(result.overtimePay / 50)} 杯便利商店咖啡，或 {Math.floor(result.overtimePay / 300)} 個便當
+              </p>
             </div>
 
             {/* 明細 */}
@@ -132,6 +139,9 @@ export default function OvertimeCalculator() {
 
         <p className="text-xs text-muted-foreground">
           * 依勞基法第 24 條計算。不含勞健保、特殊合約等因素，僅供參考。
+        </p>
+        <p className="text-xs text-muted-foreground">
+          資料依 2024 年勞動部公告，如有更新將同步調整。
         </p>
       </CardContent>
     </Card>
