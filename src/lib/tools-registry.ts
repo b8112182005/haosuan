@@ -108,7 +108,7 @@ export const tools: Tool[] = [
     description: "依勞基法計算平日、假日加班費",
     category: "finance",
     href: "/finance/overtime",
-    enabled: false,
+    enabled: true,
     keywords: ["加班費", "勞基法", "時薪", "假日"],
   },
   {
