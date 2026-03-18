@@ -72,7 +72,7 @@ export const tools: Tool[] = [
     description: "本息均攤/本金均攤，計算每月還款金額",
     category: "finance",
     href: "/finance/mortgage",
-    enabled: false,
+    enabled: true,
     keywords: ["房貸", "貸款", "利率", "月付"],
   },
   {
