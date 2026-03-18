@@ -61,7 +61,7 @@ export const tools: Tool[] = [
     description: "根據起床時間反推最佳入睡時間（90 分鐘週期）",
     category: "life",
     href: "/life/sleep",
-    enabled: false,
+    enabled: true,
     keywords: ["睡眠", "幾點睡", "睡眠週期"],
   },
 
