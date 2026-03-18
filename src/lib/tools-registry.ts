@@ -166,7 +166,7 @@ export const tools: Tool[] = [
     description: "公里、公尺、公分、英吋、英尺、英里互換",
     category: "convert",
     href: "/convert/length",
-    enabled: false,
+    enabled: true,
     keywords: ["長度", "距離", "公尺", "英吋", "換算"],
   },
   {
@@ -175,7 +175,7 @@ export const tools: Tool[] = [
     description: "公斤、公克、磅、盎司互換",
     category: "convert",
     href: "/convert/weight",
-    enabled: false,
+    enabled: true,
     keywords: ["重量", "公斤", "磅", "換算"],
   },
   {
@@ -184,7 +184,7 @@ export const tools: Tool[] = [
     description: "攝氏、華氏、克耳文互換",
     category: "convert",
     href: "/convert/temperature",
-    enabled: false,
+    enabled: true,
     keywords: ["溫度", "攝氏", "華氏", "換算"],
   },
 
@@ -195,7 +195,7 @@ export const tools: Tool[] = [
     description: "計算百分比、增減幅度、折扣金額",
     category: "math",
     href: "/math/percentage",
-    enabled: false,
+    enabled: true,
     keywords: ["百分比", "折扣", "比例"],
   },
   {
@@ -204,7 +204,7 @@ export const tools: Tool[] = [
     description: "計算中英文字數、字元數、段落數",
     category: "math",
     href: "/math/word-count",
-    enabled: false,
+    enabled: true,
     keywords: ["字數", "字元", "計算"],
   },
 ];

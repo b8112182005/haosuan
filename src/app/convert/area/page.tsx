@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
 import CalculatorLayout from "@/components/layout/CalculatorLayout";
-import AreaConverter from "./AreaConverter";
+import AreaCalculator from "./AreaCalculator";
 
 export const metadata: Metadata = {
   title: "面積換算",
   description:
-    "坪、平方公尺（m²）、平方英尺、公頃等面積單位快速換算，台灣房產常用坪數與國際單位互換，即時計算無需背公式。",
-  keywords: ["面積換算", "坪換算", "坪換平方公尺", "m²換坪", "面積計算機"],
+    "坪、平方公尺、平方公分、平方英尺即時互換。台灣1坪=3.30579平方公尺，支援公頃、平方公里等多單位換算。",
+  keywords: ["面積換算", "坪換算", "平方公尺", "坪數計算", "面積單位"],
   openGraph: {
     title: "面積換算 | 好算",
-    description: "坪、平方公尺、平方英尺等面積單位互換",
+    description: "坪、平方公尺、平方英尺等面積單位即時互換",
     url: "https://haosuan.com/convert/area",
   },
 };
@@ -18,28 +18,23 @@ const faqs = [
   {
     question: "1 坪等於幾平方公尺？",
     answer:
-      "1 坪 = 3.30578512 平方公尺（精確值）。實際使用常取近似值 3.3058 或 3.306。反過來，1 m² ≈ 0.3025 坪。",
+      "1 坪 = 3.30578512 平方公尺（精確值）。這是台灣不動產常用的坪數換算標準。以口訣記：「一坪約三點三平方公尺」即可。",
   },
   {
-    question: "台灣的「坪」是怎麼來的？",
+    question: "台灣不動產的坪數包含公設嗎？",
     answer:
-      "坪是日治時代傳入台灣的面積單位，源自日本的「坪」（つぼ）。1 坪 = 6 尺 × 6 尺，1 日本尺 ≈ 30.3cm，因此 1 坪 ≈ 1.818m × 1.818m ≈ 3.306 m²。",
+      "台灣房屋的「登記坪數」通常包含主建物、附屬建物（陽台、車位等）以及公共設施持分面積。購屋時應特別注意「室內實際使用坪數」與「登記坪數」的差異，公設比一般在 30～40% 之間。",
   },
   {
-    question: "公告地積是用哪個單位？",
+    question: "1 平方英尺等於幾平方公尺？",
     answer:
-      "台灣地政機關土地面積以「平方公尺（m²）」為法定單位，但買賣習慣上仍廣泛使用「坪」。建物登記的建坪也多以坪標示（實際登記數字為 m²，乘以 0.3025 換算）。",
-  },
-  {
-    question: "1 公頃等於幾坪？",
-    answer:
-      "1 公頃 = 10,000 m² ≈ 3,025 坪。農地面積常以「公頃」或「分」（1 公頃 = 10 分）計算，1 分地 = 1,000 m² ≈ 302.5 坪。",
+      "1 平方英尺（ft²）= 0.09290304 平方公尺。美國、英國等英語系國家普遍使用平方英尺計算房屋面積，台灣偶爾在外文資料中會看到此單位。",
   },
 ];
 
 const relatedTools = [
-  { label: "長度換算", href: "/convert/length" },
   { label: "磁磚數量計算", href: "/renovation/tile" },
+  { label: "長度換算", href: "/convert/length" },
   { label: "油漆用量計算機", href: "/renovation/paint" },
 ];
 
@@ -50,19 +45,19 @@ const jsonLd = {
   applicationCategory: "UtilitiesApplication",
   operatingSystem: "Web",
   offers: { "@type": "Offer", price: "0", priceCurrency: "TWD" },
-  description: "坪、平方公尺等面積單位互換工具",
+  description: "坪、平方公尺、平方英尺等面積單位即時互換",
 };
 
 export default function AreaPage() {
   return (
     <CalculatorLayout
       title="面積換算"
-      description="坪、平方公尺（m²）、平方英尺、公頃等面積單位即時互換，台灣房產、裝潢必備換算工具"
+      description="坪、平方公尺（m²）、平方公分（cm²）、平方英尺（ft²）等面積單位即時互換，點選單位輸入數值立即換算"
       faqs={faqs}
       relatedTools={relatedTools}
       jsonLd={jsonLd}
     >
-      <AreaConverter />
+      <AreaCalculator />
     </CalculatorLayout>
   );
 }
