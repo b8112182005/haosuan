@@ -146,7 +146,7 @@ export const tools: Tool[] = [
     description: "依坪數、樓層、朝向推薦適合的冷氣噸數",
     category: "renovation",
     href: "/renovation/ac-btu",
-    enabled: false,
+    enabled: true,
     keywords: ["冷氣", "噸數", "BTU", "坪數"],
   },
 
