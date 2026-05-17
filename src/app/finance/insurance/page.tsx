@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import CalculatorLayout from "@/components/layout/CalculatorLayout";
+import NextStepCta from "@/components/common/NextStepCta";
+import { HAOTI_LINE_URL, withUtm } from "@/lib/brand";
 import InsuranceCalculator from "./InsuranceCalculator";
 
 export const metadata: Metadata = {
@@ -57,6 +59,15 @@ export default function InsurancePage() {
       relatedTools={relatedTools}
       jsonLd={jsonLd}
     >
+      <NextStepCta
+        eyebrow="算完下一步"
+        title="接案收入不穩時，更要把勞健保與報稅節點記起來"
+        description="好算先幫你估每月負擔；好提可以幫你記繳費、報稅與合約請款期限。"
+        primaryLabel="用好提記期限"
+        primaryHref={withUtm(HAOTI_LINE_URL, "insurance")}
+        secondaryLabel="下載報價模板包"
+        secondaryHref="/templates/freelance-pricing"
+      />
       <InsuranceCalculator />
     </CalculatorLayout>
   );

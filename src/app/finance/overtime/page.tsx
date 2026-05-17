@@ -70,6 +70,16 @@ export default function OvertimePage() {
       description="依台灣勞基法第 24 條，輸入月薪與加班時數，即時計算平日、休息日、國定假日的加班費"
       faqs={faqs}
       relatedTools={relatedTools}
+      nextStepCta={{
+        eyebrow: "算完加班費後",
+        title: "接案與加班，最怕少算自己的時間",
+        description:
+          "如果你正在接案或估工時，下一步可以把溝通、修改、驗收與維護成本一起列進報價，避免做到最後變成免費加班。",
+        primaryLabel: "查看接案報價模板包",
+        primaryHref: "/templates/freelance-pricing",
+        secondaryLabel: "試算所得稅",
+        secondaryHref: "/finance/income-tax",
+      }}
       jsonLd={jsonLd}
     >
       <OvertimeCalculator />

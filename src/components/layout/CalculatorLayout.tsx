@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import Link from "next/link";
 import Breadcrumb from "./Breadcrumb";
+import NextStepCta, { type NextStepCtaProps } from "@/components/common/NextStepCta";
 
 export interface FaqItem {
   question: string;
@@ -25,6 +26,8 @@ export interface CalculatorLayoutProps {
   relatedTools?: RelatedTool[];
   /** 是否顯示 YumoPromo（裝潢分類用） */
   showYumoPromo?: boolean;
+  /** 計算後下一步 CTA：用於導向提醒、模板包或 checklist */
+  nextStepCta?: NextStepCtaProps;
   /** JSON-LD schema 物件（由頁面傳入，此元件只負責 inject） */
   jsonLd?: Record<string, unknown>;
 }
@@ -36,6 +39,7 @@ export default function CalculatorLayout({
   faqs,
   relatedTools,
   showYumoPromo = false,
+  nextStepCta,
   jsonLd,
 }: CalculatorLayoutProps) {
   return (
@@ -58,6 +62,9 @@ export default function CalculatorLayout({
 
         {/* 計算機主體 */}
         <div className="mb-12 animate-in fade-in duration-300">{children}</div>
+
+        {/* 計算後下一步 */}
+        {nextStepCta && <NextStepCta {...nextStepCta} />}
 
         {/* YumoPromo — 裝潢分類 */}
         {showYumoPromo && <YumoPromo />}

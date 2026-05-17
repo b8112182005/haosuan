@@ -65,6 +65,16 @@ export default function IncomeTaxPage() {
       description="依台灣 2024 年綜合所得稅規定，輸入月薪、婚姻狀況及撫養親屬人數，即時試算年度應繳稅額與有效稅率"
       faqs={faqs}
       relatedTools={relatedTools}
+      nextStepCta={{
+        eyebrow: "報稅之外",
+        title: "把接案收入、成本與請款節點先整理好",
+        description:
+          "所得稅只是結果。若你有接案或自由工作收入，平常就該把報價、成本、付款節點與維護責任記清楚，年底才不會回頭補帳。",
+        primaryLabel: "查看接案報價模板包",
+        primaryHref: "/templates/freelance-pricing",
+        secondaryLabel: "計算加班費",
+        secondaryHref: "/finance/overtime",
+      }}
       jsonLd={jsonLd}
     >
       <IncomeTaxCalculator />
