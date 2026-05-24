@@ -9,7 +9,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { tools, categoryLabels, type ToolCategory } from "@/lib/tools-registry";
-import { HAOTI_LINE_URL, withUtm } from "@/lib/brand";
+import { CTA_URLS } from "@/lib/brand";
 
 export const metadata: Metadata = {
   title: "好算 HaoSuan — 台灣生活計算工具",
@@ -90,7 +90,7 @@ export default function Home() {
             領免費接案 / 工程模板
           </Link>
           <a
-            href={withUtm(HAOTI_LINE_URL, "home-hero")}
+            href={CTA_URLS.lineHomeHero}
             className="inline-flex items-center justify-center rounded-full border border-border px-5 py-3 text-sm font-medium transition-colors hover:border-primary/60 hover:text-primary"
           >
             加入好提官方 LINE

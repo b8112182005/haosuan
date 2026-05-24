@@ -5,11 +5,16 @@
 
 export type Platform = 'web' | 'android' | 'ios';
 
+interface CapacitorBridge {
+  isNativePlatform?: () => boolean;
+  getPlatform?: () => Platform;
+}
+
 function detectPlatform(): Platform {
   if (typeof window === 'undefined') return 'web';
-  const cap = (window as any).Capacitor;
+  const cap = (window as Window & { Capacitor?: CapacitorBridge }).Capacitor;
   if (!cap?.isNativePlatform?.()) return 'web';
-  return cap.getPlatform() as Platform;
+  return cap.getPlatform?.() ?? 'web';
 }
 
 export const platform = detectPlatform();

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 
 export interface NextStepCtaProps {
   eyebrow?: string;
@@ -8,6 +9,33 @@ export interface NextStepCtaProps {
   primaryHref: string;
   secondaryLabel?: string;
   secondaryHref?: string;
+}
+
+function isExternalUrl(href: string) {
+  return /^https?:\/\//.test(href);
+}
+
+function CtaLink({
+  href,
+  className,
+  children,
+}: {
+  href: string;
+  className: string;
+  children: ReactNode;
+}) {
+  if (isExternalUrl(href)) {
+    return (
+      <a href={href} className={className}>
+        {children}
+      </a>
+    );
+  }
+  return (
+    <Link href={href} className={className}>
+      {children}
+    </Link>
+  );
 }
 
 export default function NextStepCta({
@@ -30,19 +58,19 @@ export default function NextStepCta({
           </p>
         </div>
         <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-          <Link
+          <CtaLink
             href={primaryHref}
             className="inline-flex items-center justify-center rounded-full bg-slate-950 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-slate-800 dark:bg-slate-50 dark:text-slate-950 dark:hover:bg-slate-200"
           >
             {primaryLabel}
-          </Link>
+          </CtaLink>
           {secondaryLabel && secondaryHref && (
-            <Link
+            <CtaLink
               href={secondaryHref}
               className="inline-flex items-center justify-center rounded-full border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:border-slate-500 hover:text-slate-950 dark:border-slate-700 dark:text-slate-200 dark:hover:border-slate-400 dark:hover:text-white"
             >
               {secondaryLabel}
-            </Link>
+            </CtaLink>
           )}
         </div>
       </div>
