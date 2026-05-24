@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CTA_URLS } from "@/lib/brand";
+import { serializeJsonLd } from "@/lib/json-ld";
 
 export const metadata: Metadata = {
   title: "免費報價與工程管理模板包｜好系列",
@@ -82,7 +83,7 @@ export default function FreeTemplatePage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
       />
       <main className="mx-auto max-w-5xl px-4 py-12 sm:py-16">
         {/* Hero */}

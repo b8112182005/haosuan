@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import Link from "next/link";
 import Breadcrumb from "./Breadcrumb";
 import NextStepCta, { type NextStepCtaProps } from "@/components/common/NextStepCta";
+import { serializeJsonLd } from "@/lib/json-ld";
 
 export interface FaqItem {
   question: string;
@@ -47,7 +48,7 @@ export default function CalculatorLayout({
       {jsonLd && (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
         />
       )}
 
