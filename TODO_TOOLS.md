@@ -1,56 +1,81 @@
-# 好算工具待辦清單
+# HaoSuan Tool Backlog
 
-## Phase 1 — 基礎建設
-- [ ] 專案初始化 (Next.js + shadcn + Tailwind)
-- [ ] 全站 Layout (Header, Footer, Breadcrumb)
-- [ ] CalculatorLayout 通用元件
-- [ ] 工具 Registry 系統
-- [ ] 首頁 (工具分類卡片)
-- [ ] SEO 基礎設施 (sitemap, robots.txt, metadata helpers)
+Last repaired: 2026-05-25.
 
-## Phase 1.5 — UI 升級（基礎建設完成後）
-- [ ] 安裝 motion (Framer Motion) 動畫庫
-- [ ] Dark/Light 模式切換（深色為預設）
-- [ ] 微互動動畫（按鈕 spring、hover scale、計算結果 fadeInUp + 數字跳動）
-- [ ] Bento Grid 首頁佈局（參考 Linear/Apple 風格）
-- [ ] 色彩系統升級（中性底色 + 單一強調色，LCH 色彩空間）
-- [ ] 計算結果一鍵複製（帶 toast 提示）
-- [ ] Command Palette (Cmd/Ctrl+K) 快速切換工具
-- [ ] 卡片圓角 16px + 1px border 分隔（無陰影）
+Purpose: readable backlog for HaoSuan. Keep this file ASCII-safe to avoid mojibake loops in heartbeat checks.
 
-## Phase 1 — 工具頁 (20 個)
+## Current State
 
-### 生活計算
-- [ ] BMI 計算機
-- [ ] 年齡計算機
-- [ ] 日期天數計算
-- [ ] 電費計算機
-- [ ] 睡眠時間計算
+- Core platform, layout, calculator shell, registry, sitemap, robots, PWA, and Capacitor setup exist.
+- Live app currently exposes 30 calculator pages plus acquisition/support pages.
+- Launch focus is no longer "add many calculators"; it is traffic validation, canonical URL/domain setup, and app release readiness.
 
-### 財務計算
-- [ ] 房貸試算
-- [ ] 匯率換算
-- [ ] 薪資所得稅試算
-- [ ] 複利計算機
-- [ ] 加班費計算機
-- [ ] 發票營業稅計算
+## Completed Calculator Pages
 
-### 裝潢工程 (含瑀墨品牌)
-- [ ] 油漆用量計算機
-- [ ] 磁磚數量計算
-- [ ] 冷氣噸數計算
+### Life
 
-### 單位換算
-- [ ] 面積換算 (坪/平方公尺)
-- [ ] 長度換算
-- [ ] 重量換算
-- [ ] 溫度換算
+- `/life/bmi`
+- `/life/age`
+- `/life/date-diff`
+- `/life/electricity`
+- `/life/sleep`
+- `/life/calories`
+- `/life/pregnancy`
+- `/life/fuel-cost`
 
-### 數學/文字
-- [ ] 百分比計算
-- [ ] 字數計算
+### Finance
 
-## Phase 2 — APP 化（工具達 30 個後啟動）
-- [ ] PWA 設定 (Service Worker + Web App Manifest + 離線支援)
-- [ ] Capacitor 包裝上架 Google Play / App Store
-- [ ] APP 推播通知（匯率更新、電費帳單提醒等）
+- `/finance/mortgage`
+- `/finance/exchange-rate`
+- `/finance/income-tax`
+- `/finance/compound-interest`
+- `/finance/overtime`
+- `/finance/invoice-tax`
+- `/finance/deposit-interest`
+- `/finance/retirement`
+- `/finance/insurance`
+- `/finance/stamp-duty`
+- `/finance/car-depreciation`
+
+### Renovation
+
+- `/renovation/paint`
+- `/renovation/tile`
+- `/renovation/ac-btu`
+
+### Convert
+
+- `/convert/area`
+- `/convert/length`
+- `/convert/weight`
+- `/convert/temperature`
+- `/convert/volume`
+- `/convert/data-speed`
+
+### Math/Text
+
+- `/math/percentage`
+- `/math/word-count`
+
+## Acquisition Pages
+
+- `/free-template`
+- `/go/line-template`
+- `/guides/freelance-pricing`
+- `/templates/freelance-pricing`
+
+## Launch Backlog
+
+- [ ] Confirm production domain and canonical URLs.
+- [ ] Replace placeholder LINE/free-template destination with the real URL.
+- [ ] Run production preview smoke test after domain and LINE URL are final.
+- [ ] Decide Next/PostCSS advisory strategy: wait for stable fix, document mitigation, or test canary separately.
+- [ ] Recheck app build with `npm run build:app` before Capacitor release work.
+- [ ] Run `npx cap sync` only after the app build and release target are confirmed.
+
+## Non-Blocking Ideas
+
+- Add more calculator pages only after traffic validation shows a category worth expanding.
+- Add calculator-level FAQ blocks where search intent is clear.
+- Improve copy/share affordances on high-traffic calculators.
+- Add app store screenshots and release notes after the release target is confirmed.

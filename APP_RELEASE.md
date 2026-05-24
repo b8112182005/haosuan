@@ -1,51 +1,83 @@
-# 好算 APP 發布流程
+# HaoSuan App Release Notes
 
-## 一套代碼，同步更新
+Last repaired: 2026-05-25.
 
-- **Web 版**：push 到 main → Railway 自動部署
-- **APP 版**：打 tag → GitHub Actions 自動建置 APK/IPA
+Purpose: readable release checklist for the HaoSuan Capacitor app. Keep this file ASCII-safe.
 
-## 發布 APP 新版本
+## Release Model
+
+- Web release: deploy from `main` after web gates pass.
+- App release: tag a tested commit, then build/sync native shells.
+- Do not publish to app stores until production domain, canonical URLs, app icons, screenshots, and store metadata are final.
+
+## Required Gates
+
+Run from the repo root:
 
 ```bash
-# 確保 main 是最新的
-git checkout main
-git pull
-
-# 打版本 tag（觸發 APP 建置）
-git tag v1.0.0
-git push origin v1.0.0
+npm run lint
+npm run typecheck
+npm run build
+npm run build:app
 ```
 
-## 本地建置（開發用）
+Expected current behavior:
 
-### Android
+- `npm run build` should produce the web build.
+- `npm run build:app` should use `BUILD_TARGET=app` for the Capacitor/static app path.
+- Known dependency state: no high/critical advisories; known moderate Next/PostCSS advisory remains until upstream fix or approved strategy.
+
+## Android Local Build Flow
+
 ```bash
-npm run build:app    # 建置 Next.js 靜態版本
-npx cap sync android # 同步到 Android 專案
-npx cap open android # 用 Android Studio 開啟
+npm run build:app
+npx cap sync android
+npx cap open android
 ```
 
-### iOS（需要 Mac + Xcode）
+Then build/sign in Android Studio.
+
+Minimum local requirements:
+
+- Android Studio
+- JDK 17+
+- Android signing key configured outside git
+
+## iOS Local Build Flow
+
 ```bash
 npm run build:app
 npx cap sync ios
 npx cap open ios
 ```
 
-## 環境需求
+Minimum local requirements:
 
-| 平台 | 工具 | 版本 |
-|------|------|------|
-| Android | Android Studio | Hedgehog+ |
-| Android | JDK | 17 |
-| iOS | macOS | Ventura+ |
-| iOS | Xcode | 15+ |
-| iOS | Apple Developer | NT$3,000/年 |
+- macOS
+- Xcode
+- Apple Developer account
+- iOS signing profile configured outside git
 
-## 注意事項
+## Tagging Flow
 
-- Web build 和 APP build 使用同一份 source code
-- 計算邏輯（src/lib/calculators/）100% 共用，零改動
-- APP build 用 `BUILD_TARGET=app` 環境變數觸發 static export
-- iOS build 需要 Mac，Windows 上只能建置 Android
+Only tag after the required gates pass and release metadata is ready:
+
+```bash
+git checkout main
+git pull
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+Heartbeat must not push tags or publish builds.
+
+## Pre-Release Checklist
+
+- [ ] Production domain confirmed.
+- [ ] Canonical URL config confirmed.
+- [ ] LINE/free-template destination confirmed.
+- [ ] App name, icon, splash screen, and screenshots confirmed.
+- [ ] Privacy policy/support URL ready for store listing.
+- [ ] Android signing material exists outside git.
+- [ ] iOS signing material exists outside git, if releasing iOS.
+- [ ] Final smoke test on web and app build completed.
