@@ -86,5 +86,6 @@ function getChineseZodiac(year: number): string {
     "鼠", "牛", "虎", "兔", "龍", "蛇",
     "馬", "羊", "猴", "雞", "狗", "豬",
   ];
-  return animals[(year - 4) % 12] + "年";
+  const index = ((year - 4) % 12 + 12) % 12;
+  return animals[index] + "年";
 }
