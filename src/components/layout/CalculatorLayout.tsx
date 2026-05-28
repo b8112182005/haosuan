@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import Link from "next/link";
 import Breadcrumb from "./Breadcrumb";
 import NextStepCta, { type NextStepCtaProps } from "@/components/common/NextStepCta";
+import { CTA_URLS } from "@/lib/brand";
 import { serializeJsonLd } from "@/lib/json-ld";
 
 export interface FaqItem {
@@ -33,6 +34,17 @@ export interface CalculatorLayoutProps {
   jsonLd?: Record<string, unknown>;
 }
 
+const defaultNextStepCta: NextStepCtaProps = {
+  eyebrow: "算完下一步",
+  title: "把結果變成可以追蹤的提醒或模板",
+  description:
+    "接案報價、工程估算、生活期限都不要只停在一次試算。先領免費模板包，或用好提 LINE 記下重要日期。",
+  primaryLabel: "領免費模板包",
+  primaryHref: "/free-template",
+  secondaryLabel: "加入好提 LINE",
+  secondaryHref: CTA_URLS.lineHomeHero,
+};
+
 export default function CalculatorLayout({
   title,
   description,
@@ -43,6 +55,8 @@ export default function CalculatorLayout({
   nextStepCta,
   jsonLd,
 }: CalculatorLayoutProps) {
+  const resolvedNextStepCta = nextStepCta ?? defaultNextStepCta;
+
   return (
     <>
       {jsonLd && (
@@ -65,7 +79,7 @@ export default function CalculatorLayout({
         <div className="mb-12 animate-in fade-in duration-300">{children}</div>
 
         {/* 計算後下一步 */}
-        {nextStepCta && <NextStepCta {...nextStepCta} />}
+        <NextStepCta {...resolvedNextStepCta} />
 
         {/* YumoPromo — 裝潢分類 */}
         {showYumoPromo && <YumoPromo />}
