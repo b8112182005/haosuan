@@ -42,7 +42,7 @@ const defaultNextStepCta: NextStepCtaProps = {
   primaryLabel: "領免費模板包",
   primaryHref: "/free-template",
   secondaryLabel: "加入好提 LINE",
-  secondaryHref: CTA_URLS.lineHomeHero,
+  secondaryHref: CTA_URLS.lineCalculatorDefault,
 };
 
 export default function CalculatorLayout({

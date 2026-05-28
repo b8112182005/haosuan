@@ -23,6 +23,10 @@ export function withUtm(
 // Centralized CTA URLs — import these instead of calling withUtm() inline.
 export const CTA_URLS = {
   lineHomeHero: withUtm(HAOTI_LINE_URL, "home-hero"),
+  lineCalculatorDefault: withUtm(HAOTI_LINE_URL, "calculator_default_cta", {
+    medium: "tool_cta",
+    campaign: "free_template_pack",
+  }),
   lineFreeTemplate: withUtm(HAOTI_LINE_URL, "free_template_page", {
     medium: "landing",
     campaign: "free_template_pack",
