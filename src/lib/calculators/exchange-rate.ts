@@ -11,7 +11,11 @@ export interface Currency {
   rateToTWD: number; // 1 單位外幣 = ? 台幣（買入/賣出中間價）
 }
 
-/** 常見幣別對台幣參考匯率（2024 年參考值，非即時） */
+/**
+ * 常見幣別對台幣參考匯率（靜態概算值，非即時報價）
+ * UI 已標示「參考匯率」並提供台灣銀行牌告匯率連結供精算
+ * 維護建議：每季校對一次，或日後改接台銀/央行匯率 API
+ */
 export const CURRENCIES: Currency[] = [
   { code: "TWD", name: "新台幣", flag: "🇹🇼", rateToTWD: 1 },
   { code: "USD", name: "美元", flag: "🇺🇸", rateToTWD: 32.5 },

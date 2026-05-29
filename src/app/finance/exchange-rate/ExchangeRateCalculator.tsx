@@ -131,7 +131,16 @@ export default function ExchangeRateCalculator() {
         )}
 
         <p className="text-xs text-muted-foreground">
-          ⚠ 以上為參考匯率，非即時報價。實際匯率請查詢台灣銀行或您的銀行。
+          ⚠ 以上為參考匯率，非即時報價，僅供概算。實際成交請以{" "}
+          <a
+            href="https://rate.bot.com.tw/xrt?Lang=zh-TW"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline hover:text-foreground"
+          >
+            台灣銀行牌告匯率
+          </a>{" "}
+          或您的銀行為準。
         </p>
       </CardContent>
     </Card>
