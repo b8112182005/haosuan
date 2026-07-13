@@ -1,7 +1,7 @@
 {
   "name": "好算 HaoSuan",
   "short_name": "好算",
-  "description": "台灣最實用的免費計算工具站，20種計算機，即時計算，無廣告",
+  "description": "台灣最實用的免費計算工具站，30種計算機，即時計算，無廣告",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
