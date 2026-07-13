@@ -1,4 +1,5 @@
 import type { CapacitorConfig } from '@capacitor/cli';
+import { Style } from '@capacitor/status-bar';
 
 const config: CapacitorConfig = {
   appId: 'com.haosuan.app',
@@ -13,7 +14,7 @@ const config: CapacitorConfig = {
       androidScaleType: 'CENTER_CROP',
     },
     StatusBar: {
-      style: 'Dark' as any,
+      style: Style.Dark,
       backgroundColor: '#09090b',
     },
   },

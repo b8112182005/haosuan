@@ -1,7 +1,8 @@
 /**
  * 薪資所得稅試算邏輯
- * 依台灣 2024 年（民國 113 年）綜合所得稅規定
- * 資料來源：財政部稅務入口網
+ * 依台灣 114 年度（2025 年所得，2026 年 5 月申報）綜合所得稅規定
+ * 財政部公告：114 年度因 CPI 漲幅 2.29% 未達 3% 調整門檻，金額與 113 年度相同
+ * 資料來源：財政部賦稅署、財政部稅務入口網
  */
 
 export interface IncomeTaxInput {
@@ -34,7 +35,7 @@ export interface TaxBreakdown {
   tax: number;
 }
 
-/** 2024 年綜合所得稅稅率級距 */
+/** 114 年度綜合所得稅稅率級距 */
 const TAX_BRACKETS = [
   { max: 590000, rate: 0.05 },
   { max: 1330000, rate: 0.12 },
@@ -43,7 +44,7 @@ const TAX_BRACKETS = [
   { max: Infinity, rate: 0.40 },
 ];
 
-/** 2024 年各項金額（元） */
+/** 114 年度各項金額（元） */
 const DEDUCTIONS = {
   salarySpecial: 218000,         // 薪資所得特別扣除額
   personal: 97000,               // 個人免稅額

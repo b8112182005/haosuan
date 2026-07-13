@@ -199,6 +199,24 @@ export default function IncomeTaxCalculator() {
             )}
           </>
         )}
+
+        <div className="space-y-1 border-t border-border/50 pt-4">
+          <p className="text-xs text-muted-foreground">
+            * 依財政部 114 年度（2025 年所得、2026 年 5 月申報）標準計算：免稅額、標準扣除額、薪資所得特別扣除額與課稅級距。
+          </p>
+          <p className="text-xs text-muted-foreground">
+            * 本工具僅就「薪資所得 + 標準扣除額」概算，未含列舉扣除額、其他類別所得、儲蓄投資／幼兒學前／長照等特別扣除額及基本生活費差額。實際應納稅額請以{" "}
+            <a
+              href="https://www.etax.nat.gov.tw/etwmain/etw158w/15"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-foreground"
+            >
+              財政部稅務入口網試算
+            </a>{" "}
+            為準。
+          </p>
+        </div>
       </CardContent>
     </Card>
   );

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
-import { convertTemperature, tempUnits, tempUnitLabels, type TempUnit } from "@/lib/calculators/temperature";
+import { convertTemperature, tempUnits, type TempUnit } from "@/lib/calculators/temperature";
 import CopyButton from "@/components/common/CopyButton";
 
 export default function TemperatureCalculator() {

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import CalculatorLayout from "@/components/layout/CalculatorLayout";
+import NextStepCta from "@/components/common/NextStepCta";
+import { HAOTI_LINE_URL, withUtm } from "@/lib/brand";
 import ElectricityCalculator from "./ElectricityCalculator";
 
 export const metadata: Metadata = {
@@ -67,6 +69,15 @@ export default function ElectricityPage() {
       relatedTools={relatedTools}
       jsonLd={jsonLd}
     >
+      <NextStepCta
+        eyebrow="算完下一步"
+        title="電費變高，不只要知道金額，也要記得檢查設備"
+        description="把濾網清潔、冷氣保養、帳單繳費這類容易忘記的小事交給好提；先用 LINE 免費記 3 件事。"
+        primaryLabel="去好提記提醒"
+        primaryHref={withUtm(HAOTI_LINE_URL, "electricity")}
+        secondaryLabel="看接案報價模板"
+        secondaryHref="/templates/freelance-pricing"
+      />
       <ElectricityCalculator />
     </CalculatorLayout>
   );

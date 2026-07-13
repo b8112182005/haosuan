@@ -1,6 +1,9 @@
 import { ReactNode } from "react";
 import Link from "next/link";
 import Breadcrumb from "./Breadcrumb";
+import NextStepCta, { type NextStepCtaProps } from "@/components/common/NextStepCta";
+import { CTA_URLS } from "@/lib/brand";
+import { serializeJsonLd } from "@/lib/json-ld";
 
 export interface FaqItem {
   question: string;
@@ -25,9 +28,22 @@ export interface CalculatorLayoutProps {
   relatedTools?: RelatedTool[];
   /** 是否顯示 YumoPromo（裝潢分類用） */
   showYumoPromo?: boolean;
+  /** 計算後下一步 CTA：用於導向提醒、模板包或 checklist */
+  nextStepCta?: NextStepCtaProps;
   /** JSON-LD schema 物件（由頁面傳入，此元件只負責 inject） */
   jsonLd?: Record<string, unknown>;
 }
+
+const defaultNextStepCta: NextStepCtaProps = {
+  eyebrow: "算完下一步",
+  title: "把結果變成可以追蹤的提醒或模板",
+  description:
+    "接案報價、工程估算、生活期限都不要只停在一次試算。先領免費模板包，或用好提 LINE 記下重要日期。",
+  primaryLabel: "領免費模板包",
+  primaryHref: "/free-template",
+  secondaryLabel: "加入好提 LINE",
+  secondaryHref: CTA_URLS.lineCalculatorDefault,
+};
 
 export default function CalculatorLayout({
   title,
@@ -36,6 +52,7 @@ export default function CalculatorLayout({
   faqs,
   relatedTools,
   showYumoPromo = false,
+  nextStepCta,
   jsonLd,
 }: CalculatorLayoutProps) {
   // 有 FAQ 時額外產生 FAQPage structured data，讓頁面有資格拿 Google FAQ rich result
@@ -54,13 +71,14 @@ export default function CalculatorLayout({
           })),
         }
       : null;
+  const resolvedNextStepCta = nextStepCta ?? defaultNextStepCta;
 
   return (
     <>
       {jsonLd && (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
         />
       )}
 
@@ -82,6 +100,9 @@ export default function CalculatorLayout({
 
         {/* 計算機主體 */}
         <div className="mb-12 animate-in fade-in duration-300">{children}</div>
+
+        {/* 計算後下一步 */}
+        <NextStepCta {...resolvedNextStepCta} />
 
         {/* YumoPromo — 裝潢分類 */}
         {showYumoPromo && <YumoPromo />}

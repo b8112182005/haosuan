@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import CalculatorLayout from "@/components/layout/CalculatorLayout";
+import NextStepCta from "@/components/common/NextStepCta";
+import { HAOTI_LINE_URL, withUtm } from "@/lib/brand";
 import PaintCalculator from "./PaintCalculator";
 
 export const metadata: Metadata = {
@@ -63,6 +65,15 @@ export default function PaintPage() {
       jsonLd={jsonLd}
       showYumoPromo={true}
     >
+      <NextStepCta
+        eyebrow="工程估算下一步"
+        title="材料算完，別漏掉工期、追加與驗收條款"
+        description="若你是接案或小型工程服務者，報價模板包會把範圍、付款節點、修改次數與維護責任先列清楚。"
+        primaryLabel="看報價模板包"
+        primaryHref="/templates/freelance-pricing"
+        secondaryLabel="用好提記工程期限"
+        secondaryHref={withUtm(HAOTI_LINE_URL, "paint")}
+      />
       <PaintCalculator />
     </CalculatorLayout>
   );

@@ -179,6 +179,10 @@ export default function MortgageCalculator() {
             </div>
           </>
         )}
+
+        <p className="text-xs text-muted-foreground border-t border-border/50 pt-4">
+          * 採固定利率試算，未含寬限期、開辦費、帳管費、保險或政府優惠房貸利率變動。實際條件與利率請以承貸銀行核定為準。
+        </p>
       </CardContent>
     </Card>
   );

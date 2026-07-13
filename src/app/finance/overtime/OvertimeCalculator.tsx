@@ -138,10 +138,10 @@ export default function OvertimeCalculator() {
         )}
 
         <p className="text-xs text-muted-foreground">
-          * 依勞基法第 24 條計算。不含勞健保、特殊合約等因素，僅供參考。
+          * 月薪制，加班費為「另再加給」之金額。平日依勞基法第 24 條、休息日採核實計算（2018 起無「做1給4」最低保障）、國定假日依第 39 條 8 小時內加發一日工資。不含勞健保、特殊合約等因素，僅供參考。
         </p>
         <p className="text-xs text-muted-foreground">
-          資料依 2024 年勞動部公告，如有更新將同步調整。
+          資料依勞動部現行規定，如有更新將同步調整。
         </p>
       </CardContent>
     </Card>

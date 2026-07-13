@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import CalculatorLayout from "@/components/layout/CalculatorLayout";
+import NextStepCta from "@/components/common/NextStepCta";
+import { HAOTI_LINE_URL, withUtm } from "@/lib/brand";
 import TileCalculator from "./TileCalculator";
 
 export const metadata: Metadata = {
@@ -68,6 +70,15 @@ export default function TilePage() {
       jsonLd={jsonLd}
       showYumoPromo={true}
     >
+      <NextStepCta
+        eyebrow="工程估算下一步"
+        title="磁磚片數只是成本之一，報價還要算損耗、工法與驗收"
+        description="報價模板包先幫你把材料、工時、追加風險與驗收責任拆開，避免只用感覺報價。"
+        primaryLabel="看報價模板包"
+        primaryHref="/templates/freelance-pricing"
+        secondaryLabel="用好提記施工期限"
+        secondaryHref={withUtm(HAOTI_LINE_URL, "tile")}
+      />
       <TileCalculator />
     </CalculatorLayout>
   );

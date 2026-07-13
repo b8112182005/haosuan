@@ -9,6 +9,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { tools, categoryLabels, type ToolCategory } from "@/lib/tools-registry";
+import { CTA_URLS } from "@/lib/brand";
 
 export const metadata: Metadata = {
   title: "好算 HaoSuan — 台灣生活計算工具",
@@ -81,6 +82,20 @@ export default function Home() {
         <p className="text-sm text-muted-foreground mt-3">
           30 個工具 · 5 大分類 · 完全免費
         </p>
+        <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <Link
+            href="/free-template"
+            className="inline-flex items-center justify-center rounded-full bg-slate-950 px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-slate-800 dark:bg-slate-50 dark:text-slate-950 dark:hover:bg-slate-200"
+          >
+            領免費接案 / 工程模板
+          </Link>
+          <a
+            href={CTA_URLS.lineHomeHero}
+            className="inline-flex items-center justify-center rounded-full border border-border px-5 py-3 text-sm font-medium transition-colors hover:border-primary/60 hover:text-primary"
+          >
+            加入好提官方 LINE
+          </a>
+        </div>
       </section>
 
       {/* Category sections */}
