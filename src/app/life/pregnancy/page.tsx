@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "懷孕週數計算機 | 好算",
     description: "輸入最後月經日期，計算懷孕週數、預產期與孕期里程碑",
-    url: "https://haosuan.com/life/pregnancy",
+    url: "/life/pregnancy",
   },
 };
 

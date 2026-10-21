@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "匯率換算 | 好算",
     description: "台幣與 14 種常用幣別即時換算",
-    url: "https://haosuan.com/finance/exchange-rate",
+    url: "/finance/exchange-rate",
   },
 };
 

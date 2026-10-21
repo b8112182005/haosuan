@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "退休金試算 | 好算",
     description: "計算退休時總資產與每月可動用金額",
-    url: "https://haosuan.com/finance/retirement",
+    url: "/finance/retirement",
   },
 };
 

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "複利計算機 | 好算",
     description: "計算複利終值、年度成長明細，感受複利的威力",
-    url: "https://haosuan.com/finance/compound-interest",
+    url: "/finance/compound-interest",
   },
 };
 

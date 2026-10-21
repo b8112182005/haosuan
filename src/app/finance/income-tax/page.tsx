@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "薪資所得稅試算 | 好算",
     description: "依台灣 2024 年稅制試算年度所得稅",
-    url: "https://haosuan.com/finance/income-tax",
+    url: "/finance/income-tax",
   },
 };
 

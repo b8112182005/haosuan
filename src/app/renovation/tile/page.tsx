@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "磁磚數量計算 | 好算",
     description: "依坪數與磁磚尺寸計算所需片數與耗料",
-    url: "https://haosuan.com/renovation/tile",
+    url: "/renovation/tile",
   },
 };
 

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "日期天數計算 | 好算",
     description: "計算兩個日期之間相差的天數、週數、工作天數",
-    url: "https://haosuan.com/life/date-diff",
+    url: "/life/date-diff",
   },
 };
 

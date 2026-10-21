@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CTA_URLS } from "@/lib/brand";
 import { serializeJsonLd } from "@/lib/json-ld";
+import { absUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "免費報價與工程管理模板包｜好系列",
@@ -9,14 +10,14 @@ export const metadata: Metadata = {
     "領取報價單、成本估算、案場紀錄與請款單模板，協助接案者與小型團隊把報價、紀錄、請款流程整理清楚。",
   keywords: ["免費模板包", "接案報價模板", "工程報價單", "成本估算表", "請款單範本", "好系列"],
   alternates: {
-    canonical: "https://haosuan.com/free-template",
+    canonical: "/free-template",
   },
   openGraph: {
     type: "website",
     title: "免費報價與工程管理模板包｜好系列",
     description:
       "領取報價單、成本估算、案場紀錄與請款單模板，協助接案者與小型團隊把報價、紀錄、請款流程整理清楚。",
-    url: "https://haosuan.com/free-template",
+    url: "/free-template",
     siteName: "好算 HaoSuan",
   },
 };
@@ -27,7 +28,7 @@ const jsonLd = {
   name: "免費報價與工程管理模板包｜好系列",
   description:
     "領取報價單、成本估算、案場紀錄與請款單模板，協助接案者與小型團隊把報價、紀錄、請款流程整理清楚。",
-  url: "https://haosuan.com/free-template",
+  url: absUrl("/free-template"),
   author: {
     "@type": "Organization",
     name: "好系列編輯部",

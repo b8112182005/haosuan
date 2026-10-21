@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "接案報價怎麼算？自由工作者避免低估的 5 個步驟",
     description: "把工時、成本、風險與利潤拆開，避免用感覺報價。",
-    url: "https://haosuan.com/guides/freelance-pricing",
+    url: "/guides/freelance-pricing",
   },
 };
 

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "油漆用量計算機 | 好算",
     description: "依房間尺寸估算油漆桶數與費用",
-    url: "https://haosuan.com/renovation/paint",
+    url: "/renovation/paint",
   },
 };
 

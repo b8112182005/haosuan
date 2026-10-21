@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "睡眠時間計算 | 好算",
     description: "依睡眠週期計算最佳入睡或起床時間",
-    url: "https://haosuan.com/life/sleep",
+    url: "/life/sleep",
   },
 };
 

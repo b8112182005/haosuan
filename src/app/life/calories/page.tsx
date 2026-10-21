@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "熱量計算機 | 好算",
     description: "輸入性別、年齡、身高、體重與活動量，即時計算 BMR 與 TDEE",
-    url: "https://haosuan.com/life/calories",
+    url: "/life/calories",
   },
 };
 

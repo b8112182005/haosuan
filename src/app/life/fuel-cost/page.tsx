@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "油耗費用計算機 | 好算",
     description: "輸入距離、油耗與油價，即時計算油資費用與每公里成本",
-    url: "https://haosuan.com/life/fuel-cost",
+    url: "/life/fuel-cost",
   },
 };
 
