@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "長度換算 | 好算",
     description: "公里、公尺、英吋、英尺等長度單位即時互換",
-    url: "https://haosuan.com/convert/length",
+    url: "/convert/length",
   },
 };
 

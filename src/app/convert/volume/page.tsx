@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "容量換算 | 好算",
     description: "公升、毫升、加侖、品脫、量米杯即時互換",
-    url: "https://haosuan.com/convert/volume",
+    url: "/convert/volume",
   },
 };
 

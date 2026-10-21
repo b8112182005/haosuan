@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "電費計算機 | 好算",
     description: "依台電累進費率估算每月電費",
-    url: "https://haosuan.com/life/electricity",
+    url: "/life/electricity",
   },
 };
 

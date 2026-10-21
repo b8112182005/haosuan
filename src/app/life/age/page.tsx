@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "年齡計算機 | 好算",
     description: "輸入生日，計算精確年齡（歲、月、日）",
-    url: "https://haosuan.com/life/age",
+    url: "/life/age",
   },
 };
 

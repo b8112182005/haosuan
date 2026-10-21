@@ -5,6 +5,11 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import InstallPWA from "@/components/common/InstallPWA";
 import ServiceWorkerRegister from "@/components/common/ServiceWorkerRegister";
+import Script from "next/script";
+import { SITE_URL } from "@/lib/site";
+
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
+const GSC_VERIFICATION = process.env.NEXT_PUBLIC_GSC_VERIFICATION;
 
 const notoSansTC = Noto_Sans_TC({
   variable: "--font-sans",
@@ -24,7 +29,8 @@ export const metadata: Metadata = {
   },
   description:
     "免費線上計算工具，涵蓋生活、財務、裝潢、單位換算等實用計算機，專為台灣用戶設計。",
-  metadataBase: new URL("https://haosuan.com"),
+  metadataBase: new URL(SITE_URL),
+  verification: GSC_VERIFICATION ? { google: GSC_VERIFICATION } : undefined,
   openGraph: {
     siteName: "好算 HaoSuan",
     locale: "zh_TW",
@@ -65,6 +71,20 @@ export default function RootLayout({
         <Footer />
         <InstallPWA />
         <ServiceWorkerRegister />
+        {GA_ID ? (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga4-init" strategy="afterInteractive">
+              {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${GA_ID}');`}
+            </Script>
+          </>
+        ) : null}
       </body>
     </html>
   );

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "加班費計算機 | 好算",
     description: "依勞基法計算平日、假日加班費",
-    url: "https://haosuan.com/finance/overtime",
+    url: "/finance/overtime",
   },
 };
 

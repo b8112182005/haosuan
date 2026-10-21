@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "勞健保費計算機 | 好算",
     description: "輸入月薪與眷屬人數，即時計算勞保費、健保費及實領薪資",
-    url: "https://haosuan.com/finance/insurance",
+    url: "/finance/insurance",
   },
 };
 

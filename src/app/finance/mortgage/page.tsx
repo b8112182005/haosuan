@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "房貸試算 | 好算",
     description: "計算每月還款金額、總利息與還款明細",
-    url: "https://haosuan.com/finance/mortgage",
+    url: "/finance/mortgage",
   },
 };
 

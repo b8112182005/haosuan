@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "網速換算 | 好算",
     description: "Mbps、Gbps、MB/s、KB/s 即時互換，附使用情境參考",
-    url: "https://haosuan.com/convert/data-speed",
+    url: "/convert/data-speed",
   },
 };
 

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "百分比計算 | 好算",
     description: "三種百分比計算：比例、折扣、增減幅度",
-    url: "https://haosuan.com/math/percentage",
+    url: "/math/percentage",
   },
 };
 

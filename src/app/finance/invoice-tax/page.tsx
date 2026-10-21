@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "發票營業稅計算 | 好算",
     description: "含稅/未稅金額換算（5% 營業稅）",
-    url: "https://haosuan.com/finance/invoice-tax",
+    url: "/finance/invoice-tax",
   },
 };
 

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "面積換算 | 好算",
     description: "坪、平方公尺、平方英尺等面積單位即時互換",
-    url: "https://haosuan.com/convert/area",
+    url: "/convert/area",
   },
 };
 

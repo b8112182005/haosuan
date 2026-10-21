@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "BMI 計算機 | 好算",
     description: "輸入身高體重，即時計算 BMI 值與健康狀態",
-    url: "https://haosuan.com/life/bmi",
+    url: "/life/bmi",
   },
 };
 

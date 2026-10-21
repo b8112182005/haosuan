@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "重量換算 | 好算",
     description: "公斤、磅、台斤等重量單位即時互換",
-    url: "https://haosuan.com/convert/weight",
+    url: "/convert/weight",
   },
 };
 

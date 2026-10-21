@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "二手車殘值估算 | 好算",
     description: "輸入購車價格、車齡與品牌，即時估算二手車殘值",
-    url: "https://haosuan.com/finance/car-depreciation",
+    url: "/finance/car-depreciation",
   },
 };
 

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "印花稅計算機 | 好算",
     description: "輸入交易金額與契約類型，即時計算印花稅金額",
-    url: "https://haosuan.com/finance/stamp-duty",
+    url: "/finance/stamp-duty",
   },
 };
 

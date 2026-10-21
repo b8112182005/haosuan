@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "冷氣噸數計算 | 好算",
     description: "依坪數、樓層、朝向推薦適合的冷氣噸數",
-    url: "https://haosuan.com/renovation/ac-btu",
+    url: "/renovation/ac-btu",
   },
 };
 

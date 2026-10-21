@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "接案報價模板包 | 好算",
     description: "少算一項成本，就是免費加班。用模板把報價範圍、付款節點與風險講清楚。",
-    url: "https://haosuan.com/templates/freelance-pricing",
+    url: "/templates/freelance-pricing",
   },
 };
 

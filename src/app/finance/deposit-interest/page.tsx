@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "存款利息計算機 | 好算",
     description: "輸入本金、年利率與存款期間，即時計算利息與到期本利和",
-    url: "https://haosuan.com/finance/deposit-interest",
+    url: "/finance/deposit-interest",
   },
 };
 

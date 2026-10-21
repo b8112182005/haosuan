@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "字數計算 | 好算",
     description: "即時計算中英文字數、字元數、段落行數",
-    url: "https://haosuan.com/math/word-count",
+    url: "/math/word-count",
   },
 };
 

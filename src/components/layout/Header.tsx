@@ -27,9 +27,6 @@ export default function Header() {
               {cat.label}
             </Link>
           ))}
-          <span className="hidden sm:inline-flex items-center gap-1 text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full ml-2">
-            APP 即將上線
-          </span>
         </nav>
       </div>
     </header>

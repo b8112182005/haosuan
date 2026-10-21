@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "溫度換算 | 好算",
     description: "攝氏、華氏、克耳文溫度即時互換",
-    url: "https://haosuan.com/convert/temperature",
+    url: "/convert/temperature",
   },
 };
 

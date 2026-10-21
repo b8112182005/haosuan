@@ -161,12 +161,9 @@ export default function Home() {
 
       {/* Bottom CTA */}
       <section className="mt-16 text-center border border-border rounded-2xl p-8 bg-card/50">
-        <h2 className="text-xl font-semibold mb-2">📱 APP 版本準備中</h2>
+        <h2 className="text-xl font-semibold mb-2">30 個工具，持續新增</h2>
         <p className="text-sm text-muted-foreground">
-          30 個工具已全數上線！APP 版本即將推出，讓你隨時隨地好算 🎉
-        </p>
-        <p className="text-xs text-muted-foreground mt-2">
-          ✅ 完全免費 · 🚫 無廣告 · 📱 手機友善
+          免費 · 無廣告 · 手機可用。想加哪個計算機，到好提 LINE 留言。
         </p>
       </section>
     </div>
