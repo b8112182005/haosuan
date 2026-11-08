@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      深色模式刻意維持白底：啟動畫面（系統 splash → Capacitor splash.png → WebView）全程都是白的，
+      中間不會閃黑。要做深色啟動畫面的話要連 splash.png 和 capacitor.config 的 backgroundColor 一起改。
+    -->
+    <color name="splash_background">#FFFFFF</color>
+</resources>

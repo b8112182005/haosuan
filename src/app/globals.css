@@ -127,3 +127,47 @@
     @apply font-sans;
   }
 }
+
+/* ── 平台差異 ──────────────────────────────────────────────
+   Capacitor 8 在 Android 15+ 是 edge-to-edge：SystemBars 外掛會在 viewport-fit=cover 時
+   注入 --safe-area-inset-*；網頁版與舊版 Android 則退回 env() 或 0。 */
+:root {
+  --safe-top: var(--safe-area-inset-top, env(safe-area-inset-top, 0px));
+  --safe-bottom: var(--safe-area-inset-bottom, env(safe-area-inset-bottom, 0px));
+}
+
+/* PlatformScript 會在首次繪製前把 data-platform 寫到 <html>，所以不會閃一下網頁版元素 */
+.app-only {
+  display: none;
+}
+html[data-platform="android"] .web-only,
+html[data-platform="ios"] .web-only {
+  display: none !important;
+}
+html[data-platform="android"] .app-only,
+html[data-platform="ios"] .app-only {
+  display: revert;
+}
+
+/* app 內的 WebView：拿掉點擊灰框與橡皮筋，手感接近原生 */
+html[data-platform="android"],
+html[data-platform="ios"] {
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
+html[data-platform="android"] body,
+html[data-platform="ios"] body {
+  overscroll-behavior-y: none;
+}
+
+/* 數字輸入框在手機上的 spinner 只會誤觸 */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* 按鈕與連結的最小點擊面積（Android 建議 48dp） */
+.bottom-tabs a {
+  min-height: 48px;
+}

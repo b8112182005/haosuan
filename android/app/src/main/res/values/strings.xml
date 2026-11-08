@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">好算好提</string>
+    <string name="title_activity_main">好算好提</string>
+    <string name="package_name">com.haosuan.haoti</string>
+    <string name="custom_url_scheme">com.haosuan.haoti</string>
+</resources>

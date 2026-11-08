@@ -1,6 +1,12 @@
 /**
  * 平台偵測與功能旗標
  * 讓 Web 和 APP 共用代碼但行為不同
+ *
+ * 兩層判斷：
+ * - isAppBuild：build 時決定（BUILD_TARGET=app），用來排除 GA、service worker 等 app 不需要的東西。
+ * - platform / isApp：執行時由 Capacitor bridge 判斷；SSR/靜態輸出階段一律是 'web'。
+ *   需要在首次繪製前就區分的樣式，改用 globals.css 的 html[data-platform] 規則
+ *   （由 src/components/app/PlatformScript.tsx 的 inline script 設定）。
  */
 
 export type Platform = 'web' | 'android' | 'ios';
@@ -10,7 +16,9 @@ interface CapacitorBridge {
   getPlatform?: () => Platform;
 }
 
-function detectPlatform(): Platform {
+export const isAppBuild = process.env.NEXT_PUBLIC_BUILD_TARGET === 'app';
+
+export function detectPlatform(): Platform {
   if (typeof window === 'undefined') return 'web';
   const cap = (window as Window & { Capacitor?: CapacitorBridge }).Capacitor;
   if (!cap?.isNativePlatform?.()) return 'web';

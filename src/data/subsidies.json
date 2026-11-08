@@ -1,0 +1,1297 @@
+{
+  "version": "2026-11-07-stub",
+  "generated_at": "2026-11-07T21:47:30.630Z",
+  "items": [
+    {
+      "id": "rent-subsidy-central",
+      "name": "中央租金補貼",
+      "short_name": "中央租金補貼",
+      "category": "housing",
+      "level": "central",
+      "city": null,
+      "agency": "內政部國土管理署",
+      "summary": "住在自租房屋、符合收入條件的民眾，每月最高補貼7,000元，各縣市金額不同。",
+      "eligibility": [
+        "月收入 50,000 元以下",
+        "租屋者",
+        "18 歲以上"
+      ],
+      "amount": {
+        "text": "每月最高 NT$7,000",
+        "min": null,
+        "max": 7000,
+        "unit": "元/月",
+        "formula": null
+      },
+      "conditions": {
+        "min_age": 18,
+        "max_age": null,
+        "must_rent": true,
+        "no_home_ownership": null,
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "has_labor_insurance": null,
+        "is_disabled": null,
+        "low_income": null,
+        "income_limit_type": "monthly_personal",
+        "income_limit_value": 50000,
+        "income_limit_note": null,
+        "cities": null
+      },
+      "documents": [],
+      "how_to_apply": [],
+      "channels": [
+        {
+          "type": "online",
+          "label": "官方網站",
+          "url": "https://has.nlma.gov.tw/house300e/front/applyAInfo"
+        }
+      ],
+      "deadline": {
+        "type": "fixed_annual",
+        "start_month": null,
+        "start_day": null,
+        "end_month": 5,
+        "end_day": 31,
+        "note": "沿用舊資料，待核對"
+      },
+      "faqs": [],
+      "pitfalls": [],
+      "related_calculator": null,
+      "official_url": "https://has.nlma.gov.tw/house300e/front/applyAInfo",
+      "sources": [
+        {
+          "url": "https://has.nlma.gov.tw/house300e/front/applyAInfo",
+          "title": "官方網站",
+          "publisher": "內政部國土管理署",
+          "accessed": null
+        }
+      ],
+      "status_2026": "unknown",
+      "last_known_update": null,
+      "confidence": "low",
+      "unverified_fields": [
+        "amount",
+        "conditions",
+        "deadline",
+        "status_2026"
+      ],
+      "topic": "legacy-haoti"
+    },
+    {
+      "id": "rent-subsidy-taipei",
+      "name": "台北市租金補貼（加碼）",
+      "short_name": "台北市租金補貼",
+      "category": "housing",
+      "level": "local",
+      "city": "台北市",
+      "agency": "台北市政府都市發展局",
+      "summary": "中央補貼之外，台北市額外加碼補助，合計每月最高可達10,600元。",
+      "eligibility": [
+        "月收入 45,000 元以下",
+        "租屋者"
+      ],
+      "amount": {
+        "text": "每月最高 NT$3,600",
+        "min": null,
+        "max": 3600,
+        "unit": "元/月",
+        "formula": null
+      },
+      "conditions": {
+        "min_age": null,
+        "max_age": null,
+        "must_rent": true,
+        "no_home_ownership": null,
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "has_labor_insurance": null,
+        "is_disabled": null,
+        "low_income": null,
+        "income_limit_type": "monthly_personal",
+        "income_limit_value": 45000,
+        "income_limit_note": null,
+        "cities": [
+          "台北市"
+        ]
+      },
+      "documents": [],
+      "how_to_apply": [],
+      "channels": [
+        {
+          "type": "online",
+          "label": "官方網站",
+          "url": "https://rent-allowance.udd.gov.taipei"
+        }
+      ],
+      "deadline": {
+        "type": "fixed_annual",
+        "start_month": null,
+        "start_day": null,
+        "end_month": 5,
+        "end_day": 31,
+        "note": "沿用舊資料，待核對"
+      },
+      "faqs": [],
+      "pitfalls": [],
+      "related_calculator": null,
+      "official_url": "https://rent-allowance.udd.gov.taipei",
+      "sources": [
+        {
+          "url": "https://rent-allowance.udd.gov.taipei",
+          "title": "官方網站",
+          "publisher": "台北市政府都市發展局",
+          "accessed": null
+        }
+      ],
+      "status_2026": "unknown",
+      "last_known_update": null,
+      "confidence": "low",
+      "unverified_fields": [
+        "amount",
+        "conditions",
+        "deadline",
+        "status_2026"
+      ],
+      "topic": "legacy-haoti"
+    },
+    {
+      "id": "rent-subsidy-new-taipei",
+      "name": "新北市租金補貼（加碼）",
+      "short_name": "新北市租金補貼",
+      "category": "housing",
+      "level": "local",
+      "city": "新北市",
+      "agency": "新北市政府城鄉發展局",
+      "summary": "新北市針對租屋族額外加碼補助，每月最高2,400元。",
+      "eligibility": [
+        "月收入 48,000 元以下",
+        "租屋者"
+      ],
+      "amount": {
+        "text": "每月最高 NT$2,400",
+        "min": null,
+        "max": 2400,
+        "unit": "元/月",
+        "formula": null
+      },
+      "conditions": {
+        "min_age": null,
+        "max_age": null,
+        "must_rent": true,
+        "no_home_ownership": null,
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "has_labor_insurance": null,
+        "is_disabled": null,
+        "low_income": null,
+        "income_limit_type": "monthly_personal",
+        "income_limit_value": 48000,
+        "income_limit_note": null,
+        "cities": [
+          "新北市"
+        ]
+      },
+      "documents": [],
+      "how_to_apply": [],
+      "channels": [
+        {
+          "type": "online",
+          "label": "官方網站",
+          "url": "https://www.ntpc.gov.tw"
+        }
+      ],
+      "deadline": {
+        "type": "fixed_annual",
+        "start_month": null,
+        "start_day": null,
+        "end_month": 5,
+        "end_day": 31,
+        "note": "沿用舊資料，待核對"
+      },
+      "faqs": [],
+      "pitfalls": [],
+      "related_calculator": null,
+      "official_url": "https://www.ntpc.gov.tw",
+      "sources": [
+        {
+          "url": "https://www.ntpc.gov.tw",
+          "title": "官方網站",
+          "publisher": "新北市政府城鄉發展局",
+          "accessed": null
+        }
+      ],
+      "status_2026": "unknown",
+      "last_known_update": null,
+      "confidence": "low",
+      "unverified_fields": [
+        "amount",
+        "conditions",
+        "deadline",
+        "status_2026"
+      ],
+      "topic": "legacy-haoti"
+    },
+    {
+      "id": "rent-subsidy-taichung",
+      "name": "台中市租金補貼（加碼）",
+      "short_name": "台中市租金補貼",
+      "category": "housing",
+      "level": "local",
+      "city": "台中市",
+      "agency": "台中市政府住宅發展工程處",
+      "summary": "台中市租屋族加碼補助，每月最高2,400元。",
+      "eligibility": [
+        "月收入 48,000 元以下",
+        "租屋者"
+      ],
+      "amount": {
+        "text": "每月最高 NT$2,400",
+        "min": null,
+        "max": 2400,
+        "unit": "元/月",
+        "formula": null
+      },
+      "conditions": {
+        "min_age": null,
+        "max_age": null,
+        "must_rent": true,
+        "no_home_ownership": null,
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "has_labor_insurance": null,
+        "is_disabled": null,
+        "low_income": null,
+        "income_limit_type": "monthly_personal",
+        "income_limit_value": 48000,
+        "income_limit_note": null,
+        "cities": [
+          "台中市"
+        ]
+      },
+      "documents": [],
+      "how_to_apply": [],
+      "channels": [
+        {
+          "type": "online",
+          "label": "官方網站",
+          "url": "https://housing.taichung.gov.tw"
+        }
+      ],
+      "deadline": {
+        "type": "fixed_annual",
+        "start_month": null,
+        "start_day": null,
+        "end_month": 5,
+        "end_day": 31,
+        "note": "沿用舊資料，待核對"
+      },
+      "faqs": [],
+      "pitfalls": [],
+      "related_calculator": null,
+      "official_url": "https://housing.taichung.gov.tw",
+      "sources": [
+        {
+          "url": "https://housing.taichung.gov.tw",
+          "title": "官方網站",
+          "publisher": "台中市政府住宅發展工程處",
+          "accessed": null
+        }
+      ],
+      "status_2026": "unknown",
+      "last_known_update": null,
+      "confidence": "low",
+      "unverified_fields": [
+        "amount",
+        "conditions",
+        "deadline",
+        "status_2026"
+      ],
+      "topic": "legacy-haoti"
+    },
+    {
+      "id": "rent-subsidy-kaohsiung",
+      "name": "高雄市租金補貼（加碼）",
+      "short_name": "高雄市租金補貼",
+      "category": "housing",
+      "level": "local",
+      "city": "高雄市",
+      "agency": "高雄市政府都市發展局",
+      "summary": "高雄市租屋族加碼補助，每月最高2,400元。",
+      "eligibility": [
+        "月收入 48,000 元以下",
+        "租屋者"
+      ],
+      "amount": {
+        "text": "每月最高 NT$2,400",
+        "min": null,
+        "max": 2400,
+        "unit": "元/月",
+        "formula": null
+      },
+      "conditions": {
+        "min_age": null,
+        "max_age": null,
+        "must_rent": true,
+        "no_home_ownership": null,
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "has_labor_insurance": null,
+        "is_disabled": null,
+        "low_income": null,
+        "income_limit_type": "monthly_personal",
+        "income_limit_value": 48000,
+        "income_limit_note": null,
+        "cities": [
+          "高雄市"
+        ]
+      },
+      "documents": [],
+      "how_to_apply": [],
+      "channels": [
+        {
+          "type": "online",
+          "label": "官方網站",
+          "url": "https://urban.kcg.gov.tw"
+        }
+      ],
+      "deadline": {
+        "type": "fixed_annual",
+        "start_month": null,
+        "start_day": null,
+        "end_month": 5,
+        "end_day": 31,
+        "note": "沿用舊資料，待核對"
+      },
+      "faqs": [],
+      "pitfalls": [],
+      "related_calculator": null,
+      "official_url": "https://urban.kcg.gov.tw",
+      "sources": [
+        {
+          "url": "https://urban.kcg.gov.tw",
+          "title": "官方網站",
+          "publisher": "高雄市政府都市發展局",
+          "accessed": null
+        }
+      ],
+      "status_2026": "unknown",
+      "last_known_update": null,
+      "confidence": "low",
+      "unverified_fields": [
+        "amount",
+        "conditions",
+        "deadline",
+        "status_2026"
+      ],
+      "topic": "legacy-haoti"
+    },
+    {
+      "id": "rent-subsidy-tainan",
+      "name": "台南市租金補貼（加碼）",
+      "short_name": "台南市租金補貼",
+      "category": "housing",
+      "level": "local",
+      "city": "台南市",
+      "agency": "台南市政府都市發展局",
+      "summary": "台南市租屋族加碼補助，每月最高2,400元。",
+      "eligibility": [
+        "月收入 48,000 元以下",
+        "租屋者"
+      ],
+      "amount": {
+        "text": "每月最高 NT$2,400",
+        "min": null,
+        "max": 2400,
+        "unit": "元/月",
+        "formula": null
+      },
+      "conditions": {
+        "min_age": null,
+        "max_age": null,
+        "must_rent": true,
+        "no_home_ownership": null,
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "has_labor_insurance": null,
+        "is_disabled": null,
+        "low_income": null,
+        "income_limit_type": "monthly_personal",
+        "income_limit_value": 48000,
+        "income_limit_note": null,
+        "cities": [
+          "台南市"
+        ]
+      },
+      "documents": [],
+      "how_to_apply": [],
+      "channels": [
+        {
+          "type": "online",
+          "label": "官方網站",
+          "url": "https://urban.tainan.gov.tw"
+        }
+      ],
+      "deadline": {
+        "type": "fixed_annual",
+        "start_month": null,
+        "start_day": null,
+        "end_month": 5,
+        "end_day": 31,
+        "note": "沿用舊資料，待核對"
+      },
+      "faqs": [],
+      "pitfalls": [],
+      "related_calculator": null,
+      "official_url": "https://urban.tainan.gov.tw",
+      "sources": [
+        {
+          "url": "https://urban.tainan.gov.tw",
+          "title": "官方網站",
+          "publisher": "台南市政府都市發展局",
+          "accessed": null
+        }
+      ],
+      "status_2026": "unknown",
+      "last_known_update": null,
+      "confidence": "low",
+      "unverified_fields": [
+        "amount",
+        "conditions",
+        "deadline",
+        "status_2026"
+      ],
+      "topic": "legacy-haoti"
+    },
+    {
+      "id": "income-tax-filing",
+      "name": "綜合所得稅申報",
+      "short_name": "綜合所得稅申報",
+      "category": "tax",
+      "level": "central",
+      "city": null,
+      "agency": "財政部",
+      "summary": "每年5月報稅，錯過期限需補繳滯納金，最高加收應補稅額15%。可使用財政部電子申報系統線上申報。",
+      "eligibility": [],
+      "amount": {
+        "text": "依條件而定",
+        "min": null,
+        "max": null,
+        "unit": null,
+        "formula": null
+      },
+      "conditions": {
+        "min_age": null,
+        "max_age": null,
+        "must_rent": null,
+        "no_home_ownership": null,
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "has_labor_insurance": null,
+        "is_disabled": null,
+        "low_income": null,
+        "income_limit_type": null,
+        "income_limit_value": null,
+        "income_limit_note": null,
+        "cities": null
+      },
+      "documents": [],
+      "how_to_apply": [],
+      "channels": [
+        {
+          "type": "online",
+          "label": "官方網站",
+          "url": "https://www.etax.nat.gov.tw"
+        }
+      ],
+      "deadline": {
+        "type": "fixed_annual",
+        "start_month": null,
+        "start_day": null,
+        "end_month": 5,
+        "end_day": 31,
+        "note": "沿用舊資料，待核對"
+      },
+      "faqs": [],
+      "pitfalls": [],
+      "related_calculator": null,
+      "official_url": "https://www.etax.nat.gov.tw",
+      "sources": [
+        {
+          "url": "https://www.etax.nat.gov.tw",
+          "title": "官方網站",
+          "publisher": "財政部",
+          "accessed": null
+        }
+      ],
+      "status_2026": "unknown",
+      "last_known_update": null,
+      "confidence": "low",
+      "unverified_fields": [
+        "amount",
+        "conditions",
+        "deadline",
+        "status_2026"
+      ],
+      "topic": "legacy-haoti"
+    },
+    {
+      "id": "youth-home-loan",
+      "name": "青年安心成家購屋優惠貸款（新青安）",
+      "short_name": "青年安心成家購屋優惠貸款",
+      "category": "housing",
+      "level": "central",
+      "city": null,
+      "agency": "財政部／內政部",
+      "summary": "40歲以下首購族可申請，利率1.775%（優惠2年），寬限期最長5年，額度最高1,000萬。",
+      "eligibility": [
+        "40 歲以下",
+        "首次購屋"
+      ],
+      "amount": {
+        "text": "依條件而定",
+        "min": null,
+        "max": null,
+        "unit": null,
+        "formula": null
+      },
+      "conditions": {
+        "min_age": null,
+        "max_age": 40,
+        "must_rent": null,
+        "no_home_ownership": true,
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "has_labor_insurance": null,
+        "is_disabled": null,
+        "low_income": null,
+        "income_limit_type": null,
+        "income_limit_value": null,
+        "income_limit_note": null,
+        "cities": null
+      },
+      "documents": [],
+      "how_to_apply": [],
+      "channels": [
+        {
+          "type": "online",
+          "label": "官方網站",
+          "url": "https://www.moi.gov.tw/cp.aspx?n=14357"
+        }
+      ],
+      "deadline": {
+        "type": "fixed_annual",
+        "start_month": null,
+        "start_day": null,
+        "end_month": 12,
+        "end_day": 31,
+        "note": "沿用舊資料，待核對"
+      },
+      "faqs": [],
+      "pitfalls": [],
+      "related_calculator": null,
+      "official_url": "https://www.moi.gov.tw/cp.aspx?n=14357",
+      "sources": [
+        {
+          "url": "https://www.moi.gov.tw/cp.aspx?n=14357",
+          "title": "官方網站",
+          "publisher": "財政部／內政部",
+          "accessed": null
+        }
+      ],
+      "status_2026": "unknown",
+      "last_known_update": null,
+      "confidence": "low",
+      "unverified_fields": [
+        "amount",
+        "conditions",
+        "deadline",
+        "status_2026"
+      ],
+      "topic": "legacy-haoti"
+    },
+    {
+      "id": "childcare-allowance-0-2",
+      "name": "育兒津貼",
+      "short_name": "育兒津貼",
+      "category": "family",
+      "level": "central",
+      "city": null,
+      "agency": "衛生福利部社會及家庭署",
+      "summary": "2歲以下幼兒每月5,000元補助，2～3歲就讀準公共化托嬰中心每月3,000元，無需申請自動發放（設籍戶政）。",
+      "eligibility": [
+        "有子女"
+      ],
+      "amount": {
+        "text": "每月最高 NT$5,000",
+        "min": null,
+        "max": 5000,
+        "unit": "元/月",
+        "formula": null
+      },
+      "conditions": {
+        "min_age": null,
+        "max_age": null,
+        "must_rent": null,
+        "no_home_ownership": null,
+        "has_children": true,
+        "child_age_min": null,
+        "child_age_max": 3,
+        "has_labor_insurance": null,
+        "is_disabled": null,
+        "low_income": null,
+        "income_limit_type": null,
+        "income_limit_value": null,
+        "income_limit_note": null,
+        "cities": null
+      },
+      "documents": [],
+      "how_to_apply": [],
+      "channels": [
+        {
+          "type": "online",
+          "label": "官方網站",
+          "url": "https://www.sfaa.gov.tw/SFAA/Pages/Detail.aspx?nodeid=910&pid=9088"
+        }
+      ],
+      "deadline": {
+        "type": "rolling",
+        "start_month": null,
+        "start_day": null,
+        "end_month": null,
+        "end_day": null,
+        "note": "沿用舊資料，待核對"
+      },
+      "faqs": [],
+      "pitfalls": [],
+      "related_calculator": null,
+      "official_url": "https://www.sfaa.gov.tw/SFAA/Pages/Detail.aspx?nodeid=910&pid=9088",
+      "sources": [
+        {
+          "url": "https://www.sfaa.gov.tw/SFAA/Pages/Detail.aspx?nodeid=910&pid=9088",
+          "title": "官方網站",
+          "publisher": "衛生福利部社會及家庭署",
+          "accessed": null
+        }
+      ],
+      "status_2026": "unknown",
+      "last_known_update": null,
+      "confidence": "low",
+      "unverified_fields": [
+        "amount",
+        "conditions",
+        "deadline",
+        "status_2026"
+      ],
+      "topic": "legacy-haoti"
+    },
+    {
+      "id": "preschool-subsidy-2-6",
+      "name": "家庭育兒補助（2～6歲托育補助）",
+      "short_name": "家庭育兒補助",
+      "category": "family",
+      "level": "central",
+      "city": null,
+      "agency": "教育部",
+      "summary": "2～6歲就讀公共化幼兒園每月補助3,000~4,500元；就讀準公共幼兒園每月補助3,000元。",
+      "eligibility": [
+        "有子女"
+      ],
+      "amount": {
+        "text": "每月最高 NT$4,500",
+        "min": null,
+        "max": 4500,
+        "unit": "元/月",
+        "formula": null
+      },
+      "conditions": {
+        "min_age": null,
+        "max_age": null,
+        "must_rent": null,
+        "no_home_ownership": null,
+        "has_children": true,
+        "child_age_min": 2,
+        "child_age_max": 6,
+        "has_labor_insurance": null,
+        "is_disabled": null,
+        "low_income": null,
+        "income_limit_type": null,
+        "income_limit_value": null,
+        "income_limit_note": null,
+        "cities": null
+      },
+      "documents": [],
+      "how_to_apply": [],
+      "channels": [
+        {
+          "type": "online",
+          "label": "官方網站",
+          "url": "https://www.ece.moe.edu.tw/ch/preschool/subsidy/"
+        }
+      ],
+      "deadline": {
+        "type": "fixed_annual",
+        "start_month": null,
+        "start_day": null,
+        "end_month": 9,
+        "end_day": 30,
+        "note": "沿用舊資料，待核對"
+      },
+      "faqs": [],
+      "pitfalls": [],
+      "related_calculator": null,
+      "official_url": "https://www.ece.moe.edu.tw/ch/preschool/subsidy/",
+      "sources": [
+        {
+          "url": "https://www.ece.moe.edu.tw/ch/preschool/subsidy/",
+          "title": "官方網站",
+          "publisher": "教育部",
+          "accessed": null
+        }
+      ],
+      "status_2026": "unknown",
+      "last_known_update": null,
+      "confidence": "low",
+      "unverified_fields": [
+        "amount",
+        "conditions",
+        "deadline",
+        "status_2026"
+      ],
+      "topic": "legacy-haoti"
+    },
+    {
+      "id": "labor-relief-loan",
+      "name": "勞工紓困貸款",
+      "short_name": "勞工紓困貸款",
+      "category": "labor",
+      "level": "central",
+      "city": null,
+      "agency": "勞動部勞工保險局",
+      "summary": "勞保被保險人可申請最高10萬元低利貸款，年利率1.845%，輕鬆還款。",
+      "eligibility": [
+        "月收入 40,000 元以下",
+        "勞保被保險人"
+      ],
+      "amount": {
+        "text": "依條件而定",
+        "min": null,
+        "max": null,
+        "unit": null,
+        "formula": null
+      },
+      "conditions": {
+        "min_age": null,
+        "max_age": null,
+        "must_rent": null,
+        "no_home_ownership": null,
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "has_labor_insurance": true,
+        "is_disabled": null,
+        "low_income": null,
+        "income_limit_type": "monthly_personal",
+        "income_limit_value": 40000,
+        "income_limit_note": null,
+        "cities": null
+      },
+      "documents": [],
+      "how_to_apply": [],
+      "channels": [
+        {
+          "type": "online",
+          "label": "官方網站",
+          "url": "https://www.bli.gov.tw/0000003.html"
+        }
+      ],
+      "deadline": {
+        "type": "fixed_annual",
+        "start_month": null,
+        "start_day": null,
+        "end_month": 12,
+        "end_day": 31,
+        "note": "沿用舊資料，待核對"
+      },
+      "faqs": [],
+      "pitfalls": [],
+      "related_calculator": null,
+      "official_url": "https://www.bli.gov.tw/0000003.html",
+      "sources": [
+        {
+          "url": "https://www.bli.gov.tw/0000003.html",
+          "title": "官方網站",
+          "publisher": "勞動部勞工保險局",
+          "accessed": null
+        }
+      ],
+      "status_2026": "unknown",
+      "last_known_update": null,
+      "confidence": "low",
+      "unverified_fields": [
+        "amount",
+        "conditions",
+        "deadline",
+        "status_2026"
+      ],
+      "topic": "legacy-haoti"
+    },
+    {
+      "id": "energy-appliance-ac",
+      "name": "節能家電補助（冷氣）",
+      "short_name": "節能家電補助",
+      "category": "energy_transport",
+      "level": "central",
+      "city": null,
+      "agency": "經濟部能源署／財政部",
+      "summary": "購買能源效率1級冷氣最高補助3,000元，全年開放申請，預算用完為止。",
+      "eligibility": [],
+      "amount": {
+        "text": "依條件而定",
+        "min": null,
+        "max": null,
+        "unit": null,
+        "formula": null
+      },
+      "conditions": {
+        "min_age": null,
+        "max_age": null,
+        "must_rent": null,
+        "no_home_ownership": null,
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "has_labor_insurance": null,
+        "is_disabled": null,
+        "low_income": null,
+        "income_limit_type": null,
+        "income_limit_value": null,
+        "income_limit_note": null,
+        "cities": null
+      },
+      "documents": [],
+      "how_to_apply": [],
+      "channels": [
+        {
+          "type": "online",
+          "label": "官方網站",
+          "url": "https://save3000.moeaea.gov.tw"
+        }
+      ],
+      "deadline": {
+        "type": "fixed_annual",
+        "start_month": null,
+        "start_day": null,
+        "end_month": 12,
+        "end_day": 31,
+        "note": "沿用舊資料，待核對"
+      },
+      "faqs": [],
+      "pitfalls": [],
+      "related_calculator": null,
+      "official_url": "https://save3000.moeaea.gov.tw",
+      "sources": [
+        {
+          "url": "https://save3000.moeaea.gov.tw",
+          "title": "官方網站",
+          "publisher": "經濟部能源署／財政部",
+          "accessed": null
+        }
+      ],
+      "status_2026": "unknown",
+      "last_known_update": null,
+      "confidence": "low",
+      "unverified_fields": [
+        "amount",
+        "conditions",
+        "deadline",
+        "status_2026"
+      ],
+      "topic": "legacy-haoti"
+    },
+    {
+      "id": "energy-appliance-other",
+      "name": "節能家電補助（冰箱/洗衣機/電視）",
+      "short_name": "節能家電補助",
+      "category": "energy_transport",
+      "level": "central",
+      "city": null,
+      "agency": "經濟部能源署／財政部",
+      "summary": "購買能源效率1~2級冰箱、洗衣機、電視，每台補助最高2,000元，預算用完為止。",
+      "eligibility": [],
+      "amount": {
+        "text": "依條件而定",
+        "min": null,
+        "max": null,
+        "unit": null,
+        "formula": null
+      },
+      "conditions": {
+        "min_age": null,
+        "max_age": null,
+        "must_rent": null,
+        "no_home_ownership": null,
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "has_labor_insurance": null,
+        "is_disabled": null,
+        "low_income": null,
+        "income_limit_type": null,
+        "income_limit_value": null,
+        "income_limit_note": null,
+        "cities": null
+      },
+      "documents": [],
+      "how_to_apply": [],
+      "channels": [
+        {
+          "type": "online",
+          "label": "官方網站",
+          "url": "https://save3000.moeaea.gov.tw"
+        }
+      ],
+      "deadline": {
+        "type": "fixed_annual",
+        "start_month": null,
+        "start_day": null,
+        "end_month": 12,
+        "end_day": 31,
+        "note": "沿用舊資料，待核對"
+      },
+      "faqs": [],
+      "pitfalls": [],
+      "related_calculator": null,
+      "official_url": "https://save3000.moeaea.gov.tw",
+      "sources": [
+        {
+          "url": "https://save3000.moeaea.gov.tw",
+          "title": "官方網站",
+          "publisher": "經濟部能源署／財政部",
+          "accessed": null
+        }
+      ],
+      "status_2026": "unknown",
+      "last_known_update": null,
+      "confidence": "low",
+      "unverified_fields": [
+        "amount",
+        "conditions",
+        "deadline",
+        "status_2026"
+      ],
+      "topic": "legacy-haoti"
+    },
+    {
+      "id": "disability-living-allowance",
+      "name": "身心障礙者生活補助",
+      "short_name": "身心障礙者生活補助",
+      "category": "senior_disability",
+      "level": "central",
+      "city": null,
+      "agency": "衛生福利部社會及家庭署",
+      "summary": "中重度身心障礙者，依家庭收入分3級補助，每月最高7,751元。",
+      "eligibility": [
+        "領有身心障礙證明"
+      ],
+      "amount": {
+        "text": "每月最高 NT$7,751",
+        "min": null,
+        "max": 7751,
+        "unit": "元/月",
+        "formula": null
+      },
+      "conditions": {
+        "min_age": null,
+        "max_age": null,
+        "must_rent": null,
+        "no_home_ownership": null,
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "has_labor_insurance": null,
+        "is_disabled": true,
+        "low_income": null,
+        "income_limit_type": null,
+        "income_limit_value": null,
+        "income_limit_note": null,
+        "cities": null
+      },
+      "documents": [],
+      "how_to_apply": [],
+      "channels": [
+        {
+          "type": "online",
+          "label": "官方網站",
+          "url": "https://www.sfaa.gov.tw/SFAA/Pages/Detail.aspx?nodeid=385"
+        }
+      ],
+      "deadline": {
+        "type": "rolling",
+        "start_month": null,
+        "start_day": null,
+        "end_month": null,
+        "end_day": null,
+        "note": "沿用舊資料，待核對"
+      },
+      "faqs": [],
+      "pitfalls": [],
+      "related_calculator": null,
+      "official_url": "https://www.sfaa.gov.tw/SFAA/Pages/Detail.aspx?nodeid=385",
+      "sources": [
+        {
+          "url": "https://www.sfaa.gov.tw/SFAA/Pages/Detail.aspx?nodeid=385",
+          "title": "官方網站",
+          "publisher": "衛生福利部社會及家庭署",
+          "accessed": null
+        }
+      ],
+      "status_2026": "unknown",
+      "last_known_update": null,
+      "confidence": "low",
+      "unverified_fields": [
+        "amount",
+        "conditions",
+        "deadline",
+        "status_2026"
+      ],
+      "topic": "legacy-haoti"
+    },
+    {
+      "id": "elderly-mid-low-income-allowance",
+      "name": "中低收入老人生活津貼",
+      "short_name": "中低收入老人生活津貼",
+      "category": "senior_disability",
+      "level": "central",
+      "city": null,
+      "agency": "衛生福利部社會及家庭署",
+      "summary": "65歲以上中低收入老人每月補助3,622~7,251元，向戶籍所在地公所申請。",
+      "eligibility": [
+        "月收入 25,000 元以下",
+        "65 歲以上"
+      ],
+      "amount": {
+        "text": "每月最高 NT$7,251",
+        "min": null,
+        "max": 7251,
+        "unit": "元/月",
+        "formula": null
+      },
+      "conditions": {
+        "min_age": 65,
+        "max_age": null,
+        "must_rent": null,
+        "no_home_ownership": null,
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "has_labor_insurance": null,
+        "is_disabled": null,
+        "low_income": null,
+        "income_limit_type": "monthly_personal",
+        "income_limit_value": 25000,
+        "income_limit_note": null,
+        "cities": null
+      },
+      "documents": [],
+      "how_to_apply": [],
+      "channels": [
+        {
+          "type": "online",
+          "label": "官方網站",
+          "url": "https://www.sfaa.gov.tw/SFAA/Pages/Detail.aspx?nodeid=382"
+        }
+      ],
+      "deadline": {
+        "type": "rolling",
+        "start_month": null,
+        "start_day": null,
+        "end_month": null,
+        "end_day": null,
+        "note": "沿用舊資料，待核對"
+      },
+      "faqs": [],
+      "pitfalls": [],
+      "related_calculator": null,
+      "official_url": "https://www.sfaa.gov.tw/SFAA/Pages/Detail.aspx?nodeid=382",
+      "sources": [
+        {
+          "url": "https://www.sfaa.gov.tw/SFAA/Pages/Detail.aspx?nodeid=382",
+          "title": "官方網站",
+          "publisher": "衛生福利部社會及家庭署",
+          "accessed": null
+        }
+      ],
+      "status_2026": "unknown",
+      "last_known_update": null,
+      "confidence": "low",
+      "unverified_fields": [
+        "amount",
+        "conditions",
+        "deadline",
+        "status_2026"
+      ],
+      "topic": "legacy-haoti"
+    },
+    {
+      "id": "labor-insurance-maternity",
+      "name": "勞保生育給付",
+      "short_name": "勞保生育給付",
+      "category": "family",
+      "level": "central",
+      "city": null,
+      "agency": "勞動部勞工保險局",
+      "summary": "勞保被保險人生產可申請生育給付，一次給付60天（雙胞胎120天），約需5~7個工作天。",
+      "eligibility": [
+        "勞保被保險人"
+      ],
+      "amount": {
+        "text": "依條件而定",
+        "min": null,
+        "max": null,
+        "unit": null,
+        "formula": null
+      },
+      "conditions": {
+        "min_age": null,
+        "max_age": null,
+        "must_rent": null,
+        "no_home_ownership": null,
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "has_labor_insurance": true,
+        "is_disabled": null,
+        "low_income": null,
+        "income_limit_type": null,
+        "income_limit_value": null,
+        "income_limit_note": null,
+        "cities": null
+      },
+      "documents": [],
+      "how_to_apply": [],
+      "channels": [
+        {
+          "type": "online",
+          "label": "官方網站",
+          "url": "https://www.bli.gov.tw/0000119.html"
+        }
+      ],
+      "deadline": {
+        "type": "rolling",
+        "start_month": null,
+        "start_day": null,
+        "end_month": null,
+        "end_day": null,
+        "note": "沿用舊資料，待核對"
+      },
+      "faqs": [],
+      "pitfalls": [],
+      "related_calculator": null,
+      "official_url": "https://www.bli.gov.tw/0000119.html",
+      "sources": [
+        {
+          "url": "https://www.bli.gov.tw/0000119.html",
+          "title": "官方網站",
+          "publisher": "勞動部勞工保險局",
+          "accessed": null
+        }
+      ],
+      "status_2026": "unknown",
+      "last_known_update": null,
+      "confidence": "low",
+      "unverified_fields": [
+        "amount",
+        "conditions",
+        "deadline",
+        "status_2026"
+      ],
+      "topic": "legacy-haoti"
+    },
+    {
+      "id": "youth-regional-revitalization",
+      "name": "地方創生青年培力工作站補助",
+      "short_name": "地方創生青年培力工作站補助",
+      "category": "youth",
+      "level": "central",
+      "city": null,
+      "agency": "國家發展委員會",
+      "summary": "18~35歲青年投入地方創生，最高補助每月25,000元生活費，適合返鄉或偏鄉創業。",
+      "eligibility": [
+        "18 歲以上",
+        "35 歲以下"
+      ],
+      "amount": {
+        "text": "每月最高 NT$25,000",
+        "min": null,
+        "max": 25000,
+        "unit": "元/月",
+        "formula": null
+      },
+      "conditions": {
+        "min_age": 18,
+        "max_age": 35,
+        "must_rent": null,
+        "no_home_ownership": null,
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "has_labor_insurance": null,
+        "is_disabled": null,
+        "low_income": null,
+        "income_limit_type": null,
+        "income_limit_value": null,
+        "income_limit_note": null,
+        "cities": null
+      },
+      "documents": [],
+      "how_to_apply": [],
+      "channels": [
+        {
+          "type": "online",
+          "label": "官方網站",
+          "url": "https://www.ndc.gov.tw/cp.aspx?n=1B28ACA2B0BF7BC8"
+        }
+      ],
+      "deadline": {
+        "type": "fixed_annual",
+        "start_month": null,
+        "start_day": null,
+        "end_month": 3,
+        "end_day": 31,
+        "note": "沿用舊資料，待核對"
+      },
+      "faqs": [],
+      "pitfalls": [],
+      "related_calculator": null,
+      "official_url": "https://www.ndc.gov.tw/cp.aspx?n=1B28ACA2B0BF7BC8",
+      "sources": [
+        {
+          "url": "https://www.ndc.gov.tw/cp.aspx?n=1B28ACA2B0BF7BC8",
+          "title": "官方網站",
+          "publisher": "國家發展委員會",
+          "accessed": null
+        }
+      ],
+      "status_2026": "unknown",
+      "last_known_update": null,
+      "confidence": "low",
+      "unverified_fields": [
+        "amount",
+        "conditions",
+        "deadline",
+        "status_2026"
+      ],
+      "topic": "legacy-haoti"
+    }
+  ],
+  "general_faqs": []
+}

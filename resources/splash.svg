@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  啟動畫面 2732×2732，白底。Capacitor SplashScreen 用 CENTER_CROP 把這張正方形裁成各種直式/橫式尺寸，
+  2:3 的直式會只剩中央 1821px 寬（橫式則是中央 1821px 高），所以 logo 與字樣都要留在中央那塊。
+  logo 560px 置中偏上、下方「好算好提」字樣（主色偏深 #5B4BD6，白底上對比比 #6C5CE7 好）。
+  logo 幾何與 icon.svg 相同（這裡縮 560/1024），改那邊記得同步。
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="2732" height="2732" viewBox="0 0 2732 2732">
+  <defs>
+    <linearGradient id="bg" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1024" y2="1024">
+      <stop offset="0" stop-color="#6C5CE7"/>
+      <stop offset="1" stop-color="#8B7CF6"/>
+    </linearGradient>
+    <mask id="badge-cut" maskUnits="userSpaceOnUse" x="0" y="0" width="1024" height="1024">
+      <rect width="1024" height="1024" fill="#FFFFFF"/>
+      <circle cx="748" cy="748" r="122" fill="#000000"/>
+    </mask>
+  </defs>
+  <rect width="2732" height="2732" fill="#FFFFFF"/>
+  <g transform="translate(1086 990) scale(0.546875)">
+    <rect width="1024" height="1024" rx="224" ry="224" fill="url(#bg)"/>
+    <text x="499" y="696" text-anchor="middle" font-family="'Noto Sans TC','Noto Sans CJK TC','WenQuanYi Zen Hei','Microsoft JhengHei','PingFang TC',sans-serif" font-size="580" font-weight="700" fill="#FFFFFF" mask="url(#badge-cut)">好</text>
+    <circle cx="748" cy="748" r="104" fill="#FFFFFF"/>
+    <path d="M700 750 L736 786 L800 714" fill="none" stroke="#10B981" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="1370" y="1753" text-anchor="middle" font-family="'Noto Sans TC','Noto Sans CJK TC','WenQuanYi Zen Hei','Microsoft JhengHei','PingFang TC',sans-serif" font-size="150" font-weight="700" letter-spacing="8" fill="#5B4BD6">好算好提</text>
+</svg>
