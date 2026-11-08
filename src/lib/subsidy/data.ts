@@ -44,6 +44,14 @@ export function getGeneralFaqs(): GeneralFaq[] {
   return DATA.general_faqs;
 }
 
+/**
+ * 卡片用的簡短機關名：資料裡的 agency 常帶括號說明（受理單位、承辦銀行…），
+ * 詳情頁要完整，列表只留主辦機關那一段。
+ */
+export function shortAgency(agency: string): string {
+  return agency.split(/[（(／/、，,]/)[0].trim() || agency;
+}
+
 /** 同一主題底下的其他項目（相關補助） */
 export function getRelatedSubsidies(subsidy: Subsidy, limit = 4): Subsidy[] {
   const sameTopic = DATA.items.filter((s) => s.id !== subsidy.id && s.topic && s.topic === subsidy.topic);

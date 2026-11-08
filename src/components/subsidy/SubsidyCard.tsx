@@ -66,7 +66,9 @@ export default function SubsidyCard({
               )}
               <StatusBadge subsidy={subsidy} />
             </div>
-            <h3 className="text-sm font-semibold leading-snug">{subsidy.name}</h3>
+            <h3 className="text-sm font-semibold leading-snug" title={subsidy.name}>
+              {subsidy.short_name || subsidy.name}
+            </h3>
             <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-muted-foreground">{subsidy.summary}</p>
           </div>
           <ChevronRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground" />

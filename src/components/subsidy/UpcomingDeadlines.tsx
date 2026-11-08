@@ -5,6 +5,7 @@ import Link from "next/link";
 import { CalendarClock, ChevronRight } from "lucide-react";
 import type { Subsidy } from "@/lib/subsidy/types";
 import { resolveSubsidyDeadline, formatLocalDate, urgency } from "@/lib/subsidy/deadline";
+import { shortAgency } from "@/lib/subsidy/data";
 import { useToday } from "@/lib/subsidy/useToday";
 
 interface Row {
@@ -88,7 +89,7 @@ export default function UpcomingDeadlines({
             <span className="min-w-0 flex-1">
               <span className="block truncate text-sm font-medium">{subsidy.short_name || subsidy.name}</span>
               <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                <CalendarClock className="h-3 w-3" /> {dateLabel} 截止 · {subsidy.agency}
+                <CalendarClock className="h-3 w-3" /> {dateLabel} 截止 · {shortAgency(subsidy.agency)}
               </span>
             </span>
             <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />
