@@ -17,9 +17,9 @@ export function getAllSubsidies(): Subsidy[] {
   return DATA.items;
 }
 
-/** 2026 仍在進行中的項目 */
+/** 2026 仍在進行中的項目（只排除確定已結束的；狀態未知的仍顯示，但卡片會標「資料待核對」） */
 export function getActiveSubsidies(): Subsidy[] {
-  return DATA.items.filter((s) => s.status_2026 === "active" || s.status_2026 === "pending");
+  return DATA.items.filter((s) => s.status_2026 !== "ended");
 }
 
 export function getSubsidyById(id: string): Subsidy | undefined {

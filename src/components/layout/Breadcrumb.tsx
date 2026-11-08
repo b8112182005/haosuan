@@ -47,9 +47,11 @@ export default function Breadcrumb() {
 
   if (segments.length === 0) return null;
 
+  // 計算機分類（/life、/finance…）沒有獨立頁面，中間層連到工具總覽，避免 404
+  const categorySegments = new Set(["life", "finance", "renovation", "convert", "math"]);
   const crumbs = segments.map((seg, i) => ({
     label: segmentLabels[seg] ?? seg,
-    href: "/" + segments.slice(0, i + 1).join("/"),
+    href: i === 0 && categorySegments.has(seg) ? "/tools" : "/" + segments.slice(0, i + 1).join("/"),
   }));
 
   return (

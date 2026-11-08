@@ -61,6 +61,29 @@ const channelIcon: Record<SubsidyChannel["type"], React.ElementType> = {
 
 const confidenceLabel = { high: "已對照官方來源", medium: "部分欄位待核對", low: "資料待核對" } as const;
 
+// unverified_fields 存的是欄位名，顯示時換成一般人看得懂的詞；研究員自由填的字串就原樣顯示
+const FIELD_LABELS: Record<string, string> = {
+  amount: "金額",
+  "amount.text": "金額",
+  "amount.max": "金額上限",
+  "amount.min": "金額下限",
+  "amount.formula": "計算方式",
+  conditions: "資格條件",
+  "conditions.income_limit_value": "所得門檻",
+  "conditions.income_limit_note": "所得門檻說明",
+  deadline: "申請期限",
+  "deadline.start_month": "開放月份",
+  "deadline.end_month": "截止月份",
+  "deadline.end_day": "截止日",
+  status_2026: "2026 年是否辦理",
+  official_url: "官方網址",
+  documents: "應備文件",
+  how_to_apply: "申請步驟",
+  channels: "申請管道",
+  eligibility: "資格條件",
+  last_known_update: "官方更新日期",
+};
+
 export default async function SubsidyDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const s = getSubsidyById(id);
@@ -293,7 +316,9 @@ export default async function SubsidyDetailPage({ params }: { params: Promise<{ 
           ))}
         </ul>
         {s.unverified_fields.length > 0 && (
-          <p className="mt-2">未取得官方依據的欄位：{s.unverified_fields.join("、")}。申請前請向主管機關確認。</p>
+          <p className="mt-2">
+            未取得官方依據的欄位：{s.unverified_fields.map((f) => FIELD_LABELS[f] ?? f).join("、")}。申請前請向主管機關確認。
+          </p>
         )}
         <p className="mt-2">本頁為公開資訊整理，不是主管機關網站；審核結果以主管機關為準。</p>
       </footer>
