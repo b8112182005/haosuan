@@ -1,11 +1,11 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 import { Style } from '@capacitor/status-bar';
 
-// 好算好提 Android app（好算計算機 + 好提補助/提醒）
+// 好耶 Android app（好算計算機 + 好提補助/提醒）
 // appId 一旦上架 Google Play 就不能再改。
 const config: CapacitorConfig = {
   appId: 'com.haosuan.haoti',
-  appName: '好算好提',
+  appName: '好耶',
   webDir: 'out',
   android: {
     // 補助申請連結全部是 https，不需要 http 混合內容

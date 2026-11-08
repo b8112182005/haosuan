@@ -191,8 +191,9 @@ export default function AddReminderButton({
         {existing ? '已加入提醒' : '加入提醒'}
       </Button>
 
+      {/* z 要高於底部分頁列（z-50），否則「確認加入」會被分頁列蓋住按不到 */}
       {open && (
-        <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center">
+        <div className="fixed inset-0 z-[70] flex items-end justify-center sm:items-center">
           <button
             type="button"
             aria-label="關閉"
@@ -203,7 +204,7 @@ export default function AddReminderButton({
             role="dialog"
             aria-modal="true"
             aria-labelledby={headingId}
-            className="relative max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-t-2xl bg-background p-5 pb-[calc(1.25rem+env(safe-area-inset-bottom))] shadow-xl ring-1 ring-foreground/10 animate-in slide-in-from-bottom duration-200 sm:rounded-2xl"
+            className="relative max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-t-2xl bg-background p-5 pb-[calc(1.25rem+var(--safe-bottom))] shadow-xl ring-1 ring-foreground/10 animate-in slide-in-from-bottom duration-200 sm:rounded-2xl"
           >
             <div className="mb-4 flex items-start justify-between gap-3">
               <h2 id={headingId} className="text-lg font-semibold">
@@ -384,7 +385,7 @@ export default function AddReminderButton({
       {toast && (
         <div
           role="status"
-          className="pointer-events-none fixed inset-x-0 bottom-6 z-[60] flex justify-center px-4"
+          className="pointer-events-none fixed inset-x-0 bottom-[calc(4.5rem+var(--safe-bottom))] z-[80] flex justify-center px-4"
         >
           <div className="rounded-full bg-foreground px-4 py-2 text-sm text-background shadow-lg animate-in fade-in slide-in-from-bottom-2 duration-200">
             {toast}

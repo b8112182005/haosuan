@@ -1,4 +1,4 @@
-# 好算好提 Android 上架手冊
+# 好耶 Android 上架手冊
 
 對象：持有 Google Play 開發者帳號的你。全部指令用 Git Bash，可直接貼上。
 前提：PC 已裝 Node 20+、JDK 17 或 21、Android Studio（含 SDK Platform 36 與 Build-Tools 36）。
@@ -51,7 +51,7 @@ GitHub Actions 會用 `github.run_number` 當 versionCode，AAB 在 workflow 的
 ## 2. Play Console 建立 app（15 分鐘，只做一次）
 
 1. [play.google.com/console](https://play.google.com/console) → 建立應用程式
-   - 名稱：好算好提
+   - 名稱：好耶
    - 預設語言：中文（繁體）
    - 應用程式／遊戲：應用程式；免費
 2. 左側「測試與發布 → 內部測試」→ 建立新版本 → 上傳 `app-release.aab`

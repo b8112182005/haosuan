@@ -10,11 +10,11 @@ export function absUrl(path: string): string {
 }
 
 /** 產品名稱：好算（計算機）＋好提（補助與提醒），Android app 與網站共用同一個名字 */
-export const APP_NAME = "好算好提";
+export const APP_NAME = "好耶";
 export const APP_TAGLINE = "查補助、記期限、算數字";
 
 /** 服務提供者（個人開發者名義）。改用工作室或公司名義時集中改這裡。 */
-export const PROVIDER_NAME = "好算好提（個人開發者）";
+export const PROVIDER_NAME = "好耶（個人開發者）";
 
 /** 客服／個資權利行使聯絡信箱 */
 export const CONTACT_EMAIL = "b8112182005@gmail.com";

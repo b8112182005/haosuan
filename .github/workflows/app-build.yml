@@ -1,4 +1,4 @@
-# 好算好提 Android — 出 release AAB/APK，有服務帳號時順便上傳 Google Play
+# 好耶 Android — 出 release AAB/APK，有服務帳號時順便上傳 Google Play
 #
 # 觸發：
 #   - push tag v*（例如 v1.2.0；versionName 會取 tag 去掉 v 的部分）

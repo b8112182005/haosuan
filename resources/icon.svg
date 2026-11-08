@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  好算好提 app 圖示（完整版，含背景）1024×1024
+  好耶 app 圖示（完整版，含背景）1024×1024
   - 背景：圓角方形（rx 224 ≈ 22%），135° 漸層 #6C5CE7 → #8B7CF6
   - 前景：白色粗體「好」。字型走系統 fontconfig：Noto Sans TC → Noto Sans CJK TC → WenQuanYi Zen Hei → 微軟正黑 → PingFang
   - 右下角白底綠勾徽章＝「提醒完成」。mask 把「好」字在徽章外圈挖掉一圈，徽章才不會和筆畫黏在一起

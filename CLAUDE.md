@@ -4,7 +4,7 @@
 
 ## 這是什麼
 
-好算好提：Next.js 16 App Router 網站 + Capacitor 8 Android app（同一份程式碼）。
+好耶：Next.js 16 App Router 網站 + Capacitor 8 Android app（同一份程式碼）。
 三個模組：補助查詢（`src/lib/subsidy`、`src/app/subsidy`）、提醒（`src/lib/reminders`、`src/app/reminders`）、30 種計算機（`src/lib/calculators`、各分類路徑）。
 
 ## 指令

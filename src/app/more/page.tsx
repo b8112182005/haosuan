@@ -18,7 +18,7 @@ import { DATA_VERSION } from "@/lib/subsidy/data";
 
 export const metadata: Metadata = {
   title: "更多",
-  description: "關於好算好提、隱私權政策、資料來源、意見回饋。",
+  description: "關於好耶、隱私權政策、資料來源、意見回饋。",
   robots: { index: false, follow: true },
 };
 
@@ -34,7 +34,7 @@ const sections = [
   {
     title: "資訊",
     items: [
-      { icon: Info, label: "關於好算好提", desc: "誰在做、怎麼用、免責說明", href: "/about" },
+      { icon: Info, label: "關於好耶", desc: "誰在做、怎麼用、免責說明", href: "/about" },
       { icon: Database, label: "資料來源與更新", desc: `補助資料版本 ${DATA_VERSION}`, href: "/about#sources" },
       { icon: ShieldCheck, label: "隱私權政策", desc: "不需帳號，提醒只存在你的手機", href: "/privacy" },
     ],

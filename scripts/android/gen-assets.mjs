@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * 好算好提 — 品牌圖片產生器
+ * 好耶 — 品牌圖片產生器
  *
  * 來源（手工維護的 SVG）：
  *   resources/icon.svg             完整圖示（含圓角漸層背景）1024×1024
@@ -95,8 +95,8 @@ function featureGraphicSvg() {
   <rect width="${W}" height="${H}" fill="url(#g)"/>
   <rect x="${tileX}" y="${tileY + 14}" width="${tile}" height="${tile}" rx="68" fill="#2A1F7A" opacity="0.28" filter="url(#shadow)"/>
   <rect x="${tileX}" y="${tileY}" width="${tile}" height="${tile}" rx="68" fill="#FFFFFF"/>
-  <text x="${textX}" y="257" font-family="${FONT}" font-size="118" font-weight="700" letter-spacing="6" fill="#FFFFFF">好算好提</text>
-  <text x="${textX}" y="341" font-family="${FONT}" font-size="34" font-weight="500" fill="#FFFFFF" fill-opacity="0.92">補助查詢 · 期限提醒 · 30 種計算機</text>
+  <text x="${textX}" y="257" font-family="${FONT}" font-size="118" font-weight="700" letter-spacing="6" fill="#FFFFFF">好耶</text>
+  <text x="${textX}" y="341" font-family="${FONT}" font-size="32" font-weight="500" fill="#FFFFFF" fill-opacity="0.92">好算 × 好提 · 補助 · 提醒 · 計算機</text>
 </svg>`;
 }
 

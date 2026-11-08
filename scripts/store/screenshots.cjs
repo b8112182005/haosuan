@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint-disable @typescript-eslint/no-require-imports -- CommonJS 才能 require 到全域安裝的 playwright */
 /**
  * 產生 Google Play 手機截圖（1080×2340，直式）。
  *

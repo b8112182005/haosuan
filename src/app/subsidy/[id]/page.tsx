@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     title: `${title}：資格、金額、截止日與申請方式`,
     description: s.summary.slice(0, 150),
     alternates: { canonical: `/subsidy/${s.id}` },
-    openGraph: { title: `${title} | 好算好提`, description: s.summary.slice(0, 150), url: `/subsidy/${s.id}` },
+    openGraph: { title: `${title} | 好耶`, description: s.summary.slice(0, 150), url: `/subsidy/${s.id}` },
   };
 }
 

@@ -1,4 +1,4 @@
-# 好算好提 HaoSuan × HaoTi
+# 好耶 HaoSuan × HaoTi
 
 查補助、記期限、算數字。一份 Next.js 程式碼同時輸出：
 
