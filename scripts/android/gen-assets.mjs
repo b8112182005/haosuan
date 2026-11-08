@@ -164,6 +164,9 @@ async function main() {
   // ---- PWA ----
   await writePng('public/icon-192.png', rasterize(iconSvg, 192), { width: 192, height: 192 });
   await writePng('public/icon-512.png', rasterize(iconSvg, 512), { width: 512, height: 512 });
+  // maskable：瀏覽器會自己套圓形／圓角遮罩並裁掉外圈 20%，所以要滿版背景，內容才不會被切到角
+  await writePng('public/icon-maskable-192.png', rasterize(fullBleed(iconSvg), 192), { width: 192, height: 192 });
+  await writePng('public/icon-maskable-512.png', rasterize(fullBleed(iconSvg), 512), { width: 512, height: 512 });
   await copyFile(path.join(SRC, 'icon.svg'), path.join(ROOT, 'public/icon.svg'));
   results.push({ file: 'public/icon.svg', size: '(copy of resources/icon.svg)', ch: '-' });
 

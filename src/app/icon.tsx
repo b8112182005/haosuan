@@ -22,7 +22,7 @@ export default function Icon() {
           color: "white",
         }}
       >
-        算
+        好
       </div>
     ),
     { ...size }
