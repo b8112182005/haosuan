@@ -1,0 +1,1495 @@
+{
+  "topic": "energy-appliance-vehicle",
+  "file_path": "/tmp/claude-0/-home-user/f5bd5a14-fb96-591c-8e34-5fac26cd15ce/scratchpad/research/topics/energy-appliance-vehicle.json",
+  "items": [
+    {
+      "id": "energy-appliance-commodity-tax-refund",
+      "name": "購買節能電器退還減徵貨物稅（冷氣、冰箱、除濕機）",
+      "short_name": "節能家電退貨物稅",
+      "category": "energy_transport",
+      "level": "central",
+      "city": null,
+      "agency": "財政部（各地區國稅局受理）",
+      "summary": "買能源效率 1 級或 2 級的新冰箱、新冷（暖）氣機、新除濕機，可向任一國稅局申請退還貨物稅，每台最高 2,000 元。冷氣依額定冷氣能力：未滿 3.6kW 退 1,600 元、3.6kW 以上退 2,000 元。冰箱依有效內容積：未滿 200 公升 500 元、200～400 公升未滿 1,200 元、400 公升以上 2,000 元。除濕機依額定除濕能力：未滿 9 公升/日 500 元、9～12 未滿 900 元、12 以上 1,200 元。2025 年 6 月修法後，適用期間延長到 2029 年（民國 118 年）12 月 31 日。申請期限是發票交易日次日起 6 個月內，逾期不受理。可與經濟部每台 3,000 元的汰舊換新補助併領。",
+      "eligibility": [
+        "購買人為自然人、營業人、機關團體或法人都可申請，不限戶籍、不限收入",
+        "電器為全新品，且經經濟部核定能源效率分級為第 1 級或第 2 級（分離式冷氣以室外機的能效標示為準）",
+        "品項限新電冰箱、新冷（暖）氣機、新除濕機三種",
+        "非供銷售用途，且未退貨、未換貨",
+        "購買日（發票交易日）在 2019 年 6 月 15 日至 2029 年 12 月 31 日之間",
+        "持有載明廠牌、品名、型號的統一發票，或免用發票店家開立載明統一編號的收據"
+      ],
+      "amount": {
+        "text": "每台 500～2,000 元，依品項與級距：冷氣 1,600/2,000 元；冰箱 500/1,200/2,000 元；除濕機 500/900/1,200 元",
+        "min": 500,
+        "max": 2000,
+        "unit": "元/台",
+        "formula": "冷氣：額定冷氣能力<3.6kW→1,600；≥3.6kW→2,000。冰箱：有效內容積<200L→500；200≤L<400→1,200；≥400L→2,000。除濕機：額定除濕能力<9L/日→500；9≤L<12→900；≥12→1,200"
+      },
+      "conditions": {
+        "min_age": null,
+        "max_age": null,
+        "income_limit_type": null,
+        "income_limit_value": null,
+        "income_limit_note": "無所得限制",
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "is_married": null,
+        "is_pregnant_or_newborn": null,
+        "is_student": null,
+        "is_employed": null,
+        "is_unemployed": null,
+        "has_labor_insurance": null,
+        "has_national_pension": null,
+        "is_disabled": null,
+        "is_elderly": null,
+        "low_income": null,
+        "must_rent": null,
+        "must_own_home": null,
+        "no_home_ownership": null,
+        "owns_vehicle": null,
+        "cities": null,
+        "other": "購買能效 1 級或 2 級的新冰箱、冷（暖）氣、除濕機；取得發票或收據；發票日次日起 6 個月內申請"
+      },
+      "documents": [
+        "統一發票影本（須載明廠牌、品名、型號）或免用發票店家開立載明統一編號的收據影本；取得雲端發票或電子發票證明聯者免附",
+        "買受人為自然人：身分證、護照或居留證影本（線上以憑證登入者免附）",
+        "採簡化身分認證線上申請：上傳退稅帳戶存摺封面影像（含銀行代號、名稱、帳號、戶名，戶名須與買受人相同）",
+        "建議附上：產品保證書或保固卡影本（有製造號碼/機器號碼）、存摺封面影本",
+        "申請時需填：銷售人統一編號、發票字軌號碼、電器廠牌、型號、製造號碼（機器號碼）"
+      ],
+      "how_to_apply": [
+        "買之前先到經濟部能源署能效分級標示系統（ranking.energylabel.org.tw）確認型號是 1 級或 2 級",
+        "結帳時請店家在發票上打出廠牌、品名、型號；若是公司行號購買，發票要打公司統編",
+        "線上申請：財政部稅務入口網 →「購買節能電器退還減徵貨物稅專區」→「消費者線上申請」，用自然人憑證、已註冊健保卡、行動自然人憑證、工商憑證登入，或選「簡化身分認證」（免憑證、免讀卡機，限直撥退稅，需上傳存摺封面）",
+        "填入發票號碼、銷售人統編、廠牌、型號、製造號碼，上傳發票（非電子發票時）與存摺照片，最多 2 個檔案、合計 8MB 以內",
+        "紙本申請：填「購買電冰箱冷（暖）氣機除濕機退還減徵貨物稅稅額申請書」，連同發票影本與身分證影本，郵寄或親送任一國稅局、分局、稽徵所或服務處",
+        "送出後記下收件編號，到專區「消費者進度查詢」追蹤；核准後退稅款匯入帳戶（直撥退稅）或寄支票"
+      ],
+      "channels": [
+        { "type": "online", "label": "財政部稅務入口網 購買節能電器退還減徵貨物稅專區（消費者線上申請）", "url": "https://www.etax.nat.gov.tw/etwmain/tax-info/purchase-energy-saving-appliance-reduced-commodity-tax-refund-area" },
+        { "type": "online", "label": "消費者進度查詢", "url": "https://www.etax.nat.gov.tw/etwmain/tax-info/purchase-energy-saving-appliance-reduced-commodity-tax-refund-area/consumer-progress-inquiry" },
+        { "type": "office", "label": "任一國稅局、分局、稽徵所、服務處臨櫃", "url": null },
+        { "type": "mail", "label": "郵寄申請書至任一國稅局", "url": null },
+        { "type": "phone", "label": "國稅局免付費專線 0800-000-321", "url": null }
+      ],
+      "deadline": {
+        "type": "event_based",
+        "start_month": null,
+        "start_day": null,
+        "end_month": 12,
+        "end_day": 31,
+        "note": "發票交易日次日起 6 個月內提出申請，逾期不得退稅。法源（貨物稅條例第 11 條之 1）適用購買日到 2029 年（民國 118 年）12 月 31 日止，2029 年底前買的最晚可申請到 2030 年 6 月底。"
+      },
+      "faqs": [
+        {
+          "q": "買了冷氣已經 7 個月才知道可以退稅，還能申請嗎？",
+          "a": "不能。申請期限是發票上交易日的次日起算 6 個月，逾期國稅局不受理，沒有補救管道。例如 2026 年 3 月 10 日買的，最晚要在 2026 年 9 月 10 日前送出申請。建議裝機當天就線上申請，整個流程 10 分鐘內可完成。",
+          "source_url": "https://www.etax.nat.gov.tw/etwmain/tax-info/understanding/tax-saving-secret/qmJ2Q7p"
+        },
+        {
+          "q": "發票是老公的名字，可以用我的帳號申請嗎？",
+          "a": "申請人必須是發票上的買受人。發票有打統一編號（公司）時，要由該統編的營利事業申請；個人購買沒有買受人姓名的發票，則由實際持有發票的人申請，但線上登入的憑證或存摺戶名要與申請人一致。若用簡化身分認證，存摺戶名必須與申請人相同，否則會被退件。",
+          "source_url": "https://www.etax.nat.gov.tw/etwmain/attachments/ZYj5VMq"
+        },
+        {
+          "q": "沒有自然人憑證也沒有讀卡機，怎麼線上申請？",
+          "a": "選「簡化身分認證」登入，不需憑證和讀卡機，但限直撥退稅（退到銀行帳戶）。流程：輸入基本資料後上傳退稅帳戶存摺封面照片（要看得到銀行代號、名稱、帳號、戶名），戶名須與買受人相同，國稅局會與銀行比對資料。也可以用已註冊的健保卡或行動自然人憑證 App 登入。",
+          "source_url": "https://www.etax.nat.gov.tw/etwmain/attachments/ZYj5VMq"
+        },
+        {
+          "q": "分離式冷氣一組有室內機和室外機，退稅算幾台？",
+          "a": "分離式冷（暖）氣機只有室外機有能源效率分級標示，所以以室外機為申請單位，一台室外機退一次。一對二、一對三的機種仍以室外機算一台，退稅金額依室外機的額定冷氣能力分級：未滿 3.6kW 退 1,600 元，3.6kW 以上退 2,000 元。",
+          "source_url": "https://www.etax.nat.gov.tw/etwmain/attachments/ZYj5VMq"
+        },
+        {
+          "q": "退稅後冷氣故障退貨了，退稅款要還嗎？",
+          "a": "要。已領退稅後退貨，須在退貨日次日起 30 日內向原核定的國稅局申請填發「繳回減徵貨物稅稅額繳款書」並繳回。若換成另一台符合規定的機種，也要在 30 日內辦繳回，再對新機種重新申請退稅；國稅局可直接退補差額。未依限繳回會移送強制執行。",
+          "source_url": "https://www.etax.nat.gov.tw/etwmain/attachments/ZYj5VMq"
+        },
+        {
+          "q": "可以同時領經濟部 3,000 元汰舊換新補助和這筆退稅嗎？",
+          "a": "可以。經濟部「住宅家電汰舊換新節能補助」作業要點明定，申請該補助的家電除可申請退還減徵貨物稅外，不得再申請其他機關補助。兩者分開申請：退稅找國稅局（6 個月內），3,000 元補助找能源署委託的工研院專案辦公室（2027 年 1 月 31 日前）。一台 1 級冷氣合計最高可拿 5,000 元。",
+          "source_url": "https://save3000.moeaea.gov.tw/subsidy02/tips/list.aspx"
+        },
+        {
+          "q": "電器節能補助 2026 年底結束，退稅也會跟著結束嗎？",
+          "a": "不會。退稅的法源是貨物稅條例第 11 條之 1，2025 年 6 月修法後適用到 2029 年（民國 118 年）12 月 31 日購買的電器。經濟部每台 3,000 元補助則在 2026 年 12 月 31 日購買期限截止。2027 到 2029 年買節能家電，仍有每台最高 2,000 元的退稅。",
+          "source_url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=G0340076&flno=11-1"
+        }
+      ],
+      "pitfalls": [
+        "發票沒打廠牌、品名、型號，或線上填錯型號導致溢退，國稅局會要求 15 日內繳回，拖延會移送強制執行",
+        "每台電器只能申請一次；同一張發票買兩台要分別登錄兩筆製造號碼",
+        "網路購物或店家沒開發票就無法申請，可向國稅局檢舉漏開，待補開後再申請",
+        "2 級能效可退稅，但經濟部 3,000 元補助只給 1 級；想兩筆都拿要買 1 級",
+        "線上送出後要收到收件編號（並寄到電子郵件）才算成功，沒收到請重新確認是否送出"
+      ],
+      "related_calculator": "ac-btu",
+      "official_url": "https://www.etax.nat.gov.tw/etwmain/tax-info/purchase-energy-saving-appliance-reduced-commodity-tax-refund-area",
+      "sources": [
+        { "url": "https://www.etax.nat.gov.tw/etwmain/tax-info/understanding/tax-saving-secret/qmJ2Q7p", "title": "財政部稅務入口網：購買節能電器退還減徵貨物稅說明（含稅額表）", "publisher": "財政部", "accessed": "2026-11-08" },
+        { "url": "https://www.etax.nat.gov.tw/etwmain/attachments/ZYj5VMq", "title": "購買節能電器退還減徵貨物稅專區 Q&A（PDF）", "publisher": "財政部", "accessed": "2026-11-08" },
+        { "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=G0340076&flno=11-1", "title": "貨物稅條例第 11 條之 1", "publisher": "全國法規資料庫", "accessed": "2026-11-08" },
+        { "url": "https://save3000.moeaea.gov.tw/subsidy02/tips/list.aspx", "title": "住宅家電汰舊換新節能補助懶人包（可與退稅併用）", "publisher": "經濟部能源署", "accessed": "2026-11-08" }
+      ],
+      "status_2026": "active",
+      "last_known_update": "2025-06",
+      "confidence": "high",
+      "unverified_fields": []
+    },
+    {
+      "id": "home-appliance-replacement-subsidy",
+      "name": "住宅家電汰舊換新節能補助（冷氣、冰箱每台 3,000 元）",
+      "short_name": "家電汰舊換新 3,000",
+      "category": "energy_transport",
+      "level": "central",
+      "city": null,
+      "agency": "經濟部能源署（委託財團法人工業技術研究院辦理）",
+      "summary": "汰換家中舊冷氣或舊冰箱、購買能源效率 1 級的新機並完成安裝，每台補助 3,000 元，冷氣以室外機台數計。購買（發票日）期間 2023 年 1 月 1 日至 2026 年 12 月 31 日，申請期限到 2027 年 1 月 31 日。能源署已表示這是最後一年、不再展延；2026 年 10 月官方說剩餘額度不到 2 成，經費用完會提前停止受理。用電種類需為住宅非營業用，舊機要交給回收商並取得環境部廢四機回收聯單第三聯。可與財政部貨物稅退稅（最高 2,000 元）併領，一台合計最高 5,000 元。",
+      "eligibility": [
+        "裝機地址的電費單用電種類為「住宅（非營業用）」",
+        "購買的新機為經濟部能源署能效分級標示 1 級的冷氣機或電冰箱（可在官網「補助產品查詢」確認型號）",
+        "有汰舊：舊冷氣或舊冰箱由環境部登記的回收商回收，並取得「廢四機回收聯單第三聯（消費者收執聯）」，一機一張，回收日期在補助購買期間內",
+        "發票開立日期在 2023 年 1 月 1 日至 2026 年 12 月 31 日之間，且發票不可有買受人統一編號（公司購買不符）",
+        "同品項汰換：換冷氣要回收冷氣、換冰箱要回收冰箱",
+        "申請人為個人，提供身分證件與本人存摺"
+      ],
+      "amount": {
+        "text": "每台 3,000 元（冷氣以室外機台數計算）；與貨物稅退稅併領一台最高 5,000 元",
+        "min": 3000,
+        "max": 3000,
+        "unit": "元/台",
+        "formula": null
+      },
+      "conditions": {
+        "min_age": null,
+        "max_age": null,
+        "income_limit_type": null,
+        "income_limit_value": null,
+        "income_limit_note": "無所得限制",
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "is_married": null,
+        "is_pregnant_or_newborn": null,
+        "is_student": null,
+        "is_employed": null,
+        "is_unemployed": null,
+        "has_labor_insurance": null,
+        "has_national_pension": null,
+        "is_disabled": null,
+        "is_elderly": null,
+        "low_income": null,
+        "must_rent": null,
+        "must_own_home": null,
+        "no_home_ownership": null,
+        "owns_vehicle": null,
+        "cities": null,
+        "other": "裝機地址為住宅用電（非營業用）；購買能效 1 級冷氣或冰箱並回收同品項舊機；發票日 2026-12-31 前；2027-01-31 前申請"
+      },
+      "documents": [
+        "補助申請表（網路申請免填）",
+        "身分證、護照或居留證影本",
+        "申請人本人帳戶存摺封面影本",
+        "環境部廢四機回收聯單第三聯影本（每台一張）",
+        "裝機地址電費單影本（用電種類須為住宅非營業用）",
+        "發票證明聯影本（開立日在購買期間內，載明產品型號或附銷售明細，不可有買受人統編）",
+        "產品保證書或保證卡影本（載明製造號碼或機器號碼，每台一份）",
+        "建議加附：能源效率分級標示貼紙影本，可加速審查"
+      ],
+      "how_to_apply": [
+        "買之前到 save3000.moeaea.gov.tw「補助產品查詢」確認型號是 1 級能效",
+        "購買並完成安裝，請業者到府回收舊機，當場索取「廢四機回收聯單第三聯」",
+        "網路申請：到官網用手機認證，填個人資料與產品資訊，上傳文件照片或掃描檔後送出",
+        "郵寄申請：下載或到超商列印申請表，附上 6 項影本，掛號寄到「板橋郵政第 8-17 號信箱」，以郵戳日期為準",
+        "到官網「進度查詢」追蹤審核，有缺件會通知補件；通過後匯款到存摺帳戶",
+        "另外向國稅局申請貨物稅退稅（發票日起 6 個月內），兩筆分開申請"
+      ],
+      "channels": [
+        { "type": "online", "label": "住宅家電汰舊換新節能補助官網（線上申請、進度查詢、產品查詢）", "url": "https://save3000.moeaea.gov.tw/subsidy02/index/index.aspx" },
+        { "type": "mail", "label": "掛號郵寄：板橋郵政第 8-17 號信箱", "url": null },
+        { "type": "phone", "label": "補助諮詢專線 02-2955-9666（週一至週日 08:00–21:00）", "url": null }
+      ],
+      "deadline": {
+        "type": "budget_until_exhausted",
+        "start_month": 1,
+        "start_day": 1,
+        "end_month": 12,
+        "end_day": 31,
+        "note": "購買（發票日）期間 2023-01-01 至 2026-12-31；申請受理至 2027-01-31。經費用罄時經濟部得公告提前終止。2026-10-10 能源署表示額度剩不到 2 成，且無展延計畫；2027 年起不再有此 3,000 元補助，僅剩貨物稅退稅。"
+      },
+      "faqs": [
+        {
+          "q": "家裡的舊冷氣是請拆冷氣的師傅載走的，沒有回收聯單怎麼辦？",
+          "a": "沒有「廢四機回收聯單第三聯」就無法申請，這是審核必備文件。只有環境部登記核可的回收商或銷售業者到府回收時才能開立聯單。補救方式：聯絡原載走舊機的業者確認是否為合格回收商並補開聯單；若對方不是合格回收商，就沒辦法補。購買前先跟店家說明「要申請補助、需要廢四機聯單」。",
+          "source_url": "https://save3000.moeaea.gov.tw/subsidy02/tips/list.aspx"
+        },
+        {
+          "q": "租屋處的電費單不是我的名字，可以申請嗎？",
+          "a": "可以。電費單的用途是證明裝機地址為「住宅非營業用」用電，不要求電費單戶名與申請人相同。申請人用自己的身分證與存摺申請即可，但發票、回收聯單、保證卡要齊全。若是店面（營業用電）則不符合。",
+          "source_url": "https://save3000.moeaea.gov.tw/subsidy02/tips/list.aspx"
+        },
+        {
+          "q": "一次換兩台冷氣，可以領 6,000 元嗎？",
+          "a": "可以，補助以室外機台數計算，每台 3,000 元，兩台室外機就是 6,000 元，但也必須回收兩台舊冷氣，取得兩張回收聯單（一機一張）。一對二的分離式冷氣只有一台室外機，算一台。沒有每戶台數上限的規定，但每台都要有對應的舊機回收。",
+          "source_url": "https://save3000.moeaea.gov.tw/subsidy02/tips/list.aspx"
+        },
+        {
+          "q": "2026 年 12 月買的冰箱，2027 年 1 月才送件來得及嗎？",
+          "a": "來得及，申請期限到 2027 年 1 月 31 日，郵寄以郵戳為準。但要注意兩點：一是發票日必須在 2026 年 12 月 31 日以前；二是經費用完會提前停止受理，2026 年 10 月官方已說剩不到 2 成，年底前最好邊買邊申請，不要留到最後。",
+          "source_url": "https://www.moeaea.gov.tw/ECW/populace/Law/Content.aspx?menu_id=21985"
+        },
+        {
+          "q": "發票打了公司統編可以申請嗎？",
+          "a": "不行。這項補助限住宅用電且發票不可有買受人統一編號，公司購買、店面安裝都不符。若店家已開立有統編的發票，要請店家作廢重開（同一月份內可處理）。另外財政部的貨物稅退稅則接受營業人申請，兩者規定不同。",
+          "source_url": "https://save3000.moeaea.gov.tw/subsidy02/tips/list.aspx"
+        }
+      ],
+      "pitfalls": [
+        "只補助能效 1 級，買到 2 級機種就領不到這 3,000 元（但仍可申請貨物稅退稅）",
+        "回收聯單日期要在購買期間內，先買新機隔很久才回收舊機、或聯單日期超過 2026-12-31 會被退件",
+        "發票要看得到型號；只印「冷氣一台」沒有型號的發票要請店家附銷售明細",
+        "保證卡要有製造號碼（機器號碼），沒有的話請店家補填並蓋店章",
+        "名額依申請順序，額度用完即停止受理；2026 年底前買的人要趕快送件"
+      ],
+      "related_calculator": "electricity",
+      "official_url": "https://save3000.moeaea.gov.tw/subsidy02/index/index.aspx",
+      "sources": [
+        { "url": "https://save3000.moeaea.gov.tw/subsidy02/news/upt.aspx?p0=13", "title": "經濟部公告：115 年度住宅家電汰舊換新節能補助委託辦理單位、補助購買期間、受理申請期間", "publisher": "經濟部能源署", "accessed": "2026-11-08" },
+        { "url": "https://www.moeaea.gov.tw/ECW/populace/Law/Content.aspx?menu_id=21985", "title": "115 年度「住宅家電汰舊換新節能補助作業要點」委託辦理單位、補助購買期間、受理申請期間及相關事宜", "publisher": "經濟部能源署", "accessed": "2026-11-08" },
+        { "url": "https://save3000.moeaea.gov.tw/subsidy02/tips/list.aspx", "title": "住宅家電汰舊換新節能補助 補助懶人包", "publisher": "經濟部能源署", "accessed": "2026-11-08" },
+        { "url": "https://cna.com.tw/news/afe/202610100027.aspx", "title": "家電汰舊換新節能補助年底截止 額度剩不到 2 成（2026-10-10）", "publisher": "中央社", "accessed": "2026-11-08" }
+      ],
+      "status_2026": "active",
+      "last_known_update": "2026-10",
+      "confidence": "high",
+      "unverified_fields": ["剩餘額度百分比（來自中央社轉述能源署說法，未取得官方即時數字）"]
+    },
+    {
+      "id": "old-vehicle-replacement-moenv",
+      "name": "環境部老舊車輛汰舊換新補助（機車／汽車換電動車或低污染車）",
+      "short_name": "環境部汰舊換新",
+      "category": "energy_transport",
+      "level": "central",
+      "city": null,
+      "agency": "環境部（車輛汰舊換新抵換媒合平臺）",
+      "summary": "出廠滿 10 年以上的燃油機車、汽油小客（貨）車、柴油大客貨車報廢後換購電動車或低污染新車，可到環境部「車輛汰舊換新抵換媒合平臺」申請兩筆錢：一是把「溫室氣體減量效益」賣給收購方的價金（機車換電動機車目前 1,500～2,500 元，例如經濟部全國適用 2,000 元、台積電 2,100 元）；二是「空氣污染減量效益」的補助或收購價金（機車部分媒體報導約 1,000 元，另有廢車回收獎勵金，官方頁面未列出金額）。補助辦法適用到 2026 年 12 月 31 日，最晚 2027 年 1 月 10 日前申請。2026 年起新增跨車種汰換，機車換電動汽車也可申請。可與經濟部新購補助、各縣市環保局加碼同時領。",
+      "eligibility": [
+        "年滿 18 歲的國民，或持中華民國居留證的外籍人士；獨資、合夥、法人也可申請（公務機關、公營事業、公立學校購新車不補助）",
+        "老舊車輛：出廠滿 10 年以上的燃油機車、汽油小客車、小貨車、小客貨兩用車、柴油大客車或大貨車",
+        "新車：首次領牌的電動機車、電動小客貨車、電動大客貨車、六期柴油大客貨車或油電混合車",
+        "申請人須為新車的實際購買人（新舊車主不同時要附保證書）",
+        "時序二擇一：先報廢舊車者，須在報廢後 12 個月內買新車；先買新車者，須在購車後 6 個月內完成舊車回收與報廢",
+        "同意把減量效益歸屬給中央主管機關或收購方；每輛老舊車只能補助一次",
+        "空污減量部分：新舊車須在同一空品區（行照地址可跨縣市）"
+      ],
+      "amount": {
+        "text": "機車換電動機車：溫室氣體減量效益收購價金 1,500～2,500 元（依收購方，例如經濟部 2,000 元、台積電 2,100 元、臺南市政府 1,500 元限台南）＋空氣污染減量補助與廢車回收獎勵（官方頁面未列金額，媒體報導空污約 1,000 元、回收獎勵 300 元，合計約 3,300 元）；汽車換電動車另有較高收購價（媒體報導 13,000 元，未驗證）",
+        "min": 1500,
+        "max": 2500,
+        "unit": "元/輛（僅溫室氣體收購價金部分）",
+        "formula": "總額＝溫室氣體減量效益收購價金（選一個收購方）＋空氣污染減量效益補助或收購價金（選一個）＋廢車回收獎勵金"
+      },
+      "conditions": {
+        "min_age": 18,
+        "max_age": null,
+        "income_limit_type": null,
+        "income_limit_value": null,
+        "income_limit_note": "無所得限制",
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "is_married": null,
+        "is_pregnant_or_newborn": null,
+        "is_student": null,
+        "is_employed": null,
+        "is_unemployed": null,
+        "has_labor_insurance": null,
+        "has_national_pension": null,
+        "is_disabled": null,
+        "is_elderly": null,
+        "low_income": null,
+        "must_rent": null,
+        "must_own_home": null,
+        "no_home_ownership": null,
+        "owns_vehicle": "持有出廠滿 10 年以上的燃油機車或汽油小客（貨）車、柴油大客貨車，並完成報廢回收",
+        "cities": null,
+        "other": "報廢舊車並換購電動車或低污染新車；報廢與購車間隔符合 12 個月／6 個月規定；2026-12-31 前完成、2027-01-10 前申請"
+      },
+      "documents": [
+        "申請人（新車實際購買人）身分證影本；公司行號附公司登記或商業登記證明",
+        "購車發票影本：載明新車車主姓名與車號，加蓋統一發票章",
+        "減量效益歸屬同意書",
+        "保證書（新舊車主為同一人時免附）",
+        "新車行照、舊車報廢證明與回收證明（平臺可查得的資料可免附）",
+        "存摺封面（匯款用）",
+        "檔案為 PDF 或 JPG，每檔 10MB 以下"
+      ],
+      "how_to_apply": [
+        "先確認舊車出廠年份滿 10 年（看行照「出廠年月」），到合格回收商回收車體、到監理站辦報廢",
+        "購買新車並領牌（注意 12 個月／6 個月的時序限制）",
+        "到「車輛汰舊換新抵換媒合平臺」（mobile.moenv.gov.tw/EPAMobileETP）註冊，分別在「溫室氣體減量效益」與「空氣污染減量效益」各選一個收購方（若所在縣市如臺南市有自己的收購方案，要選該縣市）",
+        "上傳身分證、發票、同意書、保證書等電子檔送出；兩類效益分別審核、分別撥款",
+        "在「進度查詢」輸入新車車號與車主身分證字號追蹤；匯款失敗要補正存摺資料",
+        "同時向購車經銷商申請經濟部補助、向縣市環保局申請地方加碼（各自獨立）"
+      ],
+      "channels": [
+        { "type": "online", "label": "環境部 車輛汰舊換新抵換媒合平臺", "url": "https://mobile.moenv.gov.tw/EPAMobileETP/" },
+        { "type": "phone", "label": "溫室氣體抵換媒合諮詢 02-6630-8000#437；空氣污染抵換媒合諮詢 02-2339-0129（週一至週五 09:00–11:50、13:30–17:30）", "url": null }
+      ],
+      "deadline": {
+        "type": "window",
+        "start_month": 1,
+        "start_day": 1,
+        "end_month": 12,
+        "end_day": 31,
+        "note": "補助期間至 2026-12-31 止，申請最晚 2027-01-10（逾期不受理）；另有「完成汰舊換新後 2 年內」的申請時限。空污抵換補助期間為 2025-01-01 至 2026-12-31。各收購方的收購量有限，額滿會關閉選項。2027 年以後是否延長未公告。"
+      },
+      "faqs": [
+        {
+          "q": "為什麼我在媒合平台看到的金額跟新聞寫的 3,300 元不一樣？",
+          "a": "平台上的錢分兩塊：溫室氣體減量效益由不同收購方出價（2026 年 11 月有經濟部 2,000 元、台積電 2,100 元、南山人壽 2,500 元、臺南市政府 1,500 元限台南），你選哪一家就拿多少；空氣污染減量效益另外審核撥款。新聞的 3,300 元是某種組合的加總。實際以你選的收購方價金加上空污補助為準。",
+          "source_url": "https://mobile.moenv.gov.tw/EPAMobileETP/Home/PurchaserData"
+        },
+        {
+          "q": "舊機車是爸爸的名字，新車我買，可以申請嗎？",
+          "a": "可以，但申請人必須是新車實際購買人，並檢附新舊車主共同簽署的保證書。注意溫室氣體減量效益須由首次領牌的新車購買人申請，新車過戶後就不能申請；空污抵換則新舊車都不可有過戶紀錄。縣市環保局加碼大多也有類似規定。",
+          "source_url": "https://mobile.moenv.gov.tw/EPAMobileETP/Home/QnA"
+        },
+        {
+          "q": "先買新車還是先報廢舊車比較好？",
+          "a": "兩種順序都可以，但時間限制不同：先報廢舊車，要在報廢後 12 個月內買新車；先買新車，要在購車後 6 個月內完成舊車回收與報廢。多數縣市加碼要求舊車報廢與新車發票都在同一年度內，所以年底購車的人建議先報廢再買車，避免跨年度失去縣市加碼。",
+          "source_url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020134"
+        },
+        {
+          "q": "我家在台南，為什麼平台要我選「臺南市政府」當收購方？",
+          "a": "臺南市把自己的加碼與環境部的減碳效益綁在一起：台南市民要在平台「溫室氣體減量效益」選擇「臺南市政府（限臺南市）」收購方（1,500 元），之後才能向台南市環保局申請汰舊換購補助。選錯收購方會影響縣市加碼資格，送件前先看所在縣市環保局公告。",
+          "source_url": "https://mobile.moenv.gov.tw/EPAMobileETP/Home/QnA"
+        },
+        {
+          "q": "機車報廢後想換電動汽車，有補助嗎？",
+          "a": "有。環境部 2026 年起新增跨車種汰換，機車車主報廢舊機車後購買電動汽車也可到媒合平臺申請，但金額依原有車種（機車）計算，不是汽車的額度。汽車換電動汽車的收購價較高（媒體報導 13,000 元，官方頁面未列出，請以平台當時媒合資訊為準）。",
+          "source_url": "https://cars.tvbs.com.tw/life/230695"
+        }
+      ],
+      "pitfalls": [
+        "發票沒寫新車車主姓名與車號、或沒蓋統一發票章，是最常見的退件原因；交車時當場請車行補寫蓋章",
+        "舊車「出廠滿 10 年」以行照出廠年月計算，不是領牌日；2016 年（民國 105 年）出廠的機車 2026 年才滿 10 年",
+        "收購方的收購量有限，熱門收購方額滿後選項會消失，晚申請可能只剩較低價金",
+        "存摺資料填錯會匯款失敗，要重新補正才會再撥款",
+        "環境部、經濟部、縣市環保局是三個獨立申請管道，漏掉任何一個就少領"
+      ],
+      "related_calculator": "fuel-cost",
+      "official_url": "https://mobile.moenv.gov.tw/EPAMobileETP/",
+      "sources": [
+        { "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020134", "title": "老舊車輛汰舊換新空氣污染物減量補助辦法（113-12-27 修正）", "publisher": "全國法規資料庫", "accessed": "2026-11-08" },
+        { "url": "https://oaout.moenv.gov.tw/law/LawContent.aspx?id=GL007831", "title": "老舊車輛汰舊換新空氣污染物減量補助辦法（環境部法規系統）", "publisher": "環境部", "accessed": "2026-11-08" },
+        { "url": "https://mobile.moenv.gov.tw/EPAMobileETP/Home/QnA", "title": "車輛汰舊換新抵換媒合平臺 常見問題", "publisher": "環境部", "accessed": "2026-11-08" },
+        { "url": "https://mobile.moenv.gov.tw/EPAMobileETP/Home/PurchaserData", "title": "車輛汰舊換新抵換媒合平臺 媒合資訊（收購方與價金）", "publisher": "環境部", "accessed": "2026-11-08" },
+        { "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020129", "title": "淘汰老舊機車換購電動機車溫室氣體減量獎勵辦法（已於 115-09-07 廢止）", "publisher": "全國法規資料庫", "accessed": "2026-11-08" },
+        { "url": "https://cars.tvbs.com.tw/life/230695", "title": "環境部延長老舊車輛汰舊換新補助至 115 年底、新增跨車種汰換（媒體）", "publisher": "TVBS", "accessed": "2026-11-08" }
+      ],
+      "status_2026": "active",
+      "last_known_update": "2026-11",
+      "confidence": "medium",
+      "unverified_fields": ["空氣污染減量補助的機車金額（媒體約 1,000 元）", "廢車回收獎勵金金額（媒體約 300 元）", "汽油小客車換電動車收購價 13,000 元", "附表「減量效益歸屬額度及補助金額」原文金額"]
+    },
+    {
+      "id": "electric-scooter-purchase-subsidy-moea",
+      "name": "經濟部新購電動機車補助（含國產電池芯加碼）",
+      "short_name": "經濟部電動機車 7,000",
+      "category": "energy_transport",
+      "level": "central",
+      "city": null,
+      "agency": "經濟部產業發展署（電動機車產業網）",
+      "summary": "購買經濟部認可廠商生產的電動機車，重型與輕型每輛補助 7,000 元、小型輕型 5,100 元；使用國產電池芯的車款再加 3,000 元；報廢 10 年以上燃油機車並購買認可電動機車再加 1,000 元，合計最高 11,000 元。補助期間 2022 年 12 月 11 日至 2026 年 12 月 31 日，2026 年度購車要在 2026 年 12 月 10 日前透過車廠或授權經銷商提出申請。不需自己送件，買車時經銷商會直接折抵車價。外籍人士也適用。可與環境部汰舊換新、各縣市環保局加碼同時領。",
+      "eligibility": [
+        "購買經濟部產業發展署認可廠商生產、且列入受認可車款的電動機車（重型、輕型、小型輕型）",
+        "新車首次領牌；透過受認可車廠或其授權經銷商提出申請",
+        "國產電池芯加碼：車款搭載經認定的國產電池芯",
+        "汰舊加碼 1,000 元：報廢出廠滿 10 年以上的燃油機車並購買認可電動機車",
+        "外籍人士可申請",
+        "2026 年度購車須於 2026 年 12 月 10 日前提出申請"
+      ],
+      "amount": {
+        "text": "重型／輕型 7,000 元、小型輕型 5,100 元；國產電池芯加碼 3,000 元；汰舊並新購加碼 1,000 元；合計最高 11,000 元",
+        "min": 5100,
+        "max": 11000,
+        "unit": "元/輛",
+        "formula": "基本（重型/輕型 7,000；小型輕型 5,100）＋國產電池芯 3,000（符合者）＋汰舊 10 年以上燃油機車 1,000（符合者）"
+      },
+      "conditions": {
+        "min_age": null,
+        "max_age": null,
+        "income_limit_type": null,
+        "income_limit_value": null,
+        "income_limit_note": "無所得限制",
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "is_married": null,
+        "is_pregnant_or_newborn": null,
+        "is_student": null,
+        "is_employed": null,
+        "is_unemployed": null,
+        "has_labor_insurance": null,
+        "has_national_pension": null,
+        "is_disabled": null,
+        "is_elderly": null,
+        "low_income": null,
+        "must_rent": null,
+        "must_own_home": null,
+        "no_home_ownership": null,
+        "owns_vehicle": null,
+        "cities": null,
+        "other": "購買經濟部認可車款的新電動機車；2026-12-10 前由經銷商申請"
+      },
+      "documents": [
+        "身分證或居留證（交給經銷商辦理）",
+        "購車發票與新車行照（經銷商代辦時會一併處理）",
+        "申請汰舊加碼者：舊機車報廢證明與回收證明"
+      ],
+      "how_to_apply": [
+        "到電動機車產業網「補助資訊」確認想買的車款在受認可名單內",
+        "到受認可車廠或授權經銷商購車，告知要申請經濟部補助（多數門市直接折抵車價）",
+        "有報廢 10 年以上燃油機車者，把報廢與回收證明交給經銷商，一併申請 1,000 元加碼",
+        "經銷商在 2026 年 12 月 10 日前送件；民眾另外自行到環境部媒合平臺與縣市環保局申請其他補助"
+      ],
+      "channels": [
+        { "type": "online", "label": "電動機車產業網 中央及各縣市政府補助資訊", "url": "https://meid.nat.gov.tw/lev/subsidy/city" },
+        { "type": "other", "label": "受認可車廠或授權經銷商（購車時代辦）", "url": null }
+      ],
+      "deadline": {
+        "type": "window",
+        "start_month": 1,
+        "start_day": 1,
+        "end_month": 12,
+        "end_day": 10,
+        "note": "補助期間 2022-12-11 至 2026-12-31；2026 年度購車須於 2026-12-10 前透過經銷商提出申請，逾期不補助。2027 年以後是否有新一期計畫尚未公告。"
+      },
+      "faqs": [
+        {
+          "q": "經濟部補助要自己去哪裡申請？",
+          "a": "不用自己申請。這筆補助由受認可車廠或授權經銷商在購車時代辦，通常直接在車價折抵 7,000 元（小型輕型 5,100 元）。你要做的是確認車款在認可名單內、提供身分證件，並確認經銷商在 12 月 10 日前送件。環境部與縣市環保局的補助才需要自己上網申請。",
+          "source_url": "https://www.ida.gov.tw/ctlr?PRO=news.rwdNewsView&id=42846"
+        },
+        {
+          "q": "什麼是國產電池芯加碼 3,000 元？怎麼知道車款有沒有？",
+          "a": "經濟部對搭載經認定國產電池芯的車款多補助 3,000 元，目的是扶植國內電池產業。不是每款電動機車都有，同品牌不同型號也可能不同。購車前直接問經銷商「這台有沒有國產電池芯加碼」，或在電動機車產業網查受認可車款的加碼註記。",
+          "source_url": "https://meid.nat.gov.tw/lev/subsidy/city"
+        },
+        {
+          "q": "12 月 20 日才買車，還能拿經濟部補助嗎？",
+          "a": "有風險。2026 年度的申請截止是 12 月 10 日（由經銷商送件），比補助期間的 12 月 31 日早 3 週。12 月 10 日之後購車，經銷商可能無法送件。年底想買電動機車的人，建議 11 月底前完成購車與領牌。",
+          "source_url": "https://meid.nat.gov.tw/lev/subsidy/city"
+        },
+        {
+          "q": "經濟部的 7,000 元跟縣市環保局的補助可以一起領嗎？",
+          "a": "可以，三個單位各自獨立：經濟部（新購補助，經銷商代辦）、環境部（汰舊換新減量效益，媒合平臺申請）、縣市環保局（地方加碼，各縣市線上系統申請）。例如新北市 2026 年雙汰舊方案合計最高 39,600 元、桃園市最高 44,000 元、台北市最高 49,300 元，都是把三者加總。",
+          "source_url": "https://meid.nat.gov.tw/lev/subsidy/city"
+        }
+      ],
+      "pitfalls": [
+        "不在經濟部認可名單的車款（含部分平價或進口電動機車）拿不到這筆補助",
+        "12 月 10 日申請截止比年底早，年底購車要提前",
+        "部分縣市規定「總補助不得超過車價」，買低價小型輕型車時縣市補助會被扣減（例如台中市）",
+        "折抵後的發票金額會變少，申請縣市補助時仍以發票為準，不影響資格但要留意金額上限規定"
+      ],
+      "related_calculator": "fuel-cost",
+      "official_url": "https://meid.nat.gov.tw/lev/subsidy/city",
+      "sources": [
+        { "url": "https://meid.nat.gov.tw/lev/subsidy/city", "title": "電動機車產業網：中央及各縣市政府補助資訊", "publisher": "經濟部產業發展署", "accessed": "2026-11-08" },
+        { "url": "https://www.ida.gov.tw/ctlr?PRO=news.rwdNewsView&id=42846", "title": "經濟部修正電動機車補助要點，提高三項補助金額（2025-06-17）", "publisher": "經濟部產業發展署", "accessed": "2026-11-08" },
+        { "url": "https://law.moea.gov.tw/LawContent.aspx?id=GL001372", "title": "經濟部提升電動機車產業補助實施要點", "publisher": "經濟部", "accessed": "2026-11-08" }
+      ],
+      "status_2026": "active",
+      "last_known_update": "2025-06",
+      "confidence": "high",
+      "unverified_fields": []
+    },
+    {
+      "id": "ev-commodity-tax-exemption",
+      "name": "電動車免徵貨物稅（純電動汽車、電動機車）",
+      "short_name": "電動車免貨物稅",
+      "category": "tax",
+      "level": "central",
+      "city": null,
+      "agency": "財政部賦稅署、各地區國稅局",
+      "summary": "購買完全以電能為動力的電動車輛並完成登記，免徵貨物稅。2025 年 12 月 30 日總統公布修正的貨物稅條例第 12 條之 3，把免徵期間延長 5 年到 2030 年（民國 119 年）12 月 31 日，自 2026 年 1 月 1 日生效。電動小客車的免徵金額以完稅價格 140 萬元計算的稅額為限，超過 140 萬元的部分不予免徵（國稅局舉例：完稅價格 200 萬元的電動小客車實際應繳貨物稅 9 萬元）。電動機車同樣免徵。消費者不必申請，由車廠或進口商在出廠或進口時處理，反映在車價上；財政部另宣布 2027 年起廠商可出廠前具結免稅，取消先徵後退。",
+      "eligibility": [
+        "購買完全以電能為動力的電動車輛（純電汽車、純電機車），油電混合車不適用",
+        "完成車輛登記（領牌）",
+        "購買時間在 2017 年 1 月 28 日至 2030 年 12 月 31 日之間",
+        "電動小客車：完稅價格 140 萬元以內全額免徵，超過部分不免徵"
+      ],
+      "amount": {
+        "text": "免徵該車應繳貨物稅；電動小客車以完稅價格 140 萬元計算的稅額為上限（2,000cc 以下級距稅率 25%，等於最多免約 35 萬元），超過部分照常課徵",
+        "min": null,
+        "max": 350000,
+        "unit": "元/輛（免稅額上限）",
+        "formula": "電動小客車免稅額＝min(完稅價格, 1,400,000) × 適用稅率；完稅價格超過 140 萬元部分仍課貨物稅"
+      },
+      "conditions": {
+        "min_age": null,
+        "max_age": null,
+        "income_limit_type": null,
+        "income_limit_value": null,
+        "income_limit_note": null,
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "is_married": null,
+        "is_pregnant_or_newborn": null,
+        "is_student": null,
+        "is_employed": null,
+        "is_unemployed": null,
+        "has_labor_insurance": null,
+        "has_national_pension": null,
+        "is_disabled": null,
+        "is_elderly": null,
+        "low_income": null,
+        "must_rent": null,
+        "must_own_home": null,
+        "no_home_ownership": null,
+        "owns_vehicle": null,
+        "cities": null,
+        "other": "購買純電動車並於 2030-12-31 前完成登記"
+      },
+      "documents": [
+        "消費者不需準備文件；由產製廠商或進口商向國稅局或海關辦理"
+      ],
+      "how_to_apply": [
+        "消費者不需申請，購買純電動車領牌後，免稅效果已反映在車價",
+        "若對車價是否反映免稅有疑問，可向車商要求說明完稅價格與貨物稅計算",
+        "2027 年 1 月 1 日起符合條件的車廠、進口商可在出廠或進口前申請具結免稅（財政部賦稅署公告）"
+      ],
+      "channels": [
+        { "type": "other", "label": "由車廠或進口商辦理，消費者免申請", "url": null },
+        { "type": "online", "label": "財政部新聞稿：總統修正公布貨物稅條例第 12 條之 3 及使用牌照稅法第 5 條", "url": "https://www.mof.gov.tw/singlehtml/384fb3077bb349ea973e7fc6f13b6974?cntId=dbcf258b658c4a399c43c596709d09d4" }
+      ],
+      "deadline": {
+        "type": "window",
+        "start_month": 1,
+        "start_day": 1,
+        "end_month": 12,
+        "end_day": 31,
+        "note": "免徵期間至 2030 年（民國 119 年）12 月 31 日止，修正條文 2026-01-01 生效。這是第 5 次延長；2031 年起是否再延長未定。"
+      },
+      "faqs": [
+        {
+          "q": "買電動車要自己去國稅局申請免貨物稅嗎？",
+          "a": "不用。貨物稅是在車輛出廠或進口時由車廠、進口商繳納，免徵也由他們辦理，消費者看到的車價已經是免稅後的價格。你只需要確認買的是「完全以電能為動力」的車並完成領牌。油電混合、插電式油電車不在免徵範圍。",
+          "source_url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=G0340076&flno=12-3"
+        },
+        {
+          "q": "140 萬元的門檻是看車價還是完稅價格？",
+          "a": "看完稅價格，不是售價。完稅價格是國產車出廠價或進口車 CIF 加關稅的價格，通常低於零售價。完稅價格 140 萬元以內全額免徵；超過的部分照常課徵（2,000cc 以下級距稅率 25%）。國稅局舉例：完稅價格 200 萬元的電動小客車，超過的 60 萬元 × 25% × 60%（折算）後實繳貨物稅 9 萬元。",
+          "source_url": "https://www.mof.gov.tw/singlehtml/384fb3077bb349ea973e7fc6f13b6974?cntId=6b1f66bbfad14ba38071d4cba256ef82"
+        },
+        {
+          "q": "電動機車也免貨物稅嗎？",
+          "a": "是。貨物稅條例第 12 條之 3 第 2 項寫的是「完全以電能為動力之電動車輛」，涵蓋電動機車（燃油機車貨物稅率 17%）。140 萬元上限只針對電動小客車。電動機車車價已經反映免稅，再加上經濟部 7,000 元補助與縣市加碼，所以售價會比標價低。",
+          "source_url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=G0340076&flno=12-3"
+        },
+        {
+          "q": "2026 年底是不是免稅到期要趕快買？",
+          "a": "不是。原本的期限是 2025 年底，立法院 2025 年 12 月 23 日三讀、總統 12 月 30 日公布延長 5 年到 2030 年 12 月 31 日，2026 年 1 月 1 日生效。所以 2026 到 2030 年購買登記的純電動車都免徵。不必為了這個理由趕在 2026 年買車。",
+          "source_url": "https://www.mof.gov.tw/singlehtml/384fb3077bb349ea973e7fc6f13b6974?cntId=dbcf258b658c4a399c43c596709d09d4"
+        }
+      ],
+      "pitfalls": [
+        "油電混合車（HEV、PHEV）不是「完全以電能為動力」，不適用免徵",
+        "高價電動車完稅價格超過 140 萬元的部分仍要課稅，車價不會「全免」",
+        "免稅是否完整反映在售價由市場決定，買車時可要求車商說明",
+        "使用牌照稅免徵是另一條法律（使用牌照稅法第 5 條），由各縣市決定，不要混為一談"
+      ],
+      "related_calculator": "car-depreciation",
+      "official_url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=G0340076&flno=12-3",
+      "sources": [
+        { "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=G0340076&flno=12-3", "title": "貨物稅條例第 12 條之 3", "publisher": "全國法規資料庫", "accessed": "2026-11-08" },
+        { "url": "https://www.mof.gov.tw/singlehtml/384fb3077bb349ea973e7fc6f13b6974?cntId=dbcf258b658c4a399c43c596709d09d4", "title": "總統今（30）日修正公布「貨物稅條例」第 12 條之 3 及「使用牌照稅法」第 5 條條文（2025-12-30）", "publisher": "財政部", "accessed": "2026-11-08" },
+        { "url": "https://www.mof.gov.tw/singlehtml/384fb3077bb349ea973e7fc6f13b6974?cntId=6b1f66bbfad14ba38071d4cba256ef82", "title": "立法院今（23）日三讀通過「貨物稅條例第 12 條之 3」及「使用牌照稅法第 5 條」修正草案（2025-12-23）", "publisher": "財政部", "accessed": "2026-11-08" },
+        { "url": "https://www.ey.gov.tw/Page/9277F759E41CCD91/5d1d561d-adc8-472e-b68d-68d97ea3578e", "title": "政院通過貨物稅條例第 12 條之 3 及使用牌照稅法第 5 條修正草案 延長電動車稅負優惠至 119 年 12 月 31 日", "publisher": "行政院", "accessed": "2026-11-08" }
+      ],
+      "status_2026": "active",
+      "last_known_update": "2025-12",
+      "confidence": "high",
+      "unverified_fields": ["免稅額上限 35 萬元為依 25% 稅率推算，非官方公告數字", "完稅價格 200 萬元實繳 9 萬元的計算細節（來自搜尋摘要引述北區國稅局）"]
+    },
+    {
+      "id": "ev-license-tax-exemption",
+      "name": "電動汽車、電動機車免徵使用牌照稅",
+      "short_name": "電動車免牌照稅",
+      "category": "tax",
+      "level": "central",
+      "city": null,
+      "agency": "財政部（法源）、各直轄市及縣市地方稅務局（執行）",
+      "summary": "使用牌照稅法第 5 條授權各直轄市、縣市政府對「完全以電能為動力」的車輛免徵使用牌照稅，2025 年 12 月 30 日修正公布後，電動汽車（自 2012 年 1 月 6 日起）與電動機車（自 2018 年 1 月 1 日起）的免徵期間都延長到 2030 年（民國 119 年）12 月 31 日。財政部表示 2026 年牌照稅開徵時，各地方政府均對電動車免徵至 2030 年底。電動汽車馬達最大馬力超過 262 英制馬力（265.9 公制馬力）者，免徵金額以該門檻車輛（相當於 2,400cc 級距）的稅額為限，超過部分仍要繳。免徵不需申請，監理機關登記為電動車後地方稅務局自動不開徵。",
+      "eligibility": [
+        "車輛為完全以電能為動力的電動汽車或電動機車（油電混合不適用）",
+        "車籍所在縣市公告免徵（2026 年全國 22 縣市均免徵）",
+        "電動汽車：免徵期間 2012-01-06 至 2030-12-31；電動機車：2018-01-01 至 2030-12-31",
+        "馬達最大馬力超過 262 HP（265.9 PS）的電動汽車：免徵金額以 2,400cc 級距車輛稅額為限"
+      ],
+      "amount": {
+        "text": "免徵全年使用牌照稅；一般電動小客車依馬力級距換算，相當於每年省 7,120～28,220 元以上（1,201cc～3,000cc 級距自用小客車稅額），大馬力車以 2,400cc 級距稅額（11,230 元）為上限",
+        "min": null,
+        "max": null,
+        "unit": "元/年",
+        "formula": "免徵金額＝該車依馬力換算排氣量級距的年稅額；超過 262HP 者以 2,401–3,000cc 級距（11,230 元）為限，超過部分課徵"
+      },
+      "conditions": {
+        "min_age": null,
+        "max_age": null,
+        "income_limit_type": null,
+        "income_limit_value": null,
+        "income_limit_note": null,
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "is_married": null,
+        "is_pregnant_or_newborn": null,
+        "is_student": null,
+        "is_employed": null,
+        "is_unemployed": null,
+        "has_labor_insurance": null,
+        "has_national_pension": null,
+        "is_disabled": null,
+        "is_elderly": null,
+        "low_income": null,
+        "must_rent": null,
+        "must_own_home": null,
+        "no_home_ownership": null,
+        "owns_vehicle": "持有純電動汽車或純電動機車",
+        "cities": null,
+        "other": "車輛登記為完全以電能為動力；2030-12-31 前"
+      },
+      "documents": [
+        "不需申請；監理機關車籍登記能源種類為「電能」即自動免徵"
+      ],
+      "how_to_apply": [
+        "領牌時監理所登記能源種類為電能，地方稅務局依車籍資料自動免徵，不會寄發牌照稅繳款書",
+        "若 4 月收到牌照稅繳款書且車輛為純電動車，向車籍所在地地方稅務局查詢更正",
+        "大馬力電動車（超過 262 HP）會收到超過門檻部分的繳款書，4 月 1 日至 30 日繳納"
+      ],
+      "channels": [
+        { "type": "online", "label": "使用牌照稅法第 5 條（全國法規資料庫）", "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=G0340095&flno=5" },
+        { "type": "office", "label": "車籍所在地直轄市、縣市地方稅務局", "url": null }
+      ],
+      "deadline": {
+        "type": "window",
+        "start_month": 1,
+        "start_day": 1,
+        "end_month": 12,
+        "end_day": 31,
+        "note": "免徵至 2030 年（民國 119 年）12 月 31 日。每年使用牌照稅開徵期為 4 月 1 日至 4 月 30 日（純電動車免徵者不會收到繳款書）。2031 年起是否延長未定。"
+      },
+      "faqs": [
+        {
+          "q": "買了電動車要去稅務局申請免牌照稅嗎？",
+          "a": "不用。監理機關領牌時登記能源種類為「電能」，地方稅務局依車籍資料直接不開徵，不會寄繳款書。2026 年 2 月底全國有 12 萬 9,248 輛純電動汽車免徵，金額約 33 億元。若收到繳款書，先確認行照能源種類，再向地方稅務局反映。",
+          "source_url": "https://www.nownews.com/news/6800370"
+        },
+        {
+          "q": "電動車免牌照稅不是 2025 年底就到期了嗎？",
+          "a": "原定 2025 年 12 月 31 日到期，但立法院 2025 年 12 月 23 日三讀、總統 12 月 30 日公布使用牌照稅法第 5 條修正，延長 5 年到 2030 年 12 月 31 日，2026 年 1 月 1 日生效。財政部 2026 年 3 月表示各地方政府均已對電動車免徵至 2030 年底。",
+          "source_url": "https://www.mof.gov.tw/singlehtml/384fb3077bb349ea973e7fc6f13b6974?cntId=dbcf258b658c4a399c43c596709d09d4"
+        },
+        {
+          "q": "高性能電動車也全免嗎？",
+          "a": "不是全免。使用牌照稅法第 5 條規定，電動馬達最大馬力超過 262 英制馬力（265.9 公制馬力）的車輛，免徵金額以該門檻車輛（相當於 2,400cc 級距，自用小客車年稅 11,230 元）的稅額為限，超過部分照課。例如 400 HP 的電動車換算屬 3,001cc 以上級距，會收到差額的繳款書。",
+          "source_url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=G0340095&flno=5"
+        },
+        {
+          "q": "電動機車也免牌照稅嗎？",
+          "a": "是，而且輕型與普通重型機車本來就依排氣量級距課稅，電動機車自 2018 年 1 月 1 日起免徵，現延長到 2030 年 12 月 31 日。另外 150cc 以下燃油機車原本也免徵牌照稅，所以電動機車省到的主要是 150cc 以上級距的稅額。",
+          "source_url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=G0340095&flno=5"
+        }
+      ],
+      "pitfalls": [
+        "油電混合、插電式油電車不算「完全以電能為動力」，牌照稅照繳",
+        "免徵由地方政府公告執行，雖然 2026 年全國都免徵，仍以車籍所在縣市公告為準",
+        "大馬力電動車仍會收到超過門檻部分的繳款書，4 月底前要繳，逾期加徵滯納金",
+        "牌照稅免徵與貨物稅免徵是兩條法律、兩個機關，不要混淆到期日與條件"
+      ],
+      "related_calculator": "car-depreciation",
+      "official_url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=G0340095&flno=5",
+      "sources": [
+        { "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=G0340095&flno=5", "title": "使用牌照稅法第 5 條", "publisher": "全國法規資料庫", "accessed": "2026-11-08" },
+        { "url": "https://www.mof.gov.tw/singlehtml/384fb3077bb349ea973e7fc6f13b6974?cntId=dbcf258b658c4a399c43c596709d09d4", "title": "總統修正公布貨物稅條例第 12 條之 3 及使用牌照稅法第 5 條（2025-12-30）", "publisher": "財政部", "accessed": "2026-11-08" },
+        { "url": "https://www.nownews.com/news/6800370", "title": "115 年使用牌照稅 4 月開徵，電動車免徵至 119 年 12 月 31 日（2026-03-26，轉述財政部）", "publisher": "NOWnews", "accessed": "2026-11-08" }
+      ],
+      "status_2026": "active",
+      "last_known_update": "2025-12",
+      "confidence": "high",
+      "unverified_fields": ["各級距年稅額（7,120／11,230／28,220 元）為使用牌照稅法稅額表常見數字，本次未另行開啟稅額表頁面核對"]
+    },
+    {
+      "id": "taipei-electric-scooter-subsidy-2026",
+      "name": "台北市 115 年電動機車補助（新購、汰購、電池資費、袋鼠方案）",
+      "short_name": "台北市電動機車補助",
+      "category": "energy_transport",
+      "level": "local",
+      "city": "台北市",
+      "agency": "臺北市政府環境保護局",
+      "summary": "設籍台北市滿 1 年的市民新購或淘汰老舊機車換購電動機車，台北市環保局提供加碼：汰舊換購最高 22,000 元、新購最高 10,000 元，2026 年新增電池資費補助 8,000 元（新購或汰購都有）與「袋鼠方案」8,000 元（育有 12 歲以下、2014 年 1 月 1 日以後出生的孩童），中低與低收入戶再加 10,000 元。含中央補助後，淘汰二行程機車換購電動機車最高 49,300 元、新購最高 33,000 元。單純淘汰 10 年以上燃油機車不買新車，可領 3,600 元獎勵金或一年期 TPASS 二選一。113 至 115 年計畫每年預算約 1.565 億元，依申請順序用罄為止；115 年度購車與報廢須在 2026 年 12 月 31 日前完成，申請最晚 2027 年 1 月 10 日。",
+      "eligibility": [
+        "年滿 18 歲、設籍台北市滿 1 年（以購車發票日計算）；外籍人士須在台北市居留滿 1 年且配偶設籍台北市滿 1 年",
+        "在台北市登記的獨資、合夥、法人可申請（公務機關、公營事業、公立學校、租賃共享業者除外）",
+        "新購：發票開立日與領牌日須與申請年度相同",
+        "汰購：淘汰的老舊機車須於 2025 年 12 月 31 日前設籍台北市，2026 年 1 月 1 日起到報廢前不得遷出",
+        "袋鼠方案：育有設籍台北市、2014 年 1 月 1 日（含）以後出生的孩童，申請人為法定監護人；每名孩童限用一次",
+        "曾在 110～112 年計畫領過補助者不得再申請；每人限一輛"
+      ],
+      "amount": {
+        "text": "市府加碼：汰舊換購最高 22,000 元、新購最高 10,000 元、電池資費 8,000 元、袋鼠方案 8,000 元、中低／低收入戶加 10,000 元；含中央後汰購二行程最高 49,300 元、新購最高 33,000 元",
+        "min": 8000,
+        "max": 49300,
+        "unit": "元/輛",
+        "formula": "市府加碼（依淘汰車期別與車型）＋電池資費 8,000＋袋鼠方案 8,000（符合者）＋中低收 10,000（符合者）＋經濟部 7,000～11,000＋環境部減量效益"
+      },
+      "conditions": {
+        "min_age": 18,
+        "max_age": null,
+        "income_limit_type": null,
+        "income_limit_value": null,
+        "income_limit_note": "中低、低收入戶另加 10,000 元",
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": 12,
+        "is_married": null,
+        "is_pregnant_or_newborn": null,
+        "is_student": null,
+        "is_employed": null,
+        "is_unemployed": null,
+        "has_labor_insurance": null,
+        "has_national_pension": null,
+        "is_disabled": null,
+        "is_elderly": null,
+        "low_income": "either",
+        "must_rent": null,
+        "must_own_home": null,
+        "no_home_ownership": null,
+        "owns_vehicle": null,
+        "cities": ["台北市"],
+        "other": "設籍台北市滿 1 年；新購或汰購電動機車並於台北市領牌；袋鼠方案需有 12 歲以下孩童"
+      },
+      "documents": [
+        "身分證（外籍人士附居留證）",
+        "購車發票（載明車主姓名與車號）",
+        "新車行照",
+        "汰購：舊機車報廢證明與回收證明",
+        "存摺封面",
+        "袋鼠方案：可證明監護關係的戶口名簿或戶籍謄本",
+        "中低、低收入戶證明"
+      ],
+      "how_to_apply": [
+        "購車前確認設籍滿 1 年；汰購者先確認舊機車車籍在台北市且 2025 年底前已登記",
+        "報廢舊機車（合格回收商回收＋監理站報廢），購買電動機車並在台北市領牌",
+        "到「臺北市汰舊換新及新購電動機車線上申辦系統」（envimac.com.tw/MotorSubsidy）填資料、上傳文件；多數車行可代辦",
+        "有 12 歲以下孩童者在申請時勾選袋鼠方案並附戶籍文件；2026 年 4 月 2 日前已申請者，環保局會主動通知補件",
+        "另外向經銷商申請經濟部補助、到環境部媒合平臺申請減量效益",
+        "最晚 2027 年 1 月 10 日前送件；可加 LINE「臺北市環保局－定檢好康愛報報」詢問"
+      ],
+      "channels": [
+        { "type": "online", "label": "臺北市汰舊換新及新購電動機車線上申辦系統", "url": "https://www.envimac.com.tw/MotorSubsidy/" },
+        { "type": "online", "label": "臺北市環保局 113 年至 115 年電動機車補助專區", "url": "https://www.dep.gov.taipei/News_Content.aspx?n=CE8746C01243996C&s=9B373391D9A680F0&sms=18E59B21BD8494A1" },
+        { "type": "app", "label": "LINE 官方帳號「臺北市環保局－定檢好康愛報報」", "url": null }
+      ],
+      "deadline": {
+        "type": "budget_until_exhausted",
+        "start_month": 1,
+        "start_day": 1,
+        "end_month": 12,
+        "end_day": 31,
+        "note": "115 年度補助期間 2026-01-01 至 2026-12-31（購車、報廢須在期間內完成），申請最晚 2027-01-10。每年預算約 1.565 億元依申請順序用罄為止。113～115 年計畫到 2026 年底結束，2027 年方案未公告。"
+      },
+      "faqs": [
+        {
+          "q": "我搬到台北市才 8 個月，可以申請嗎？",
+          "a": "不行。台北市要求申請人設籍台北市滿 1 年，以購車發票日期計算。設籍未滿 1 年可以等滿 1 年再買車，或者改以已設籍滿 1 年的同住家人名義購車申請（新車車主與申請人需同一人）。經濟部與環境部的中央補助則沒有設籍限制。",
+          "source_url": "https://www.dep.gov.taipei/News_Content.aspx?n=CE8746C01243996C&s=9B373391D9A680F0&sms=18E59B21BD8494A1"
+        },
+        {
+          "q": "袋鼠方案 8,000 元怎麼算資格？兩個小孩可以領兩次嗎？",
+          "a": "孩童須設籍台北市、2014 年 1 月 1 日（含）以後出生，申請人為其法定監護人。每名孩童只能用一次加碼資格，且同一位孩童只能由一位監護人申請；但每人限補助一輛車，所以一輛車只能加碼一次 8,000 元，兩個小孩不會變 16,000 元。要附可證明監護關係的戶口名簿或戶籍謄本。",
+          "source_url": "https://www.dep.gov.taipei/News_Content.aspx?n=CB6D5C560DE4D2DD&s=4F42D332497D01CC"
+        },
+        {
+          "q": "4 月 2 日公告電池資費加碼之前就買車申請了，拿得到 8,000 元嗎？",
+          "a": "拿得到。環保局表示 2026 年 4 月 2 日修正公告前已提出 115 年新購或汰購申請的民眾，會透過代辦業者或發函主動通知電池資費與袋鼠方案的規定，審核通過後另行撥付，不用重新申請。但 2025 年以前申請的案件不適用。",
+          "source_url": "https://www.dep.gov.taipei/News_Content.aspx?n=CB6D5C560DE4D2DD&s=4F42D332497D01CC"
+        },
+        {
+          "q": "舊機車在新北市登記，人設籍台北市，可以申請台北市汰購補助嗎？",
+          "a": "不行。汰購補助要求淘汰的老舊機車在 2025 年 12 月 31 日前就設籍台北市，且 2026 年起到報廢前不得遷出。舊車車籍在外縣市者只能申請「新購」補助（市府最高 10,000 元＋電池資費 8,000 元），或者看舊車車籍所在縣市的汰舊方案。",
+          "source_url": "https://www.dep.gov.taipei/News_Content.aspx?n=CB6D5C560DE4D2DD&s=4F42D332497D01CC"
+        },
+        {
+          "q": "只想報廢老機車不買新車，有錢可以領嗎？",
+          "a": "有。淘汰出廠滿 10 年以上的燃油機車，可選 3,600 元獎勵金或一年期 TPASS 定期票，二選一。但淘汰二行程機車的人只能在「換購電動機車」「TPASS／獎勵金」之間擇一，不能同時領汰購補助又領獎勵金。",
+          "source_url": "https://www.dep.gov.taipei/News_Content.aspx?n=CB6D5C560DE4D2DD&s=4F42D332497D01CC"
+        }
+      ],
+      "pitfalls": [
+        "設籍滿 1 年以發票日計算，差幾天就不符，購車前先查戶籍遷入日期",
+        "新購電動機車的發票日與領牌日必須同一年度，12 月底買車隔年 1 月才領牌會喪失資格",
+        "每年預算約 1.565 億元依申請順序用罄為止，年底額度可能不足",
+        "曾在 110～112 年計畫領過補助的人不能再領 113～115 年計畫",
+        "金額表中依淘汰機車期別（二行程／一至三期／四期／五期）的細項金額在公告附件，申請前要查附件確認自己車輛的級距"
+      ],
+      "related_calculator": "fuel-cost",
+      "official_url": "https://www.dep.gov.taipei/News_Content.aspx?n=CE8746C01243996C&s=9B373391D9A680F0&sms=18E59B21BD8494A1",
+      "sources": [
+        { "url": "https://www.dep.gov.taipei/News_Content.aspx?n=CB6D5C560DE4D2DD&s=4F42D332497D01CC", "title": "兒童節利多驚喜！115 年臺北市電動機車最高補助 5 萬 9,300 元！新增「袋鼠方案」、「電池資費」加碼補助（2026-04-02 新聞稿）", "publisher": "臺北市政府環境保護局", "accessed": "2026-11-08" },
+        { "url": "https://www.dep.gov.taipei/News_Content.aspx?n=CE8746C01243996C&s=9B373391D9A680F0&sms=18E59B21BD8494A1", "title": "113 年至 115 年電動機車補助 補助專區", "publisher": "臺北市政府環境保護局", "accessed": "2026-11-08" },
+        { "url": "https://meid.nat.gov.tw/lev/subsidy/city", "title": "電動機車產業網 各縣市政府補助資訊（臺北市：汰舊換購最高 22,000、新購最高 10,000、電池資費 8,000）", "publisher": "經濟部產業發展署", "accessed": "2026-11-08" }
+      ],
+      "status_2026": "active",
+      "last_known_update": "2026-04",
+      "confidence": "medium",
+      "unverified_fields": ["依淘汰機車期別的市府加碼細項金額（新聞稿金額表為圖片，未能讀取）", "新聞稿標題「最高 59,300 元」的組成（含中低收入戶 10,000 元）"]
+    },
+    {
+      "id": "new-taipei-electric-scooter-subsidy-2026",
+      "name": "新北市 115 年電動二輪車補助（新購、換購、早鳥、雙汰舊加碼）",
+      "short_name": "新北市電動機車補助",
+      "category": "energy_transport",
+      "level": "local",
+      "city": "新北市",
+      "agency": "新北市政府環境保護局",
+      "summary": "設籍新北市 1 年以上的市民淘汰 2015 年（民國 104 年）12 月 31 日前出廠的燃油機車換購電動機車，市府補助重型 8,000～10,000 元、輕（小）型 4,000～6,000 元（依淘汰車期別）；新購電動機車重型 4,000 元、輕（小）型 2,000 元（限 7,000 名）。加碼方案：早鳥加碼 10,000 元（限 4,500 名）、雙汰舊加碼 9,000 元（限 1,000 名，報廢兩輛舊機車），中低收入戶不限名額加碼 10,000 元。微型電動二輪車與電動輔助自行車每輛最高 4,000 元，不限名額至預算用罄。環保局表示搭配經濟部 7,000 元與環境部約 3,300 元獎勵金，雙汰舊方案單筆最高 39,600 元。補助年度 2026 年 1 月 1 日至 12 月 31 日，文件最晚 2027 年 1 月 10 日上傳。",
+      "eligibility": [
+        "年滿 18 歲、設籍新北市 1 年以上的國民，或在新北市登記設立的獨資、合夥、法人",
+        "淘汰的燃油機車須設籍新北市，且 2015 年 12 月 31 日（含）前出廠",
+        "補助年度內完成報廢與環境部認可回收商的車體回收，每輛舊車限換購一次",
+        "新車發票日在補助年度內（2026 年），首次領牌",
+        "每人限補助一輛，曾受補助者不得再申請",
+        "雙汰舊：同一人報廢兩輛符合條件的舊機車換購一輛電動機車"
+      ],
+      "amount": {
+        "text": "市府：換購重型 8,000～10,000 元／輕小型 4,000～6,000 元；新購重型 4,000 元／輕小型 2,000 元；早鳥 +10,000（4,500 名）；雙汰舊 +9,000（1,000 名）；中低收 +10,000；微型電動二輪車、電輔車最高 4,000 元。含中央最高 39,600 元",
+        "min": 2000,
+        "max": 39600,
+        "unit": "元/輛",
+        "formula": "市府基本（一至三期重型 10,000／四期 9,000／五期 8,000；輕小型各減 4,000）＋早鳥 10,000＋雙汰舊 9,000＋中低收 10,000＋經濟部 7,000＋環境部約 3,300（雙汰舊有兩份回收獎勵金）"
+      },
+      "conditions": {
+        "min_age": 18,
+        "max_age": null,
+        "income_limit_type": null,
+        "income_limit_value": null,
+        "income_limit_note": "中低收入戶加碼 10,000 元，不限名額",
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "is_married": null,
+        "is_pregnant_or_newborn": null,
+        "is_student": null,
+        "is_employed": null,
+        "is_unemployed": null,
+        "has_labor_insurance": null,
+        "has_national_pension": null,
+        "is_disabled": null,
+        "is_elderly": null,
+        "low_income": "either",
+        "must_rent": null,
+        "must_own_home": null,
+        "no_home_ownership": null,
+        "owns_vehicle": null,
+        "cities": ["新北市"],
+        "other": "設籍新北市 1 年以上；換購者舊機車設籍新北市且 2015-12-31 前出廠；新購限 7,000 名"
+      },
+      "documents": [
+        "身分證明文件；法人附商工登記資料",
+        "戶籍遷徙紀錄（證明設籍 1 年以上）",
+        "購車發票（載明車主姓名、車號）",
+        "新車行照",
+        "換購：舊機車報廢證明、回收證明",
+        "切結書",
+        "存摺封面",
+        "中低收入戶證明（申請加碼者）"
+      ],
+      "how_to_apply": [
+        "第一階段（2026-01-01 至 12-31）：到「機車汰舊換新補網」motor.ntpc.gov.tw 線上填基本資料並上傳初步資料，取得受理順序（早鳥、雙汰舊名額依此排序）",
+        "完成報廢、回收、購車、領牌後，第二階段在指定期限內（最晚 2027-01-10）上傳完整文件與照片",
+        "一律線上申請，不收紙本；可請車行協助",
+        "另向經銷商申請經濟部補助、到環境部媒合平臺申請減量效益",
+        "剩餘名額可在官網查詢；諮詢電話 (02) 2965-1501"
+      ],
+      "channels": [
+        { "type": "online", "label": "新北市機車汰舊換新補網（線上申請、名額查詢）", "url": "https://motor.ntpc.gov.tw/" },
+        { "type": "online", "label": "115 年新北市新購電動機車及淘汰燃油機車換購電動二輪車補助公告", "url": "https://motor.ntpc.gov.tw/Home/News?id=1132" },
+        { "type": "phone", "label": "新北市環保局補助諮詢 (02) 2965-1501", "url": null }
+      ],
+      "deadline": {
+        "type": "budget_until_exhausted",
+        "start_month": 1,
+        "start_day": 1,
+        "end_month": 12,
+        "end_day": 31,
+        "note": "第一階段線上登錄 2026-01-01 至 2026-12-31；第二階段補件最晚 2027-01-10。早鳥 4,500 名、雙汰舊 1,000 名、新購 7,000 名依順序用罄即止；官網 2026 年已提示早鳥名額將額滿。"
+      },
+      "faqs": [
+        {
+          "q": "早鳥加碼 10,000 元要怎麼搶？是看購車日還是申請日？",
+          "a": "看線上系統的受理順序。新北市採兩階段：第一階段先在 motor.ntpc.gov.tw 登錄基本資料取得順位，名額 4,500 名依登錄順序分配；第二階段再補齊文件。所以決定要換車時就先上線登錄，不要等車到手才申請。官網會顯示剩餘名額，額滿後只剩基本補助。",
+          "source_url": "https://motor.ntpc.gov.tw/Home/News?id=1132"
+        },
+        {
+          "q": "雙汰舊加碼 9,000 元是什麼意思？",
+          "a": "同一位申請人報廢兩輛符合條件（新北市車籍、2015 年底前出廠）的燃油機車，換購一輛電動機車，除了基本換購補助外再加碼 9,000 元，限 1,000 名。因為報廢兩輛車，環境部的廢車回收獎勵金也會有兩份，所以環保局計算單筆最高可達 39,600 元。",
+          "source_url": "https://www.epd.ntpc.gov.tw/Article/Info?ID=12961"
+        },
+        {
+          "q": "2016 年出廠的機車算老舊機車嗎？",
+          "a": "在新北市不算。新北市 115 年方案限 2015 年（民國 104 年）12 月 31 日（含）前出廠的燃油機車，2016 年出廠的車即使 2026 年已滿 10 年也不在範圍內（環境部中央補助以「出廠滿 10 年」計算，2016 年 11 月前出廠的車 2026 年 11 月可符合環境部條件，但拿不到新北市加碼）。",
+          "source_url": "https://motor.ntpc.gov.tw/Home/News?id=1132"
+        },
+        {
+          "q": "買微型電動二輪車（電動自行車）也有補助嗎？",
+          "a": "有。新北市對淘汰老舊機車換購微型電動二輪車或電動輔助自行車每輛最高補助 4,000 元，中低收入戶 14,000 元，不限名額至預算用罄，但沒有早鳥與雙汰舊加碼。微型電動二輪車自 2022 年起須領牌、投保強制險，申請時要附行照。",
+          "source_url": "https://motor.ntpc.gov.tw/Home/News?id=1132"
+        }
+      ],
+      "pitfalls": [
+        "新購補助限 7,000 名、早鳥 4,500 名、雙汰舊 1,000 名，額滿即止，官網的剩餘名額是即時快照",
+        "舊車出廠年限以 2015-12-31 為界，不是「滿 10 年」",
+        "設籍 1 年以上要附遷徙紀錄，剛遷入新北市不符",
+        "第一階段登錄後若未在指定期限上傳文件會被取消順位",
+        "每人限一輛、曾領過新北市補助者不得再領"
+      ],
+      "related_calculator": "fuel-cost",
+      "official_url": "https://motor.ntpc.gov.tw/",
+      "sources": [
+        { "url": "https://motor.ntpc.gov.tw/Home/News?id=1132", "title": "115 年新北市新購電動機車及淘汰燃油機車換購電動二輪車補助申請資訊", "publisher": "新北市政府環境保護局", "accessed": "2026-11-08" },
+        { "url": "https://www.epd.ntpc.gov.tw/Article/Info?ID=12961", "title": "新北 115 年電動機車補助方案出爐 早鳥加碼結合「雙汰舊」最高補助 3 萬 9,600 元（2025-12-31）", "publisher": "新北市政府環境保護局", "accessed": "2026-11-08" },
+        { "url": "https://meid.nat.gov.tw/lev/subsidy/city", "title": "電動機車產業網 各縣市政府補助資訊（新北市：換購最高 10,000、新購最高 4,000、早鳥 10,000、雙汰舊 9,000）", "publisher": "經濟部產業發展署", "accessed": "2026-11-08" }
+      ],
+      "status_2026": "active",
+      "last_known_update": "2025-12",
+      "confidence": "high",
+      "unverified_fields": ["環保局新聞稿原頁（epd.ntpc.gov.tw）本次回應 503，39,600 元與早鳥／雙汰舊名額數字來自搜尋摘要與電動機車產業網轉載"]
+    },
+    {
+      "id": "taoyuan-electric-scooter-subsidy-2026",
+      "name": "桃園市 115 年電動機車補助計畫（最高 44,000 元）",
+      "short_name": "桃園市電動機車補助",
+      "category": "energy_transport",
+      "level": "local",
+      "city": "桃園市",
+      "agency": "桃園市政府環境保護局",
+      "summary": "2024 年 12 月 31 日前設籍桃園市、年滿 18 歲的市民，淘汰二行程機車（2003 年 12 月 31 日前出廠）換購電動機車補助普通重型 15,000 元、輕型 12,000 元；淘汰一至五期機車（2016 年 12 月 31 日前出廠）換購補助重型 12,000 元、輕型 9,000 元；新購電動機車重型 4,000 元、輕型 2,000 元（新購總名額 6,000 名）。加碼專案：中低收入戶或復興區居民 10,000 元（不限名額）、婦幼 E 騎 GO 6,000 元（育有 0～12 歲幼童，2,500 名）、青壯騎行 36～45 歲 4,000 元（2,500 名）、青春馭電 18～35 歲 1,000 元（1,000 名）、原住民 1,000 元、外送騎士 3,000 元（1,000 名）、守望相助隊 5,000 元（每隊 5 輛）。環保局稱各項加總含中央最高 44,000 元，為六都最高。補助期間 2026 年 1 月 1 日至 12 月 31 日（以發票日認定），申請期限 2026 年 1 月 11 日至 2027 年 1 月 10 日，限線上申辦。",
+      "eligibility": [
+        "年滿 18 歲，2024 年 12 月 31 日（含）前設籍桃園市；或持居留證居住桃園市且配偶設籍符合條件",
+        "換購或新購的電動機車為新領牌車輛，不得有過戶紀錄，車籍登記桃園市",
+        "淘汰的老舊機車須於 2024 年 12 月 31 日前設籍桃園市；二行程指 2003-12-31 前出廠，一至五期指 2016-12-31 前出廠",
+        "每位申請人限補助 2 輛",
+        "專案加碼資格在申請前確認，提送後不得追加；中低收入戶與復興區兩專案擇一，其他專案可併領"
+      ],
+      "amount": {
+        "text": "二行程換購重型 15,000／輕型 12,000 元；一至五期換購重型 12,000／輕型 9,000 元；新購重型 4,000／輕型 2,000 元；專案加碼：中低收或復興區 10,000、婦幼 6,000、青壯 4,000、青春 1,000、原住民 1,000、外送騎士 3,000、守望相助隊 5,000；含中央最高 44,000 元",
+        "min": 1000,
+        "max": 44000,
+        "unit": "元/輛",
+        "formula": "一般性補助（依淘汰車期別與車型）＋可併領的專案加碼＋經濟部 5,100～10,000＋環境部減量效益；上限 44,000"
+      },
+      "conditions": {
+        "min_age": 18,
+        "max_age": null,
+        "income_limit_type": null,
+        "income_limit_value": null,
+        "income_limit_note": "中低收入戶加碼 10,000 元（與復興區專案擇一）",
+        "has_children": null,
+        "child_age_min": 0,
+        "child_age_max": 12,
+        "is_married": null,
+        "is_pregnant_or_newborn": null,
+        "is_student": null,
+        "is_employed": null,
+        "is_unemployed": null,
+        "has_labor_insurance": null,
+        "has_national_pension": null,
+        "is_disabled": null,
+        "is_elderly": null,
+        "low_income": "either",
+        "must_rent": null,
+        "must_own_home": null,
+        "no_home_ownership": null,
+        "owns_vehicle": null,
+        "cities": ["桃園市"],
+        "other": "2024-12-31 前設籍桃園市；年齡專案 18～35 歲 1,000 元、36～45 歲 4,000 元；育有 0～12 歲幼童 6,000 元；外送騎士、守望相助隊、原住民另有專案"
+      },
+      "documents": [
+        "身分證（外籍人士附居留證）",
+        "購車發票（載明車主與車號）、新車行照",
+        "換購：舊機車報廢與回收證明",
+        "存摺封面",
+        "專案證明：中低收入戶證明、戶口名簿（婦幼）、原住民身分登記、外送平台從業證明、守望相助隊證明"
+      ],
+      "how_to_apply": [
+        "確認設籍日在 2024 年 12 月 31 日前；換購者確認舊機車出廠年份與車籍",
+        "報廢回收舊車、購買電動機車並在桃園市領牌（發票日在 2026 年內）",
+        "到「桃園市電動機車補助申辦系統」tydeposs.cc 線上申請，一次勾選所有符合的專案並上傳證明（送出後不得追加）",
+        "另向經銷商申請經濟部補助、到環境部媒合平臺申請減量效益",
+        "申請期限 2027 年 1 月 10 日；洽詢 03-3359117 或 03-3386021 分機 1218、1241"
+      ],
+      "channels": [
+        { "type": "online", "label": "桃園市電動機車補助申辦系統", "url": "https://tydeposs.cc/" },
+        { "type": "online", "label": "桃園市環保局 115 年桃園市電動機車補助計畫公告", "url": "https://tydep.tycg.gov.tw/News_Content.aspx?n=20028&s=1601363" },
+        { "type": "phone", "label": "03-3359117；03-3386021 分機 1218、1241", "url": null }
+      ],
+      "deadline": {
+        "type": "budget_until_exhausted",
+        "start_month": 1,
+        "start_day": 11,
+        "end_month": 12,
+        "end_day": 31,
+        "note": "購車發票日 2026-01-01 至 2026-12-31；申請受理 2026-01-11 至 2027-01-10（以環保局受理日為準）。新購 6,000 名、各專案名額有限，用罄即止，剩餘名額可在申辦系統查詢。"
+      },
+      "faqs": [
+        {
+          "q": "44,000 元是怎麼算的？我也能拿到嗎？",
+          "a": "44,000 元是把一般性補助最高額與可併領的專案加碼加總後的上限，含經濟部補助，實際金額看個人符合哪些條件。例如淘汰二行程機車換普通重型（15,000）＋中低收入戶（10,000）＋婦幼（6,000）＋青壯（4,000）＋外送騎士（3,000）再加中央補助。多數人只符合 1～2 項專案，拿不到上限。",
+          "source_url": "https://tydep.tycg.gov.tw/News_Content.aspx?n=20082&s=1601461"
+        },
+        {
+          "q": "送出申請後才發現忘了勾婦幼專案，可以補嗎？",
+          "a": "不行。桃園市規定專案資格須在申請前確認，提送後不得追加。送件前先把所有符合的專案（婦幼、青壯、青春、原住民、外送騎士、守望相助隊、中低收或復興區）一次勾選並上傳證明文件。若資格審查不符，可重新申請。",
+          "source_url": "https://ws.tycg.gov.tw/Download.ashx?u=LzAwMS9VcGxvYWQvMTkzL3JlbGZpbGUvMTkzNjgvMTYwMTM2My81MGRmOTU4MS0zNWQxLTQ5MjYtOTI2Yy00OGJlNzBhMDY2OTEucGRm&n=44CMMTE15bm05qGD5ZyS5biC6Zu75YuV5qmf6LuK6KOc5Yqp6KiI55Wr44CNKOWFrOWRiikucGRm"
+        },
+        {
+          "q": "2025 年才搬到桃園，2026 年買電動機車可以申請嗎？",
+          "a": "不行。桃園市要求 2024 年 12 月 31 日（含）前設籍桃園市，2025 年以後遷入者不符合 115 年計畫。可以先領經濟部與環境部的中央補助，等桃園市公告下一年度計畫再看是否符合設籍條件。",
+          "source_url": "https://tydep.tycg.gov.tw/News_Content.aspx?n=20082&s=1601461"
+        },
+        {
+          "q": "我 2017 年出廠的機車可以申請桃園市汰舊換購嗎？",
+          "a": "不行。桃園市一至五期機車的汰舊門檻是 2016 年（民國 105 年）12 月 31 日前出廠。2017 年出廠的車就算 2027 年滿 10 年，也要看下一年度計畫是否放寬。只能申請新購補助（重型 4,000 元、輕型 2,000 元）加專案加碼。",
+          "source_url": "https://tydep.tycg.gov.tw/News_Content.aspx?n=20082&s=1601461"
+        }
+      ],
+      "pitfalls": [
+        "設籍截止日 2024-12-31 比其他縣市的「設籍滿 1 年」更嚴格，2025 年遷入者整年都不符",
+        "專案加碼送件後不能追加，漏勾就少領",
+        "新購總名額 6,000 名、婦幼與青壯各 2,500 名，額滿即止",
+        "每人限 2 輛，公司行號多輛需另提計畫",
+        "外送騎士與守望相助隊專案須附從業或參與證明，沒有證明會被退件"
+      ],
+      "related_calculator": "fuel-cost",
+      "official_url": "https://tydep.tycg.gov.tw/News_Content.aspx?n=20028&s=1601363",
+      "sources": [
+        { "url": "https://tydep.tycg.gov.tw/News_Content.aspx?n=20082&s=1601461", "title": "115 年桃園電動機車補助六都第一 最高補助 44,000 元 外送騎士、守望相助隊加碼上路（2026-01-02）", "publisher": "桃園市政府環境保護局", "accessed": "2026-11-08" },
+        { "url": "https://tydep.tycg.gov.tw/News_Content.aspx?n=20028&s=1601363", "title": "115 年桃園市電動機車補助計畫", "publisher": "桃園市政府環境保護局", "accessed": "2026-11-08" },
+        { "url": "https://ws.tycg.gov.tw/Download.ashx?u=LzAwMS9VcGxvYWQvMTkzL3JlbGZpbGUvMTkzNjgvMTYwMTM2My81MGRmOTU4MS0zNWQxLTQ5MjYtOTI2Yy00OGJlNzBhMDY2OTEucGRm&n=44CMMTE15bm05qGD5ZyS5biC6Zu75YuV5qmf6LuK6KOc5Yqp6KiI55Wr44CNKOWFrOWRiikucGRm", "title": "桃園市政府「115 年桃園市電動機車補助計畫」（公告 PDF）", "publisher": "桃園市政府", "accessed": "2026-11-08" }
+      ],
+      "status_2026": "active",
+      "last_known_update": "2026-01",
+      "confidence": "high",
+      "unverified_fields": ["44,000 元上限的確切組成（新聞稿未拆解）"]
+    },
+    {
+      "id": "taichung-low-carbon-vehicle-subsidy-2026",
+      "name": "台中市 115 年低碳排車輛補助計畫（淘汰老舊機車換購電動／油電機車、新購電動機車）",
+      "short_name": "台中市電動機車補助",
+      "category": "energy_transport",
+      "level": "local",
+      "city": "台中市",
+      "agency": "臺中市政府環境保護局",
+      "summary": "設籍台中市、年滿 18 歲的市民淘汰老舊機車換購電動機車，市府依淘汰車期別補助：二行程 16,000 元、一至三期 13,000 元、四期 10,000 元、五期（2015 年 12 月 31 日前出廠）5,000 元；中低與低收入戶換購一律 30,000 元。新購電動機車一般 3,000 元、中低收 25,000 元。淘汰 2015 年底前出廠機車換購油電混合機車，補助為對應電動機車金額的 50%。育有設籍台中市 12 歲以下兒童的法定監護人，換購或新購再加 3,000 元（每名兒童限一次）。補助期間 2026 年 1 月 1 日至 12 月 31 日，購車發票須為 2026 年開立，舊車須在 2026 年內完成報廢與回收，最晚 2027 年 1 月 10 日前線上申請。不含環境部與經濟部補助，且總補助不得超過車價，超出部分從市府補助扣除。",
+      "eligibility": [
+        "年滿 18 歲（以購車發票日計）、申請時設籍台中市的國民；或持居留證且居留地址在台中市的外籍人士；或在台中市登記設立的獨資、合夥、法人",
+        "中低或低收入戶須持台中市區公所核發、有效日期在 2026 年內的證明",
+        "淘汰老舊機車：二行程與一至三期為 2003-12-31 前出廠，四期為 2004-01-01 至 2007-06-30 出廠，五期限 2015-12-31 前出廠；2026-01-01 以後不得有外縣市過戶紀錄",
+        "新車須為新領牌、車籍登記台中市，2026-01-01 至 2027-01-10 間完成領牌，不得有過戶紀錄",
+        "每人限補助一輛；2016 年 1 月 1 日起曾申請過台中市環保局或環境部相關購車補助者不予補助",
+        "兒童專案：育有設籍台中市 12 歲以下兒童（以購車發票日計）的法定監護人，每名兒童限用一次"
+      ],
+      "amount": {
+        "text": "換購電動機車：二行程 16,000／一至三期 13,000／四期 10,000／五期 5,000 元，中低收 30,000 元；新購 3,000 元，中低收 25,000 元；換購油電混合機車為對應金額 50%；12 歲以下兒童專案加碼 3,000 元",
+        "min": 3000,
+        "max": 33000,
+        "unit": "元/輛（不含中央補助）",
+        "formula": "市府補助（依淘汰車期別與身分）＋兒童專案 3,000（符合者）；油電混合機車＝電動機車金額 × 50%；市府＋環境部＋經濟部總額不得超過車價"
+      },
+      "conditions": {
+        "min_age": 18,
+        "max_age": null,
+        "income_limit_type": null,
+        "income_limit_value": null,
+        "income_limit_note": "中低、低收入戶換購 30,000 元、新購 25,000 元",
+        "has_children": null,
+        "child_age_min": 0,
+        "child_age_max": 12,
+        "is_married": null,
+        "is_pregnant_or_newborn": null,
+        "is_student": null,
+        "is_employed": null,
+        "is_unemployed": null,
+        "has_labor_insurance": null,
+        "has_national_pension": null,
+        "is_disabled": null,
+        "is_elderly": null,
+        "low_income": "either",
+        "must_rent": null,
+        "must_own_home": null,
+        "no_home_ownership": null,
+        "owns_vehicle": null,
+        "cities": ["台中市"],
+        "other": "申請時設籍台中市；淘汰 2015-12-31 前出廠機車或新購電動機車；兒童專案需有 12 歲以下設籍台中市兒童"
+      },
+      "documents": [
+        "申請補助切結書（附表二）",
+        "身分證或政府核准設立證明文件",
+        "新臺幣金融存簿封面",
+        "中低、低收入戶證明（有效期在 2026 年內）",
+        "兒童專案：申請日前後 3 個月內戶籍謄本或新式戶口名簿（兒童記事不得省略），必要時附監護關係證明",
+        "外籍人士：居留證與所得稅納稅證明（永久居留者免納稅證明）",
+        "購車發票或免用統一發票收據，註明申請人姓名或車號（電子發票可由經銷商手寫加蓋發票章）",
+        "新車行車執照；換購油電機車另附機車新領牌照登記書",
+        "新舊車主不同：雙方共同簽署的保證書；舊車主死亡：遺產稅完免稅證明與全體繼承人同意的委託書",
+        "公務人員用國民旅遊卡購車：切結未重複申請休假補助"
+      ],
+      "how_to_apply": [
+        "到「臺中ㄅㄨㄅㄨ網」green.epb.taichung.gov.tw 確認車款與自己的淘汰車期別",
+        "2026 年內完成舊機車報廢（監理站）與車體回收（環境部核可回收商），購買新車並在台中市領牌",
+        "一律線上申請，上傳切結書、身分證、存摺、發票、行照等圖片檔（內容、簽名、蓋章要清晰）",
+        "申請時一併確認兒童專案或中低收資格，申請後不得追加；文件缺漏在通知 30 日內補正",
+        "審核通過後扣除 30 元匯費匯款（台灣銀行帳戶免扣）",
+        "另向經銷商申請經濟部補助、到環境部媒合平臺申請減量效益（三者總額不得超過車價）"
+      ],
+      "channels": [
+        { "type": "online", "label": "臺中ㄅㄨㄅㄨ網（線上申請）", "url": "http://green.epb.taichung.gov.tw/" },
+        { "type": "online", "label": "115 年臺中市低碳排車輛補助計畫 條文（PDF）", "url": "https://www.epb.taichung.gov.tw/media/1378388/115年臺中市低碳排車輛補助計畫-條文.pdf" }
+      ],
+      "deadline": {
+        "type": "budget_until_exhausted",
+        "start_month": 1,
+        "start_day": 1,
+        "end_month": 12,
+        "end_day": 31,
+        "note": "補助期間 2026-01-01 至 2026-12-31（發票須 2026 年開立，舊車須 2026 年內報廢回收），申請最晚 2027-01-10；領牌可到 2027-01-10。依申請順序辦理，當年度經費用罄得不予補助。"
+      },
+      "faqs": [
+        {
+          "q": "低收入戶買一台 35,000 元的小型輕型電動機車，可以領滿 30,000 元嗎？",
+          "a": "不一定。台中市規定市府、環境部、經濟部三方補助總額不得超過車價，超出部分從市府補助扣除。計畫舉例：中低收入戶換購小型輕型電動機車車價 35,000 元，三方總補助 37,100 元，超出 2,100 元，市府補助就只給 27,900 元。買低價車時要先算總補助是否超過車價。",
+          "source_url": "https://www.epb.taichung.gov.tw/media/1378388/115年臺中市低碳排車輛補助計畫-條文.pdf"
+        },
+        {
+          "q": "換油電混合機車也有補助嗎？金額怎麼算？",
+          "a": "有。淘汰 2015 年 12 月 31 日前出廠的老舊機車換購油電混合動力機車（能源種類登載為「汽油/電能」或「汽油（油電）」，不含大型重型），補助為對應淘汰期別電動機車金額的 50%，例如淘汰二行程換油電機車為 8,000 元。純新購油電機車沒有補助，且要附機車新領牌照登記書。",
+          "source_url": "https://www.epb.taichung.gov.tw/media/1378388/115年臺中市低碳排車輛補助計畫-條文.pdf"
+        },
+        {
+          "q": "2018 年曾經領過台中市電動自行車補助，現在換電動機車還能領嗎？",
+          "a": "不能。台中市規定 2016 年 1 月 1 日起曾申請過台中市環保局或環境部新購、淘汰老舊機車換購電動機車、電動輔助自行車、電動自行車、燃油機車或自行車等補助者，不予補助。但經濟部與環境部的中央補助仍可申請（環境部以每輛舊車限一次計）。",
+          "source_url": "https://www.epb.taichung.gov.tw/media/1378388/115年臺中市低碳排車輛補助計畫-條文.pdf"
+        },
+        {
+          "q": "舊機車是過世父親的名字，可以申請汰舊換購嗎？",
+          "a": "可以，但文件較多：申請人要檢附遺產稅完（免）稅證明文件與法定繼承委託書，並經全體法定繼承人同意簽名蓋章。新舊車主不同時還要附雙方共同簽署的保證書，由購買新車的車主申請。建議先到監理站辦理繼承過戶或報廢程序再申請。",
+          "source_url": "https://www.epb.taichung.gov.tw/media/1378388/115年臺中市低碳排車輛補助計畫-條文.pdf"
+        },
+        {
+          "q": "電子發票沒有我的名字和車號，會被退件嗎？",
+          "a": "會。台中市要求發票註明申請人姓名或牌照號碼；電子發票或收銀機發票無法登錄時，要由開立發票的公司或交車經銷商以人工手寫註明，修改處加蓋統一發票專用章。免用統一發票收據則要蓋免用統一發票專用章並註明統編與負責人姓名。交車時當場請車行處理。",
+          "source_url": "https://www.epb.taichung.gov.tw/media/1378388/115年臺中市低碳排車輛補助計畫-條文.pdf"
+        }
+      ],
+      "pitfalls": [
+        "總補助不得超過車價，買低價車的中低收入戶實領會被扣減",
+        "舊機車 2026-01-01 以後不得有外縣市過戶紀錄、車主戶籍不得有外縣市異動紀錄",
+        "兒童專案與中低收資格申請後不得追加，送件前先確認",
+        "文件通知補正後 30 日內未補齊即退件",
+        "市府補助要扣 30 元匯費（台灣銀行帳戶免扣），退匯再匯會累計扣除"
+      ],
+      "related_calculator": "fuel-cost",
+      "official_url": "http://green.epb.taichung.gov.tw/",
+      "sources": [
+        { "url": "https://www.epb.taichung.gov.tw/media/1378388/115年臺中市低碳排車輛補助計畫-條文.pdf", "title": "115 年臺中市低碳排車輛補助計畫 條文（2026-02-24）", "publisher": "臺中市政府環境保護局", "accessed": "2026-11-08" },
+        { "url": "https://meid.nat.gov.tw/lev/subsidy/city", "title": "電動機車產業網 各縣市政府補助資訊（臺中市：汰舊換購最高 16,000、新購 3,000）", "publisher": "經濟部產業發展署", "accessed": "2026-11-08" }
+      ],
+      "status_2026": "active",
+      "last_known_update": "2026-02",
+      "confidence": "high",
+      "unverified_fields": []
+    },
+    {
+      "id": "tainan-electric-two-wheeler-subsidy-2026",
+      "name": "台南市 115 年淘汰老舊機車及換（新）購電動二輪車補助方案",
+      "short_name": "台南市電動機車補助",
+      "category": "energy_transport",
+      "level": "local",
+      "city": "台南市",
+      "agency": "臺南市政府環境保護局",
+      "summary": "台南市民淘汰 2015 年 12 月 31 日前出廠的燃油機車換購電動二輪車，市府補助重型電動機車 8,000 元、輕型／小型 6,500 元、微型電動二輪車 3,000 元、電動輔助自行車 1,500 元；偏遠四區（左鎮、楠西、南化、龍崎）重型 9,000、輕小型 10,500 元；中低與低收入戶重型 14,000、輕小型 16,500、微型／電輔車 10,000 元。新購電動二輪車一般重型 3,000、輕小型 4,500 元，偏遠區 6,000／7,500 元，中低收 9,000／12,500 元。另有月租費（電池資費）補助：重型 7,200 元、輕小型 3,600 元；貼心專案換／新購電動機車每輛再加 3,000 元；70 歲以上長者自願繳回所有駕照並換／新購微型電動二輪車或電輔車再加 5,000 元。環保局表示含中央後汰舊換新最高 30,200 元、新購最高 20,200 元（中低收各再加 6,000）。台南市民要先在環境部媒合平臺選「臺南市政府（限臺南市）」收購方（1,500 元）再申請市府補助。實施期間 2026 年 1 月 1 日至 12 月 31 日，受理至 2027 年 1 月 10 日。",
+      "eligibility": [
+        "設籍台南市的市民、公司行號；偏遠地區指左鎮區、楠西區、南化區、龍崎區",
+        "老舊機車：2015 年（民國 104 年）12 月 31 日（含）前出廠的燃油機車",
+        "電動二輪車：經濟部認可的電動機車、微型電動二輪車、電動輔助自行車",
+        "中低或低收入戶持有效證明",
+        "高齡專案：年滿 70 歲、自願繳回名下所有駕駛執照並換／新購微型電動二輪車或電輔車",
+        "汰舊換購者須先在環境部媒合平臺溫室氣體減量效益選擇「臺南市政府（限臺南市）」收購方"
+      ],
+      "amount": {
+        "text": "換購：重型 8,000／輕小型 6,500／微型 3,000／電輔車 1,500（偏遠區 9,000／10,500；中低收 14,000／16,500／10,000）；新購：重型 3,000／輕小型 4,500／微型 1,500／電輔車 500（偏遠區 6,000／7,500；中低收 9,000／12,500／10,000）；電池資費重型 7,200／輕小型 3,600；貼心專案 +3,000；70 歲繳照專案 +5,000。含中央汰舊最高 30,200、新購最高 20,200 元",
+        "min": 500,
+        "max": 36200,
+        "unit": "元/輛",
+        "formula": "市府基本（依車型、身分、地區）＋電池資費（7,200 或 3,600）＋貼心專案 3,000＋高齡繳照 5,000（符合者）＋經濟部 7,000～11,000＋環境部（含臺南市收購價金 1,500）"
+      },
+      "conditions": {
+        "min_age": 18,
+        "max_age": null,
+        "income_limit_type": null,
+        "income_limit_value": null,
+        "income_limit_note": "中低、低收入戶有較高補助額",
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "is_married": null,
+        "is_pregnant_or_newborn": null,
+        "is_student": null,
+        "is_employed": null,
+        "is_unemployed": null,
+        "has_labor_insurance": null,
+        "has_national_pension": null,
+        "is_disabled": null,
+        "is_elderly": null,
+        "low_income": "either",
+        "must_rent": null,
+        "must_own_home": null,
+        "no_home_ownership": null,
+        "owns_vehicle": null,
+        "cities": ["台南市"],
+        "other": "設籍台南市；淘汰 2015-12-31 前出廠機車或新購電動二輪車；偏遠四區與 70 歲以上繳回駕照者另有加碼"
+      },
+      "documents": [
+        "身分證或公司登記證明",
+        "購車發票（載明車主與車號）、新車行照",
+        "換購：舊機車報廢與回收證明",
+        "存摺封面",
+        "中低、低收入戶證明",
+        "高齡繳照專案：駕照繳回（註銷）證明",
+        "環境部媒合平臺選擇臺南市政府收購方的申請紀錄"
+      ],
+      "how_to_apply": [
+        "淘汰舊機車（回收＋報廢），購買電動二輪車並在台南市領牌",
+        "到環境部「車輛汰舊換新抵換媒合平臺」溫室氣體減量效益選擇「臺南市政府（限臺南市）」收購方，取得 1,500 元收購價金",
+        "再向台南市環保局申請市府汰舊換購或新購補助、電池資費與專案加碼（線上系統或委託車行）",
+        "另向經銷商申請經濟部補助",
+        "受理期限 2027 年 1 月 10 日，名額有限"
+      ],
+      "channels": [
+        { "type": "online", "label": "115 年臺南市淘汰老舊機車及換（新）購電動二輪車補助方案 修正公告（PDF）", "url": "https://w3fs.tainan.gov.tw/002/FS01/82/relfile/11857/8827147/c5ee4820-89d6-483d-8b2b-79b9d415ea30.pdf" },
+        { "type": "online", "label": "環境部車輛汰舊換新抵換媒合平臺（選臺南市政府收購方）", "url": "https://mobile.moenv.gov.tw/EPAMobileETP/" },
+        { "type": "office", "label": "臺南市政府環境保護局（車行代辦或洽詢）", "url": null }
+      ],
+      "deadline": {
+        "type": "budget_until_exhausted",
+        "start_month": 1,
+        "start_day": 1,
+        "end_month": 12,
+        "end_day": 31,
+        "note": "實施期間 2026-01-01 至 2026-12-31，補助受理至 2027-01-10。淘汰宣導報廢獎勵金有件數上限（2003 年前出廠 1,500 件、2004～2007 年 6 月出廠 5,000 件），其他項目名額有限。"
+      },
+      "faqs": [
+        {
+          "q": "為什麼台南市民要先到環境部平台選「臺南市政府」？選其他收購方會怎樣？",
+          "a": "台南市把市府汰舊換購補助與環境部減碳效益綁定，市民必須先在媒合平臺溫室氣體減量效益選擇「臺南市政府（限臺南市）」收購方（1,500 元），完成後才能申請市府汰舊換購補助。若選了經濟部（2,000 元）或台積電（2,100 元）等其他收購方，多拿 500～600 元但可能失去市府 8,000 元以上的補助資格。",
+          "source_url": "https://mobile.moenv.gov.tw/EPAMobileETP/Home/QnA"
+        },
+        {
+          "q": "電池資費補助 7,200 元是直接給現金嗎？",
+          "a": "台南市的「月租費（電池資費）補助方案」換購或新購重型電動機車補助 7,200 元、輕型／小型 3,600 元，與購車補助一起申請、一起撥付（依公告為每輛補助金額）。它是針對換電資費負擔的加碼，不是逐月折抵電池月租，申請人仍須自行與電池服務商簽約繳費。",
+          "source_url": "https://w3fs.tainan.gov.tw/002/FS01/82/relfile/11857/8827147/c5ee4820-89d6-483d-8b2b-79b9d415ea30.pdf"
+        },
+        {
+          "q": "70 歲以上長輩繳回駕照換電動自行車的 5,000 元怎麼領？",
+          "a": "這是 2026 年新增的高齡繳回駕照專案：年滿 70 歲、自願到監理站繳回名下所有駕駛執照（註銷），並換購或新購微型電動二輪車或電動輔助自行車，可在基本補助外再加碼 5,000 元。申請時附駕照繳回證明。注意微型電動二輪車也須領牌、投保強制險，且不能再騎需要駕照的機車。",
+          "source_url": "https://w3fs.tainan.gov.tw/002/FS01/82/relfile/11857/8827147/c5ee4820-89d6-483d-8b2b-79b9d415ea30.pdf"
+        },
+        {
+          "q": "我住左鎮區，補助會比市區多嗎？",
+          "a": "會。左鎮、楠西、南化、龍崎四區列為偏遠地區，汰舊換購重型電動機車 9,000 元（市區 8,000）、輕小型 10,500 元（市區 6,500）；新購重型 6,000 元（市區 3,000）、輕小型 7,500 元（市區 4,500）。微型電動二輪車與電輔車金額與市區相同。中低收入戶則適用更高的中低收額度，不再疊加偏遠區額度。",
+          "source_url": "https://w3fs.tainan.gov.tw/002/FS01/82/relfile/11857/8827147/c5ee4820-89d6-483d-8b2b-79b9d415ea30.pdf"
+        }
+      ],
+      "pitfalls": [
+        "媒合平臺收購方選錯（沒選臺南市政府）會影響市府汰舊換購補助資格",
+        "舊機車出廠年限以 2015-12-31 為界，2016 年出廠不符",
+        "報廢獎勵金是給機車業者（1,000 或 500 元），不是給車主，別誤算進自己的補助",
+        "偏遠區與中低收入戶額度不疊加，以身分別較高者適用",
+        "名額有限，受理至 2027-01-10，年底購車要同步申請"
+      ],
+      "related_calculator": "fuel-cost",
+      "official_url": "https://w3fs.tainan.gov.tw/002/FS01/82/relfile/11857/8827147/c5ee4820-89d6-483d-8b2b-79b9d415ea30.pdf",
+      "sources": [
+        { "url": "https://w3fs.tainan.gov.tw/002/FS01/82/relfile/11857/8827147/c5ee4820-89d6-483d-8b2b-79b9d415ea30.pdf", "title": "115 年臺南市淘汰老舊機車及換（新）購電動二輪車補助方案 公告及附件部分內容修正（原公告 2025-12-22）", "publisher": "臺南市政府", "accessed": "2026-11-08" },
+        { "url": "https://mobile.moenv.gov.tw/EPAMobileETP/Home/QnA", "title": "車輛汰舊換新抵換媒合平臺 常見問題（臺南市須選臺南市政府收購方）", "publisher": "環境部", "accessed": "2026-11-08" },
+        { "url": "https://cars.tvbs.com.tw/life/319444", "title": "台南市 115 年度電動機車汰舊換新加碼補助方案 最高 30,200 元（2026-04-30，媒體）", "publisher": "TVBS", "accessed": "2026-11-08" }
+      ],
+      "status_2026": "active",
+      "last_known_update": "2026-04",
+      "confidence": "medium",
+      "unverified_fields": ["含中央最高 30,200／20,200 元的組成（來自媒體轉述環保局）", "台南市線上申請系統網址", "電池資費補助是否與購車補助同時撥付（依公告為每輛補助金額，撥付方式未明載）"]
+    },
+    {
+      "id": "kaohsiung-electric-scooter-subsidy-2026",
+      "name": "高雄市 115 年老舊機車汰舊換新暨新購電動二輪車補助（已於 2026 年 8 月公告經費用罄）",
+      "short_name": "高雄市電動機車補助",
+      "category": "energy_transport",
+      "level": "local",
+      "city": "高雄市",
+      "agency": "高雄市政府環境保護局",
+      "summary": "高雄市 2026 年 3 月 31 日公告補助方案，4 月 10 日宣布加碼：設籍高雄市且出廠滿 10 年以上的燃油機車（含二行程與四行程）汰舊換購電動機車，市府補助最高 7,000 元、新購最高 4,000 元、單純汰舊補助 1,000 元；月租費（電池）補助單顆電池 3,600 元、雙顆 7,200 元；醫護、家長（育有設籍高雄市國小、國中、高中職學生）、青年（18～30 歲）三專案擇一，重型加碼 20,000 元、輕／小型加碼 10,000 元。環保局官網於 2026 年 8 月 11 日更新「補助金額已用罄」，本文件撰寫時（2026 年 11 月）未見恢復受理的公告，2026 年剩餘時間內高雄市民只能申請經濟部與環境部的中央補助。",
+      "eligibility": [
+        "設籍高雄市的市民",
+        "汰舊換新：淘汰設籍高雄市、出廠滿 10 年以上的燃油機車（含二行程、四行程）並換購電動機車",
+        "專案加碼三擇一：醫護專案（任職於高雄市合法登記醫療或護理機構）、家長專案（育有設籍高雄市國小、國中、高中職孩童）、青年專案（設籍高雄市 18～30 歲）",
+        "月租費補助：申請汰舊換購或新購電動機車者，依電池顆數補助",
+        "依公告「補助經費有限」，2026-08-11 已公告用罄"
+      ],
+      "amount": {
+        "text": "市府：汰舊換購最高 7,000 元、新購最高 4,000 元、汰舊補助 1,000 元；電池月租費單顆 3,600／雙顆 7,200 元；醫護／家長／青年專案擇一加碼重型 20,000、輕小型 10,000 元",
+        "min": 1000,
+        "max": 34200,
+        "unit": "元/輛（市府部分）",
+        "formula": "汰舊換購 7,000＋電池 7,200＋專案加碼 20,000（重型）＝市府最高 34,200；另加經濟部 7,000～11,000 與環境部減量效益"
+      },
+      "conditions": {
+        "min_age": 18,
+        "max_age": null,
+        "income_limit_type": null,
+        "income_limit_value": null,
+        "income_limit_note": null,
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": 18,
+        "is_married": null,
+        "is_pregnant_or_newborn": null,
+        "is_student": null,
+        "is_employed": null,
+        "is_unemployed": null,
+        "has_labor_insurance": null,
+        "has_national_pension": null,
+        "is_disabled": null,
+        "is_elderly": null,
+        "low_income": null,
+        "must_rent": null,
+        "must_own_home": null,
+        "no_home_ownership": null,
+        "owns_vehicle": null,
+        "cities": ["高雄市"],
+        "other": "設籍高雄市；淘汰出廠滿 10 年燃油機車或新購電動機車；醫護、家長（國小至高中職學生）、青年 18～30 歲專案擇一"
+      },
+      "documents": [
+        "身分證",
+        "購車發票、新車行照",
+        "汰舊：舊機車報廢與回收證明",
+        "存摺封面",
+        "專案證明：醫療機構在職證明、孩童在學或戶籍證明、青年身分以身分證年齡認定"
+      ],
+      "how_to_apply": [
+        "先到「高雄市機車排氣檢驗及汰舊補助資訊網」khepa.kcg.gov.tw 補助專區確認是否恢復受理（2026-08-11 公告已用罄）",
+        "若有名額：完成舊機車報廢與回收、購買電動機車並在高雄市領牌後，到補助專區線上申請並上傳文件",
+        "無論市府是否受理，仍可向經銷商申請經濟部補助、到環境部媒合平臺申請減量效益",
+        "免付費專線 0800-073-073"
+      ],
+      "channels": [
+        { "type": "online", "label": "高雄市機車排氣檢驗及汰舊補助資訊網（補助專區）", "url": "https://khepa.kcg.gov.tw/" },
+        { "type": "online", "label": "高雄市環保局新聞：115 年汰舊換新購電動機車補助加碼（2026-08-11 更新：補助金額已用罄）", "url": "https://ksepb.kcg.gov.tw/AuditAnnouncement/news?PageType=1&id=cb6475fa-0b83-46b7-bc1c-830b3f8c8bbf" },
+        { "type": "phone", "label": "免付費專線 0800-073-073", "url": null }
+      ],
+      "deadline": {
+        "type": "budget_until_exhausted",
+        "start_month": 1,
+        "start_day": 1,
+        "end_month": 12,
+        "end_day": 31,
+        "note": "原補助期間 2026-01-01 至 2026-12-31；環保局 2026-08-11 更新公告「補助金額已用罄」，是否追加預算或恢復受理未公告。2027 年方案未公告。"
+      },
+      "faqs": [
+        {
+          "q": "現在（2026 年 11 月）在高雄買電動機車還有市府補助嗎？",
+          "a": "依高雄市環保局官網 2026 年 8 月 11 日更新，115 年汰舊換新購電動機車補助金額已用罄，之後沒有看到恢復受理的公告。購車前到 khepa.kcg.gov.tw 補助專區或撥 0800-073-073 確認。即使市府沒額度，經濟部 7,000 元（經銷商代辦）與環境部減量效益（媒合平臺）仍可申請。",
+          "source_url": "https://ksepb.kcg.gov.tw/AuditAnnouncement/news?PageType=1&id=cb6475fa-0b83-46b7-bc1c-830b3f8c8bbf"
+        },
+        {
+          "q": "醫護、家長、青年專案可以同時領嗎？",
+          "a": "不行，三個專案採三擇一，重型電動機車加碼 20,000 元、輕／小型加碼 10,000 元。例如 28 歲的護理師同時符合醫護與青年，也只能領一份 20,000 元。家長專案的孩童須設籍高雄市且就讀國小、國中或高中職。專案加碼經費與基本補助同樣受「已用罄」影響。",
+          "source_url": "https://ksepb.kcg.gov.tw/AuditAnnouncement/news?PageType=1&id=cb6475fa-0b83-46b7-bc1c-830b3f8c8bbf"
+        },
+        {
+          "q": "高雄市的電池補助怎麼算？",
+          "a": "申請淘汰並新購或純新購電動機車補助者，依車輛電池顆數補助月租費：單顆電池 3,600 元、雙顆電池 7,200 元，與購車補助一起申請。換電車款多為雙顆電池可拿 7,200 元；充電式或單顆電池車款為 3,600 元。此項同樣受經費用罄限制。",
+          "source_url": "https://ksepb.kcg.gov.tw/AuditAnnouncement/news?PageType=1&id=cb6475fa-0b83-46b7-bc1c-830b3f8c8bbf"
+        },
+        {
+          "q": "高雄市汰舊門檻跟其他縣市有什麼不同？",
+          "a": "高雄市 2026 年放寬為「設籍高雄市且出廠滿 10 年以上的燃油機車（含二行程與四行程）」都可申請汰舊換新，與環境部的 10 年標準一致，比新北、台南、台中以「2015 年 12 月 31 日前出廠」為界更寬（2016 年 1～11 月出廠的車在 2026 年同月滿 10 年即符合）。但市府經費已用罄，放寬的門檻 2026 年剩餘時間內用不到。",
+          "source_url": "https://ksepb.kcg.gov.tw/AuditAnnouncement/news?PageType=1&id=cb6475fa-0b83-46b7-bc1c-830b3f8c8bbf"
+        }
+      ],
+      "pitfalls": [
+        "2026-08-11 官方已公告補助金額用罄，購車前要先確認，不要以為年底前都有",
+        "三專案擇一，不能疊加",
+        "報廢回收後要儘速申請，公告強調經費有限、先到先得",
+        "公告 PDF 為掃描檔，細部條件（名額、設籍年限）須向環保局確認"
+      ],
+      "related_calculator": "fuel-cost",
+      "official_url": "https://khepa.kcg.gov.tw/",
+      "sources": [
+        { "url": "https://ksepb.kcg.gov.tw/AuditAnnouncement/news?PageType=1&id=cb6475fa-0b83-46b7-bc1c-830b3f8c8bbf", "title": "【2026.8.11 更新】高市府 115 年汰舊換新購電動機車補助加碼啟動！醫護、家長、青年專案最高領 2 萬元（2026-04-10 發布；2026-08-11 註記補助金額已用罄）", "publisher": "高雄市政府環境保護局", "accessed": "2026-11-08" },
+        { "url": "https://khepa.kcg.gov.tw/01_news_page.asp?news=20260331101810463", "title": "公佈本市 115 年度老舊機車汰舊換新暨新購電動二輪車補助方案（2026-03-31）", "publisher": "高雄市政府環境保護局", "accessed": "2026-11-08" },
+        { "url": "https://meid.nat.gov.tw/lev/subsidy/city", "title": "電動機車產業網 各縣市政府補助資訊（高雄市：汰舊換購最高 7,000、新購最高 4,000、汰舊補助 1,000、電池資費最高 7,200）", "publisher": "經濟部產業發展署", "accessed": "2026-11-08" }
+      ],
+      "status_2026": "ended",
+      "last_known_update": "2026-08",
+      "confidence": "medium",
+      "unverified_fields": ["公告 PDF 為掃描影像無法讀取，設籍年限、名額、各期別細項金額未驗證", "用罄後是否追加預算"]
+    }
+  ],
+  "general_faqs": [
+    {
+      "q": "買一台 1 級能效冷氣，2026 年最多可以拿回多少錢？",
+      "a": "兩筆加起來最高 5,000 元：經濟部「住宅家電汰舊換新節能補助」每台 3,000 元（要回收舊冷氣、住宅用電、2026 年 12 月 31 日前購買、2027 年 1 月 31 日前申請），加上財政部貨物稅退稅（額定冷氣能力 3.6kW 以上 2,000 元、未滿 1,600 元，發票日起 6 個月內向國稅局申請）。兩筆要分開向不同單位申請。",
+      "source_url": "https://save3000.moeaea.gov.tw/subsidy02/tips/list.aspx",
+      "tags": ["節能家電", "冷氣", "退稅", "補助併領"]
+    },
+    {
+      "q": "2027 年以後買節能家電還有補助嗎？",
+      "a": "經濟部每台 3,000 元補助在 2026 年 12 月 31 日購買期限截止，能源署已表示不展延。財政部的貨物稅退稅依 2025 年 6 月修法延長到 2029 年 12 月 31 日，所以 2027～2029 年買 1 級或 2 級的冰箱、冷氣、除濕機仍可退最高 2,000 元。各縣市 2026 年沒有查到全國性可比的節能家電加碼方案。",
+      "source_url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=G0340076&flno=11-1",
+      "tags": ["節能家電", "2027", "退稅"]
+    },
+    {
+      "q": "買電動機車到底有幾筆補助？要去哪裡申請？",
+      "a": "三個單位三筆：一、經濟部新購補助 7,000 元（小型輕型 5,100）＋國產電池芯 3,000＋汰舊 1,000，由經銷商代辦折抵車價，2026 年 12 月 10 日截止。二、環境部汰舊換新減量效益（機車約 1,500～2,500 元收購價金加空污補助），自己到「車輛汰舊換新抵換媒合平臺」申請，2027 年 1 月 10 日截止。三、縣市環保局加碼，各縣市線上系統申請，多數截止 2027 年 1 月 10 日。",
+      "source_url": "https://meid.nat.gov.tw/lev/subsidy/city",
+      "tags": ["電動機車", "汰舊換新", "申請管道"]
+    },
+    {
+      "q": "我的機車幾年出廠才算「老舊機車」可以汰舊換新？",
+      "a": "環境部中央補助以「出廠滿 10 年以上」計算（看行照出廠年月）。縣市加碼各有門檻：新北、台中、台南以 2015 年 12 月 31 日前出廠為界，桃園一至五期以 2016 年 12 月 31 日前出廠，二行程多以 2003 年 12 月 31 日前出廠；高雄 2026 年放寬為滿 10 年。同一輛車在不同縣市的資格可能不同，先查行照再對照所在縣市公告。",
+      "source_url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0020134",
+      "tags": ["老舊機車", "出廠年限", "汰舊換新"]
+    },
+    {
+      "q": "電動車的免稅優惠到什麼時候？2026 年買會不會剛好到期？",
+      "a": "不會到期。貨物稅條例第 12 條之 3 與使用牌照稅法第 5 條在 2025 年 12 月 30 日修正公布，純電動汽車與電動機車免徵貨物稅、免徵使用牌照稅都延長到 2030 年 12 月 31 日，2026 年 1 月 1 日生效。電動小客車貨物稅免徵以完稅價格 140 萬元為上限，牌照稅免徵以 262 英制馬力為門檻，超過部分仍課稅。",
+      "source_url": "https://www.mof.gov.tw/singlehtml/384fb3077bb349ea973e7fc6f13b6974?cntId=dbcf258b658c4a399c43c596709d09d4",
+      "tags": ["電動車", "貨物稅", "牌照稅", "2030"]
+    },
+    {
+      "q": "縣市電動機車補助年底前會不會沒錢？",
+      "a": "會。多數縣市依申請順序、經費用罄即止：高雄市 2026 年 8 月 11 日已公告用罄；新北市早鳥 4,500 名 2026 年內已提示將額滿；台北市每年預算約 1.565 億元；桃園新購 6,000 名。年底購車前先到各縣市申辦系統查剩餘名額，並優先完成線上登錄取得順位。中央的經濟部與環境部補助則沒有縣市名額問題。",
+      "source_url": "https://ksepb.kcg.gov.tw/AuditAnnouncement/news?PageType=1&id=cb6475fa-0b83-46b7-bc1c-830b3f8c8bbf",
+      "tags": ["電動機車", "名額", "預算用罄"]
+    }
+  ],
+  "notes": "研究日期 2026-11-08。核心結論：(1) 節能電器貨物稅退稅：貨物稅條例第 11 條之 1 於 2025-06-10 三讀、適用至 2029-12-31（民國 118 年），每台最高 2,000 元，發票日次日起 6 個月內申請，線上入口為財政部稅務入口網專區（gov.tw/mz4 轉址），稅額表與 Q&A 已由官方 PDF 核對。(2) 經濟部能源署「住宅家電汰舊換新節能補助」仍在進行，購買期限 2026-12-31、申請至 2027-01-31，能源署 2026-10-10 表示額度剩不到 2 成且不展延，故 status 為 active 但 2027 年起結束。(3) 環境部「老舊車輛汰舊換新空氣污染物減量補助辦法」適用至 2026-12-31、申請至 2027-01-10；舊的「淘汰老舊機車換購電動機車溫室氣體減量獎勵辦法」已於 2026-09-07 廢止，機車減碳效益改由媒合平臺收購方出價（2026-11 有經濟部 2,000、台積電 2,100、南山 2,500、臺南市 1,500 元）；空污減量補助機車金額官方頁未列（媒體約 1,000 元），列為未驗證。(4) 經濟部產業發展署新購電動機車補助 7,000／5,100 元、國產電池芯 +3,000、汰舊 +1,000，2026 年度申請截止 2026-12-10。(5) 電動車貨物稅（第 12 條之 3）與使用牌照稅（第 5 條）免徵均延長至 2030-12-31（民國 119 年），2025-12-30 公布、2026-01-01 生效；電動小客車 140 萬元完稅價格上限、262 HP 牌照稅門檻。(6) 縣市節能家電加碼：2026 年未找到縣市層級的全國可比方案（搜尋到的台北 111 年、新北 108 年方案已過期，桃園高溫敏感族群冷氣補助年份未確認），故未列 item。(7) 縣市電動機車加碼差異大，已依官方公告列出台北、新北、桃園、台中、台南、高雄六都各一個 item；其他縣市金額可參考電動機車產業網彙整表（基隆換購 12,000／新購 4,000；新竹市換購 17,000；彰化 12,000／5,000；南投 16,000／5,000；雲林 15,000／10,000；嘉義市 12,000／8,000；嘉義縣 14,000／8,000；屏東 6,000／3,000；宜蘭 10,000／8,000；金門 20,000／10,000；苗栗換購 2,500；新竹縣新購 5,500）。(8) 燃料費與牌照稅一般規定未納入本主題。本次 WebSearch 共 20 次、實際讀取官方頁面／PDF 20 餘個；無法讀取的頁面：lev.org.tw（403/525）、epd.ntpc.gov.tw 新聞稿（503）、dot.gov.tw 新聞稿（503）、高雄市公告 PDF（掃描影像）。"
+}
