@@ -17,6 +17,7 @@ import {
   Smartphone,
   Mail,
   ChevronLeft,
+  Info,
 } from "lucide-react";
 import { getAllSubsidies, getSubsidyById, getSubsidyIds, getRelatedSubsidies } from "@/lib/subsidy/data";
 import { CATEGORY_LABELS } from "@/lib/subsidy/types";
@@ -90,6 +91,7 @@ export default async function SubsidyDetailPage({ params }: { params: Promise<{ 
   const s = getSubsidyById(id);
   if (!s) notFound();
 
+  const title = s.short_name || s.name;
   const related = getRelatedSubsidies(s, 4);
   const calc = s.related_calculator ? tools.find((t) => t.slug === s.related_calculator) : undefined;
   const allCount = getAllSubsidies().length;
@@ -134,11 +136,9 @@ export default async function SubsidyDetailPage({ params }: { params: Promise<{ 
           {s.status_2026 === "ended" && <span className="rounded-full bg-red-100 px-2 py-0.5 text-red-700">已結束</span>}
           {s.status_2026 === "pending" && <span className="rounded-full bg-sky-100 px-2 py-0.5 text-sky-700">待公告</span>}
         </div>
-        <h1 className="text-2xl font-bold leading-tight tracking-tight sm:text-3xl">{s.name}</h1>
-        <p className="mt-1 flex items-center gap-1 text-sm text-muted-foreground">
-          <Building2 className="h-3.5 w-3.5" /> {s.agency}
-        </p>
-        <p className="mt-3 text-[15px] leading-relaxed">{s.summary}</p>
+        {/* 短名稱當標題：正式名稱常是「115年度 300億元中央擴大租金補貼專案計畫」這種長度，一般人不這樣叫 */}
+        <h1 className="text-2xl font-bold leading-tight tracking-tight sm:text-3xl">{title}</h1>
+        {title !== s.name && <p className="mt-1 text-sm leading-snug text-muted-foreground">{s.name}</p>}
       </header>
 
       <LiveUpdateNotice subsidy={{ id: s.id, amount: s.amount, deadline: s.deadline, status_2026: s.status_2026, official_url: s.official_url }} />
@@ -148,10 +148,24 @@ export default async function SubsidyDetailPage({ params }: { params: Promise<{ 
         <section className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 dark:border-emerald-900 dark:bg-emerald-950/30">
           <p className="text-xs font-medium text-emerald-800 dark:text-emerald-300">補助金額</p>
           <p className="mt-0.5 text-lg font-bold leading-snug text-emerald-900 dark:text-emerald-100">{amountHeadline(s.amount)}</p>
-          {amountNeedsDetail(s.amount) && (
-            <p className="mt-1.5 text-[13px] leading-relaxed text-emerald-900/90 dark:text-emerald-100/90">{s.amount.text}</p>
+          {/* 完整金額表常是一整段（各縣市、各級距），短的直接顯示，長的收起來，第一屏留給金額、期限與按鈕 */}
+          {amountNeedsDetail(s.amount) &&
+            (s.amount.text.length <= 70 && !s.amount.formula ? (
+              <p className="mt-1.5 text-[13px] leading-relaxed text-emerald-900/90 dark:text-emerald-100/90">{s.amount.text}</p>
+            ) : (
+              <details className="group mt-2">
+                <summary className="inline-flex cursor-pointer list-none items-center gap-1 text-xs font-medium text-emerald-800 underline underline-offset-4 dark:text-emerald-200">
+                  看完整金額與計算方式
+                </summary>
+                <p className="mt-2 text-[13px] leading-relaxed text-emerald-900/90 dark:text-emerald-100/90">{s.amount.text}</p>
+                {s.amount.formula && (
+                  <p className="mt-1.5 text-xs leading-relaxed text-emerald-800/80 dark:text-emerald-200/80">計算方式：{s.amount.formula}</p>
+                )}
+              </details>
+            ))}
+          {!amountNeedsDetail(s.amount) && s.amount.formula && (
+            <p className="mt-1.5 text-xs leading-relaxed text-emerald-800/80 dark:text-emerald-200/80">計算方式：{s.amount.formula}</p>
           )}
-          {s.amount.formula && <p className="mt-1.5 text-xs leading-relaxed text-emerald-800/80 dark:text-emerald-200/80">計算方式：{s.amount.formula}</p>}
           {calc && (
             <Link
               href={calc.href}
@@ -176,6 +190,14 @@ export default async function SubsidyDetailPage({ params }: { params: Promise<{ 
         </a>
         <ShareAppButton title={s.name} text={`${s.name}：${amountHeadline(s.amount)}。${describeWindow(s.deadline)}。`} url={`${SITE_URL}/subsidy/${s.id}`} label="分享這項補助" />
       </div>
+
+      {/* 這是什麼 */}
+      <Section icon={Info} title="這是什麼">
+        <p className="text-sm leading-relaxed">{s.summary}</p>
+        <p className="mt-2 flex items-start gap-1.5 text-xs text-muted-foreground">
+          <Building2 className="mt-0.5 h-3.5 w-3.5 shrink-0" /> {s.agency}
+        </p>
+      </Section>
 
       {/* 資格 */}
       <Section icon={FileText} title="誰可以申請">

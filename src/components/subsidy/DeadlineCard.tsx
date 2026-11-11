@@ -63,9 +63,18 @@ export default function DeadlineCard({ subsidy }: { subsidy: DeadlineCardSubsidy
           ) : (
             <p className="mt-0.5 text-lg font-bold leading-tight">{state.label}</p>
           )}
-          {subsidy.deadline.note && (
-            <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">{subsidy.deadline.note}</p>
-          )}
+          {/* 期限說明常有一整段（年度公告、戶數上限、明年展望），長的收起來，讓「加入提醒」留在第一屏 */}
+          {subsidy.deadline.note &&
+            (subsidy.deadline.note.length <= 60 ? (
+              <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">{subsidy.deadline.note}</p>
+            ) : (
+              <details className="mt-1.5">
+                <summary className="cursor-pointer list-none text-xs font-medium text-muted-foreground underline underline-offset-4">
+                  期限細節
+                </summary>
+                <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">{subsidy.deadline.note}</p>
+              </details>
+            ))}
         </div>
       </div>
 

@@ -30,7 +30,7 @@ const subsidies = ACTIVE_SUBSIDY_INDEX;
 
 /** 卡片用的簡短機關名：agency 常帶括號說明（受理單位、承辦銀行…），列表只留主辦機關那一段 */
 function shortAgency(agency: string): string {
-  return agency.split(/[（(／/、，,]/)[0].trim() || agency;
+  return agency.split(/[（(／/]/)[0].trim() || agency;
 }
 
 export default function UpcomingDeadlines({ limit = 5, withinDays = 120 }: { limit?: number; withinDays?: number }) {
