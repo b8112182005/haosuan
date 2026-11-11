@@ -217,7 +217,7 @@ export default function CheckWizard({ subsidies }: { subsidies: Subsidy[] }) {
             <Toggle label="有國民年金（沒勞保、25～64 歲通常自動納保）" value={profile.hasNationalPension} onChange={(v) => update({ hasNationalPension: v })} />
             <Toggle label="領有身心障礙證明" value={profile.isDisabled} onChange={(v) => update({ isDisabled: v })} />
             <Toggle label="在學學生" value={profile.isStudent} onChange={(v) => update({ isStudent: v })} />
-            <Toggle label="目前失業中（非自願離職）" value={profile.isUnemployed} onChange={(v) => update({ isUnemployed: v })} />
+            <Toggle label="目前沒有工作（待業或失業）" value={profile.isUnemployed} onChange={(v) => update({ isUnemployed: v })} />
             <Field label="低收入戶／中低收入戶資格">
               <div className="grid grid-cols-3 gap-2">
                 <Choice active={profile.lowIncome === "none"} onClick={() => update({ lowIncome: "none" })}>都不是</Choice>
@@ -288,7 +288,9 @@ function Results({
   if (!evaluations) return <div className="h-64 animate-pulse rounded-2xl bg-muted/40" aria-busy="true" />;
 
   const sum = summarize(evaluations);
-  const eligible = evaluations.filter((e) => e.verdict === "eligible");
+  // 「符合」再分兩組：有對上你填的條件的，和本來就不限身分的（報稅、疫苗、節能家電…）
+  const eligible = evaluations.filter((e) => e.verdict === "eligible" && e.matched.length > 0);
+  const universal = evaluations.filter((e) => e.verdict === "eligible" && e.matched.length === 0);
   const maybe = evaluations.filter((e) => e.verdict === "maybe");
   const no = evaluations.filter((e) => e.verdict === "not_eligible");
 
@@ -328,14 +330,14 @@ function Results({
           </div>
         </div>
         <div className="mt-4 grid grid-cols-3 gap-2 text-center">
-          <Stat icon={<CheckCircle2 className="h-4 w-4 text-emerald-600" />} n={sum.eligible} label="符合" />
+          <Stat icon={<CheckCircle2 className="h-4 w-4 text-emerald-600" />} n={sum.eligible} label="條件相符" />
           <Stat icon={<HelpCircle className="h-4 w-4 text-amber-600" />} n={sum.maybe} label="可能符合" />
           <Stat icon={<XCircle className="h-4 w-4 text-muted-foreground" />} n={sum.notEligible} label="不符合" />
         </div>
       </div>
 
       {eligible.length > 0 && (
-        <Group title="符合條件" hint="每一條自動比對的條件都對得上。申請前仍要看項目頁的文件與注意事項。">
+        <Group title={`和你的條件相符（${eligible.length}）`} hint="你填的條件都對得上。每項底下的「另需確認」是 app 無法比對的條件，申請前要自己看一次。">
           {eligible.map((e) => (
             <SubsidyCard key={e.subsidy.id} subsidy={e.subsidy} today={today} highlight="eligible" footer={<Reasons e={e} />} />
           ))}
@@ -343,9 +345,17 @@ function Results({
       )}
 
       {maybe.length > 0 && (
-        <Group title="可能符合" hint="有條件你還沒填，或要用全家所得、財產等資料自行確認。">
+        <Group title={`可能符合（${maybe.length}）`} hint="有條件你還沒填，或要用全家所得、財產等資料自行確認。">
           {maybe.map((e) => (
             <SubsidyCard key={e.subsidy.id} subsidy={e.subsidy} today={today} highlight="maybe" footer={<Reasons e={e} />} />
+          ))}
+        </Group>
+      )}
+
+      {universal.length > 0 && (
+        <Group title={`不限身分（${universal.length}）`} hint="沒有年齡、縣市、身分門檻的項目：報稅、疫苗、節能家電、申辦工具等。">
+          {universal.map((e) => (
+            <SubsidyCard key={e.subsidy.id} subsidy={e.subsidy} today={today} footer={<Reasons e={e} />} />
           ))}
         </Group>
       )}
@@ -384,7 +394,14 @@ function Reasons({ e }: { e: Evaluation }) {
     ...e.failed.map((t) => ({ kind: "no" as const, text: t })),
     ...e.unknown.map((t) => ({ kind: "unknown" as const, text: t })),
   ];
-  if (rows.length === 0) return <p className="mt-3 text-xs text-muted-foreground">沒有額外身分條件，符合基本資格即可申請。</p>;
+  // conditions.other：無法自動比對的補充條件，縮成兩行提示，完整內容在項目頁
+  const note = e.notes[0];
+  if (rows.length === 0)
+    return (
+      <p className="mt-3 line-clamp-2 border-t border-border pt-3 text-xs text-muted-foreground">
+        {note ? `另需確認：${note}` : "沒有額外身分條件，符合基本資格即可申請。"}
+      </p>
+    );
   return (
     <ul className="mt-3 space-y-1 border-t border-border pt-3 text-xs">
       {rows.slice(0, 5).map((r, i) => (
@@ -400,6 +417,7 @@ function Reasons({ e }: { e: Evaluation }) {
         </li>
       ))}
       {rows.length > 5 && <li className="text-muted-foreground">還有 {rows.length - 5} 條，見項目頁</li>}
+      {note && <li className="line-clamp-2 pt-1 text-muted-foreground">另需確認：{note}</li>}
     </ul>
   );
 }

@@ -120,6 +120,10 @@ export interface Subsidy {
   last_known_update: string | null;
   confidence: Confidence;
   unverified_fields: string[];
+  /** 核對員對照官方頁面重查金額、期限、是否辦理的日期（YYYY-MM-DD）；沒查過為 null */
+  verified_at?: string | null;
+  /** 核對員的一兩句結論：看了哪些頁面、改了什麼 */
+  verification_summary?: string | null;
   /** 研究主題 id，方便追溯來源檔 */
   topic?: string;
 }

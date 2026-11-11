@@ -5,10 +5,11 @@
  *   node scripts/subsidy/build-data.mjs [--research research] [--version YYYY-MM-DD]
  *
  * 讀取順序：
- *   <research>/verified/<id>.json   核對員修正後的完整 item（優先）
  *   <research>/topics/<topic>.json  研究員原始輸出（items + general_faqs）
- *   <research>/removed.json         要排除的 id 清單（核對員判定 remove 的項目）
+ *   <research>/verified/<id>.json   核對員重寫後的完整 item（有的話整筆取代）
+ *   <research>/patches/<id>.json    核對員的重點核對結果：corrections（path + 新值）與 verified_at
  *   <research>/overrides.json       人工覆寫（{ "<id>": { ...欄位 } }），最後套用
+ *   <research>/removed.json         要排除的 id 清單（跨主題重複、已失效的項目）
  *
  * 輸出 src/data/subsidies.json 與 public/data/subsidies.json（兩份相同）。
  * 這支腳本會做 schema 檢查：缺必要欄位、enum 值不對、id 重複都會直接失敗，不讓壞資料進 app。
@@ -99,6 +100,8 @@ function normalizeItem(item) {
     sources: (item.sources ?? []).map((s) => ({ url: s.url, title: s.title, publisher: s.publisher ?? null, accessed: s.accessed ?? null })),
     last_known_update: item.last_known_update ?? null,
     unverified_fields: item.unverified_fields ?? [],
+    verified_at: item.verified_at ?? null,
+    verification_summary: item.verification_summary ?? null,
   };
 }
 
@@ -115,6 +118,58 @@ for (const f of listJson(path.join(researchDir, "verified"))) {
   const v = readJson(f);
   if (v && typeof v === "object" && v.id) verified.set(v.id, v);
 }
+// 重點核對補丁：只允許改這些欄位，型別不對的修正直接略過（印警告），不讓核對員的筆誤弄壞資料
+const patches = new Map();
+for (const f of listJson(path.join(researchDir, "patches"))) {
+  const v = readJson(f);
+  if (v && typeof v === "object" && v.id) patches.set(v.id, v);
+}
+const warnings = [];
+const isNumOrNull = (v) => v === null || (typeof v === "number" && Number.isFinite(v));
+const PATCH_RULES = {
+  "amount.text": (v) => typeof v === "string" && v.length > 0,
+  "amount.min": isNumOrNull,
+  "amount.max": isNumOrNull,
+  "amount.unit": (v) => v === null || typeof v === "string",
+  "amount.formula": (v) => v === null || typeof v === "string",
+  "deadline.type": (v) => DEADLINE_TYPES.includes(v),
+  "deadline.start_month": (v) => v === null || (Number.isInteger(v) && v >= 1 && v <= 12),
+  "deadline.end_month": (v) => v === null || (Number.isInteger(v) && v >= 1 && v <= 12),
+  "deadline.start_day": (v) => v === null || (Number.isInteger(v) && v >= 1 && v <= 31),
+  "deadline.end_day": (v) => v === null || (Number.isInteger(v) && v >= 1 && v <= 31),
+  "deadline.note": (v) => typeof v === "string",
+  status_2026: (v) => STATUSES.includes(v),
+  official_url: (v) => typeof v === "string" && /^https?:\/\//.test(v),
+  summary: (v) => typeof v === "string" && v.length > 0,
+};
+
+function applyPatch(item, patch) {
+  const out = structuredClone(item);
+  let applied = 0;
+  for (const c of patch.corrections ?? []) {
+    const rule = PATCH_RULES[c.path];
+    let value;
+    try {
+      value = JSON.parse(c.new_value_json);
+    } catch {
+      value = c.new_value_json; // 核對員忘了加引號的字串
+    }
+    if (!rule || !rule(value)) {
+      warnings.push(`${item.id}: 略過修正 ${c.path} = ${String(c.new_value_json).slice(0, 60)}（欄位不允許或型別不符）`);
+      continue;
+    }
+    const [head, tail] = c.path.split(".");
+    if (tail) out[head] = { ...out[head], [tail]: value };
+    else out[head] = value;
+    applied++;
+  }
+  if (patch.verdict === "confirmed" || patch.verdict === "corrected") {
+    out.verified_at = patch.verified_at ?? null;
+    out.verification_summary = patch.summary ?? null;
+  }
+  return { item: out, applied };
+}
+
 const removedFile = path.join(researchDir, "removed.json");
 const removed = new Set(fs.existsSync(removedFile) ? readJson(removedFile) : []);
 const overridesFile = path.join(researchDir, "overrides.json");
@@ -125,6 +180,10 @@ const items = [];
 const generalFaqs = [];
 const seen = new Map();
 let verifiedCount = 0;
+let patchedCount = 0;
+let correctionCount = 0;
+let overrideCount = 0;
+const seenFaq = new Set();
 for (const { file, data } of topics) {
   const topic = data.topic ?? path.basename(file, ".json");
   for (const raw of data.items ?? []) {
@@ -134,8 +193,23 @@ for (const { file, data } of topics) {
       item = verified.get(raw.id);
       verifiedCount++;
     }
-    if (overrides[raw.id]) item = { ...item, ...overrides[raw.id] };
     item = normalizeItem({ ...item, topic });
+    if (patches.has(raw.id)) {
+      const r = applyPatch(item, patches.get(raw.id));
+      item = r.item;
+      correctionCount += r.applied;
+      if (item.verified_at) patchedCount++;
+    }
+    if (overrides[raw.id]) {
+      // _why 只是給人看的理由，不進資料；conditions／amount／deadline 逐欄合併，其餘欄位整個取代
+      const { _why, ...ov } = overrides[raw.id];
+      void _why;
+      for (const [key, value] of Object.entries(ov)) {
+        const nested = ["conditions", "amount", "deadline"].includes(key) && value && typeof value === "object";
+        item = { ...item, [key]: nested ? { ...item[key], ...value } : value };
+      }
+      overrideCount++;
+    }
     validateItem(item, path.basename(file));
     if (seen.has(item.id)) {
       problems.push(`id 重複：${item.id}（${seen.get(item.id)} 與 ${path.basename(file)}）`);
@@ -146,9 +220,15 @@ for (const { file, data } of topics) {
   }
   for (const f of data.general_faqs ?? []) {
     if (!f?.q || !f?.a) continue;
+    // 不同主題的研究員會寫到同一題（例如「房東不同意可以申請嗎」），留先出現的那則
+    const key = f.q.replace(/[\s？?。，,！!]/g, "");
+    if (seenFaq.has(key)) continue;
+    seenFaq.add(key);
     generalFaqs.push({ q: f.q, a: f.a, source_url: f.source_url ?? null, tags: Array.isArray(f.tags) ? f.tags : [], topic });
   }
 }
+
+for (const id of Object.keys(overrides)) check(seen.has(id) || removed.has(id), `overrides.json 的 ${id} 不存在於任何主題檔`);
 
 if (problems.length > 0) {
   console.error(`資料檢查失敗（${problems.length} 個問題）：`);
@@ -175,6 +255,8 @@ for (const out of ["src/data/subsidies.json", "public/data/subsidies.json"]) {
 
 const byCat = {};
 for (const i of items) byCat[i.category] = (byCat[i.category] ?? 0) + 1;
-console.log(`版本 ${version}：${items.length} 個項目（${verifiedCount} 個經核對）、${generalFaqs.length} 則一般問答、${topics.length} 個主題檔`);
+console.log(`版本 ${version}：${items.length} 個項目、${generalFaqs.length} 則一般問答、${topics.length} 個主題檔`);
+console.log(`二次核對：${patchedCount + verifiedCount} 個項目（補丁修正 ${correctionCount} 個欄位）；人工覆寫 ${overrideCount} 個項目；排除 ${removed.size} 個重複項目`);
+for (const w of warnings) console.warn("警告：", w);
 console.log("分類：", Object.entries(byCat).map(([k, v]) => `${k} ${v}`).join("，"));
 console.log(`信心：high ${items.filter((i) => i.confidence === "high").length}／medium ${items.filter((i) => i.confidence === "medium").length}／low ${items.filter((i) => i.confidence === "low").length}`);

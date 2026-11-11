@@ -315,6 +315,12 @@ export default async function SubsidyDetailPage({ params }: { params: Promise<{ 
             </li>
           ))}
         </ul>
+        {s.verified_at && (
+          <p className="mt-2 text-emerald-700 dark:text-emerald-400">
+            ✓ {s.verified_at} 由第二位核對員對照官方頁面重查金額、期限與是否仍辦理。
+            {s.verification_summary && <span className="text-muted-foreground"> {s.verification_summary}</span>}
+          </p>
+        )}
         {s.unverified_fields.length > 0 && (
           <p className="mt-2">
             未取得官方依據的欄位：{s.unverified_fields.map((f) => FIELD_LABELS[f] ?? f).join("、")}。申請前請向主管機關確認。
