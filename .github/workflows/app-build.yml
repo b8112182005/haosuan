@@ -1,45 +1,138 @@
+# 好耶 Android — 出 release AAB/APK，有服務帳號時順便上傳 Google Play
+#
+# 觸發：
+#   - push tag v*（例如 v1.2.0；versionName 會取 tag 去掉 v 的部分）
+#   - 手動 workflow_dispatch（可選 Play track，預設 internal）
+#
+# 需要的 GitHub Secrets（Settings → Secrets and variables → Actions → Repository secrets）：
+#   ANDROID_KEYSTORE_BASE64    upload-keystore.jks 轉 base64：`base64 -w0 android/upload-keystore.jks`（macOS：`base64 -i`）
+#   ANDROID_KEYSTORE_PASSWORD  keystore 密碼
+#   ANDROID_KEY_ALIAS          金鑰別名（scripts/android/make-keystore.sh 產生的是 upload）
+#   ANDROID_KEY_PASSWORD       金鑰密碼（PKCS12 keystore 和上面那個相同）
+#   PLAY_SERVICE_ACCOUNT_JSON  （選用）Play Console 服務帳號 JSON 全文；有設且有簽章才會上傳 Play
+#
+# 四個 ANDROID_* 都沒設時還是會 build，但 release 會用 debug 簽章（只能裝來測，不能上傳 Play），
+# gradle 會印一行 [haoti] 警告。versionCode 固定用 github.run_number，所以每次跑都會遞增，
+# 不要手動 re-run 舊的 run 去上傳（run_number 不變，Play 會拒收）。
 name: App Build (Android)
 
 on:
   push:
     tags:
       - 'v*'
+  workflow_dispatch:
+    inputs:
+      track:
+        description: 'Google Play track（有 PLAY_SERVICE_ACCOUNT_JSON 才會上傳）'
+        type: choice
+        default: internal
+        options:
+          - internal
+          - alpha
+          - beta
+          - production
+
+permissions:
+  contents: read
+
+concurrency:
+  group: app-build-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   build-android:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
 
       - uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '21'
+
+      - uses: android-actions/setup-android@v3
+
+      # 快取 Gradle 依賴與 wrapper，少抓幾百 MB
+      - uses: gradle/actions/setup-gradle@v4
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Build Next.js static export
+      - name: Build Next.js static export (app target)
         run: npm run build:app
-
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
 
       - name: Capacitor sync Android
         run: npx cap sync android
 
-      - name: Build Android AAB
+      # GitHub 不允許在 if: 裡直接讀 secrets，先經過 env 轉成 step output
+      - name: Detect optional secrets
+        id: secrets
+        env:
+          KEYSTORE_B64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          PLAY_JSON: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+        run: |
+          if [ -n "$KEYSTORE_B64" ]; then echo "has_keystore=true"; else echo "has_keystore=false"; fi >> "$GITHUB_OUTPUT"
+          if [ -n "$PLAY_JSON" ]; then echo "has_play=true"; else echo "has_play=false"; fi >> "$GITHUB_OUTPUT"
+
+      - name: Decode upload keystore
+        if: steps.secrets.outputs.has_keystore == 'true'
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > android/upload-keystore.jks
+          {
+            echo "ANDROID_KEYSTORE_PATH=$GITHUB_WORKSPACE/android/upload-keystore.jks"
+            echo "ANDROID_KEYSTORE_PASSWORD=$KEYSTORE_PASSWORD"
+            echo "ANDROID_KEY_ALIAS=$KEY_ALIAS"
+            echo "ANDROID_KEY_PASSWORD=$KEY_PASSWORD"
+          } >> "$GITHUB_ENV"
+
+      # tag v1.2.0 → versionName 1.2.0；手動觸發則讓 gradle 讀 package.json 的 version
+      - name: Resolve versionName
+        id: version
+        run: |
+          if [ "$GITHUB_REF_TYPE" = "tag" ] && [ "${GITHUB_REF_NAME#v}" != "$GITHUB_REF_NAME" ]; then
+            echo "args=-PversionName=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+          else
+            echo "args=" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build release AAB + APK
         working-directory: android
-        run: ./gradlew bundleRelease
+        run: ./gradlew bundleRelease assembleRelease -PversionCode=${{ github.run_number }} ${{ steps.version.outputs.args }} --no-daemon
 
       - name: Upload AAB
         uses: actions/upload-artifact@v4
         with:
-          name: haosuan-android-${{ github.ref_name }}
+          name: haoti-android-aab-${{ github.ref_name }}-${{ github.run_number }}
           path: android/app/build/outputs/bundle/release/*.aab
           retention-days: 30
+          if-no-files-found: error
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: haoti-android-apk-${{ github.ref_name }}-${{ github.run_number }}
+          path: android/app/build/outputs/apk/release/*.apk
+          retention-days: 30
+          if-no-files-found: error
+
+      # 沒有正式簽章的 AAB 傳上去 Play 一定被拒，所以兩個條件都要成立
+      - name: Upload to Google Play
+        if: steps.secrets.outputs.has_play == 'true' && steps.secrets.outputs.has_keystore == 'true'
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          packageName: com.haosuan.haoti
+          releaseFiles: android/app/build/outputs/bundle/release/*.aab
+          track: ${{ inputs.track || 'internal' }}
+          status: completed

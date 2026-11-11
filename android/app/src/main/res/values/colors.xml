@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 品牌色：主色紫、深一階給狀態列、強調色＝補助綠。和 capacitor.config.ts / src 裡的 token 一致 -->
+    <color name="colorPrimary">#6C5CE7</color>
+    <color name="colorPrimaryDark">#5B4BD6</color>
+    <color name="colorAccent">#10B981</color>
+    <!-- 啟動畫面底色。values-night 也定義成白色，深色模式才不會黑底 -->
+    <color name="splash_background">#FFFFFF</color>
+</resources>

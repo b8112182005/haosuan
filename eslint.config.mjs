@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Capacitor 原生專案：裡面的 JS 是 build 產物（複製進 assets 的 Next chunk）
+    "android/**",
+    "ios/**",
   ]),
 ]);
 

@@ -1,0 +1,233 @@
+{
+  "rent-subsidy-central-300b": {
+    "_why": "子女與低收身分是加碼條件，不是申請門檻；單身租屋族可申請",
+    "conditions": {
+      "child_age_max": null,
+      "child_age_min": null,
+      "has_children": null,
+      "low_income": null
+    }
+  },
+  "public-welfare-landlord-tax-benefits": {
+    "_why": "這頁主要給房客拿去說服房東，不限有房者才看得到",
+    "conditions": {
+      "must_own_home": null
+    }
+  },
+  "social-housing-sublet-management": {
+    "_why": "一般戶也能承租（弱勢戶折扣較多）；目前沒租屋的人也能申請",
+    "conditions": {
+      "low_income": null,
+      "must_rent": null
+    }
+  },
+  "central-social-housing-rental": {
+    "_why": "一般戶可申請，低收／中低收是優先戶不是門檻",
+    "conditions": {
+      "low_income": null
+    }
+  },
+  "home-purchase-loan-interest-subsidy": {
+    "_why": "看家庭年所得標準，不要求列冊低收／中低收",
+    "conditions": {
+      "low_income": null
+    }
+  },
+  "home-repair-loan-interest-subsidy": {
+    "_why": "看家庭年所得標準，不要求列冊低收／中低收",
+    "conditions": {
+      "low_income": null
+    }
+  },
+  "rent-subsidy-taipei-topup": {
+    "_why": "三類擇一：單身青年未滿 40、已婚青年 45 以下無子女、育兒家庭子女 12 歲以下；子女與 45 歲不是共同門檻",
+    "conditions": {
+      "max_age": null,
+      "child_age_min": null,
+      "child_age_max": null,
+      "has_children": null
+    }
+  },
+  "rent-subsidy-new-taipei-youth": {
+    "_why": "單身、新婚、育有未成年子女三者擇一，子女不是門檻",
+    "conditions": {
+      "child_age_max": null,
+      "child_age_min": null,
+      "has_children": null
+    }
+  },
+  "preschool-fee-cap-2-6": {
+    "_why": "繳費上限適用所有 2–6 歲幼兒；低收／中低收是免繳，不是門檻",
+    "conditions": {
+      "low_income": null
+    }
+  },
+  "toddler-care-subsidy-0-2": {
+    "_why": "一般家庭即可領；低收／中低收是加碼金額",
+    "conditions": {
+      "low_income": null
+    }
+  },
+  "childcare-allowance-0-2": {
+    "_why": "有 0–2 歲子女即符合，不需要同時是孕婦或 1 年內新生兒",
+    "conditions": {
+      "is_pregnant_or_newborn": null
+    }
+  },
+  "labor-insurance-maternity-benefit": {
+    "_why": "保險有效期間懷孕、退保後 1 年內分娩也能請領，不限在職",
+    "conditions": {
+      "is_employed": null
+    }
+  },
+  "income-tax-longterm-care-deduction": {
+    "_why": "扣除額看申報戶內有沒有符合長照需求的人，不限申報人本人領有身障證明",
+    "conditions": {
+      "is_disabled": null
+    }
+  },
+  "labor-insurance-old-age-pension-age": {
+    "_why": "已退保的退休者也要看這頁；年資條件寫在其他條件",
+    "conditions": {
+      "has_labor_insurance": null
+    }
+  },
+  "unemployment-benefit": {
+    "_why": "失業者已退保，問「現在有沒有勞保」會把他們排除；條件是離職前有就業保險年資",
+    "conditions": {
+      "has_labor_insurance": null
+    }
+  },
+  "vocational-training-living-allowance": {
+    "_why": "同失業給付：失業者現在沒有勞保",
+    "conditions": {
+      "has_labor_insurance": null
+    }
+  },
+  "nhi-premium-subsidy-unemployed": {
+    "_why": "同失業給付：失業者現在沒有勞保",
+    "conditions": {
+      "has_labor_insurance": null
+    }
+  },
+  "early-reemployment-bonus": {
+    "_why": "對象是領失業給付期間提早找到工作的人：申請時在職、之前失業，兩種狀態的人都要看得到",
+    "conditions": {
+      "is_employed": null,
+      "has_labor_insurance": null
+    }
+  },
+  "occupational-accident-and-wage-arrears": {
+    "_why": "工資墊償發生在雇主歇業後，勞工當下是失業狀態",
+    "conditions": {
+      "is_employed": null
+    }
+  },
+  "disadvantaged-college-student-grant-2026": {
+    "_why": "門檻是家庭年所得 90 萬以下，不是列冊低收／中低收（那是學雜費減免）",
+    "conditions": {
+      "low_income": null
+    }
+  },
+  "cancer-screening-public": {
+    "_why": "子宮頸抹片 30 歲以上沒有年齡上限",
+    "conditions": {
+      "max_age": null
+    }
+  },
+  "elderly-nhi-premium-subsidy": {
+    "_why": "多數縣市補助 65 歲以上一般長者（看稅率），中低收 70 歲以上只是中央全額補助的那一類",
+    "conditions": {
+      "min_age": 65,
+      "low_income": null
+    }
+  },
+  "nhi-premium-subsidy-low-income-disability": {
+    "_why": "身心障礙者不是低收也有補助",
+    "conditions": {
+      "low_income": null
+    }
+  },
+  "national-pension-premium-subsidy": {
+    "_why": "一般被保險人政府就負擔 40%；「所得未達一定標準」另外向公所申請認定，不等於列冊低收；原官方網址 bli.gov.tw/0000001.html 已 404，改指勞保局國民年金簡介頁",
+    "conditions": {
+      "low_income": null
+    },
+    "official_url": "https://www.bli.gov.tw/0019852.html"
+  },
+  "mid-low-income-elderly-allowance": {
+    "_why": "津貼有自己的所得財產審查，不要求先有低收／中低收入戶資格",
+    "conditions": {
+      "low_income": null
+    }
+  },
+  "disability-living-allowance": {
+    "_why": "低收、中低收，或家庭平均所得未達 2.5 倍者都可領，不限列冊戶",
+    "conditions": {
+      "low_income": null
+    }
+  },
+  "elderly-denture-subsidy": {
+    "_why": "各縣市辦法不同，有的不限低收（例如高雄一般長者型）",
+    "conditions": {
+      "low_income": null
+    }
+  },
+  "low-income-living-assistance-2026": {
+    "_why": "沒有子女的低收入戶也領家庭生活補助；子女年齡只影響兒童生活補助",
+    "conditions": {
+      "child_age_max": null,
+      "child_age_min": null
+    }
+  },
+  "low-income-household-thresholds-2026": {
+    "_why": "這頁是教人怎麼申請低收／中低收資格，還不是低收的人最需要看",
+    "conditions": {
+      "low_income": null,
+      "owns_vehicle": null
+    }
+  },
+  "taichung-low-carbon-vehicle-subsidy-2026": {
+    "_why": "育兒與低收是加碼金額，不是門檻",
+    "conditions": {
+      "child_age_min": null,
+      "child_age_max": null,
+      "low_income": null
+    }
+  },
+  "taipei-electric-scooter-subsidy-2026": {
+    "_why": "育兒與低收是加碼金額，不是門檻",
+    "conditions": {
+      "child_age_min": null,
+      "child_age_max": null,
+      "low_income": null
+    }
+  },
+  "tainan-electric-two-wheeler-subsidy-2026": {
+    "_why": "低收是加碼金額，不是門檻",
+    "conditions": {
+      "low_income": null
+    }
+  },
+  "taoyuan-electric-scooter-subsidy-2026": {
+    "_why": "育兒與低收是加碼金額，不是門檻",
+    "conditions": {
+      "child_age_min": null,
+      "child_age_max": null,
+      "low_income": null
+    }
+  },
+  "kaohsiung-electric-scooter-subsidy-2026": {
+    "_why": "育兒是加碼金額，不是門檻",
+    "conditions": {
+      "child_age_min": null,
+      "child_age_max": null
+    }
+  },
+  "new-taipei-electric-scooter-subsidy-2026": {
+    "_why": "低收是加碼金額，不是門檻",
+    "conditions": {
+      "low_income": null
+    }
+  }
+}
