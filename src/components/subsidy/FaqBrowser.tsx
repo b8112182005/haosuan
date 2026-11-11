@@ -15,9 +15,13 @@ export interface FaqEntry {
   subsidyName?: string;
 }
 
+const PAGE_SIZE = 40;
+
 export default function FaqBrowser({ entries, groups }: { entries: FaqEntry[]; groups: string[] }) {
   const [query, setQuery] = useState("");
   const [group, setGroup] = useState<string>("all");
+  // 五百多則一次畫出來，手機捲動會頓；先畫 40 則，按鈕再加
+  const [limit, setLimit] = useState(PAGE_SIZE);
 
   const list = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -35,13 +39,16 @@ export default function FaqBrowser({ entries, groups }: { entries: FaqEntry[]; g
         <input
           type="search"
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            setLimit(PAGE_SIZE);
+          }}
           placeholder="輸入你的問題：房東不同意、戶籍、補件、撥款…"
           aria-label="搜尋問答"
           className="h-11 w-full rounded-xl border border-input bg-background pl-9 pr-9 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
         />
         {query && (
-          <button type="button" onClick={() => setQuery("")} aria-label="清除" className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-muted-foreground">
+          <button type="button" onClick={() => { setQuery(""); setLimit(PAGE_SIZE); }} aria-label="清除" className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-muted-foreground">
             <X className="h-4 w-4" />
           </button>
         )}
@@ -49,9 +56,9 @@ export default function FaqBrowser({ entries, groups }: { entries: FaqEntry[]; g
 
       <div className="-mx-4 overflow-x-auto px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         <div className="flex w-max gap-2 pb-1">
-          <GroupChip active={group === "all"} onClick={() => setGroup("all")}>全部 {entries.length}</GroupChip>
+          <GroupChip active={group === "all"} onClick={() => { setGroup("all"); setLimit(PAGE_SIZE); }}>全部 {entries.length}</GroupChip>
           {groups.map((g) => (
-            <GroupChip key={g} active={group === g} onClick={() => setGroup(g)}>
+            <GroupChip key={g} active={group === g} onClick={() => { setGroup(g); setLimit(PAGE_SIZE); }}>
               {g}
             </GroupChip>
           ))}
@@ -66,8 +73,8 @@ export default function FaqBrowser({ entries, groups }: { entries: FaqEntry[]; g
         </p>
       ) : (
         <div className="space-y-2">
-          {list.map((e, i) => (
-            <details key={`${e.group}-${i}`} className="group rounded-xl border border-border bg-card">
+          {list.slice(0, limit).map((e, i) => (
+            <details key={`${e.group}-${e.subsidyId ?? "g"}-${i}`} className="group rounded-xl border border-border bg-card">
               <summary className="flex cursor-pointer list-none items-start justify-between gap-3 px-4 py-3">
                 <span>
                   <span className="block text-sm font-medium leading-snug">{e.q}</span>
@@ -92,6 +99,15 @@ export default function FaqBrowser({ entries, groups }: { entries: FaqEntry[]; g
               </div>
             </details>
           ))}
+          {list.length > limit && (
+            <button
+              type="button"
+              onClick={() => setLimit((n) => n + PAGE_SIZE)}
+              className="mt-2 h-11 w-full rounded-xl border border-border text-sm font-medium hover:bg-accent/40"
+            >
+              再顯示 {Math.min(PAGE_SIZE, list.length - limit)} 則（還有 {list.length - limit} 則）
+            </button>
+          )}
         </div>
       )}
     </div>

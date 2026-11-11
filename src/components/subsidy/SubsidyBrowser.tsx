@@ -20,6 +20,8 @@ function matches(q: string, s: Subsidy): boolean {
   return hay.includes(needle);
 }
 
+const PAGE_SIZE = 30;
+
 export default function SubsidyBrowser({ subsidies }: { subsidies: Subsidy[] }) {
   const params = useSearchParams();
   const initialCat = params.get("cat") as SubsidyCategory | null;
@@ -29,6 +31,8 @@ export default function SubsidyBrowser({ subsidies }: { subsidies: Subsidy[] }) 
   const [city, setCity] = useState<string>("");
   const [query, setQuery] = useState("");
   const [activeOnly, setActiveOnly] = useState(true);
+  // 一次畫 99 張卡片，低階手機捲動會頓；先畫 30 張
+  const [limit, setLimit] = useState(PAGE_SIZE);
   const today = useToday();
 
   // 進站時順手檢查一次遠端資料（6 小時內只抓一次）
@@ -135,11 +139,22 @@ export default function SubsidyBrowser({ subsidies }: { subsidies: Subsidy[] }) 
           找不到符合的項目。換個關鍵字，或到「疑難雜症」看看相關問答。
         </p>
       ) : (
-        <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-          {list.map((s) => (
-            <SubsidyCard key={s.id} subsidy={s} today={today} />
-          ))}
-        </div>
+        <>
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+            {list.slice(0, limit).map((s) => (
+              <SubsidyCard key={s.id} subsidy={s} today={today} />
+            ))}
+          </div>
+          {list.length > limit && (
+            <button
+              type="button"
+              onClick={() => setLimit((n) => n + PAGE_SIZE)}
+              className="h-11 w-full rounded-xl border border-border text-sm font-medium hover:bg-accent/40"
+            >
+              再顯示 {Math.min(PAGE_SIZE, list.length - limit)} 項（還有 {list.length - limit} 項）
+            </button>
+          )}
+        </>
       )}
     </div>
   );

@@ -1,0 +1,60 @@
+{
+  "id": "income-tax-filing-2026",
+  "verdict": "confirmed",
+  "verified_at": "2026-11-11",
+  "checked": [
+    {
+      "field": "amount.text（免稅額、標準扣除額、特別扣除額、基本生活費）",
+      "value_in_data": "免稅額97,000元（70歲以上145,500元）；標準扣除額單身131,000元、夫妻262,000元；薪資所得、身心障礙特別扣除額各218,000元；基本生活費213,000元",
+      "official_value": "基本生活費 213,000；免稅額 97,000／年滿70歲 145,500；標準扣除額 單身 131,000／與配偶合併申報 262,000；薪資所得 218,000；身心障礙 218,000",
+      "match": true,
+      "source_url": "https://announce.ndhu.edu.tw/message_8/1777858456/114%E5%B9%B4%E5%BA%A6%E7%B6%9C%E5%90%88%E6%89%80%E5%BE%97%E7%A8%85%E7%B5%90%E7%AE%97%E7%94%B3%E5%A0%B1%E6%B3%95%E4%BB%A4%E4%BB%8B%E7%B4%B9.pdf"
+    },
+    {
+      "field": "amount.text（稅率與級距）",
+      "value_in_data": "5%／12%／20%／30%／40%，級距59萬／133萬／266萬／498萬元",
+      "official_value": "5% 0~590,000；12% 590,001~1,330,000；20% 1,330,001~2,660,000；30% 2,660,001~4,980,000",
+      "match": true,
+      "source_url": "https://announce.ndhu.edu.tw/message_8/1777858456/114%E5%B9%B4%E5%BA%A6%E7%B6%9C%E5%90%88%E6%89%80%E5%BE%97%E7%A8%85%E7%B5%90%E7%AE%97%E7%94%B3%E5%A0%B1%E6%B3%95%E4%BB%A4%E4%BB%8B%E7%B4%B9.pdf"
+    },
+    {
+      "field": "amount.formula（累進差額）",
+      "value_in_data": "12%級距41,300元、20%級距147,700元、30%級距413,700元、40%級距911,700元",
+      "official_value": "簡報未列累進差額；依官方級距 590,000／1,330,000／2,660,000／4,980,000 自行驗算，結果為 41,300／147,700／413,700／911,700",
+      "match": true,
+      "source_url": "https://announce.ndhu.edu.tw/message_8/1777858456/114%E5%B9%B4%E5%BA%A6%E7%B6%9C%E5%90%88%E6%89%80%E5%BE%97%E7%A8%85%E7%B5%90%E7%AE%97%E7%94%B3%E5%A0%B1%E6%B3%95%E4%BB%A4%E4%BB%8B%E7%B4%B9.pdf"
+    },
+    {
+      "field": "deadline（start 5/1、end 5/31，115年順延到6/1，附件6/11前）",
+      "value_in_data": "每年5月1日至5月31日；115年截止日為6月1日；網路申報附件6月11日前送達",
+      "official_value": "申報期間 115/5/1~6/1；延長收件 115/6/1 至 19 時；網路附件 6/11 前",
+      "match": true,
+      "source_url": "https://announce.ndhu.edu.tw/message_8/1777858456/114%E5%B9%B4%E5%BA%A6%E7%B6%9C%E5%90%88%E6%89%80%E5%BE%97%E7%A8%85%E7%B5%90%E7%AE%97%E7%94%B3%E5%A0%B1%E6%B3%95%E4%BB%A4%E4%BB%8B%E7%B4%B9.pdf"
+    },
+    {
+      "field": "deadline.note（116年5月申報115年度的新數字）",
+      "value_in_data": "免稅額10.1萬元、標準扣除額13.6萬元（夫妻27.2萬）、薪資與身障特別扣除額22.7萬元，級距61萬／138萬／277萬／519萬元",
+      "official_value": "賦稅署重要公告頁列有「公告115年度綜合所得稅免稅額、標準扣除額、薪資所得特別扣除額、身心障礙特別扣除額、課稅級距」，但只連到行政院公報，頁面沒有數字；媒體轉述財政部級距表為 61萬／138萬／277萬／519萬，免稅額10.1萬、標準扣除額13.6萬／27.2萬、特別扣除額22.7萬",
+      "match": true,
+      "source_url": "https://news.tvbs.com.tw/life/2967797"
+    },
+    {
+      "field": "status_2026",
+      "value_in_data": "active",
+      "official_value": "115年5月1日至6月1日已照常辦理申報；退稅第二批115/10/30、第三批116/1/20；116年5月申報適用的115年度數字已公告",
+      "match": true,
+      "source_url": "https://announce.ndhu.edu.tw/message_8/1777858456/114%E5%B9%B4%E5%BA%A6%E7%B6%9C%E5%90%88%E6%89%80%E5%BE%97%E7%A8%85%E7%B5%90%E7%AE%97%E7%94%B3%E5%A0%B1%E6%B3%95%E4%BB%A4%E4%BB%8B%E7%B4%B9.pdf"
+    },
+    {
+      "field": "official_url",
+      "value_in_data": "https://www.etax.nat.gov.tw/etwmain/tax-info/understanding/tax-saving-manual/national/individual-income-tax",
+      "official_value": "HTTP 200",
+      "match": true,
+      "source_url": "https://www.etax.nat.gov.tw/etwmain/tax-info/understanding/tax-saving-manual/national/individual-income-tax"
+    }
+  ],
+  "corrections": [],
+  "official_url_ok": true,
+  "file_path": "/home/user/haosuan/research/patches/income-tax-filing-2026.json",
+  "summary": "讀了北區國稅局花蓮分局115.4.21申報實務簡報（PDF）與賦稅署重要公告頁，114年度免稅額、扣除額、基本生活費、四個級距與申報期間115/5/1~6/1、附件6/11前都和資料一致，official_url 回 200。116年5月適用的115年度級距（61萬／138萬／277萬／519萬）只在媒體轉述中看到，賦稅署頁面僅連到行政院公報、沒有數字，仍屬未核對公報原文，維持在 unverified_fields。"
+}
