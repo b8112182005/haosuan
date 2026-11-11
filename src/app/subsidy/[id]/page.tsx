@@ -22,6 +22,7 @@ import { getAllSubsidies, getSubsidyById, getSubsidyIds, getRelatedSubsidies } f
 import { CATEGORY_LABELS } from "@/lib/subsidy/types";
 import type { SubsidyChannel } from "@/lib/subsidy/types";
 import { describeWindow } from "@/lib/subsidy/deadline";
+import { amountHeadline, amountNeedsDetail } from "@/lib/subsidy/format";
 import { tools } from "@/lib/tools-registry";
 import { serializeJsonLd } from "@/lib/json-ld";
 import DeadlineCard from "@/components/subsidy/DeadlineCard";
@@ -146,7 +147,10 @@ export default async function SubsidyDetailPage({ params }: { params: Promise<{ 
       <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
         <section className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 dark:border-emerald-900 dark:bg-emerald-950/30">
           <p className="text-xs font-medium text-emerald-800 dark:text-emerald-300">補助金額</p>
-          <p className="mt-0.5 text-lg font-bold leading-snug text-emerald-900 dark:text-emerald-100">{s.amount.text}</p>
+          <p className="mt-0.5 text-lg font-bold leading-snug text-emerald-900 dark:text-emerald-100">{amountHeadline(s.amount)}</p>
+          {amountNeedsDetail(s.amount) && (
+            <p className="mt-1.5 text-[13px] leading-relaxed text-emerald-900/90 dark:text-emerald-100/90">{s.amount.text}</p>
+          )}
           {s.amount.formula && <p className="mt-1.5 text-xs leading-relaxed text-emerald-800/80 dark:text-emerald-200/80">計算方式：{s.amount.formula}</p>}
           {calc && (
             <Link
@@ -170,7 +174,7 @@ export default async function SubsidyDetailPage({ params }: { params: Promise<{ 
         >
           前往官方申請頁 <ExternalLink className="h-4 w-4" />
         </a>
-        <ShareAppButton title={s.name} text={`${s.name}：${s.amount.text}。${describeWindow(s.deadline)}。`} url={`${SITE_URL}/subsidy/${s.id}`} label="分享這項補助" />
+        <ShareAppButton title={s.name} text={`${s.name}：${amountHeadline(s.amount)}。${describeWindow(s.deadline)}。`} url={`${SITE_URL}/subsidy/${s.id}`} label="分享這項補助" />
       </div>
 
       {/* 資格 */}
@@ -291,7 +295,7 @@ export default async function SubsidyDetailPage({ params }: { params: Promise<{ 
             {related.map((r) => (
               <Link key={r.id} href={`/subsidy/${r.id}`} className="rounded-xl border border-border p-3 text-sm hover:border-primary/50">
                 <span className="block font-medium">{r.short_name || r.name}</span>
-                <span className="mt-0.5 block text-xs text-muted-foreground">{r.amount.text}</span>
+                <span className="mt-0.5 block truncate text-xs text-muted-foreground">{amountHeadline(r.amount)}</span>
               </Link>
             ))}
           </div>

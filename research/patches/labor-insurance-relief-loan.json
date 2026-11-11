@@ -1,0 +1,16 @@
+{
+  "id": "labor-insurance-relief-loan",
+  "verdict": "confirmed",
+  "verified_at": "2026-11-11",
+  "checked": [
+    {"field": "amount.max", "value_in_data": "100000", "official_value": "每人最高貸款金額新臺幣10萬元；本貸款總額度新臺幣200億元為原則", "match": true, "source_url": "https://events.bli.gov.tw/Activities/202511_05/"},
+    {"field": "amount.text", "value_in_data": "貸款3年，年息2.165%，前6個月付息不還本，第7個月起本息平均攤還；借10萬元前6個月每月利息180元，第7個月起每月本息3,427元", "official_value": "自撥款日起為年息2.165%，嗣後於每年1月及7月第1個營業日公告調整；貸款期間3年，前6個月按月付息不還本，自第7個月起按月平均攤還本息；如借款10萬元，前6個月每月需繳利息180元，第7個月開始每月繳本息3,427元", "match": true, "source_url": "https://events.bli.gov.tw/Activities/202511_05/"},
+    {"field": "deadline", "value_in_data": "12月15日至1月2日（115年度：2025-12-15 08:00 至 2026-01-02 24:00）", "official_value": "114年12月15日（星期一）至115年1月2日（星期五）止；網路8時起至24時止；臨櫃每上班日上午9時至下午5時；郵遞以郵戳為憑", "match": true, "source_url": "https://events.bli.gov.tw/Activities/202511_05/"},
+    {"field": "status_2026", "value_in_data": "active", "official_value": "勞保局114年12月5日公告115年紓困貸款，委由土地銀行於114年12月15日至115年1月2日受理；116年度方案至2026-11-11查無公告", "match": true, "source_url": "https://www.bli.gov.tw/0109572.html"},
+    {"field": "official_url", "value_in_data": "https://events.bli.gov.tw/Activities/202511_05/", "official_value": "HTTP 200，頁面標題「115年勞工保險被保險人紓困貸款開辦了！」", "match": true, "source_url": "https://events.bli.gov.tw/Activities/202511_05/"}
+  ],
+  "corrections": [],
+  "official_url_ok": true,
+  "file_path": "/home/user/haosuan/research/patches/labor-insurance-relief-loan.json",
+  "summary": "看了勞保局115年紓困貸款活動頁與勞保局新聞稿（0109572），土地銀行申請頁回 200。最高10萬元、3年、年息2.165%、受理期間114/12/15至115/1/2、試算金額180元與3,427元都與資料一致。116年度方案在勞保局、勞動部、土地銀行網站都還查不到公告；另外115年7月的利率調整公告這次沒有查到，2.165% 是開辦時的利率。"
+}

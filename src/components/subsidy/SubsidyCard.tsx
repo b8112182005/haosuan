@@ -5,6 +5,7 @@ import { ChevronRight, MapPin } from "lucide-react";
 import type { Subsidy } from "@/lib/subsidy/types";
 import { CATEGORY_LABELS } from "@/lib/subsidy/types";
 import { resolveSubsidyDeadline, urgency, type LocalDate } from "@/lib/subsidy/deadline";
+import { amountHeadline } from "@/lib/subsidy/format";
 
 export function StatusBadge({ subsidy }: { subsidy: Subsidy }) {
   if (subsidy.status_2026 === "ended")
@@ -74,7 +75,9 @@ export default function SubsidyCard({
           <ChevronRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground" />
         </div>
         <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
-          <span className="text-sm font-semibold text-emerald-700 dark:text-emerald-300">{subsidy.amount.text}</span>
+          <span className="min-w-0 flex-1 truncate text-sm font-semibold text-emerald-700 dark:text-emerald-300">
+            {amountHeadline(subsidy.amount)}
+          </span>
           <DeadlineBadge subsidy={subsidy} today={today} />
         </div>
       </Link>

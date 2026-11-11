@@ -1,0 +1,53 @@
+{
+  "id": "land-value-tax-november",
+  "verdict": "confirmed",
+  "verified_at": "2026-11-11",
+  "checked": [
+    {
+      "field": "amount.text",
+      "value_in_data": "地價稅 = 課稅地價 × 稅率。自用住宅用地2‰，一般用地10‰～55‰累進；應納稅額100元以下免徵",
+      "official_value": "自用住宅用地2‰；一般用地10‰、15‰、25‰、35‰、45‰、55‰六級累進（第2至6級為課稅地價×稅率－累進差額）",
+      "match": true,
+      "source_url": "https://www.etax.nat.gov.tw/etwmain/tax-info/understanding/tax-saving-manual/local/land-value-tax/bD9Bk19"
+    },
+    {
+      "field": "amount.text（免徵門檻）",
+      "value_in_data": "應納稅額100元以下免徵",
+      "official_value": "如果應納稅額在新臺幣100元以下者，是免予課徵",
+      "match": true,
+      "source_url": "https://www.etax.nat.gov.tw/etwmain/announcement/news/Ye29mN6"
+    },
+    {
+      "field": "deadline.start_month/start_day/end_month/end_day",
+      "value_in_data": "11月1日至11月30日",
+      "official_value": "115年地價稅將於11月1日開徵，繳納期限至11月30日止（嘉義市）；繳納時間為115年11月1日至11月30日止（屏東縣）",
+      "match": true,
+      "source_url": "https://www.etax.nat.gov.tw/etwmain/announcement/news/Ye29mN6"
+    },
+    {
+      "field": "deadline.note（滯納金、超商限額）",
+      "value_in_data": "逾期每3日加1%滯納金最高10%；超商可繳3萬元以下稅單，郵局不代收",
+      "official_value": "每逾3日被加徵1%滯納金，最高可加徵至10%；金融機構(郵局不代收)及四大超商(限3萬元以下)",
+      "match": true,
+      "source_url": "https://www.etax.nat.gov.tw/etwmain/announcement/news/EVP5Zml"
+    },
+    {
+      "field": "status_2026",
+      "value_in_data": "active",
+      "official_value": "115年地價稅將於11月1日開徵（115-11-03 嘉義市政府財政稅務局、115-11-02 屏東縣政府財稅局公告）",
+      "match": true,
+      "source_url": "https://www.etax.nat.gov.tw/etwmain/announcement/news/EVP5Zml"
+    },
+    {
+      "field": "official_url",
+      "value_in_data": "https://www.etax.nat.gov.tw/etwmain/tax-info/understanding/tax-saving-manual/local/land-value-tax",
+      "official_value": "HTTP 200，頁面為財政部稅務入口網「地價稅節稅手冊」目錄",
+      "match": true,
+      "source_url": "https://www.etax.nat.gov.tw/etwmain/tax-info/understanding/tax-saving-manual/local/land-value-tax"
+    }
+  ],
+  "corrections": [],
+  "official_url_ok": true,
+  "file_path": "/home/user/haosuan/research/patches/land-value-tax-november.json",
+  "summary": "讀了財政部稅務入口網的地價稅節稅手冊（貳、地價稅的課徵）與嘉義市、屏東縣 115 年 11 月開徵公告。稅率 2‰ 與 10‰～55‰ 六級、100 元以下免徵、115 年 11 月 1 日至 11 月 30 日繳納、滯納金每 3 日 1% 最高 10%、超商限 3 萬元，都與資料一致，不需修正。自用住宅 9 月 22 日申請期限這次沒有重讀原文。"
+}

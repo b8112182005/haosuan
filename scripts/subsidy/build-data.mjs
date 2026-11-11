@@ -175,6 +175,20 @@ const removed = new Set(fs.existsSync(removedFile) ? readJson(removedFile) : [])
 const overridesFile = path.join(researchDir, "overrides.json");
 const overrides = fs.existsSync(overridesFile) ? readJson(overridesFile) : {};
 
+// check-urls.mjs 查到的失效連結（404／410）：來源與問答的連結直接拿掉，官方網址失效則必須用 overrides 換掉
+const deadFile = path.join(researchDir, "dead-urls.json");
+const dead = new Set(fs.existsSync(deadFile) ? readJson(deadFile) : []);
+function dropDeadUrls(item) {
+  if (dead.size === 0) return item;
+  const sources = item.sources.filter((s) => !dead.has(s.url));
+  return {
+    ...item,
+    sources: sources.length > 0 ? sources : item.sources,
+    channels: item.channels.map((c) => (c.url && dead.has(c.url) ? { ...c, url: null } : c)),
+    faqs: item.faqs.map((f) => (f.source_url && dead.has(f.source_url) ? { ...f, source_url: null } : f)),
+  };
+}
+
 // 3. 合併
 const items = [];
 const generalFaqs = [];
@@ -210,6 +224,8 @@ for (const { file, data } of topics) {
       }
       overrideCount++;
     }
+    item = dropDeadUrls(item);
+    check(!dead.has(item.official_url), `${item.id}: official_url 在 dead-urls.json 裡，請在 overrides.json 換成有效網址`);
     validateItem(item, path.basename(file));
     if (seen.has(item.id)) {
       problems.push(`id 重複：${item.id}（${seen.get(item.id)} 與 ${path.basename(file)}）`);
@@ -224,7 +240,7 @@ for (const { file, data } of topics) {
     const key = f.q.replace(/[\s？?。，,！!]/g, "");
     if (seenFaq.has(key)) continue;
     seenFaq.add(key);
-    generalFaqs.push({ q: f.q, a: f.a, source_url: f.source_url ?? null, tags: Array.isArray(f.tags) ? f.tags : [], topic });
+    generalFaqs.push({ q: f.q, a: f.a, source_url: f.source_url && !dead.has(f.source_url) ? f.source_url : null, tags: Array.isArray(f.tags) ? f.tags : [], topic });
   }
 }
 

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import type { Subsidy, SubsidyDataset } from "./types";
 import { DATA_VERSION, getSubsidyById } from "./data";
 import { REMOTE_DATA_URL, SITE_URL } from "@/lib/site";
+import { amountHeadline } from "./format";
 
 /**
  * 補助資料隨 app 一起打包，但政策會變。網站每次部署都會把最新資料檔放在 /data/subsidies.json，
@@ -121,7 +122,7 @@ export function useLiveSubsidy(id: string): LiveSubsidy {
 /** 兩個版本的項目有沒有使用者會在意的差異 */
 export function diffSubsidy(local: Subsidy, remote: Subsidy): string[] {
   const diffs: string[] = [];
-  if (local.amount.text !== remote.amount.text) diffs.push(`金額：${remote.amount.text}`);
+  if (local.amount.text !== remote.amount.text) diffs.push(`金額：${amountHeadline(remote.amount)}（詳細金額已更新）`);
   if (
     local.deadline.type !== remote.deadline.type ||
     local.deadline.end_month !== remote.deadline.end_month ||
