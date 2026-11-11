@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home, Landmark, Bell, Calculator, Menu } from "lucide-react";
+import { normalizePath } from "@/lib/platform";
 
 // 手機寬度（< md）顯示的底部分頁列；桌面寬度改由 Header 的導覽列負責。
 // 在 app 裡這是主要導覽，所以 5 個分頁對應 5 個主要區塊。
@@ -18,7 +19,7 @@ const TABS = [
 const TOOL_PREFIXES = ["/life", "/finance", "/renovation", "/convert", "/math", "/tools"];
 
 function isActive(pathname: string, href: string, exact: boolean): boolean {
-  const path = pathname.replace(/\/$/, "") || "/";
+  const path = normalizePath(pathname);
   if (exact) return path === "/";
   if (href === "/tools") return TOOL_PREFIXES.some((p) => path === p || path.startsWith(p + "/"));
   return path === href || path.startsWith(href + "/");

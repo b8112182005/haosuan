@@ -19,7 +19,7 @@ const entries = [
     href: "/subsidy/check",
     icon: Landmark,
     title: "我能領什麼補助？",
-    desc: "回答 6 題：縣市、年齡、收入、租屋、家庭。列出可能符合的項目與截止日。",
+    desc: "回答 7 題：縣市、年齡、收入、住的狀況、家庭、身分、車輛。列出可能符合的項目與截止日。",
     accent: "from-emerald-500/15 to-emerald-500/5 text-emerald-700 dark:text-emerald-300",
     iconBg: "bg-emerald-500 text-white",
   },
@@ -93,7 +93,7 @@ export default function Home() {
             年度時程表 <ArrowRight className="h-3 w-3" />
           </Link>
         </div>
-        <UpcomingDeadlines subsidies={subsidies} limit={5} />
+        <UpcomingDeadlines limit={5} />
       </section>
 
       {/* 補助分類 */}

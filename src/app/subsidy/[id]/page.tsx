@@ -141,7 +141,7 @@ export default async function SubsidyDetailPage({ params }: { params: Promise<{ 
         <p className="mt-3 text-[15px] leading-relaxed">{s.summary}</p>
       </header>
 
-      <LiveUpdateNotice subsidy={s} />
+      <LiveUpdateNotice subsidy={{ id: s.id, amount: s.amount, deadline: s.deadline, status_2026: s.status_2026, official_url: s.official_url }} />
 
       {/* 金額 + 期限 */}
       <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -161,7 +161,7 @@ export default async function SubsidyDetailPage({ params }: { params: Promise<{ 
             </Link>
           )}
         </section>
-        <DeadlineCard subsidy={s} />
+        <DeadlineCard subsidy={{ id: s.id, name: s.name, short_name: s.short_name, deadline: s.deadline }} />
       </div>
 
       {/* 主要行動 */}

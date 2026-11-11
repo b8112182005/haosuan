@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { Subsidy, SubsidyDataset } from "./types";
-import { DATA_VERSION, getSubsidyById } from "./data";
+import { DATA_VERSION } from "./index-data";
 import { REMOTE_DATA_URL, SITE_URL } from "@/lib/site";
 import { amountHeadline } from "./format";
 
@@ -119,8 +119,11 @@ export function useLiveSubsidy(id: string): LiveSubsidy {
   return state;
 }
 
+/** 比對差異只需要這幾個欄位；詳情頁只傳這些給 client，避免整筆資料進 props */
+export type DiffableSubsidy = Pick<Subsidy, "id" | "amount" | "deadline" | "status_2026" | "official_url">;
+
 /** 兩個版本的項目有沒有使用者會在意的差異 */
-export function diffSubsidy(local: Subsidy, remote: Subsidy): string[] {
+export function diffSubsidy(local: DiffableSubsidy, remote: Subsidy): string[] {
   const diffs: string[] = [];
   if (local.amount.text !== remote.amount.text) diffs.push(`金額：${amountHeadline(remote.amount)}（詳細金額已更新）`);
   if (
@@ -136,6 +139,3 @@ export function diffSubsidy(local: Subsidy, remote: Subsidy): string[] {
   return diffs;
 }
 
-export function getBundledSubsidy(id: string): Subsidy | undefined {
-  return getSubsidyById(id);
-}

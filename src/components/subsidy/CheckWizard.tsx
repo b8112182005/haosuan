@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, RotateCcw, CheckCircle2, HelpCircle, XCircle, Pencil } from "lucide-react";
-import type { Subsidy } from "@/lib/subsidy/types";
+import { ACTIVE_SUBSIDY_INDEX } from "@/lib/subsidy/index-data";
 import { TAIWAN_CITIES } from "@/lib/subsidy/types";
 import { EMPTY_PROFILE, loadProfile, saveProfile, clearProfile, type Profile } from "@/lib/subsidy/profile";
 import { evaluateAll, summarize, type Evaluation } from "@/lib/subsidy/eligibility";
@@ -34,7 +34,7 @@ const STEP_HINTS: Record<Step, string> = {
 const INCOME_CHIPS = [25000, 30000, 36000, 42000, 50000, 60000, 80000];
 const AGE_CHIPS = [20, 25, 30, 35, 40, 45, 55, 65];
 
-export default function CheckWizard({ subsidies }: { subsidies: Subsidy[] }) {
+export default function CheckWizard() {
   const today = useToday();
   const [profile, setProfile] = useState<Profile>(EMPTY_PROFILE);
   const [stepIndex, setStepIndex] = useState(0);
@@ -75,12 +75,8 @@ export default function CheckWizard({ subsidies }: { subsidies: Subsidy[] }) {
 
   const evaluations = useMemo<Evaluation[] | null>(() => {
     if (mode !== "results" || !today) return null;
-    return evaluateAll(
-      subsidies.filter((s) => s.status_2026 !== "ended"),
-      profile,
-      today
-    );
-  }, [mode, subsidies, profile, today]);
+    return evaluateAll(ACTIVE_SUBSIDY_INDEX, profile, today);
+  }, [mode, profile, today]);
 
   if (mode === "loading") {
     return <div className="h-64 animate-pulse rounded-2xl bg-muted/40" aria-busy="true" />;

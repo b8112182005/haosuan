@@ -40,7 +40,7 @@ export default function SubsidyIndexPage() {
       </div>
       {/* useSearchParams 在靜態輸出需要 Suspense 邊界 */}
       <Suspense fallback={<div className="h-40 animate-pulse rounded-2xl bg-muted/40" />}>
-        <SubsidyBrowser subsidies={subsidies} />
+        <SubsidyBrowser />
       </Suspense>
       <p className="mt-8 text-xs leading-relaxed text-muted-foreground">
         ⓘ 金額、資格與截止日依各年度政策調整，部分採「額滿即止」。每個項目頁底部列有來源與核對日期；申請前以主管機關最新公告為準。

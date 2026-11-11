@@ -18,7 +18,7 @@ export default function SubsidyCheckPage() {
           {subsidies.filter((s) => s.status_2026 !== "ended").length} 個進行中的項目，依你的條件逐條比對。答案只存在這支手機。
         </p>
       </div>
-      <CheckWizard subsidies={subsidies} />
+      <CheckWizard />
     </div>
   );
 }

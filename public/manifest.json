@@ -19,7 +19,7 @@
     {
       "name": "補助資格試算",
       "short_name": "補助",
-      "description": "回答 6 題，列出你可能符合的補助",
+      "description": "回答 7 題，列出你可能符合的補助",
       "url": "/subsidy/check",
       "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     },

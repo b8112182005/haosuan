@@ -3,14 +3,15 @@
 import { useMemo } from "react";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
-import type { Subsidy } from "@/lib/subsidy/types";
+import type { SubsidySummary } from "@/lib/subsidy/types";
+import { ACTIVE_SUBSIDY_INDEX } from "@/lib/subsidy/index-data";
 import { CATEGORY_LABELS } from "@/lib/subsidy/types";
 import { resolveSubsidyDeadline, formatLocalDate, toDateString, describeWindow, type LocalDate } from "@/lib/subsidy/deadline";
 import { useToday } from "@/lib/subsidy/useToday";
 import AddReminderButton from "@/components/reminders/AddReminderButton";
 
 interface Entry {
-  subsidy: Subsidy;
+  subsidy: SubsidySummary;
   end: LocalDate;
   daysLeft: number;
   open: boolean;
@@ -20,7 +21,9 @@ interface Entry {
  * 未來 12 個月的固定期限清單，依月份分組。
  * 只列有明確截止日的項目（fixed_annual / window / 有日期的 budget）；隨到隨辦的不在這裡。
  */
-export default function DeadlineCalendar({ subsidies }: { subsidies: Subsidy[] }) {
+const subsidies = ACTIVE_SUBSIDY_INDEX;
+
+export default function DeadlineCalendar() {
   const today = useToday();
 
   const groups = useMemo(() => {
@@ -40,7 +43,7 @@ export default function DeadlineCalendar({ subsidies }: { subsidies: Subsidy[] }
       byMonth.get(key)!.push(e);
     }
     return Array.from(byMonth.entries());
-  }, [subsidies, today]);
+  }, [today]);
 
   if (groups === null) {
     return (

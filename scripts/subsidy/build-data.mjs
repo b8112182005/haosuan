@@ -11,7 +11,7 @@
  *   <research>/overrides.json       人工覆寫（{ "<id>": { ...欄位 } }），最後套用
  *   <research>/removed.json         要排除的 id 清單（跨主題重複、已失效的項目）
  *
- * 輸出 src/data/subsidies.json 與 public/data/subsidies.json（兩份相同）。
+ * 輸出 src/data/subsidies.json 與 public/data/subsidies.json（兩份相同），以及列表用的精簡索引 src/data/subsidies-index.json。
  * 這支腳本會做 schema 檢查：缺必要欄位、enum 值不對、id 重複都會直接失敗，不讓壞資料進 app。
  */
 import fs from "node:fs";
@@ -268,6 +268,15 @@ for (const out of ["src/data/subsidies.json", "public/data/subsidies.json"]) {
   fs.mkdirSync(path.dirname(target), { recursive: true });
   fs.writeFileSync(target, json);
 }
+
+// 列表、試算、時程表只需要這些欄位。完整資料約 1 MB，若整包當 props 傳給 client component，
+// 每個列表頁的 HTML 都會被撐到 900 KB 以上；精簡索引讓它們共用一個約四分之一大小的 chunk。
+const INDEX_FIELDS = ["id", "name", "short_name", "category", "level", "city", "agency", "summary", "eligibility", "amount", "conditions", "deadline", "status_2026", "confidence", "topic"];
+const index = {
+  version,
+  items: items.map((item) => Object.fromEntries(INDEX_FIELDS.map((k) => [k, item[k]]))),
+};
+fs.writeFileSync(path.join(ROOT, "src/data/subsidies-index.json"), JSON.stringify(index) + "\n");
 
 const byCat = {};
 for (const i of items) byCat[i.category] = (byCat[i.category] ?? 0) + 1;

@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { normalizePath } from "@/lib/platform";
 
 /**
  * 只在 Capacitor 原生環境啟用的膠水程式：
@@ -26,8 +27,7 @@ export default function NativeBridge() {
       const { Browser } = await import("@capacitor/browser");
 
       const backSub = await App.addListener("backButton", ({ canGoBack }) => {
-        const path = window.location.pathname.replace(/\/index\.html$/, "/");
-        const atRoot = path === "/" || path === "";
+        const atRoot = normalizePath(window.location.pathname) === "/";
         if (atRoot || !canGoBack) {
           App.exitApp();
         } else {

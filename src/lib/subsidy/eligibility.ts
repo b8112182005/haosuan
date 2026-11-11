@@ -1,4 +1,4 @@
-import type { Subsidy, SubsidyConditions } from "./types";
+import type { SubsidyConditions, SubsidySummary } from "./types";
 import type { Profile } from "./profile";
 import { resolveSubsidyDeadline, type LocalDate } from "./deadline";
 
@@ -16,8 +16,8 @@ import { resolveSubsidyDeadline, type LocalDate } from "./deadline";
 
 export type Verdict = "eligible" | "maybe" | "not_eligible";
 
-export interface Evaluation {
-  subsidy: Subsidy;
+export interface Evaluation<S extends SubsidySummary = SubsidySummary> {
+  subsidy: S;
   verdict: Verdict;
   /** 對得上的條件 */
   matched: string[];
@@ -212,8 +212,8 @@ function checkBool(
   else out.failed.push(labels.fail);
 }
 
-export function evaluate(subsidy: Subsidy, profile: Profile): Evaluation {
-  const out: Evaluation = { subsidy, verdict: "maybe", matched: [], failed: [], unknown: [], notes: [] };
+export function evaluate<S extends SubsidySummary>(subsidy: S, profile: Profile): Evaluation<S> {
+  const out: Evaluation<S> = { subsidy, verdict: "maybe", matched: [], failed: [], unknown: [], notes: [] };
   const c = subsidy.conditions ?? {};
 
   if (subsidy.status_2026 === "ended") {
@@ -278,9 +278,9 @@ const VERDICT_RANK: Record<Verdict, number> = { eligible: 0, maybe: 1, not_eligi
  * 對得上的條件越多越前面（越貼近這個人），再依截止日近的在前。
  * today 由呼叫端（client）提供，才能依使用者裝置的日期排序。
  */
-export function evaluateAll(subsidies: Subsidy[], profile: Profile, today: LocalDate): Evaluation[] {
+export function evaluateAll<S extends SubsidySummary>(subsidies: S[], profile: Profile, today: LocalDate): Evaluation<S>[] {
   const rows = subsidies.map((s) => evaluate(s, profile));
-  const daysOf = (s: Subsidy) => {
+  const daysOf = (s: S) => {
     const st = resolveSubsidyDeadline(s, today);
     return st.kind === "upcoming" && st.open ? st.daysLeft : 10_000;
   };

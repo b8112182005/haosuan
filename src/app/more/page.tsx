@@ -26,7 +26,7 @@ const sections = [
   {
     title: "功能",
     items: [
-      { icon: Landmark, label: "補助資格試算", desc: "回答 6 題，列出你可能符合的補助", href: "/subsidy/check" },
+      { icon: Landmark, label: "補助資格試算", desc: "回答 7 題，列出你可能符合的補助", href: "/subsidy/check" },
       { icon: Bell, label: "我的提醒", desc: "截止前 30、14、3 天通知", href: "/reminders" },
       { icon: FileText, label: "年度時程表", desc: "報稅、牌照稅、補助申請月份一覽", href: "/subsidy/calendar" },
     ],

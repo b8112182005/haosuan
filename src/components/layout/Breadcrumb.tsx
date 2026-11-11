@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronRight, Home } from "lucide-react";
+import { normalizePath } from "@/lib/platform";
 
 const segmentLabels: Record<string, string> = {
   life: "生活",
@@ -43,7 +44,7 @@ const segmentLabels: Record<string, string> = {
 
 export default function Breadcrumb() {
   const pathname = usePathname();
-  const segments = pathname.split("/").filter(Boolean);
+  const segments = normalizePath(pathname).split("/").filter(Boolean);
 
   if (segments.length === 0) return null;
 

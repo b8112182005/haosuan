@@ -1,14 +1,13 @@
 "use client";
 
 import { RefreshCw, AlertTriangle } from "lucide-react";
-import type { Subsidy } from "@/lib/subsidy/types";
-import { useLiveSubsidy, diffSubsidy } from "@/lib/subsidy/remote";
+import { useLiveSubsidy, diffSubsidy, type DiffableSubsidy } from "@/lib/subsidy/remote";
 
 /**
  * 詳情頁頂部：內建資料與網站最新資料有差異時提示。
  * 沒差異、沒更新、還在載入時什麼都不顯示，避免每頁都多一塊。
  */
-export default function LiveUpdateNotice({ subsidy }: { subsidy: Subsidy }) {
+export default function LiveUpdateNotice({ subsidy }: { subsidy: DiffableSubsidy }) {
   const live = useLiveSubsidy(subsidy.id);
   if (live.loading || !live.version) return null;
 

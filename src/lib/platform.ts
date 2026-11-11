@@ -39,3 +39,12 @@ export const features = {
   pwaInstallBanner: isWeb,   // 只在 Web 顯示安裝提示
   appRatingPrompt: isApp,    // 只在 APP 顯示評分提示
 } as const;
+
+/**
+ * usePathname() 的值在 app 裡可能帶著 /index.html（見 PlatformScript 的整頁載入後備路徑）
+ * 或結尾斜線（靜態輸出 trailingSlash）。比對路由前先正規化成「/subsidy/check」這種形式。
+ */
+export function normalizePath(pathname: string): string {
+  const p = pathname.replace(/\/index\.html$/, "").replace(/\/+$/, "");
+  return p === "" ? "/" : p;
+}

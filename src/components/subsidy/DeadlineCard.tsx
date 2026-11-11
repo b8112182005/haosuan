@@ -6,11 +6,14 @@ import { resolveSubsidyDeadline, formatLocalDate, toDateString, describeWindow, 
 import { useToday } from "@/lib/subsidy/useToday";
 import AddReminderButton from "@/components/reminders/AddReminderButton";
 
+/** 只收用得到的欄位：整筆 Subsidy 當 props 會連問答、來源一起序列化進頁面 */
+export type DeadlineCardSubsidy = Pick<Subsidy, "id" | "name" | "short_name" | "deadline">;
+
 /**
  * 詳情頁的截止日卡片 + 一鍵加入提醒。
  * 「剩幾天」依裝置的今天計算（useToday），所以是 client component。
  */
-export default function DeadlineCard({ subsidy }: { subsidy: Subsidy }) {
+export default function DeadlineCard({ subsidy }: { subsidy: DeadlineCardSubsidy }) {
   const today = useToday();
   const state = today ? resolveSubsidyDeadline(subsidy, today) : null;
 

@@ -4,17 +4,18 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Search, X, ListChecks } from "lucide-react";
-import type { Subsidy, SubsidyCategory } from "@/lib/subsidy/types";
+import type { SubsidyCategory, SubsidySummary } from "@/lib/subsidy/types";
+import { SUBSIDY_INDEX } from "@/lib/subsidy/index-data";
 import { CATEGORY_LABELS, CATEGORY_ORDER, TAIWAN_CITIES } from "@/lib/subsidy/types";
 import { useToday } from "@/lib/subsidy/useToday";
 import { resolveSubsidyDeadline } from "@/lib/subsidy/deadline";
 import { refreshRemoteDataset } from "@/lib/subsidy/remote";
 import SubsidyCard from "./SubsidyCard";
 
-function matches(q: string, s: Subsidy): boolean {
+function matches(q: string, s: SubsidySummary): boolean {
   const needle = q.trim().toLowerCase();
   if (!needle) return true;
-  const hay = [s.name, s.short_name, s.summary, s.agency, s.city ?? "", ...s.eligibility, ...s.pitfalls, ...s.faqs.map((f) => f.q)]
+  const hay = [s.name, s.short_name, s.summary, s.agency, s.city ?? "", ...s.eligibility]
     .join("\n")
     .toLowerCase();
   return hay.includes(needle);
@@ -22,7 +23,10 @@ function matches(q: string, s: Subsidy): boolean {
 
 const PAGE_SIZE = 30;
 
-export default function SubsidyBrowser({ subsidies }: { subsidies: Subsidy[] }) {
+// 資料直接 import 精簡索引，不走 props（避免整份資料被序列化進頁面 HTML）
+const subsidies = SUBSIDY_INDEX;
+
+export default function SubsidyBrowser() {
   const params = useSearchParams();
   const initialCat = params.get("cat") as SubsidyCategory | null;
   const [category, setCategory] = useState<SubsidyCategory | "all">(
@@ -43,7 +47,7 @@ export default function SubsidyBrowser({ subsidies }: { subsidies: Subsidy[] }) 
   const categories = useMemo(() => {
     const used = new Set(subsidies.map((s) => s.category));
     return CATEGORY_ORDER.filter((c) => used.has(c));
-  }, [subsidies]);
+  }, []);
 
   const list = useMemo(() => {
     let rows = subsidies.filter((s) => {
@@ -54,14 +58,14 @@ export default function SubsidyBrowser({ subsidies }: { subsidies: Subsidy[] }) 
       return matches(query, s);
     });
     if (today) {
-      const days = (s: Subsidy) => {
+      const days = (s: SubsidySummary) => {
         const st = resolveSubsidyDeadline(s, today);
         return st.kind === "upcoming" && st.open ? st.daysLeft : st.kind === "upcoming" ? 5000 + st.daysLeft : 9000;
       };
       rows = [...rows].sort((a, b) => days(a) - days(b));
     }
     return rows;
-  }, [subsidies, activeOnly, category, city, query, today]);
+  }, [activeOnly, category, city, query, today]);
 
   return (
     <div className="space-y-4">
@@ -74,7 +78,7 @@ export default function SubsidyBrowser({ subsidies }: { subsidies: Subsidy[] }) 
           <ListChecks className="h-5 w-5" />
         </span>
         <span className="min-w-0 flex-1">
-          <span className="block text-sm font-semibold">不想一個個看？回答 6 題</span>
+          <span className="block text-sm font-semibold">不想一個個看？回答 7 題</span>
           <span className="block text-xs opacity-80">依你的縣市、年齡、收入、家庭狀況篩出可能符合的項目</span>
         </span>
       </Link>

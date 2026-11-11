@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 import { ChevronRight, MapPin } from "lucide-react";
-import type { Subsidy } from "@/lib/subsidy/types";
+import type { SubsidySummary } from "@/lib/subsidy/types";
 import { CATEGORY_LABELS } from "@/lib/subsidy/types";
 import { resolveSubsidyDeadline, urgency, type LocalDate } from "@/lib/subsidy/deadline";
 import { amountHeadline } from "@/lib/subsidy/format";
 
-export function StatusBadge({ subsidy }: { subsidy: Subsidy }) {
+export function StatusBadge({ subsidy }: { subsidy: Pick<SubsidySummary, "status_2026" | "confidence"> }) {
   if (subsidy.status_2026 === "ended")
     return <span className="rounded-full bg-muted px-2 py-0.5 text-[11px] text-muted-foreground">已結束</span>;
   if (subsidy.status_2026 === "pending")
@@ -17,7 +17,7 @@ export function StatusBadge({ subsidy }: { subsidy: Subsidy }) {
   return null;
 }
 
-export function DeadlineBadge({ subsidy, today }: { subsidy: Subsidy; today: LocalDate | null }) {
+export function DeadlineBadge({ subsidy, today }: { subsidy: Pick<SubsidySummary, "deadline">; today: LocalDate | null }) {
   if (!today) return <span className="inline-block h-4 w-16 animate-pulse rounded bg-muted" />;
   const state = resolveSubsidyDeadline(subsidy, today);
   if (state.kind === "upcoming") {
@@ -40,7 +40,7 @@ export default function SubsidyCard({
   footer,
   highlight,
 }: {
-  subsidy: Subsidy;
+  subsidy: SubsidySummary;
   today: LocalDate | null;
   /** 卡片底部額外內容（例如試算結果的原因） */
   footer?: React.ReactNode;

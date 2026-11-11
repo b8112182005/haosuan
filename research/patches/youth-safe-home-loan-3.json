@@ -1,0 +1,53 @@
+{
+  "id": "youth-safe-home-loan-3",
+  "verdict": "confirmed",
+  "verified_at": "2026-11-11",
+  "checked": [
+    {
+      "field": "amount.text / amount.max（貸款額度）",
+      "value_in_data": "一般最高1,000萬元；新婚家庭最高1,200萬元；育有未成年子女家庭最高1,500萬元；最高貸8成；max=15000000",
+      "official_value": "貸款成數：最高 8 成核貸。貸款額度：最高 1,000 萬元；申請日前 2 年內完成結婚登記之家庭（新婚家庭），最高 1,200 萬元；育有未成年子女家庭，最高 1,500 萬元。",
+      "match": true,
+      "source_url": "https://www.nta.gov.tw/singlehtml/108"
+    },
+    {
+      "field": "amount.formula（利率與補貼退場）",
+      "value_in_data": "郵儲2年期機動利率1.72%＋0.555%＝2.275%；撥貸後3年內補貼0.375%＋少調升0.125%；期滿第1年0.25%＋0.125%、第2年0.125%＋0.125%、第3年僅0.125%、第4年起回復原利率；115/8/1起只剩一段式機動",
+      "official_value": "基準利率自 113 年 3 月 27 日起為 1.72%；一段式機動利率自 110 年 1 月 1 日起新貸放案件按基準利率固定加 0.555%；自 115 年 8 月 1 日起申貸案件取消二段式機動利率或混合式固定利率；112 年 8 月 1 日起撥貸案件：自撥貸日起算 3 年內補貼 0.375% 及基準利率減少調升 0.125%，期滿後第 1 年補貼 0.25% 及 0.125%，第 2 年 0.125% 及 0.125%，第 3 年 0.125%，期滿後第 4 年起回復原貸款利率。",
+      "match": true,
+      "source_url": "https://www.nta.gov.tw/singlehtml/108"
+    },
+    {
+      "field": "deadline（申辦期間 8/1～7/31，115/8/1 至 118/7/31，撥款最遲 118/10/31）",
+      "value_in_data": "type=window，start 8/1，end 7/31；note：115年8月1日至118年7月31日，撥款最遲118年10月31日",
+      "official_value": "自115年8月1日起至118年7月31日均得申請辦理，惟撥款日至遲不得逾118年10月31日。（貸款原則第六點：本優惠貸款申辦日期至 118 年 7 月 31 日止）",
+      "match": true,
+      "source_url": "https://www.nta.gov.tw/singlehtml/109"
+    },
+    {
+      "field": "status_2026",
+      "value_in_data": "active",
+      "official_value": "專區標題「青安3.0(自115年8月1日起受理申辦)」，頁面更新日期 115-11-11；貸款原則更新日期 115-07-28",
+      "match": true,
+      "source_url": "https://www.nta.gov.tw/htmlList/71"
+    },
+    {
+      "field": "summary（年齡、所得、房屋總價門檻）",
+      "value_in_data": "申貸時未滿50歲；本人年所得200萬元以下；總價上限台北市3,500萬、新北市及新竹縣市2,500萬、其他縣市2,000萬；最長40年含寬限期5年，年齡加年限不逾80",
+      "official_value": "申貸時未滿 50 歲；借款人本人年所得總額不得逾 200 萬元；臺北市 3,500 萬元、新北市及新竹縣（市） 2,500 萬元、其他縣（市） 2,000 萬元（鑑價或買賣總價二者取孰高）；貸款年限最長 40 年，含寬限期 5 年，申貸年齡加計核貸年限合計不得逾 80。",
+      "match": true,
+      "source_url": "https://www.nta.gov.tw/singlehtml/108"
+    },
+    {
+      "field": "official_url",
+      "value_in_data": "https://www.nta.gov.tw/htmlList/71",
+      "official_value": "HTTP 200，財政部國庫署「青年安心成家貸款」專區",
+      "match": true,
+      "source_url": "https://www.nta.gov.tw/htmlList/71"
+    }
+  ],
+  "corrections": [],
+  "official_url_ok": true,
+  "file_path": "/home/user/haosuan/research/patches/youth-safe-home-loan-3.json",
+  "summary": "讀了財政部國庫署青安專區（htmlList/71）、青安3.0貸款原則（singlehtml/108，115-07-28更新）與問答集（singlehtml/109）三頁，三頁都回 HTTP 200。額度1,000／1,200／1,500萬元、最高8成、利率1.72%＋0.555%與補貼退場級距、申辦期間115年8月1日至118年7月31日（撥款最遲118年10月31日）都和資料一致，115年下半年仍在受理，不需修正。"
+}

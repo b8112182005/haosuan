@@ -2,6 +2,10 @@ import dataset from "@/data/subsidies.json";
 import type { GeneralFaq, Subsidy, SubsidyCategory, SubsidyDataset } from "./types";
 import { CATEGORY_ORDER } from "./types";
 
+// 完整資料（約 1 MB）：只給 server component 與測試用。
+// client component 請改用 ./index-data.ts 的精簡索引，否則整包資料會進 client bundle
+// （src/lib/subsidy/__tests__/bundle-boundary.test.ts 會擋）。
+//
 // JSON 匯入時 TypeScript 會把 enum 欄位推成 string，這裡斷言成我們的型別；
 // 資料檔由 scripts/subsidy/build-data.mjs 產生並做過 schema 檢查。
 const DATA = dataset as unknown as SubsidyDataset;
@@ -42,14 +46,6 @@ export function getCategoriesInUse(): SubsidyCategory[] {
 
 export function getGeneralFaqs(): GeneralFaq[] {
   return DATA.general_faqs;
-}
-
-/**
- * 卡片用的簡短機關名：資料裡的 agency 常帶括號說明（受理單位、承辦銀行…），
- * 詳情頁要完整，列表只留主辦機關那一段。
- */
-export function shortAgency(agency: string): string {
-  return agency.split(/[（(／/、，,]/)[0].trim() || agency;
 }
 
 /** 同一主題底下的其他項目（相關補助） */

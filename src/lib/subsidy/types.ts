@@ -128,6 +128,29 @@ export interface Subsidy {
   topic?: string;
 }
 
+/**
+ * 列表、資格試算、時程表用的精簡版（src/data/subsidies-index.json）。
+ * client component 一律用這個；完整的 Subsidy 只在詳情頁的 server component 讀。
+ */
+export type SubsidySummary = Pick<
+  Subsidy,
+  | "id"
+  | "name"
+  | "short_name"
+  | "category"
+  | "level"
+  | "city"
+  | "agency"
+  | "summary"
+  | "eligibility"
+  | "amount"
+  | "conditions"
+  | "deadline"
+  | "status_2026"
+  | "confidence"
+  | "topic"
+>;
+
 export interface GeneralFaq {
   q: string;
   a: string;

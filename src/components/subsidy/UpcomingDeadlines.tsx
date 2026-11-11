@@ -3,13 +3,13 @@
 import { useMemo } from "react";
 import Link from "next/link";
 import { CalendarClock, ChevronRight } from "lucide-react";
-import type { Subsidy } from "@/lib/subsidy/types";
+import type { SubsidySummary } from "@/lib/subsidy/types";
+import { ACTIVE_SUBSIDY_INDEX } from "@/lib/subsidy/index-data";
 import { resolveSubsidyDeadline, formatLocalDate, urgency } from "@/lib/subsidy/deadline";
-import { shortAgency } from "@/lib/subsidy/data";
 import { useToday } from "@/lib/subsidy/useToday";
 
 interface Row {
-  subsidy: Subsidy;
+  subsidy: SubsidySummary;
   daysLeft: number;
   dateLabel: string;
   tone: "urgent" | "soon" | "later";
@@ -25,15 +25,15 @@ const toneClass: Record<Row["tone"], string> = {
  * 近期截止清單。「剩幾天」要用使用者裝置的今天算（useToday 在 server 回 null），
  * 靜態輸出時先渲染骨架，避免 build 當天的數字被烤進 HTML。
  */
-export default function UpcomingDeadlines({
-  subsidies,
-  limit = 5,
-  withinDays = 120,
-}: {
-  subsidies: Subsidy[];
-  limit?: number;
-  withinDays?: number;
-}) {
+// 資料直接 import 精簡索引，不走 props：整份資料當 props 會被序列化進首頁 HTML（曾經撐到 944 KB）
+const subsidies = ACTIVE_SUBSIDY_INDEX;
+
+/** 卡片用的簡短機關名：agency 常帶括號說明（受理單位、承辦銀行…），列表只留主辦機關那一段 */
+function shortAgency(agency: string): string {
+  return agency.split(/[（(／/、，,]/)[0].trim() || agency;
+}
+
+export default function UpcomingDeadlines({ limit = 5, withinDays = 120 }: { limit?: number; withinDays?: number }) {
   const today = useToday();
 
   const rows = useMemo<Row[] | null>(() => {
@@ -54,7 +54,7 @@ export default function UpcomingDeadlines({
     }
     next.sort((a, b) => a.daysLeft - b.daysLeft);
     return next.slice(0, limit);
-  }, [subsidies, limit, withinDays, today]);
+  }, [limit, withinDays, today]);
 
   if (rows === null) {
     return (
