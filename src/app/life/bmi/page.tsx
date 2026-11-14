@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "免費線上 BMI 計算機，輸入身高體重即時計算 BMI 值，依台灣衛福部亞洲標準判斷體重狀態，並顯示理想體重範圍。",
   keywords: ["BMI", "身體質量指數", "體重", "健康", "肥胖", "台灣"],
   openGraph: {
-    title: "BMI 計算機 | 好算",
+    title: "BMI 計算機 | 好耶",
     description: "輸入身高體重，即時計算 BMI 值與健康狀態",
     url: "/life/bmi",
   },

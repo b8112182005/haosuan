@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "攝氏（°C）、華氏（°F）、克耳文（K）即時互換。輸入任一溫度單位立即換算其他，支援正負溫度。",
   keywords: ["溫度換算", "攝氏華氏換算", "°C換°F", "克耳文換算", "溫度單位"],
   openGraph: {
-    title: "溫度換算 | 好算",
+    title: "溫度換算 | 好耶",
     description: "攝氏、華氏、克耳文溫度即時互換",
     url: "/convert/temperature",
   },

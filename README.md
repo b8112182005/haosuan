@@ -25,6 +25,7 @@ npm run typecheck    # tsc --noEmit
 npm test             # vitest（計算機、資格引擎、提醒模組）
 npm run build        # 網站 build（Vercel）
 npm run build:app    # 靜態輸出到 out/（給 Capacitor）
+npm run qa:native    # 用模擬的 Android 原生端跑返回鍵、通知排程、通知點擊（先 build:app；需要 playwright）
 npm run data:build   # 由 research/ 合併產生 src/data/subsidies.json 與 public/data/subsidies.json
 npx cap sync android # 把 out/ 複製進 android/ 並同步外掛
 ```
@@ -43,6 +44,7 @@ src/components/subsidy/  補助 UI
 src/components/reminders/提醒 UI
 src/lib/subsidy/         型別、資料存取、資格引擎、截止日計算、遠端更新
 src/lib/reminders/       提醒儲存、通知排程
+src/lib/backHandler.ts   Android 返回鍵攔截堆疊（面板、試算精靈的上一題）
 src/lib/calculators/     30 種計算機的純函式
 src/data/subsidies.json  補助資料（app 內建）
 public/data/             同一份資料，網站部署後供 app 檢查更新
@@ -67,3 +69,6 @@ scripts/                 資料合併、Android 資產與簽章、商店截圖
 - `BUILD_TARGET=app` 時：靜態輸出、不載 GA、不註冊 service worker。
 - Android 15 edge-to-edge：`viewport-fit=cover` + Capacitor SystemBars 注入的 `--safe-area-inset-*`，Header 與底部分頁列用 `--safe-top` / `--safe-bottom`。
 - 提醒用 inexact alarm（`SCHEDULE_EXACT_ALARM` 已在 manifest 移除），日期等級的提醒不需要精確到秒。
+- Android 返回鍵：開著的面板先關、試算精靈回上一題（元件用 `useBackHandler` 註冊），其餘回上一頁，首頁離開 app。
+- 每次開 app 重排一次通知（`NativeBridge` 呼叫 `rolloverReminders`）：系統清掉排程或強制停止之後，開 app 就補回來。
+- `android:allowBackup="false"`：試算條件與提醒不跟著 Google 帳號備份到雲端，和隱私權政策的說法一致。

@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "公里、公尺、公分、公厘、英里、英尺、英吋即時互換。支援公制與英制長度單位，輸入數值立即換算全部單位。",
   keywords: ["長度換算", "公尺換算", "英吋換算", "英尺換算", "長度單位"],
   openGraph: {
-    title: "長度換算 | 好算",
+    title: "長度換算 | 好耶",
     description: "公里、公尺、英吋、英尺等長度單位即時互換",
     url: "/convert/length",
   },

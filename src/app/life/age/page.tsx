@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "免費線上年齡計算機，輸入生日即時計算精確年齡（歲、月、日），顯示總天數、星座、生肖及下次生日倒數。",
   keywords: ["年齡計算機", "幾歲", "生日計算", "星座", "生肖"],
   openGraph: {
-    title: "年齡計算機 | 好算",
+    title: "年齡計算機 | 好耶",
     description: "輸入生日，計算精確年齡（歲、月、日）",
     url: "/life/age",
   },

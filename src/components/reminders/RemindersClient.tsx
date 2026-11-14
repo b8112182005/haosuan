@@ -37,7 +37,7 @@ export default function RemindersClient() {
           <div className="min-w-0 flex-1">
             <p className="font-medium text-amber-900 dark:text-amber-100">通知權限已關閉</p>
             <p className="mt-1 leading-relaxed text-amber-800 dark:text-amber-200">
-              提醒會存著，但不會推播。到「設定 → 應用程式 → 好算 → 通知」打開，回到這裡會自動補排。
+              提醒會存著，但不會推播。到「設定 → 應用程式 → 好耶 → 通知」打開，回到這裡會自動補排。
             </p>
             <Button
               type="button"
@@ -67,7 +67,7 @@ export default function RemindersClient() {
       {!native && !loading && reminders.length > 0 && (
         <p className="mb-6 text-xs leading-relaxed text-muted-foreground">
           網頁版不會推播。每筆提醒都可以加入 Google 日曆或下載 .ics，由行事曆提醒你；
-          裝好算 App 才會在截止前推播。
+          裝好耶 App 才會在截止前推播。
         </p>
       )}
 

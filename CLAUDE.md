@@ -13,6 +13,12 @@
 npm run lint && npm run typecheck && npm test && npm run build:app
 ```
 
+改到返回鍵、提醒、通知、`NativeBridge` 之後另外跑。需要 playwright：`npm install --no-save playwright@1.63.0 && npx playwright install chromium`；雲端 session 已預裝在 `/opt/node-tools` 時改成在指令前加 `NODE_PATH=/opt/node-tools/node_modules`：
+
+```bash
+npm run build:app && npm run qa:native
+```
+
 改 Android 原生或 Capacitor 設定後另外跑：
 
 ```bash
@@ -28,6 +34,9 @@ npx cap sync android && cd android && ./gradlew assembleDebug
 - 所有「今天」相關計算在 client 做（`useToday`），不要在 server component 用 `new Date()` 算剩幾天，靜態輸出會把 build 日期烤進 HTML。
 - `YYYY-MM-DD` 一律手動 split 成本地日期，不要 `new Date('YYYY-MM-DD')`（那是 UTC）。
 - 不申請 `SCHEDULE_EXACT_ALARM`（manifest 用 `tools:node="remove"` 拿掉），提醒用 inexact alarm。
+- 新增會蓋住畫面的面板或多步驟流程時，用 `useBackHandler` 接 Android 返回鍵；不要讓返回鍵直接換頁。
+- `android:allowBackup` 維持 `false`；隱私權政策寫的是資料不離開裝置、解除安裝即刪除。
+- 特定身分有較低年齡門檻（原住民 55 歲）時用 `conditions.lower_age_for`，不要把 `min_age` 寫死成一般門檻就算了。
 - `capacitor.config.ts` 的 `appId` 上架後不能改。
 - 金鑰（`android/*.jks`、`android/keystore.properties`）不進 git；CI 用 Secrets。
 - 文案繁體中文、白話；禁用抽象形容詞與副詞（非常、極致、完美、輕鬆、優雅等），用具體名詞、動詞、數字、場景。註解寫「為什麼」。

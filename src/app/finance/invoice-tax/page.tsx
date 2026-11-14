@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "台灣 5% 營業稅快速換算，支援含稅拆算未稅、未稅加算含稅兩種方向，適合開發票、報帳或採購核算使用。",
   keywords: ["營業稅計算", "發票計算", "含稅未稅", "5%稅率", "稅額計算"],
   openGraph: {
-    title: "發票營業稅計算 | 好算",
+    title: "發票營業稅計算 | 好耶",
     description: "含稅/未稅金額換算（5% 營業稅）",
     url: "/finance/invoice-tax",
   },

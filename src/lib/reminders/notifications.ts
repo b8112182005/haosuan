@@ -179,12 +179,25 @@ export interface SyncResult {
   skipped: 'web' | 'permission' | null;
 }
 
+/** 排隊中的重排；見 syncScheduledNotifications 的說明 */
+let syncQueue: Promise<unknown> = Promise.resolve();
+
 /**
  * 以目前所有提醒為準，重排本模組的全部通知：
  * 先取消上次排的（ledger ∪ getPending 裡 extra.module 是我們的），再整批 schedule。
  * 全部重排而不是比對差異，是因為差異比對的 bug 會變成「刪掉的提醒還在響」，重排不會。
+ *
+ * 多次呼叫會照呼叫順序一個一個跑。啟動時的重排和使用者刪除提醒觸發的重排如果交錯執行，
+ * 先開始的那次可能在後面才 schedule，把剛刪掉的提醒又排回去；排隊之後最後生效的一定是最新的清單。
  */
-export async function syncScheduledNotifications(reminders: Reminder[]): Promise<SyncResult> {
+export function syncScheduledNotifications(reminders: Reminder[]): Promise<SyncResult> {
+  const run = syncQueue.then(() => runSync(reminders));
+  // runSync 自己接住所有例外；這裡再接一次只是保證佇列不會因為意外的 rejection 卡住
+  syncQueue = run.catch(() => undefined);
+  return run;
+}
+
+async function runSync(reminders: Reminder[]): Promise<SyncResult> {
   if (!isNativePlatform()) return { scheduled: 0, cancelled: 0, skipped: 'web' };
   try {
     const [pending, ledger] = await Promise.all([LocalNotifications.getPending(), readScheduledIds()]);

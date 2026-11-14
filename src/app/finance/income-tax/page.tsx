@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "依台灣 2024 年（民國 113 年）綜合所得稅規定，輸入月薪、婚姻狀況及撫養親屬，即時試算年度所得稅與有效稅率。",
   keywords: ["所得稅試算", "薪資稅", "報稅計算機", "扣除額", "台灣稅務"],
   openGraph: {
-    title: "薪資所得稅試算 | 好算",
+    title: "薪資所得稅試算 | 好耶",
     description: "依台灣 2024 年稅制試算年度所得稅",
     url: "/finance/income-tax",
   },

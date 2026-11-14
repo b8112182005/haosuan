@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "免費線上懷孕週數計算機，輸入最後月經日期，即時計算目前懷孕週數、預產期及重要孕期里程碑。",
   keywords: ["懷孕", "週數", "預產期", "孕期", "里程碑", "產檢", "懷孕計算"],
   openGraph: {
-    title: "懷孕週數計算機 | 好算",
+    title: "懷孕週數計算機 | 好耶",
     description: "輸入最後月經日期，計算懷孕週數、預產期與孕期里程碑",
     url: "/life/pregnancy",
   },

@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
+import { useBackHandler } from '@/lib/useBackHandler';
 import { useReminders } from '@/lib/reminders/useReminders';
 import { useIsNativePlatform } from '@/lib/reminders/useIsNativePlatform';
 import { daysUntil, formatDate, todayLocal } from '@/lib/reminders/dates';
@@ -95,6 +96,9 @@ export default function AddReminderButton({
       document.removeEventListener('keydown', onKeyDown);
     };
   }, [open]);
+
+  // Android 返回鍵：面板開著時先關面板，不要整頁跳回上一頁
+  useBackHandler(open, () => setOpen(false));
 
   useEffect(() => {
     if (!toast) return;

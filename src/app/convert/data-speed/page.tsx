@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "免費線上網速換算工具，支援 Mbps、Kbps、Gbps、MB/s、KB/s 互相換算，並顯示各種使用情境是否足夠。",
   keywords: ["網速換算", "Mbps", "Gbps", "MB/s", "頻寬", "下載速度"],
   openGraph: {
-    title: "網速換算 | 好算",
+    title: "網速換算 | 好耶",
     description: "Mbps、Gbps、MB/s、KB/s 即時互換，附使用情境參考",
     url: "/convert/data-speed",
   },

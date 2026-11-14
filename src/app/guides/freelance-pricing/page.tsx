@@ -3,7 +3,7 @@ import Link from "next/link";
 import { HAOTI_LINE_URL, withUtm } from "@/lib/brand";
 
 export const metadata: Metadata = {
-  title: "接案報價怎麼算？自由工作者避免低估的 5 個步驟 | 好算",
+  title: "接案報價怎麼算？自由工作者避免低估的 5 個步驟 | 好耶",
   description:
     "接案報價不能只看工時。用 5 個步驟拆出底價、溝通成本、修改輪次、風險預備金與利潤，避免接到案卻變成免費加班。",
   keywords: ["接案報價怎麼算", "自由工作者報價", "接案成本", "接案時薪", "報價模板"],
@@ -91,7 +91,7 @@ export default function FreelancePricingGuidePage() {
         <section className="mt-10 rounded-3xl bg-slate-950 p-6 text-white sm:p-8 dark:bg-slate-100 dark:text-slate-950">
           <h2 className="text-2xl font-semibold">不想從空白文件開始？</h2>
           <p className="mt-3 text-sm leading-7 text-slate-300 dark:text-slate-700">
-            好算整理了免費接案 / 工程模板包，包含報價單、成本估算、案場紀錄與請款單。加入好提官方 LINE，回覆「模板」領取。
+            好耶整理了免費接案 / 工程模板包，包含報價單、成本估算、案場紀錄與請款單。加入好提官方 LINE，回覆「模板」領取。
           </p>
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
             <a

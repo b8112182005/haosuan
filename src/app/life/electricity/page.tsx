@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     "依台電 2024 年住宅累進費率，輸入用電度數即時估算每月電費，支援夏月與非夏月費率切換。",
   keywords: ["電費計算機", "台電", "累進費率", "夏月電費", "用電度數"],
   openGraph: {
-    title: "電費計算機 | 好算",
+    title: "電費計算機 | 好耶",
     description: "依台電累進費率估算每月電費",
     url: "/life/electricity",
   },

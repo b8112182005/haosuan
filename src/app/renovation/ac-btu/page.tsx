@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "依房間坪數、樓層、日照狀況與用途，計算適合的冷氣噸數（BTU），並提供建議規格與選購tips。",
   keywords: ["冷氣噸數計算", "冷氣BTU", "幾噸冷氣", "冷氣選購", "坪數冷氣"],
   openGraph: {
-    title: "冷氣噸數計算 | 好算",
+    title: "冷氣噸數計算 | 好耶",
     description: "依坪數、樓層、朝向推薦適合的冷氣噸數",
     url: "/renovation/ac-btu",
   },

@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "免費線上二手車殘值計算機，依購車價格、車齡與品牌類型，以複利折舊法估算二手車殘值、折舊金額與殘值率。",
   keywords: ["二手車", "殘值", "折舊", "車齡", "中古車", "估價"],
   openGraph: {
-    title: "二手車殘值估算 | 好算",
+    title: "二手車殘值估算 | 好耶",
     description: "輸入購車價格、車齡與品牌，即時估算二手車殘值",
     url: "/finance/car-depreciation",
   },

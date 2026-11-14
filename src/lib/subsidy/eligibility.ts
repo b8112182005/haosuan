@@ -170,6 +170,12 @@ function checkAge(c: SubsidyConditions, p: Profile, out: Evaluation) {
     out.matched.push(label);
     return;
   }
+  // 「一般 65 歲、原住民 55 歲」這類放寬：精靈沒問身分，年齡落在兩個門檻之間的人不能直接排除
+  const alt = c.lower_age_for;
+  if (alt && min != null && p.age < min && p.age >= alt.age && (max == null || p.age <= max)) {
+    out.unknown.push(`一般要滿 ${min} 歲；${alt.who}滿 ${alt.age} 歲就適用，請自行確認是否符合`);
+    return;
+  }
   // 給兒少的項目（文化幣、HPV 疫苗、學生補助）：家長查詢時，子女在範圍內就值得看
   if (max != null && max <= 22) {
     const kids = p.childrenAges.filter(inRange);

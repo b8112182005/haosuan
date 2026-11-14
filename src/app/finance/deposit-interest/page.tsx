@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "免費線上存款利息計算機，支援單利與複利計算，輸入本金、年利率與期間，即時算出利息金額與到期本利和。",
   keywords: ["存款利息", "定存", "複利", "單利", "利率", "本利和", "儲蓄"],
   openGraph: {
-    title: "存款利息計算機 | 好算",
+    title: "存款利息計算機 | 好耶",
     description: "輸入本金、年利率與存款期間，即時計算利息與到期本利和",
     url: "/finance/deposit-interest",
   },

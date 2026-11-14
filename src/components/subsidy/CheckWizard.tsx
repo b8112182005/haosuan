@@ -8,6 +8,7 @@ import { TAIWAN_CITIES } from "@/lib/subsidy/types";
 import { EMPTY_PROFILE, loadProfile, saveProfile, clearProfile, type Profile } from "@/lib/subsidy/profile";
 import { evaluateAll, summarize, type Evaluation } from "@/lib/subsidy/eligibility";
 import { useToday } from "@/lib/subsidy/useToday";
+import { useBackHandler } from "@/lib/useBackHandler";
 import SubsidyCard from "./SubsidyCard";
 
 type Step = "city" | "age" | "income" | "housing" | "family" | "status" | "vehicle";
@@ -56,6 +57,9 @@ export default function CheckWizard() {
       alive = false;
     };
   }, []);
+
+  // Android 返回鍵：答到第 2 題以後按返回是回上一題，不是離開試算（第 1 題才離開）
+  useBackHandler(mode === "wizard" && stepIndex > 0, () => setStepIndex((i) => Math.max(0, i - 1)));
 
   const step = STEPS[stepIndex];
   const update = (patch: Partial<Profile>) => setProfile((p) => ({ ...p, ...patch }));

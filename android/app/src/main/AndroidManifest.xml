@@ -2,8 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!--
+      allowBackup=false：試算條件（收入、低收或身障身分）與提醒只留在這支手機，不跟著 Google 帳號備份到雲端。
+      隱私權政策寫的是「不會送到任何伺服器、解除安裝即全部刪除」，開著備份的話重裝會被還原，說法就不成立。
+      Android 12 以上用傳輸線或 Wi-Fi 直接換手機（device-to-device）不受這個設定影響，資料照樣會搬過去。
+    -->
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"

@@ -226,6 +226,35 @@ describe("evaluate：精靈沒有問的身分", () => {
   });
 });
 
+describe("evaluate：特定身分的年齡放寬（lower_age_for）", () => {
+  const card = makeSubsidy({ conditions: { min_age: 65, lower_age_for: { age: 55, who: "原住民" } } });
+
+  it("年齡在放寬門檻與一般門檻之間 → maybe，並說明是哪個身分", () => {
+    const r = evaluate(card, { ...renter, age: 58 });
+    expect(r.verdict).toBe("maybe");
+    expect(r.failed).toEqual([]);
+    expect(r.unknown.some((u) => u.includes("原住民") && u.includes("55") && u.includes("65"))).toBe(true);
+    // 剛好等於放寬門檻也算
+    expect(evaluate(card, { ...renter, age: 55 }).verdict).toBe("maybe");
+  });
+
+  it("低於放寬門檻仍然不符合；達到一般門檻直接相符", () => {
+    expect(evaluate(card, { ...renter, age: 54 }).verdict).toBe("not_eligible");
+    const r = evaluate(card, { ...renter, age: 65 });
+    expect(r.verdict).toBe("eligible");
+    expect(r.unknown).toEqual([]);
+  });
+
+  it("其他條件確定不符時，年齡放寬不會把結果拉回可能符合", () => {
+    const local = makeSubsidy({ city: "高雄市", conditions: { min_age: 65, lower_age_for: { age: 55, who: "原住民" } } });
+    expect(evaluate(local, { ...renter, age: 58 }).verdict).toBe("not_eligible");
+  });
+
+  it("沒有設 lower_age_for 的項目維持原本行為", () => {
+    expect(evaluate(makeSubsidy({ conditions: { min_age: 65 } }), { ...renter, age: 58 }).verdict).toBe("not_eligible");
+  });
+});
+
 describe("evaluate：家長替子女查", () => {
   it("學生項目：本人不是學生但有學齡子女 → maybe", () => {
     const loan = makeSubsidy({ conditions: { is_student: true } });

@@ -66,6 +66,11 @@ export interface SubsidyConditions {
   owns_vehicle?: string | null;
   /** 試算精靈沒有問的身分（原住民、新住民、農民、純電動車車主…）。有填時引擎一律歸「可能符合」並請使用者自行確認 */
   special_identity?: string | null;
+  /**
+   * 特定身分適用較低的年齡門檻（例如敬老卡一般 65 歲、原住民 55 歲）。
+   * 精靈沒有問這些身分，年齡落在兩個門檻之間的人歸「可能符合」，不直接判成不符合。
+   */
+  lower_age_for?: { age: number; who: string } | null;
   other?: string | null;
 }
 

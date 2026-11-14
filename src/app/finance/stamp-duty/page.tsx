@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "免費線上印花稅計算機，輸入交易金額與契約類型，即時計算印花稅金額與適用費率。支援買賣契約、贈與契約等類型。",
   keywords: ["印花稅", "契稅", "買賣契約", "贈與契約", "不動產", "稅務"],
   openGraph: {
-    title: "印花稅計算機 | 好算",
+    title: "印花稅計算機 | 好耶",
     description: "輸入交易金額與契約類型，即時計算印花稅金額",
     url: "/finance/stamp-duty",
   },

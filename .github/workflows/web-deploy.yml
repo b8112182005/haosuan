@@ -20,11 +20,15 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Lint
+        run: npm run lint
+
       - name: Type check
         run: npx tsc --noEmit
 
+      # 資格引擎與補助資料的回歸測試在這裡：資料重建後把使用者能領的項目判成不符合，這一步會擋下來
+      - name: Unit tests
+        run: npm test
+
       - name: Build (web mode)
         run: npm run build
-
-      - name: Build success notification
-        run: echo "✅ Web build passed — Railway will auto-deploy"

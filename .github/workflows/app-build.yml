@@ -67,6 +67,14 @@ jobs:
       - name: Build Next.js static export (app target)
         run: npm run build:app
 
+      # 返回鍵、通知排程、通知點擊只在 WebView 有原生橋接時才會執行，一般測試跑不到。
+      # 出包前用模擬的原生端對靜態輸出跑一次；沒過就不出 AAB。
+      - name: Native bridge simulation
+        run: |
+          npm install --no-save playwright@1.63.0
+          npx playwright install --with-deps chromium
+          npm run qa:native
+
       - name: Capacitor sync Android
         run: npx cap sync android
 

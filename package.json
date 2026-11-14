@@ -11,6 +11,7 @@
     "lint": "eslint",
     "test": "vitest run",
     "test:watch": "vitest",
+    "qa:native": "node scripts/qa/native-sim.cjs",
     "data:build": "node scripts/subsidy/build-data.mjs",
     "prebuild:app": "node scripts/subsidy/sync-public-data.mjs",
     "build:app": "cross-env BUILD_TARGET=app next build",

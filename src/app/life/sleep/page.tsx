@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "依 90 分鐘睡眠週期理論，輸入起床時間反推最佳入睡時間，或輸入現在時間計算最佳起床時間，避免在深睡期被吵醒。",
   keywords: ["睡眠計算機", "睡眠週期", "最佳入睡時間", "幾點睡", "90分鐘"],
   openGraph: {
-    title: "睡眠時間計算 | 好算",
+    title: "睡眠時間計算 | 好耶",
     description: "依睡眠週期計算最佳入睡或起床時間",
     url: "/life/sleep",
   },

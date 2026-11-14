@@ -3,13 +3,16 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { normalizePath } from "@/lib/platform";
+import { runBackHandlers } from "@/lib/backHandler";
 
 /**
  * 只在 Capacitor 原生環境啟用的膠水程式：
- * - Android 返回鍵：有上一頁就回上一頁，在首頁就離開 app（不處理會直接關閉 app，使用者會以為當掉）。
+ * - Android 返回鍵：開著的面板、試算精靈的上一題先處理（lib/backHandler）；
+ *   沒有的話有上一頁就回上一頁，在首頁就離開 app（不處理會直接關閉 app，使用者會以為當掉）。
  * - 外部連結：補助申請頁都是政府網站，用 Chrome Custom Tabs（@capacitor/browser）開，
  *   按返回就回到 app，比丟到外部瀏覽器順。
  * - 通知點擊：導到提醒帶的 url。
+ * - 啟動時重排通知：被強制停止、系統清掉排程之後，開 app 就補回來；每年固定的提醒也在這時推到下一年。
  * 所有 Capacitor 套件都用動態 import，網頁版不會載入它們。
  */
 export default function NativeBridge() {
@@ -27,6 +30,7 @@ export default function NativeBridge() {
       const { Browser } = await import("@capacitor/browser");
 
       const backSub = await App.addListener("backButton", ({ canGoBack }) => {
+        if (runBackHandlers()) return;
         const atRoot = normalizePath(window.location.pathname) === "/";
         if (atRoot || !canGoBack) {
           App.exitApp();
@@ -71,6 +75,10 @@ export default function NativeBridge() {
           else router.push(url);
         });
         if (typeof off === "function") cleanups.push(off);
+
+        // 不等使用者走到提醒頁：提醒頁以外的畫面也可能是 app 這次啟動唯一看過的一頁
+        const store = await import("@/lib/reminders/store");
+        store.rolloverReminders().catch(() => {});
       } catch {
         // 提醒模組不存在或初始化失敗時，app 其餘功能照常
       }

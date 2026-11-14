@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "坪、平方公尺、平方公分、平方英尺即時互換。台灣1坪=3.30579平方公尺，支援公頃、平方公里等多單位換算。",
   keywords: ["面積換算", "坪換算", "平方公尺", "坪數計算", "面積單位"],
   openGraph: {
-    title: "面積換算 | 好算",
+    title: "面積換算 | 好耶",
     description: "坪、平方公尺、平方英尺等面積單位即時互換",
     url: "/convert/area",
   },

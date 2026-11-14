@@ -166,6 +166,22 @@ describe("旗艦項目不能被誤判成不符合", () => {
     notHidden("special-circumstances-family-assistance", renter);
   });
 
+  it("58 歲（一般門檻 65 歲、原住民 55 歲起的項目）：敬老卡、假牙、長者健保費補助不會被藏起來", () => {
+    const at58: Profile = { ...elder, age: 58 };
+    notHidden("kaohsiung-senior-card-and-chongyang", at58);
+    notHidden("taipei-senior-card-and-chongyang", { ...at58, city: "台北市" });
+    notHidden("new-taipei-senior-card-and-chongyang", { ...at58, city: "新北市" });
+    notHidden("elderly-denture-subsidy", at58);
+    notHidden("elderly-nhi-premium-subsidy", at58);
+    // 54 歲連放寬門檻都沒到，照樣排除
+    expect(evaluate(byId("kaohsiung-senior-card-and-chongyang"), { ...elder, age: 54 }).verdict).toBe("not_eligible");
+  });
+
+  it("56 歲有舊制年資的人：勞保老年給付不會被藏起來", () => {
+    notHidden("labor-insurance-old-age-pension-age", { ...renter, age: 56 });
+    expect(evaluate(byId("labor-insurance-old-age-pension-age"), { ...renter, age: 45 }).verdict).toBe("not_eligible");
+  });
+
   it("地方項目照樣依縣市排除", () => {
     expect(evaluate(byId("rent-subsidy-new-taipei-youth"), renter).verdict).toBe("not_eligible");
     expect(evaluate(byId("birth-incentive-taipei"), { ...renter, isPregnantOrNewborn: true }).verdict).not.toBe("not_eligible");

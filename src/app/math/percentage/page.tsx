@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "三種百分比計算模式：X是Y的幾%、X的Y%是多少、從X到Y增減了幾%。適合折扣計算、業績增減率、比例分析。",
   keywords: ["百分比計算", "折扣計算", "增減幅度", "比例計算", "百分比換算"],
   openGraph: {
-    title: "百分比計算 | 好算",
+    title: "百分比計算 | 好耶",
     description: "三種百分比計算：比例、折扣、增減幅度",
     url: "/math/percentage",
   },

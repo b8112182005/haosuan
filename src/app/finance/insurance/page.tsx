@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     "免費線上勞健保費計算機，依 2024 年最新費率計算勞保、健保自付額，含眷屬加保試算，快速得知每月實領薪資。",
   keywords: ["勞保", "健保", "勞健保", "薪資", "扣繳", "眷屬", "保費計算"],
   openGraph: {
-    title: "勞健保費計算機 | 好算",
+    title: "勞健保費計算機 | 好耶",
     description: "輸入月薪與眷屬人數，即時計算勞保費、健保費及實領薪資",
     url: "/finance/insurance",
   },
@@ -62,7 +62,7 @@ export default function InsurancePage() {
       <NextStepCta
         eyebrow="算完下一步"
         title="接案收入不穩時，更要把勞健保與報稅節點記起來"
-        description="好算先幫你估每月負擔；好提可以幫你記繳費、報稅與合約請款期限。"
+        description="好耶先幫你估每月負擔；好提可以幫你記繳費、報稅與合約請款期限。"
         primaryLabel="用好提記期限"
         primaryHref={withUtm(HAOTI_LINE_URL, "insurance")}
         secondaryLabel="下載報價模板包"

@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "免費線上日期天數計算機，計算兩個日期之間相差幾天、幾週、幾個月，並顯示工作天數（不含週末）。",
   keywords: ["日期計算", "天數計算", "相差幾天", "工作天數", "倒數計時"],
   openGraph: {
-    title: "日期天數計算 | 好算",
+    title: "日期天數計算 | 好耶",
     description: "計算兩個日期之間相差的天數、週數、工作天數",
     url: "/life/date-diff",
   },

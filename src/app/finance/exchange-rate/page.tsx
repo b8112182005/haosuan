@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "免費線上匯率換算工具，支援台幣與美元、日圓、歐元、港幣、人民幣等 14 種常用幣別互換，快速估算旅遊或購物所需金額。",
   keywords: ["匯率換算", "台幣換算", "美金換台幣", "日圓換台幣", "外幣計算機"],
   openGraph: {
-    title: "匯率換算 | 好算",
+    title: "匯率換算 | 好耶",
     description: "台幣與 14 種常用幣別即時換算",
     url: "/finance/exchange-rate",
   },
