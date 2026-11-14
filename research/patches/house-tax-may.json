@@ -1,0 +1,53 @@
+{
+  "id": "house-tax-may",
+  "verdict": "confirmed",
+  "verified_at": "2026-11-14",
+  "checked": [
+    {
+      "field": "amount.text",
+      "value_in_data": "房屋稅 = 房屋評定現值 × 稅率。自住1.2%，全國單一自住1%（現值門檻各縣市不同，如新竹市115年期為185萬6,600元），非自住住家2.6%～4.8%",
+      "official_value": "新竹市稅務局：全國單一自住房屋現值在一定金額以下者，稅率由1.2%調降為1%；新竹市115年期一定金額為185萬6,600元。臺北市稅捐處：全國單一自住稅率為1%，臺北市課稅現值267.4萬元以下適用",
+      "match": true,
+      "source_url": "https://www.etax.nat.gov.tw/etwmain/announcement/news/MVkepkV"
+    },
+    {
+      "field": "deadline.start_month/start_day/end_month/end_day",
+      "value_in_data": "5月1日至5月31日（115年期順延至6月1日）",
+      "official_value": "臺北市稅捐處（115-04-28）：今（115）年房屋稅將於5月1日開徵，繳納期限至5月31日止，因適逢假日，順延至6月1日",
+      "match": true,
+      "source_url": "https://www.etax.nat.gov.tw/etwmain/announcement/news/wGAPDR7"
+    },
+    {
+      "field": "deadline.note",
+      "value_in_data": "115年期截止6月1日，6月2日至4日繳不加滯納金，6月5日起每3日加1%",
+      "official_value": "嘉義縣財政稅務局（115-06-03）：繳納最後期限至6月1日，每超過3日加徵1%滯納金，6月2日至6月4日不加徵，6月5日起開始加徵",
+      "match": true,
+      "source_url": "https://www.etax.nat.gov.tw/etwmain/announcement/news/jK0VrWQ"
+    },
+    {
+      "field": "summary",
+      "value_in_data": "課稅期間是前一年7月1日至當年6月30日；超商可繳3萬元以下稅單，郵局不代收",
+      "official_value": "臺北市稅捐處：115年期課稅期間為114年7月1日至115年6月30日，以每年2月末日為納稅義務基準日；金融機構臨櫃繳納（郵局不代收），稅額3萬元以下可至四大超商繳納",
+      "match": true,
+      "source_url": "https://www.etax.nat.gov.tw/etwmain/announcement/news/wGAPDR7"
+    },
+    {
+      "field": "status_2026",
+      "value_in_data": "active",
+      "official_value": "115年期房屋稅已於115年5月1日開徵、6月1日截止；房屋稅按年課徵，屬常態稅目",
+      "match": true,
+      "source_url": "https://www.etax.nat.gov.tw/etwmain/announcement/news/wGAPDR7"
+    },
+    {
+      "field": "official_url",
+      "value_in_data": "https://www.mof.gov.tw/multiplehtml/f48f5ee3f0e74cf3ac1be77f5b1aefbd",
+      "official_value": "HTTP 200，頁面為財政部「房屋稅2.0」專區",
+      "match": true,
+      "source_url": "https://www.mof.gov.tw/multiplehtml/f48f5ee3f0e74cf3ac1be77f5b1aefbd"
+    }
+  ],
+  "corrections": [],
+  "official_url_ok": true,
+  "file_path": "/home/user/haosuan/research/patches/house-tax-may.json",
+  "summary": "讀了財政部稅務入口網上新竹市稅務局、嘉義縣財政稅務局、臺北市稅捐處三則公告，並確認財政部房屋稅2.0專區網址回應200。稅率（全國單一自住1%、自住1.2%）、新竹市門檻185萬6,600元、5月1日至5月31日繳納（115年期順延6月1日）、6月5日起加徵滯納金都與資料一致，無需修正。非自住2.6%～4.8%等級距與116年期是否有變動，本次未讀到官方頁面，維持原本的 unverified_fields。"
+}

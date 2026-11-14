@@ -1,6 +1,6 @@
 {
   "version": "2026-11-14",
-  "generated_at": "2026-11-14T17:04:53.421Z",
+  "generated_at": "2026-11-14T17:06:38.912Z",
   "items": [
     {
       "id": "rent-subsidy-central-300b",
@@ -6410,8 +6410,8 @@
         "電話語音繳稅號碼 412-1111 服務代碼 166#：未在本次讀取頁面確認"
       ],
       "topic": "income-tax-2026",
-      "verified_at": null,
-      "verification_summary": null
+      "verified_at": "2026-11-14",
+      "verification_summary": "讀了財政部賦稅署「115年使用牌照稅繳納期限至4月30日」新聞稿、稅務入口網的115年開徵公告與營業車下期順延公告，以及稅務入口網節稅手冊的小客車稅額表。金額（1201-1800cc 7,120元、1801-2400cc 11,230元）、繳納期間（4月1日至4月30日）、115年仍辦理、官方網址（HTTP 200）四項都對得上，沒有修正。本次未查到116年稅額或期間變動的公告；電動車免徵至119年底與身心障礙2400cc上限不在本次核對範圍。"
     },
     {
       "id": "income-tax-rent-deduction",
@@ -6729,8 +6729,8 @@
         "納稅義務基準日2月末日：取自房屋稅條例一般認知，未在本次讀取頁面確認"
       ],
       "topic": "income-tax-2026",
-      "verified_at": null,
-      "verification_summary": null
+      "verified_at": "2026-11-14",
+      "verification_summary": "讀了財政部稅務入口網上新竹市稅務局、嘉義縣財政稅務局、臺北市稅捐處三則公告，並確認財政部房屋稅2.0專區網址回應200。稅率（全國單一自住1%、自住1.2%）、新竹市門檻185萬6,600元、5月1日至5月31日繳納（115年期順延6月1日）、6月5日起加徵滯納金都與資料一致，無需修正。非自住2.6%～4.8%等級距與116年期是否有變動，本次未讀到官方頁面，維持原本的 unverified_fields。"
     },
     {
       "id": "income-tax-longterm-care-deduction",
@@ -9497,8 +9497,8 @@
       "confidence": "high",
       "unverified_fields": [],
       "topic": "youth-and-students",
-      "verified_at": null,
-      "verification_summary": null
+      "verified_at": "2026-11-14",
+      "verification_summary": "看了文化幣官網的領取資格問答、2025-12-31最新消息與115年使用手冊PDF：1,200點、獨立書店加碼上限600點、115年1月1日上午8點開領、12月31日前用完，都與資料相符，官網回200。116年的發放日期與點數搜尋不到公告，資料裡的 deadline.note 已如實註明，不需修改。"
     },
     {
       "id": "private-college-tuition-reduction-35k",
