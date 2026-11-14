@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { evaluate, evaluateAll } from "../eligibility";
 import { EMPTY_PROFILE, type Profile } from "../profile";
 import type { Subsidy } from "../types";
-import { resolveDeadline, describeWindow } from "../deadline";
+import { resolveDeadline, describeWindow, isProjected, parseDateString } from "../deadline";
 
 function makeSubsidy(partial: Partial<Subsidy>): Subsidy {
   return {
@@ -315,5 +315,68 @@ describe("deadline", () => {
   it("describeWindow 文字", () => {
     expect(describeWindow({ type: "fixed_annual", start_month: 5, start_day: 1, end_month: 5, end_day: 31, note: "" })).toBe("每年 5/1 ～ 5/31");
     expect(describeWindow({ type: "budget_until_exhausted", start_month: null, start_day: null, end_month: null, end_day: null, note: "" })).toBe("額滿即止");
+    expect(describeWindow({ type: "window", start_month: 1, start_day: 1, end_month: 12, end_day: 31, end_year: 2030, note: "" })).toBe("到 2030/12/31 為止");
+    expect(describeWindow({ type: "window", start_month: 8, start_day: 1, start_year: 2026, end_month: 7, end_day: 31, end_year: 2029, note: "" })).toBe("2026/8/1 ～ 2029/7/31");
+    expect(describeWindow({ type: "varies", start_month: null, start_day: null, end_month: null, end_day: null, note: "" })).toContain("依公告");
+  });
+
+  it("還沒開始的期間，標籤講哪一天開始；每年固定的加「每年」", () => {
+    const annual = resolveDeadline({ type: "fixed_annual", start_month: 5, start_day: 1, end_month: 5, end_day: 31, note: "" }, today);
+    expect(annual.label).toBe("每年 5/1 開始");
+    const once = resolveDeadline({ type: "window", start_month: 12, start_day: 15, end_month: 1, end_day: 2, note: "" }, today);
+    expect(once.label).toBe("12/15 開始");
+    expect(once.kind === "upcoming" && once.open).toBe(false);
+  });
+
+  it("有 end_year 的多年期方案：不會被算成今年底截止", () => {
+    // 電動車免徵牌照稅到 2030/12/31
+    const st = resolveDeadline({ type: "window", start_month: 1, start_day: 1, end_month: 12, end_day: 31, end_year: 2030, note: "" }, today);
+    expect(st.kind).toBe("upcoming");
+    if (st.kind === "upcoming") {
+      expect(st.date).toEqual({ y: 2030, m: 12, d: 31 });
+      expect(st.open).toBe(true);
+      expect(st.daysLeft).toBeGreaterThan(1400);
+      // 超過一年不顯示「剩 N 天」
+      expect(st.label).toBe("2030/12/31 截止");
+    }
+    // 沒有年份的同一組月日會被算成今年底
+    const naive = resolveDeadline({ type: "window", start_month: 1, start_day: 1, end_month: 12, end_day: 31, note: "" }, today);
+    expect(naive.kind === "upcoming" && naive.date.y).toBe(2026);
+  });
+
+  it("有 start_year 與 end_year：期間內是開放、開始前不是、結束後不滾到下一年", () => {
+    const loan = { type: "window" as const, start_month: 8, start_day: 1, start_year: 2026, end_month: 7, end_day: 31, end_year: 2029, note: "" };
+    const during = resolveDeadline(loan, today);
+    expect(during.kind === "upcoming" && during.open && during.date.y === 2029).toBe(true);
+    const before = resolveDeadline(loan, { y: 2026, m: 7, d: 1 });
+    expect(before.kind === "upcoming" && !before.open).toBe(true);
+    expect(before.label).toBe("8/1 開始");
+    const after = resolveDeadline(loan, { y: 2029, m: 8, d: 1 });
+    expect(after.kind).toBe("ended");
+    expect(after.label).toContain("2029/7/31");
+    // 一年內到期時照常顯示剩幾天
+    const near = resolveDeadline(loan, { y: 2029, m: 7, d: 1 });
+    expect(near.label).toBe("剩 30 天");
+  });
+
+  it("varies 不給日期", () => {
+    const st = resolveDeadline({ type: "varies", start_month: null, start_day: null, end_month: null, end_day: null, note: "" }, today);
+    expect(st).toEqual({ kind: "none", label: "依公告為準" });
+  });
+
+  it("isProjected：資料整理完之後才開始的期間是照上一期推算的", () => {
+    const dataDate = parseDateString("2026-11-14")!;
+    const tax = { type: "fixed_annual" as const, start_month: 5, start_day: 1, end_month: 5, end_day: 31, note: "" };
+    expect(isProjected(tax, resolveDeadline(tax, today), dataDate)).toBe(true);
+    // 資料整理時已經開始的期間（台北幸福租 4/8 ～ 隔年 3/31）是公告過的日期
+    const topup = { type: "window" as const, start_month: 4, start_day: 8, end_month: 3, end_day: 31, note: "" };
+    expect(isProjected(topup, resolveDeadline(topup, today), dataDate)).toBe(false);
+    // 12/15 才開始的下一期：開放後仍然是推算的
+    const loan = { type: "fixed_annual" as const, start_month: 12, start_day: 15, end_month: 1, end_day: 2, note: "" };
+    expect(isProjected(loan, resolveDeadline(loan, { y: 2026, m: 12, d: 20 }), dataDate)).toBe(true);
+    // 寫明年份的一次性期間不是推算
+    const ev = { type: "window" as const, start_month: 1, start_day: 1, end_month: 12, end_day: 31, end_year: 2030, note: "" };
+    expect(isProjected(ev, resolveDeadline(ev, today), dataDate)).toBe(false);
+    expect(parseDateString("2026/11/14")).toBeNull();
   });
 });

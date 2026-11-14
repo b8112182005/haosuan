@@ -61,7 +61,8 @@ const channelIcon: Record<SubsidyChannel["type"], React.ElementType> = {
   other: Link2,
 };
 
-const confidenceLabel = { high: "已對照官方來源", medium: "部分欄位待核對", low: "資料待核對" } as const;
+// high 是研究時每個數字都在來源頁面上找到；來源多數是主管機關網頁，少數是學校公告或新聞，所以不寫「官方」
+const confidenceLabel = { high: "數字已對照來源頁面", medium: "部分欄位待核對", low: "資料待核對" } as const;
 
 // unverified_fields 存的是欄位名，顯示時換成一般人看得懂的詞；研究員自由填的字串就原樣顯示
 const FIELD_LABELS: Record<string, string> = {

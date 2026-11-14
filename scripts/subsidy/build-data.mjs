@@ -33,7 +33,7 @@ const CATEGORY_ORDER = ["housing", "family", "tax", "labor", "youth", "health", 
 const LEVELS = ["central", "local"];
 const STATUSES = ["active", "ended", "pending", "unknown"];
 const CONFIDENCES = ["high", "medium", "low"];
-const DEADLINE_TYPES = ["fixed_annual", "rolling", "window", "budget_until_exhausted", "event_based", "ended", "unknown"];
+const DEADLINE_TYPES = ["fixed_annual", "rolling", "window", "budget_until_exhausted", "event_based", "varies", "ended", "unknown"];
 const CHANNEL_TYPES = ["online", "office", "mail", "phone", "app", "bank", "other"];
 const REQUIRED = [
   "id", "name", "short_name", "category", "level", "city", "agency", "summary", "eligibility", "amount", "conditions",
@@ -64,6 +64,14 @@ function validateItem(item, origin) {
   check(STATUSES.includes(item.status_2026), `${where}: status_2026 錯誤`);
   check(CONFIDENCES.includes(item.confidence), `${where}: confidence 錯誤`);
   check(item.deadline && DEADLINE_TYPES.includes(item.deadline.type), `${where}: deadline.type 錯誤`);
+  const dl = item.deadline ?? {};
+  for (const k of ["start_year", "end_year"]) {
+    check(dl[k] == null || (Number.isInteger(dl[k]) && dl[k] >= 2020 && dl[k] <= 2100), `${where}: deadline.${k} 不是合理的年份`);
+  }
+  check(!(dl.end_year && !dl.end_month), `${where}: deadline.end_year 有填但沒有 end_month`);
+  check(!(dl.start_year && !dl.end_year), `${where}: deadline.start_year 要搭配 end_year`);
+  // varies 不該帶月日：帶了會讓人以為有固定日期
+  if (dl.type === "varies") check(dl.end_month == null && dl.start_month == null, `${where}: deadline.type=varies 不要填月日，日期寫在 note`);
   check(typeof item.official_url === "string" && /^https?:\/\//.test(item.official_url), `${where}: official_url 不是網址`);
   check(Array.isArray(item.sources) && item.sources.length > 0, `${where}: sources 為空`);
   check(typeof item.amount?.text === "string", `${where}: amount.text 缺`);
@@ -92,6 +100,9 @@ function normalizeItem(item) {
       start_day: d.start_day ?? null,
       end_month: d.end_month ?? null,
       end_day: d.end_day ?? null,
+      // 只辦一次、跨年度的期間才有年份（見 research/README.md）
+      start_year: d.start_year ?? null,
+      end_year: d.end_year ?? null,
       note: d.note ?? "",
     },
     faqs: (item.faqs ?? []).map((f) => ({ q: f.q, a: f.a, source_url: f.source_url ?? null })),

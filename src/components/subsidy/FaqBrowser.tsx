@@ -43,7 +43,7 @@ export default function FaqBrowser({ entries, groups }: { entries: FaqEntry[]; g
             setQuery(e.target.value);
             setLimit(PAGE_SIZE);
           }}
-          placeholder="輸入你的問題：房東不同意、戶籍、補件、撥款…"
+          placeholder="搜尋：房東不同意、戶籍、補件"
           aria-label="搜尋問答"
           className="h-11 w-full rounded-xl border border-input bg-background pl-9 pr-9 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
         />
@@ -87,7 +87,7 @@ export default function FaqBrowser({ entries, groups }: { entries: FaqEntry[]; g
                 <div className="mt-2 flex flex-wrap gap-3 text-xs">
                   {e.source_url && (
                     <a href={e.source_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-0.5 underline underline-offset-4">
-                      官方來源 <ExternalLink className="h-3 w-3" />
+                      來源 <ExternalLink className="h-3 w-3" />
                     </a>
                   )}
                   {e.subsidyId && (

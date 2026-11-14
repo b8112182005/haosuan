@@ -84,8 +84,25 @@ function fakeNative() {
         return;
       }
 
-      log({ key, options: o });
+      // 記錄時把很長的字串截短：線上資料檔整份有 1 MB 多，照存會把 localStorage 塞爆
+      log({ key, options: JSON.parse(JSON.stringify(o, (k, v) => (typeof v === "string" && v.length > 300 ? `${v.slice(0, 300)}…（共 ${v.length} 字）` : v))) });
       switch (key) {
+        case "CapacitorHttp.get":
+        case "CapacitorHttp.request": {
+          // __remote_mode 沒設＝網站還沒有資料檔（404）；newer＝網站的資料比 app 內建的新，而且牌照稅的金額與期限改了
+          if (LS.getItem("__remote_mode") !== "newer") return ok(call, { status: 404, data: "", headers: {}, url: o.url });
+          fetch("/data/subsidies.json")
+            .then((r) => r.json())
+            .then((d) => {
+              d.version = "2099-01-01";
+              const item = d.items.find((i) => i.id === "vehicle-license-tax-april");
+              item.amount = { ...item.amount, text: `${item.amount.text}（測試：金額調整）` };
+              item.deadline = { ...item.deadline, end_day: 29, note: "測試：改到 4/29" };
+              ok(call, { status: 200, data: d, headers: { "content-type": "application/json" }, url: o.url });
+            })
+            .catch((e) => fail(call, String(e)));
+          return;
+        }
         case "Preferences.get":
           return ok(call, { value: LS.getItem(`__pref:${o.key}`) });
         case "Preferences.set":
@@ -176,6 +193,7 @@ const PLUGIN_HEADERS = [
   header("SplashScreen", ["show", "hide"]),
   header("StatusBar", ["setStyle", "setBackgroundColor", "show", "hide", "getInfo", "setOverlaysWebView"]),
   header("SystemBars", ["setStyle", "show", "hide", "setAnimation"]),
+  header("CapacitorHttp", ["request", "get", "post", "put", "patch", "delete"]),
 ];
 const INIT_SCRIPT = `(${fakeNative.toString()})();\n${BRIDGE_JS}\nwindow.Capacitor.PluginHeaders = ${JSON.stringify(PLUGIN_HEADERS)};`;
 
@@ -441,6 +459,31 @@ async function main() {
   await page.getByRole("button", { name: "刪除" }).first().click();
   await settle(1000);
   await check("getPending 沒有 extra 時，刪除提醒仍取消全部通知", async () => (await pendingNow()).length === 0 || (await pendingNow()).map((n) => n.id));
+
+  // 13. 網站上有比 app 內建更新的資料 ─────────────────────────────────────────────────────────
+  console.log("\n# 線上資料更新");
+  await check("網站還沒有資料檔（404）時，詳情頁照常顯示、不出現更新提示", async () => {
+    await page.goto(`${ORIGIN}/subsidy/vehicle-license-tax-april/`, { waitUntil: "networkidle" });
+    await settle(1200);
+    return (await page.getByText("有較新的資料").count()) === 0 && (await page.locator("h1").first().innerText()).includes("牌照稅");
+  });
+  await page.evaluate(() => {
+    localStorage.setItem("__remote_mode", "newer");
+  });
+  await clearLog();
+  await page.goto(`${ORIGIN}/subsidy/vehicle-license-tax-april/`, { waitUntil: "networkidle" });
+  await check("app 用原生 HTTP 抓網站的資料檔", async () => {
+    await page.getByText("有較新的資料（2099-01-01）").waitFor({ state: "visible", timeout: 6000 });
+    const got = await calls("CapacitorHttp.get");
+    return (got.length === 1 && /\/data\/subsidies\.json$/.test(got[0].options.url)) || got;
+  });
+  await check("金額與期限有變動的項目，頁面頂端列出差異", async () =>
+    (await page.getByText("測試：改到 4/29").count()) >= 1 && (await page.getByText("詳細金額已更新").count()) >= 1);
+  await clearLog();
+  await page.goto(`${ORIGIN}/subsidy/house-tax-may/`, { waitUntil: "networkidle" });
+  await settle(1200);
+  await check("沒有變動的項目不顯示提示", async () => (await page.getByText("有較新的資料").count()) === 0);
+  await check("6 小時內不重複下載資料檔", async () => (await calls("CapacitorHttp.get")).length === 0 || (await calls("CapacitorHttp.get")).length);
 
   await check("全程沒有未捕捉的 JS 錯誤", async () => pageErrors.length === 0 || pageErrors.slice(0, 5));
 

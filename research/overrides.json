@@ -28,24 +28,42 @@
     }
   },
   "home-purchase-loan-interest-subsidy": {
-    "_why": "看家庭年所得標準，不要求列冊低收／中低收",
+    "_why": "看家庭年所得標準，不要求列冊低收／中低收 期限說明寫每年日期不固定（113 年度 8/1～8/30、115 年度 9/1～9/30），116 年度未公告。拿 9/30 當明年的截止日，如果改回 8 月就會錯過。改成依公告為準。",
     "conditions": {
       "low_income": null
+    },
+    "deadline": {
+      "type": "varies",
+      "start_month": null,
+      "start_day": null,
+      "end_month": null,
+      "end_day": null
     }
   },
   "home-repair-loan-interest-subsidy": {
-    "_why": "看家庭年所得標準，不要求列冊低收／中低收",
+    "_why": "看家庭年所得標準，不要求列冊低收／中低收 和自購住宅貸款利息補貼同一個受理期間，每年日期不固定（113 年度 8 月、115 年度 9 月）。改成依公告為準。",
     "conditions": {
       "low_income": null
+    },
+    "deadline": {
+      "type": "varies",
+      "start_month": null,
+      "start_day": null,
+      "end_month": null,
+      "end_day": null
     }
   },
   "rent-subsidy-taipei-topup": {
-    "_why": "三類擇一：單身青年未滿 40、已婚青年 45 以下無子女、育兒家庭子女 12 歲以下；子女與 45 歲不是共同門檻",
+    "_why": "三類擇一：單身青年未滿 40、已婚青年 45 以下無子女、育兒家庭子女 12 歲以下；子女與 45 歲不是共同門檻 115 年度受理期間是 115 年 4 月 8 日到 116 年 3 月 31 日。補上年份：過了 116 年 3 月 31 日顯示已截止，不會自己滾到 117 年。",
     "conditions": {
       "max_age": null,
       "child_age_min": null,
       "child_age_max": null,
       "has_children": null
+    },
+    "deadline": {
+      "start_year": 2026,
+      "end_year": 2027
     }
   },
   "rent-subsidy-new-taipei-youth": {
@@ -128,9 +146,16 @@
     }
   },
   "disadvantaged-college-student-grant-2026": {
-    "_why": "門檻是家庭年所得 90 萬以下，不是列冊低收／中低收（那是學雜費減免）",
+    "_why": "門檻是家庭年所得 90 萬以下，不是列冊低收／中低收（那是學雜費減免） 實際收件日由各校公告（屏科大到 10/5、宜蘭大學 8/17～9/30、也有學校到 10/18）。原本填的 9/1～10/15 是概估，比 10/15 早截止的學校會被誤導。改成依公告為準。",
     "conditions": {
       "low_income": null
+    },
+    "deadline": {
+      "type": "varies",
+      "start_month": null,
+      "start_day": null,
+      "end_month": null,
+      "end_day": null
     }
   },
   "cancer-screening-public": {
@@ -176,13 +201,20 @@
     }
   },
   "elderly-denture-subsidy": {
-    "_why": "各縣市辦法不同，有的不限低收（例如高雄一般長者型） 條文寫部分縣市低收、中低收放寬到 55 歲、原住民 55 歲；加 lower_age_for，55 到 64 歲歸「可能符合」。",
+    "_why": "各縣市辦法不同，有的不限低收（例如高雄一般長者型） 條文寫部分縣市低收、中低收放寬到 55 歲、原住民 55 歲；加 lower_age_for，55 到 64 歲歸「可能符合」。 各縣市期間不同：臺北全年受理、高雄 3/1 開始 6/30 截止且 3/7 就額滿。原本填 1/1～12/31 會顯示「剩 46 天」。改成依公告為準。",
     "conditions": {
       "low_income": null,
       "lower_age_for": {
         "age": 55,
         "who": "原住民，以及部分縣市的低收、中低收入戶"
       }
+    },
+    "deadline": {
+      "type": "varies",
+      "start_month": null,
+      "start_day": null,
+      "end_month": null,
+      "end_day": null
     }
   },
   "low-income-living-assistance-2026": {
@@ -285,16 +317,26 @@
     }
   },
   "disabled-preschooler-education-subsidy": {
-    "_why": "身心障礙的是幼兒，不是查詢的家長本人",
+    "_why": "身心障礙的是幼兒，不是查詢的家長本人 9/1～10/15 與 3/1～4/15 是園所向縣市政府申請的期間，家長交件給園所的期限由各縣市另訂而且更早。拿園所的期限當家長的截止日會讓人錯過。改成依公告為準。",
     "conditions": {
       "is_disabled": null,
       "special_identity": "子女經鑑輔會鑑定為身心障礙幼兒"
+    },
+    "deadline": {
+      "type": "varies",
+      "start_month": null,
+      "start_day": null,
+      "end_month": null,
+      "end_day": null
     }
   },
   "ev-license-tax-exemption": {
-    "_why": "只有純電動車免徵，一般汽機車車主不適用",
+    "_why": "只有純電動車免徵，一般汽機車車主不適用 期限說明寫免徵到 2030 年 12 月 31 日，但月日沒有年份，app 會算成今年底截止（剩 46 天）。補上 end_year。",
     "conditions": {
       "special_identity": "車輛為純電動（油電混合不適用）"
+    },
+    "deadline": {
+      "end_year": 2030
     }
   },
   "taipei-elementary-new-student-registration-115": {
@@ -408,6 +450,68 @@
         "age": 55,
         "who": "原住民"
       }
+    }
+  },
+  "ev-commodity-tax-exemption": {
+    "_why": "期限說明寫免徵到 2030 年 12 月 31 日，但月日沒有年份，app 會算成今年底截止。補上 end_year。",
+    "deadline": {
+      "end_year": 2030
+    }
+  },
+  "youth-safe-home-loan-3": {
+    "_why": "申辦期間是 115 年 8 月 1 日到 118 年 7 月 31 日；沒有年份時 app 會算成 2027 年 7 月 31 日截止。補上年份。",
+    "deadline": {
+      "start_year": 2026,
+      "end_year": 2029
+    }
+  },
+  "vulnerable-extra-living-allowance-2026": {
+    "_why": "發放期間是 115 年 1 月到 116 年 1 月底共 13 個月；沒有年份時 app 顯示成「1 月 31 日截止，尚未開放」。補上年份。",
+    "deadline": {
+      "start_year": 2026,
+      "end_year": 2027
+    }
+  },
+  "old-house-renewal-repair-subsidy": {
+    "_why": "中央計畫到 116 年底，各縣市自訂受理期間且分梯次（新北 6/15～9/15、台北到 8/28、桃園高雄首梯已截止）。原本填 5/1～12/31 會顯示「剩 46 天」，多數縣市其實已經截止。改成依公告為準。",
+    "deadline": {
+      "type": "varies",
+      "start_month": null,
+      "start_day": null,
+      "end_month": null,
+      "end_day": null
+    }
+  },
+  "low-income-tuition-waiver": {
+    "_why": "每學期一次、各校自訂期限（上學期多在 8 月底到 9 月底、下學期多在 1 月底到 2 月底）。原本填 9/1～2/28 會在兩個學期中間顯示成開放中。改成依公告為準。",
+    "deadline": {
+      "type": "varies",
+      "start_month": null,
+      "start_day": null,
+      "end_month": null,
+      "end_day": null
+    }
+  },
+  "taipei-low-income-festival-allowance-2026": {
+    "_why": "一年三次在春節、端午、中秋前 5 日內匯入，不是申請期間。原本填成 2/11～9/18 的區間，會顯示成「9/18 截止」。改成依事件。",
+    "deadline": {
+      "type": "event_based",
+      "start_month": null,
+      "start_day": null,
+      "end_month": null,
+      "end_day": null
+    }
+  },
+  "hpv-vaccine-public-junior-high": {
+    "_why": "event_based 不該帶月份，原本只填了 start_month 9。",
+    "deadline": {
+      "start_month": null
+    }
+  },
+  "energy-appliance-commodity-tax-refund": {
+    "_why": "法源適用購買日到 2029 年 12 月 31 日；期限是依事件計算（發票日次日起 6 個月），月日只是法源的終止日，補上年份避免被當成每年年底。",
+    "deadline": {
+      "end_year": 2029
     }
   }
 }

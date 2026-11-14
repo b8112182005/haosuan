@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import dataset from "../../../data/subsidies.json";
 import { evaluate, evaluateAll } from "../eligibility";
+import { resolveDeadline } from "../deadline";
 import { EMPTY_PROFILE, type Profile } from "../profile";
 import type { Subsidy } from "../types";
 import { tools } from "../../tools-registry";
@@ -97,6 +98,59 @@ describe("資料集基本檢查", () => {
     const active = items.filter((s) => s.status_2026 !== "ended");
     const failed = evaluateAll(active, EMPTY_PROFILE, { y: 2026, m: 11, d: 11 }).filter((e) => e.verdict === "not_eligible");
     expect(failed.map((e) => e.subsidy.id)).toEqual([]);
+  });
+});
+
+describe("期限顯示（以 2026-11-15 為今天）", () => {
+  const today = { y: 2026, m: 11, d: 15 };
+  const state = (id: string) => resolveDeadline(byId(id).deadline, today);
+
+  it("跨年度的方案用公告的年份，不會顯示成今年底截止", () => {
+    for (const [id, y, m, d] of [
+      ["ev-license-tax-exemption", 2030, 12, 31],
+      ["ev-commodity-tax-exemption", 2030, 12, 31],
+      ["youth-safe-home-loan-3", 2029, 7, 31],
+      ["vulnerable-extra-living-allowance-2026", 2027, 1, 31],
+    ] as const) {
+      const st = state(id);
+      expect(st.kind, id).toBe("upcoming");
+      if (st.kind === "upcoming") {
+        expect(st.date, id).toEqual({ y, m, d });
+        expect(st.open, `${id} 應該在期間內`).toBe(true);
+      }
+    }
+  });
+
+  it("各縣市、各校自訂期限的項目不顯示倒數", () => {
+    for (const id of [
+      "old-house-renewal-repair-subsidy",
+      "low-income-tuition-waiver",
+      "disabled-preschooler-education-subsidy",
+      "disadvantaged-college-student-grant-2026",
+      "elderly-denture-subsidy",
+      "home-purchase-loan-interest-subsidy",
+      "home-repair-loan-interest-subsidy",
+    ]) {
+      expect(state(id), id).toEqual({ kind: "none", label: "依公告為準" });
+    }
+  });
+
+  it("期限說明提到比今年晚的截止年份時，資料要填 end_year", () => {
+    // 「到 2030 年 12 月 31 日」「至 118 年 7 月 31 日」這種寫法卻沒填年份，app 會把它算成今年或明年
+    const suspicious: string[] = [];
+    for (const s of items) {
+      const d = s.deadline;
+      if (!d.end_month || d.end_year || s.status_2026 === "ended") continue;
+      const day = d.end_day ?? 31;
+      const patterns = [
+        new RegExp(`(20(?:2[89]|[3-9]\\d))\\s*年?[^。；]{0,12}?${d.end_month}\\s*月\\s*${day}\\s*日`),
+        // 民國 117 年（2028）以後
+        new RegExp(`(11[7-9]|12\\d)\\s*年[^。；]{0,12}?${d.end_month}\\s*月\\s*${day}\\s*日`),
+        new RegExp(`(20(?:2[89]|[3-9]\\d))-${String(d.end_month).padStart(2, "0")}-${String(day).padStart(2, "0")}`),
+      ];
+      if (patterns.some((p) => p.test(d.note))) suspicious.push(s.id);
+    }
+    expect(suspicious).toEqual([]);
   });
 });
 

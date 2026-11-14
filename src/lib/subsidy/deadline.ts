@@ -44,18 +44,25 @@ export type DeadlineState =
   | { kind: "none"; label: string }                       // 隨到隨辦／依事件／未知
   | { kind: "ended"; label: string }                      // 方案已結束
   | { kind: "budget"; label: string }                     // 額滿即止，沒有日期
-  | { kind: "upcoming"; label: string; date: LocalDate; daysLeft: number; open: boolean }; // 有明確截止日
+  // 有明確截止日。start 是這一期的開始日（沒有就是 null），用來判斷這一期是不是照往年日期推算出來的
+  | { kind: "upcoming"; label: string; date: LocalDate; daysLeft: number; open: boolean; start: LocalDate | null };
+
+/** 超過這個天數就不顯示「剩 N 天」，改顯示日期：「剩 1,507 天」沒有人看得懂 */
+export const FAR_DAYS = 365;
 
 /**
  * 依今天算出下一個截止日。
  * - fixed_annual / window：有 end_month/end_day 就算「今年或明年的那一天」；
  *   有 start 的話另外回報現在是否在開放期間內（open）。
+ * - 有 end_year：只辦一次的期間，用指定的年份算；過了就是結束，不滾到下一年。
  * - budget_until_exhausted：若有 end 日期仍算截止，否則回報額滿即止。
+ * - varies：各地或每年日期不同，不給日期。
  */
 export function resolveDeadline(deadline: SubsidyDeadline, today: LocalDate): DeadlineState {
   if (deadline.type === "ended") return { kind: "ended", label: "已結束" };
   if (deadline.type === "rolling") return { kind: "none", label: "隨到隨辦" };
   if (deadline.type === "event_based") return { kind: "none", label: "依事件計算期限" };
+  if (deadline.type === "varies") return { kind: "none", label: "依公告為準" };
   if (deadline.type === "unknown" && !deadline.end_month) return { kind: "none", label: "期限未公告" };
 
   const em = deadline.end_month;
@@ -65,21 +72,55 @@ export function resolveDeadline(deadline: SubsidyDeadline, today: LocalDate): De
     return { kind: "none", label: "全年受理" };
   }
 
-  let end = clampDay(today.y, em, ed);
-  if (toUtcMs(end) < toUtcMs(today)) end = clampDay(today.y + 1, em, ed);
-  const daysLeft = diffDays(today, end);
-
-  let open = true;
-  if (deadline.start_month) {
-    const sd = deadline.start_day ?? 1;
-    // 開放期間若跨年（例如 12/1 ～ 1/31），start 要用截止日那一年或前一年
-    let start = clampDay(end.y, deadline.start_month, sd);
-    if (toUtcMs(start) > toUtcMs(end)) start = clampDay(end.y - 1, deadline.start_month, sd);
-    open = toUtcMs(today) >= toUtcMs(start);
+  let end: LocalDate;
+  let start: LocalDate | null = null;
+  if (deadline.end_year) {
+    end = clampDay(deadline.end_year, em, ed);
+    if (toUtcMs(end) < toUtcMs(today)) return { kind: "ended", label: `${formatLocalDate(end)} 已截止` };
+    // 多年期的期間只有在明寫開始年份時才判斷「還沒開始」；沒寫就當作已經在期間內
+    if (deadline.start_month && deadline.start_year) {
+      start = clampDay(deadline.start_year, deadline.start_month, deadline.start_day ?? 1);
+    }
+  } else {
+    end = clampDay(today.y, em, ed);
+    if (toUtcMs(end) < toUtcMs(today)) end = clampDay(today.y + 1, em, ed);
+    if (deadline.start_month) {
+      const sd = deadline.start_day ?? 1;
+      // 開放期間若跨年（例如 12/1 ～ 1/31），start 要用截止日那一年或前一年
+      start = clampDay(end.y, deadline.start_month, sd);
+      if (toUtcMs(start) > toUtcMs(end)) start = clampDay(end.y - 1, deadline.start_month, sd);
+    }
   }
 
-  const label = daysLeft === 0 ? "今天截止" : open ? `剩 ${daysLeft} 天` : `${formatLocalDate(end, false)} 截止，尚未開放`;
-  return { kind: "upcoming", label, date: end, daysLeft, open };
+  const daysLeft = diffDays(today, end);
+  const open = start ? toUtcMs(today) >= toUtcMs(start) : true;
+
+  let label: string;
+  if (daysLeft === 0) label = "今天截止";
+  else if (!open && start) {
+    // 還沒開始的期間，使用者要知道的是哪一天開始；每年固定的項目加「每年」提醒這是照往年的日期
+    const startText = formatLocalDate(start, start.y !== today.y && start.y !== today.y + 1);
+    label = deadline.type === "fixed_annual" ? `每年 ${formatLocalDate(start, false)} 開始` : `${startText} 開始`;
+  } else if (daysLeft > FAR_DAYS) label = `${formatLocalDate(end)} 截止`;
+  else label = `剩 ${daysLeft} 天`;
+
+  return { kind: "upcoming", label, date: end, daysLeft, open, start };
+}
+
+/**
+ * 這一期的日期是不是推算出來的：資料整理完之後才開始的期間，日期是照上一期抄的，主管機關還沒公告。
+ * 有 end_year 的一次性期間是公告過的確定日期，不算推算。dataDate 傳資料版本的日期。
+ */
+export function isProjected(deadline: SubsidyDeadline, state: DeadlineState, dataDate: LocalDate): boolean {
+  if (state.kind !== "upcoming" || deadline.end_year) return false;
+  if (state.start) return toUtcMs(state.start) > toUtcMs(dataDate);
+  return state.date.y > dataDate.y;
+}
+
+/** "2026-11-14" → LocalDate；格式不對回 null */
+export function parseDateString(value: string): LocalDate | null {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  return m ? { y: Number(m[1]), m: Number(m[2]), d: Number(m[3]) } : null;
 }
 
 export function resolveSubsidyDeadline(subsidy: Pick<Subsidy, "deadline">, today: LocalDate): DeadlineState {
@@ -94,14 +135,18 @@ export function urgency(state: DeadlineState): "urgent" | "soon" | "later" | "no
   return "later";
 }
 
-/** 開放期間的文字，例如「每年 5/1 ～ 5/31」 */
+/** 開放期間的文字，例如「每年 5/1 ～ 5/31」；有填年份的一次性期間會帶年份 */
 export function describeWindow(deadline: SubsidyDeadline): string {
-  const end = deadline.end_month ? `${deadline.end_month}/${deadline.end_day ?? "月底"}` : null;
-  const start = deadline.start_month ? `${deadline.start_month}/${deadline.start_day ?? 1}` : null;
+  const endYear = deadline.end_year ? `${deadline.end_year}/` : "";
+  const startYear = deadline.start_year ? `${deadline.start_year}/` : "";
+  const end = deadline.end_month ? `${endYear}${deadline.end_month}/${deadline.end_day ?? "月底"}` : null;
+  const start = deadline.start_month ? `${startYear}${deadline.start_month}/${deadline.start_day ?? 1}` : null;
   switch (deadline.type) {
     case "fixed_annual":
       return start && end ? `每年 ${start} ～ ${end}` : end ? `每年 ${end} 截止` : "每年固定期間";
     case "window":
+      // 只有結束年份、沒有開始年份的多年期方案（免稅到 2030 年）：開始的月日沒有意義，只講到哪一天
+      if (deadline.end_year && !deadline.start_year) return end ? `到 ${end} 為止` : "限期受理";
       return start && end ? `${start} ～ ${end}` : end ? `${end} 截止` : "限期受理";
     case "budget_until_exhausted":
       return end ? `至 ${end}，額滿即止` : "額滿即止";
@@ -109,6 +154,8 @@ export function describeWindow(deadline: SubsidyDeadline): string {
       return "隨到隨辦";
     case "event_based":
       return "依事件計算";
+    case "varies":
+      return "各地或每年的日期不同，依公告為準";
     case "ended":
       return "已結束";
     default:

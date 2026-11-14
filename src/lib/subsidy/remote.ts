@@ -131,7 +131,9 @@ export function diffSubsidy(local: DiffableSubsidy, remote: Subsidy): string[] {
     local.deadline.end_month !== remote.deadline.end_month ||
     local.deadline.end_day !== remote.deadline.end_day ||
     local.deadline.start_month !== remote.deadline.start_month ||
-    local.deadline.start_day !== remote.deadline.start_day
+    local.deadline.start_day !== remote.deadline.start_day ||
+    (local.deadline.start_year ?? null) !== (remote.deadline.start_year ?? null) ||
+    (local.deadline.end_year ?? null) !== (remote.deadline.end_year ?? null)
   )
     diffs.push(`期限：${remote.deadline.note || "已調整"}`);
   if (local.status_2026 !== remote.status_2026) diffs.push(`狀態：${remote.status_2026 === "ended" ? "已結束" : remote.status_2026 === "active" ? "進行中" : remote.status_2026}`);

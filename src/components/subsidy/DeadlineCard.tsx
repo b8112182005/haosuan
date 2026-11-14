@@ -2,7 +2,17 @@
 
 import { CalendarClock, Infinity as InfinityIcon, Ban, Hourglass } from "lucide-react";
 import type { Subsidy } from "@/lib/subsidy/types";
-import { resolveSubsidyDeadline, formatLocalDate, toDateString, describeWindow, urgency } from "@/lib/subsidy/deadline";
+import {
+  FAR_DAYS,
+  describeWindow,
+  formatLocalDate,
+  isProjected,
+  parseDateString,
+  resolveSubsidyDeadline,
+  toDateString,
+  urgency,
+} from "@/lib/subsidy/deadline";
+import { DATA_VERSION } from "@/lib/subsidy/index-data";
 import { useToday } from "@/lib/subsidy/useToday";
 import AddReminderButton from "@/components/reminders/AddReminderButton";
 
@@ -27,6 +37,8 @@ export default function DeadlineCard({ subsidy }: { subsidy: DeadlineCardSubsidy
       : "border-border bg-card";
 
   const reminderDate = state && state.kind === "upcoming" ? toDateString(state.date) : undefined;
+  const dataDate = parseDateString(DATA_VERSION);
+  const projected = !!state && !!dataDate && isProjected(subsidy.deadline, state, dataDate);
   const yearly = subsidy.deadline.type === "fixed_annual";
 
   return (
@@ -51,14 +63,21 @@ export default function DeadlineCard({ subsidy }: { subsidy: DeadlineCardSubsidy
             <>
               <p className="mt-0.5 text-lg font-bold leading-tight">
                 {formatLocalDate(state.date)} 截止
-                <span className="ml-2 text-sm font-semibold">
-                  {state.daysLeft === 0 ? "今天截止" : `剩 ${state.daysLeft} 天`}
-                </span>
+                {state.daysLeft <= FAR_DAYS && (
+                  <span className="ml-2 text-sm font-semibold">
+                    {state.daysLeft === 0 ? "今天截止" : `剩 ${state.daysLeft} 天`}
+                  </span>
+                )}
               </p>
               <p className="mt-0.5 text-xs text-muted-foreground">
                 {describeWindow(subsidy.deadline)}
                 {!state.open && "，目前尚未開放受理"}
               </p>
+              {projected && (
+                <p className="mt-0.5 text-xs text-muted-foreground">
+                  這一期的日期是照上一期推算的，實際日期以主管機關公告為準。
+                </p>
+              )}
             </>
           ) : (
             <p className="mt-0.5 text-lg font-bold leading-tight">{state.label}</p>

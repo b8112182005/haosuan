@@ -27,6 +27,8 @@ export type DeadlineType =
   | "window"
   | "budget_until_exhausted"
   | "event_based"
+  /** 各縣市、各校各自公告，或每年日期不固定：不顯示倒數，避免拿一個不準的日期讓人錯過 */
+  | "varies"
   | "ended"
   | "unknown";
 
@@ -86,6 +88,13 @@ export interface SubsidyDeadline {
   start_day: number | null;
   end_month: number | null;
   end_day: number | null;
+  /**
+   * 只辦一次、跨年度的期間才填年份（例如電動車免徵牌照稅到 2030/12/31）。
+   * 沒填年份時，月日會被當成「今年或明年的那一天」：跨多年的方案會被算成今年底截止。
+   * 有 end_year 的期間過了就是結束，不會滾到下一年。
+   */
+  start_year?: number | null;
+  end_year?: number | null;
   note: string;
 }
 

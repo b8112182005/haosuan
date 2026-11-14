@@ -238,8 +238,8 @@ export default function CheckWizard() {
         )}
       </div>
 
-      {/* 導覽 */}
-      <div className="mt-8 flex items-center justify-between gap-3">
+      {/* 導覽：固定在底部分頁列上方。縣市那一題有 22 個選項，按鈕放在最底下的話選完還要往下捲才找得到 */}
+      <div className="sticky bottom-[calc(3.5rem+var(--safe-bottom)+0.5rem)] z-10 mt-8 flex items-center justify-between gap-3 rounded-full bg-background/95 p-1.5 ring-1 ring-border backdrop-blur md:bottom-4">
         <button
           type="button"
           onClick={() => setStepIndex((i) => Math.max(0, i - 1))}

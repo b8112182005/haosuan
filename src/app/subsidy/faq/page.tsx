@@ -5,7 +5,7 @@ import { serializeJsonLd } from "@/lib/json-ld";
 
 export const metadata: Metadata = {
   title: "補助疑難雜症",
-  description: "房東不同意怎麼辦？戶籍在外縣市能申請嗎？被退件怎麼補件？撥款要多久？政府補助申請常見問題，每一題都附官方來源。",
+  description: "房東不同意怎麼辦？戶籍在外縣市能申請嗎？被退件怎麼補件？撥款要多久？政府補助申請常見問題，附來源連結。",
   alternates: { canonical: "/subsidy/faq" },
 };
 
@@ -82,7 +82,7 @@ export default function SubsidyFaqPage() {
       <div className="mb-5">
         <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">疑難雜症</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          {entries.length} 則申請補助會遇到的問題，每一則都附官方來源。找不到的，到各補助項目頁再看一次「常見卡關」。
+          {entries.length} 則申請補助會遇到的問題，其中 {entries.filter((e) => e.source_url).length} 則附來源連結（多數是主管機關網頁）。找不到的，到各補助項目頁再看一次「常見卡關」。
         </p>
       </div>
       <FaqBrowser entries={entries} groups={groups} />

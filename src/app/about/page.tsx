@@ -36,8 +36,8 @@ export default function AboutPage() {
 
       <h2 id="sources">資料來源與更新</h2>
       <p>
-        目前補助資料版本：<strong>{DATA_VERSION}</strong>，共 {subsidies.length} 個項目。每個項目頁底部都列出來源網址與核對日期；
-        查不到官方依據的欄位會標「未驗證」。資料整理自下列機關的公開資訊：
+        目前補助資料版本：<strong>{DATA_VERSION}</strong>，共 {subsidies.length} 個項目。每個項目頁底部都列出來源網址與讀取日期；
+        查不到官方依據的欄位會標「未驗證」。資料以下列機關的公開資訊為主，少數數字引用學校公告或新聞報導：
       </p>
       <ul>
         {agencies.map((a) => (
