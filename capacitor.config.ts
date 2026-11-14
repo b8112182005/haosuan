@@ -12,6 +12,11 @@ const config: CapacitorConfig = {
     allowMixedContent: false,
     // 讓 WebView 的 scheme 保持 https://localhost，與 Next.js 靜態輸出的絕對路徑相容
   },
+  server: {
+    // 主框架拿到 404（舊提醒連到已下架的補助頁）或 WebView 低於最低版本時，改載這一頁；
+    // 沒設的話是一片空白。檔案在 public/app-error.html，不依賴 app 的 CSS 與 JS。
+    errorPath: 'app-error.html',
+  },
   plugins: {
     SplashScreen: {
       launchShowDuration: 600,

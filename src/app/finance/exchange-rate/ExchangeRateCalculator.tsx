@@ -82,7 +82,7 @@ export default function ExchangeRateCalculator() {
         {result && (
           <div className="rounded-xl bg-muted/50 p-6 text-center space-y-3">
             <div className="text-muted-foreground text-sm">
-              {result.fromAmount.toLocaleString()} {result.fromCurrency.flag}{" "}
+              {result.fromAmount.toLocaleString("zh-TW")} {result.fromCurrency.flag}{" "}
               {result.fromCurrency.code} ＝
             </div>
             <div className="text-5xl font-mono font-bold tracking-tight">

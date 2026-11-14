@@ -5,9 +5,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { calculateAge } from "@/lib/calculators/age";
+import { toDateString } from "@/lib/subsidy/deadline";
+import { useToday } from "@/lib/subsidy/useToday";
 
 export default function AgeCalculator() {
   const [birthDate, setBirthDate] = useState("");
+  // 生日最晚只能選今天。直接在 render 算的話，靜態輸出會把建置當天寫死在 max 裡，之後出生的日期選不到
+  const today = useToday();
 
   const birth = birthDate ? new Date(birthDate) : null;
   const isValid = birth && !isNaN(birth.getTime()) && birth < new Date();
@@ -23,7 +27,7 @@ export default function AgeCalculator() {
             type="date"
             value={birthDate}
             onChange={(e) => setBirthDate(e.target.value)}
-            max={new Date().toISOString().split("T")[0]}
+            max={today ? toDateString(today) : undefined}
           />
         </div>
 
@@ -44,7 +48,7 @@ export default function AgeCalculator() {
             {/* 詳細資訊 */}
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
               {[
-                { label: "總天數", value: result.totalDays.toLocaleString(), unit: "天" },
+                { label: "總天數", value: result.totalDays.toLocaleString("zh-TW"), unit: "天" },
                 { label: "下次生日", value: result.nextBirthdayDays.toString(), unit: "天後" },
                 { label: "星座", value: result.zodiac, unit: "" },
                 { label: "生肖", value: result.chineseZodiac, unit: "" },

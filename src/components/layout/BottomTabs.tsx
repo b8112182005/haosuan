@@ -5,8 +5,8 @@ import { usePathname } from "next/navigation";
 import { Home, Landmark, Bell, Calculator, Menu } from "lucide-react";
 import { normalizePath } from "@/lib/platform";
 
-// 手機寬度（< md）顯示的底部分頁列；桌面寬度改由 Header 的導覽列負責。
-// 在 app 裡這是主要導覽，所以 5 個分頁對應 5 個主要區塊。
+// 網頁版在手機寬度（< md）顯示的底部分頁列；桌面寬度改由 Header 的導覽列負責。
+// 在 app 裡這是主要導覽，不論寬度都顯示（globals.css 對 html[data-platform] 的覆寫），所以 5 個分頁對應 5 個主要區塊。
 const TABS = [
   { href: "/", label: "首頁", icon: Home, exact: true },
   { href: "/subsidy", label: "補助", icon: Landmark, exact: false },
@@ -31,7 +31,7 @@ export default function BottomTabs() {
   return (
     <nav
       aria-label="主要分頁"
-      className="bottom-tabs fixed inset-x-0 bottom-0 z-50 border-t border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/85 md:hidden"
+      className="bottom-tabs safe-x fixed inset-x-0 bottom-0 z-50 border-t border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/85 md:hidden"
     >
       <ul className="mx-auto flex max-w-lg items-stretch" style={{ paddingBottom: "var(--safe-bottom)" }}>
         {TABS.map((tab) => {

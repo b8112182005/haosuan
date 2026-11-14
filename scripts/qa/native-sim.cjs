@@ -12,6 +12,7 @@
  * 驗不到的：系統實際響鈴的時間、通知外觀、edge-to-edge 版面、Chrome Custom Tabs。這些仍要實機確認。
  *
  * 用法：npm run build:app && node scripts/qa/native-sim.cjs
+ * 設 SHOTS_DIR=<資料夾> 會在幾個關鍵畫面存截圖（橫放、平板、錯誤頁、提醒面板），給人眼看版面用。
  * 需要 playwright（CI 或本機自行安裝；找不到時設 NODE_PATH 指到裝有 playwright 的 node_modules）。
  */
 const http = require("http");
@@ -258,6 +259,14 @@ async function main() {
   const tab = (label) => page.locator("nav.bottom-tabs a", { hasText: label }).click();
   const settle = (ms = 500) => page.waitForTimeout(ms);
   const storedReminders = () => page.evaluate(() => JSON.parse(localStorage.getItem("__pref:haoti.reminders.v1") || "[]"));
+  const SHOTS_DIR = process.env.SHOTS_DIR;
+  if (SHOTS_DIR) fs.mkdirSync(SHOTS_DIR, { recursive: true });
+  const shot = async (name, target = page) => {
+    if (!SHOTS_DIR) return;
+    // 面板滑入的動畫是 200 毫秒，等它停下來再拍
+    await target.waitForTimeout(400);
+    await target.screenshot({ path: path.join(SHOTS_DIR, `${name}.png`) }).catch(() => {});
+  };
 
   // 1. 啟動 ────────────────────────────────────────────────────────────────────────────────
   console.log("\n# 啟動");
@@ -462,6 +471,7 @@ async function main() {
     const pressed = await page.locator('[role="dialog"] button[aria-pressed="true"]').allInnerTexts();
     return (pressed.length === 1 && pressed[0].includes("當天")) || pressed;
   });
+  await shot("reminder-sheet-near-date");
   await page.getByRole("button", { name: "確認加入" }).click();
   await settle(1200);
   const custom = await pendingNow();
@@ -567,7 +577,119 @@ async function main() {
   await check("沒有變動的項目不顯示提示", async () => (await page.getByText("有較新的資料").count()) === 0);
   await check("6 小時內不重複下載資料檔", async () => (await calls("CapacitorHttp.get")).length === 0 || (await calls("CapacitorHttp.get")).length);
 
+  // 14. 外殼：橫放與平板、找不到頁面、hydration、左右安全區 ────────────────────────────────────
+  console.log("\n# 外殼");
+  await page.goto(`${ORIGIN}/`, { waitUntil: "networkidle" });
+  await settle(600);
+  for (const [label, size] of [["手機橫放 844×390", { width: 844, height: 390 }], ["平板直放 800×1280", { width: 800, height: 1280 }]]) {
+    await page.setViewportSize(size);
+    await settle(300);
+    await check(`${label}：底部分頁列還在、「更多」有入口、Header 不重複出一套導覽`, async () => {
+      const tabs = await page.locator("nav.bottom-tabs").isVisible();
+      const more = await page.locator('nav.bottom-tabs a[href*="/more"]').isVisible();
+      const headerNav = await page.locator("header nav").isVisible();
+      const mainPad = await page.evaluate(() => parseFloat(getComputedStyle(document.querySelector("main")).paddingBottom));
+      return (tabs && more && !headerNav && mainPad >= 56) || { tabs, more, headerNav, mainPad };
+    });
+    await shot(`shell-${size.width}x${size.height}`);
+  }
+  await page.setViewportSize({ width: 390, height: 844 });
+
+  // Android 15 以上橫放：SystemBars 會把左右的安全區寫到 <html> 的 style
+  await page.evaluate(() => {
+    document.documentElement.style.setProperty("--safe-area-inset-left", "48px");
+    document.documentElement.style.setProperty("--safe-area-inset-right", "24px");
+  });
+  await check("左右安全區：內容與分頁列各讓出鏡頭開孔與側邊導覽列的寬度", async () => {
+    const got = await page.evaluate(() => {
+      const body = getComputedStyle(document.body);
+      const tabs = getComputedStyle(document.querySelector("nav.bottom-tabs"));
+      return [body.paddingLeft, body.paddingRight, tabs.paddingLeft, tabs.paddingRight];
+    });
+    return JSON.stringify(got) === JSON.stringify(["48px", "24px", "48px", "24px"]) || got;
+  });
+  await page.evaluate(() => {
+    document.documentElement.style.removeProperty("--safe-area-inset-left");
+    document.documentElement.style.removeProperty("--safe-area-inset-right");
+  });
+
+  // 整頁載入「睡眠時間」：以前預設值在 render 用 new Date()，文字和靜態 HTML 對不上，
+  // React 重建 <html> 時把 data-platform 一起清掉，網頁版的 Footer 就跑出來
+  const errorsBefore = pageErrors.length;
+  await page.goto(`${ORIGIN}/life/sleep/`, { waitUntil: "networkidle" });
+  await settle(1200);
+  await check("整頁載入睡眠時間計算機：沒有 hydration 錯誤，仍是 app 版面", async () => {
+    const platform = await page.evaluate(() => document.documentElement.dataset.platform);
+    const footer = await page.locator("footer.web-only").isVisible();
+    const filled = await page.locator("#time-input").inputValue();
+    const newErrors = pageErrors.slice(errorsBefore);
+    return (platform === "android" && !footer && /^\d\d:\d\d$/.test(filled) && newErrors.length === 0) || { platform, footer, filled, newErrors };
+  });
+
+  // 上面那種情況的後備：React 重建 <html> 會發生在 PlatformScript 跑完之後、effect 執行之前。
+  // 這裡在 DOMContentLoaded 把屬性清掉來模擬，NativeBridge 掛載時要把平台寫回去
+  const wiped = await context.newPage();
+  await wiped.addInitScript(() => {
+    document.addEventListener("DOMContentLoaded", () => {
+      document.documentElement.removeAttribute("data-platform");
+      window.__platformWiped = true;
+    });
+  });
+  await wiped.goto(`${ORIGIN}/more/index.html`, { waitUntil: "networkidle" });
+  await wiped.waitForTimeout(800);
+  await check("<html> 的 data-platform 在載入途中被清掉：NativeBridge 補回來，網頁版 Footer 不會跑出來", async () => {
+    const got = await wiped.evaluate(() => ({ wiped: window.__platformWiped === true, platform: document.documentElement.dataset.platform }));
+    const footer = await wiped.locator("footer.web-only").isVisible();
+    return (got.wiped && got.platform === "android" && !footer) || { ...got, footer };
+  });
+  await wiped.close();
+
+  // 主框架拿到 404 時，真機的 BridgeWebViewClient.onReceivedHttpError 會改載 server.errorPath。這裡照做
+  const capConfig = fs.readFileSync(path.join(ROOT, "capacitor.config.ts"), "utf8");
+  const errorPath = (capConfig.match(/errorPath:\s*'([^']+)'/) || [])[1];
+  await check("capacitor.config.ts 有設 server.errorPath，而且檔案在輸出裡", async () =>
+    (!!errorPath && fs.existsSync(path.join(OUT, errorPath))) || `errorPath=${errorPath}`);
+  const onResponse = (response) => {
+    if (response.status() === 404 && response.request().isNavigationRequest() && response.frame() === page.mainFrame() && errorPath) {
+      page.goto(`${ORIGIN}/${errorPath}`).catch(() => {});
+    }
+  };
+  page.on("response", onResponse);
+  await page.goto(`${ORIGIN}/subsidy/removed-item-2019/`, { waitUntil: "networkidle" }).catch(() => {});
+  await check("整頁載入不存在的路徑：顯示「找不到這一頁」與回去的連結，不是空白", async () => {
+    await page.getByRole("heading", { name: "找不到這一頁" }).waitFor({ state: "visible", timeout: 5000 });
+    return (await page.getByRole("link", { name: "看補助列表" }).isVisible()) && !(await page.getByRole("heading", { name: "需要更新系統元件" }).isVisible());
+  });
+  await shot("error-page-missing");
+  await page.getByRole("link", { name: "看補助列表" }).click();
+  await page.waitForURL(/\/subsidy\/index\.html$/);
+  await settle(800);
+  await check("從錯誤頁按「看補助列表」回到 app", async () =>
+    ((await page.locator("nav.bottom-tabs").isVisible()) && (await page.evaluate(() => document.documentElement.dataset.platform)) === "android") || pathNow());
+  page.off("response", onResponse);
+
   await check("全程沒有未捕捉的 JS 錯誤", async () => pageErrors.length === 0 || pageErrors.slice(0, 5));
+
+  // 15. WebView 太舊（沒有 @layer，Chrome 99 以前）：蓋一層說明，不留壞掉的畫面 ─────────────────────
+  const oldContext = await browser.newContext({ viewport: { width: 390, height: 844 }, locale: "zh-TW", timezoneId: "Asia/Taipei" });
+  await oldContext.addInitScript("delete window.CSSLayerBlockRule;");
+  await oldContext.addInitScript(INIT_SCRIPT);
+  const oldPage = await oldContext.newPage();
+  await oldPage.goto(`${ORIGIN}/`, { waitUntil: "networkidle" });
+  await check("WebView 不支援 @layer：整頁蓋上「需要更新系統元件」與 Play 商店連結", async () => {
+    // Next 自己也有一個 role="alert" 的 route announcer，所以用文字再篩一次
+    const alert = oldPage.locator('div[role="alert"]').filter({ hasText: "需要更新系統元件" });
+    await alert.waitFor({ state: "visible", timeout: 5000 });
+    const text = await alert.innerText();
+    const href = await alert.locator("a").getAttribute("href");
+    const box = await alert.boundingBox();
+    return (text.includes("Android System WebView") && /com\.google\.android\.webview/.test(href) && box.width >= 390 && box.height >= 844) || { text, href, box };
+  });
+  await shot("old-webview-notice", oldPage);
+  await oldPage.goto(`${ORIGIN}/app-error.html`, { waitUntil: "networkidle" });
+  await check("錯誤頁在太舊的 WebView 上顯示的是更新說明，不是「找不到這一頁」", async () =>
+    (await oldPage.getByRole("heading", { name: "需要更新系統元件" }).isVisible()) && !(await oldPage.getByRole("heading", { name: "找不到這一頁" }).isVisible()));
+  await oldContext.close();
 
   await browser.close();
   server.close();

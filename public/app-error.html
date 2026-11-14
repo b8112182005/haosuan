@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>好耶</title>
+<!--
+  app 內兩種情況會載入這一頁（capacitor.config.ts 的 server.errorPath）：
+  1. 要開的頁面在這一版 app 裡不存在（舊提醒帶的路徑、資料換版後下架的補助）。
+  2. 手機的 Android System WebView 版本低於 Capacitor 的最低需求，app 本體載不起來。
+  這一頁不能依賴 app 的 CSS 與 JS：樣式全部寫在這裡，腳本只用舊版 WebView 也看得懂的語法。
+-->
+<style>
+  body { margin: 0; font-family: sans-serif; background: #fff; color: #1f2937; }
+  .box { max-width: 420px; margin: 0 auto; padding: 72px 24px 24px; }
+  h1 { font-size: 22px; margin: 0 0 12px; }
+  p { font-size: 16px; line-height: 1.7; margin: 0 0 16px; color: #4b5563; }
+  a.btn { display: block; margin: 0 0 12px; padding: 14px 16px; border-radius: 12px; text-align: center;
+          font-size: 16px; font-weight: bold; text-decoration: none; background: #6C5CE7; color: #fff; }
+  a.btn.plain { background: #fff; color: #1f2937; border: 1px solid #d1d5db; }
+  .hide { display: none; }
+</style>
+</head>
+<body>
+<div class="box">
+  <div id="missing">
+    <h1>找不到這一頁</h1>
+    <p>這一頁在目前的版本裡已經不存在。可能是補助方案換了年度或已經結束，舊的提醒還連到原本的頁面。</p>
+    <a class="btn" href="/subsidy/index.html">看補助列表</a>
+    <a class="btn plain" href="/reminders/index.html">看我的提醒</a>
+    <a class="btn plain" href="/index.html">回首頁</a>
+  </div>
+  <div id="outdated" class="hide">
+    <h1>需要更新系統元件</h1>
+    <p>這支手機的「Android System WebView」版本太舊，好耶的畫面無法顯示。</p>
+    <p>請到 Play 商店更新「Android System WebView」和「Chrome」，更新完再重新開啟好耶。</p>
+    <a class="btn" href="https://play.google.com/store/apps/details?id=com.google.android.webview">到 Play 商店更新</a>
+  </div>
+</div>
+<script>
+  // CSSLayerBlockRule 是 Chrome 99 才有的介面：app 的樣式全部包在 @layer 裡，沒有它整頁沒有版面
+  (function () {
+    try {
+      if (typeof window.CSSLayerBlockRule === 'undefined') {
+        document.getElementById('missing').className = 'hide';
+        document.getElementById('outdated').className = '';
+      }
+    } catch (e) {}
+  })();
+</script>
+</body>
+</html>

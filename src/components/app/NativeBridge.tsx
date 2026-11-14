@@ -28,6 +28,21 @@ export default function NativeBridge() {
       const { Capacitor } = await import("@capacitor/core");
       if (!Capacitor.isNativePlatform() || disposed) return;
 
+      // 頁面有 hydration 不一致時，React 會重建 <html>，把 PlatformScript 寫的 data-platform
+      // 和 SystemBars 注入的安全區變數一起清掉：網頁版的 Footer 跑出來、Header 被狀態列蓋住。
+      // 這裡補寫一次平台，並請 SystemBars 重新注入（它掛在 window 上的介面，舊版或 iOS 沒有就略過）。
+      const root = document.documentElement;
+      const platform = Capacitor.getPlatform();
+      if (root.dataset.platform !== platform) root.dataset.platform = platform;
+      if (!root.style.getPropertyValue("--safe-area-inset-top")) {
+        try {
+          (window as unknown as { CapacitorSystemBarsAndroidInterface?: { onDOMReady?: () => void } })
+            .CapacitorSystemBarsAndroidInterface?.onDOMReady?.();
+        } catch {
+          // 介面不存在或呼叫失敗：版面退回 env() 的安全區，不影響其他功能
+        }
+      }
+
       const { App } = await import("@capacitor/app");
       const { Browser } = await import("@capacitor/browser");
 

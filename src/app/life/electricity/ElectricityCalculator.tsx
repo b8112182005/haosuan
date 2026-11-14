@@ -52,7 +52,7 @@ export default function ElectricityCalculator() {
             <div className="rounded-xl bg-muted/50 p-6 text-center space-y-2">
               <div className="text-sm text-muted-foreground">本月電費（估算）</div>
               <div className="text-5xl font-mono font-bold tracking-tight">
-                NT${result.totalCharge.toLocaleString()}
+                NT${result.totalCharge.toLocaleString("zh-TW")}
               </div>
               <div className="text-sm text-muted-foreground">
                 平均 {result.avgPricePerUnit} 元 / 度
@@ -90,7 +90,7 @@ export default function ElectricityCalculator() {
 
               <div className="flex justify-between font-semibold pt-2">
                 <span>合計</span>
-                <span className="font-mono">NT${result.totalCharge.toLocaleString()}</span>
+                <span className="font-mono">NT${result.totalCharge.toLocaleString("zh-TW")}</span>
               </div>
             </div>
           </>

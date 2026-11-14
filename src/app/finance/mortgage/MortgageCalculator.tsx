@@ -114,7 +114,7 @@ export default function MortgageCalculator() {
                   <CopyButton value={String(result.firstMonthPayment)} label="複製月付金額" />
                 </div>
                 <p className="text-xs text-muted-foreground mt-1">
-                  💡 相當於每日支出 {Math.round(result.firstMonthPayment / 30).toLocaleString()} 元
+                  💡 相當於每日支出 {Math.round(result.firstMonthPayment / 30).toLocaleString("zh-TW")} 元
                 </p>
               </div>
 

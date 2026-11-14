@@ -70,7 +70,7 @@ export default function PercentageCalculator() {
                   <CopyButton value={result1.toString()} label="複製結果" />
                 </div>
                 <p className="text-xs text-muted-foreground mt-1">
-                  以月薪 5 萬為例 = {(50000 * result1 / 100).toLocaleString()} 元
+                  以月薪 5 萬為例 = {(50000 * result1 / 100).toLocaleString("zh-TW")} 元
                 </p>
               </div>
             )}
@@ -111,13 +111,13 @@ export default function PercentageCalculator() {
               <div className="rounded-xl bg-muted/50 p-6 text-center space-y-1">
                 <div className="text-sm text-muted-foreground">{m2x} 的 {m2y}%</div>
                 <div className="text-5xl font-mono font-bold tracking-tight">
-                  {result2.toLocaleString()}
+                  {result2.toLocaleString("zh-TW")}
                 </div>
                 <div className="flex items-center justify-center pt-1">
                   <CopyButton value={result2.toString()} label="複製結果" />
                 </div>
                 <p className="text-xs text-muted-foreground mt-1">
-                  以月薪 5 萬為例 = {(50000 * (parseFloat(m2y) || 0) / 100).toLocaleString()} 元
+                  以月薪 5 萬為例 = {(50000 * (parseFloat(m2y) || 0) / 100).toLocaleString("zh-TW")} 元
                 </p>
               </div>
             )}

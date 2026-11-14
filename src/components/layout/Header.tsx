@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { APP_NAME } from "@/lib/site";
 
-// 桌面寬度的導覽列；手機寬度（含 app）改用 BottomTabs，所以這裡的 nav 只在 md 以上顯示。
+// 桌面寬度的導覽列；手機寬度改用 BottomTabs，所以這裡的 nav 只在 md 以上顯示。
+// app 內不論寬度都用 BottomTabs（平板、手機橫放也是），nav 加 web-only 才不會兩套導覽同時出現。
 const navItems = [
   { label: "補助查詢", href: "/subsidy" },
   { label: "我的提醒", href: "/reminders" },
@@ -25,7 +26,7 @@ export default function Header() {
           </span>
           <span>{APP_NAME}</span>
         </Link>
-        <nav className="hidden items-center gap-1 md:flex" aria-label="主要導覽">
+        <nav className="web-only hidden items-center gap-1 md:flex" aria-label="主要導覽">
           {navItems.map((item) => (
             <Link
               key={item.href}

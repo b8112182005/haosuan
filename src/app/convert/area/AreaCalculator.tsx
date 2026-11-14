@@ -60,7 +60,7 @@ export default function AreaCalculator() {
                 const displayValue = converted >= 1000000
                   ? converted.toExponential(4)
                   : converted >= 0.0001 || converted === 0
-                  ? parseFloat(converted.toPrecision(8)).toLocaleString()
+                  ? parseFloat(converted.toPrecision(8)).toLocaleString("zh-TW")
                   : converted.toExponential(4);
                 return (
                   <div key={unit.key} className="space-y-1">

@@ -71,8 +71,8 @@ export default function RootLayout({
       >
         <PlatformScript />
         <Header />
-        {/* 手機寬度底部留給分頁列（h-14 + 安全區） */}
-        <main className="min-h-screen pb-[calc(3.5rem+var(--safe-bottom))] md:pb-0">
+        {/* 底部留給分頁列（--tabs-h 在沒有分頁列的桌面網頁版是 0）＋安全區 */}
+        <main className="min-h-screen pb-[calc(var(--tabs-h)+var(--safe-bottom))]">
           {children}
         </main>
         <Footer />

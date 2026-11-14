@@ -5,11 +5,18 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { calculateDateDiff } from "@/lib/calculators/date-diff";
+import { toDateString } from "@/lib/subsidy/deadline";
+import { useToday } from "@/lib/subsidy/useToday";
 
 export default function DateDiffCalculator() {
-  const today = new Date().toISOString().split("T")[0];
-  const [startDate, setStartDate] = useState(today);
-  const [endDate, setEndDate] = useState(today);
+  // 預設是裝置的今天（本地日期）。toISOString 是 UTC，台灣早上 8 點前會拿到昨天；
+  // 靜態輸出時也沒有「今天」，所以等 hydration 完才填
+  const today = useToday();
+  const todayStr = today ? toDateString(today) : "";
+  const [typedStart, setStartDate] = useState<string | null>(null);
+  const [typedEnd, setEndDate] = useState<string | null>(null);
+  const startDate = typedStart ?? todayStr;
+  const endDate = typedEnd ?? todayStr;
 
   const start = startDate ? new Date(startDate) : null;
   const end = endDate ? new Date(endDate) : null;
@@ -51,7 +58,7 @@ export default function DateDiffCalculator() {
             <div className="rounded-xl bg-muted/50 p-6 text-center space-y-2">
               <div className="text-sm text-muted-foreground">相差</div>
               <div className="text-5xl font-mono font-bold tracking-tight">
-                {result.totalDays.toLocaleString()}
+                {result.totalDays.toLocaleString("zh-TW")}
                 <span className="text-2xl font-normal ml-1">天</span>
               </div>
               <div className="text-muted-foreground">
@@ -66,17 +73,17 @@ export default function DateDiffCalculator() {
               {[
                 {
                   label: "完整週數",
-                  value: result.weeks.toLocaleString(),
+                  value: result.weeks.toLocaleString("zh-TW"),
                   unit: `週又 ${result.remainingDays} 天`,
                 },
                 {
                   label: "工作天數",
-                  value: result.workdays.toLocaleString(),
+                  value: result.workdays.toLocaleString("zh-TW"),
                   unit: "天（不含例假日）",
                 },
                 {
                   label: "總天數",
-                  value: result.totalDays.toLocaleString(),
+                  value: result.totalDays.toLocaleString("zh-TW"),
                   unit: "天",
                 },
               ].map((item) => (

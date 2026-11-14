@@ -5,15 +5,22 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { getSleepTimes, getWakeTimes, formatDuration } from "@/lib/calculators/sleep";
+import { useHydrated } from "@/lib/useHydrated";
 
 type Mode = "wake" | "sleep";
 
-export default function SleepCalculator() {
+function currentTime(): string {
   const now = new Date();
-  const nowStr = `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
+  return `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
+}
 
+export default function SleepCalculator() {
   const [mode, setMode] = useState<Mode>("wake");
-  const [timeInput, setTimeInput] = useState(nowStr);
+  // 使用者還沒輸入時預設是「現在」。靜態輸出的 HTML 裡沒有「現在」，等 hydration 完才填
+  const hydrated = useHydrated();
+  const [typed, setTyped] = useState<string | null>(null);
+  const timeInput = typed ?? (hydrated ? currentTime() : "");
+  const setTimeInput = setTyped;
 
   const results =
     timeInput.match(/^\d{1,2}:\d{2}$/)
