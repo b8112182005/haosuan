@@ -264,6 +264,11 @@ export function evaluate<S extends SubsidySummary>(subsidy: S, profile: Profile)
   checkIncome(c, profile, out);
   checkVehicle(c, profile, out);
 
+  // 精靈沒有問的身分：無法確認，但也不能當成「條件相符」（否則老農津貼會出現在每個長者的相符清單）
+  if (c.special_identity && c.special_identity.trim()) {
+    out.unknown.push(`限${c.special_identity.trim()}：這一題 app 沒有問，請自行確認`);
+  }
+
   // 無法機器判斷的補充條件：只提示，不影響 verdict
   if (c.other && c.other.trim()) out.notes.push(c.other.trim());
 

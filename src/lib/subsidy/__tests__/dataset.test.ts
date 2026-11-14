@@ -150,6 +150,22 @@ describe("旗艦項目不能被誤判成不符合", () => {
     notHidden("senior-high-tuition-free", withTeen);
   });
 
+  it("精靈沒問的身分（農民、原住民、新住民、純電動車）不會被列為條件相符", () => {
+    for (const id of ["elderly-farmer-allowance", "indigenous-college-scholarship", "new-immigrant-scholarship", "ev-license-tax-exemption"]) {
+      const s = byId(id);
+      for (const p of [renter, parent, elder, student]) {
+        expect(evaluate(s, p).verdict, `${id} 對沒有該身分的人顯示為條件相符`).not.toBe("eligible");
+      }
+    }
+  });
+
+  it("家長替身障幼兒、弱勢兒少查：本人沒有身障證明、超過 17 歲也不會被排除", () => {
+    const withKid: Profile = { ...parent, childrenAges: [4] };
+    notHidden("disabled-preschooler-education-subsidy", withKid);
+    notHidden("disadvantaged-children-youth-living-assistance", withKid);
+    notHidden("special-circumstances-family-assistance", renter);
+  });
+
   it("地方項目照樣依縣市排除", () => {
     expect(evaluate(byId("rent-subsidy-new-taipei-youth"), renter).verdict).toBe("not_eligible");
     expect(evaluate(byId("birth-incentive-taipei"), { ...renter, isPregnantOrNewborn: true }).verdict).not.toBe("not_eligible");

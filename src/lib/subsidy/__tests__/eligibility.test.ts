@@ -216,6 +216,16 @@ describe("evaluate：真實資料的寫法", () => {
   });
 });
 
+describe("evaluate：精靈沒有問的身分", () => {
+  it("special_identity 一律歸可能符合，並說明要自行確認", () => {
+    const r = evaluate(makeSubsidy({ conditions: { min_age: 65, special_identity: "農民（農保年資 15 年以上）" } }), { ...renter, age: 70 });
+    expect(r.verdict).toBe("maybe");
+    expect(r.unknown.some((u) => u.includes("農民") && u.includes("自行確認"))).toBe(true);
+    // 其他條件確定不符時仍然是不符合
+    expect(evaluate(makeSubsidy({ conditions: { min_age: 65, special_identity: "農民" } }), renter).verdict).toBe("not_eligible");
+  });
+});
+
 describe("evaluate：家長替子女查", () => {
   it("學生項目：本人不是學生但有學齡子女 → maybe", () => {
     const loan = makeSubsidy({ conditions: { is_student: true } });

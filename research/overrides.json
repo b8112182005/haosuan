@@ -229,5 +229,100 @@
     "conditions": {
       "low_income": null
     }
+  },
+  "elderly-farmer-allowance": {
+    "_why": "農民身分精靈沒有問，標成特殊身分讓它落在「可能符合」",
+    "conditions": {
+      "special_identity": "農民（農保年資合計 15 年以上，或漁會甲類會員 15 年）"
+    }
+  },
+  "indigenous-housing-subsidies": {
+    "_why": "租金加碼要無自有住宅、修繕補助要有自有住宅，兩種都在這一項，不能用無自有住宅當門檻",
+    "conditions": {
+      "no_home_ownership": null,
+      "special_identity": "原住民"
+    }
+  },
+  "indigenous-college-scholarship": {
+    "_why": "原住民身分精靈沒有問",
+    "conditions": {
+      "special_identity": "原住民大專學生"
+    }
+  },
+  "new-immigrant-scholarship": {
+    "_why": "清寒只是其中一類獎助，不是全部都要低收／中低收",
+    "conditions": {
+      "low_income": null,
+      "special_identity": "新住民或新住民子女"
+    }
+  },
+  "special-circumstances-family-assistance": {
+    "_why": "未婚懷孕、家暴受害等情形不一定有子女；子女年齡只影響其中兩項津貼",
+    "conditions": {
+      "child_age_max": null,
+      "child_age_min": null,
+      "special_identity": "符合特殊境遇家庭 7 種情形之一（見「誰可以申請」）"
+    }
+  },
+  "disadvantaged-children-youth-living-assistance": {
+    "_why": "17 歲以下指的是被扶助的兒少，查詢的人通常是家長或監護人；門檻是家庭遭遇困境並經評估，不是列冊中低收",
+    "conditions": {
+      "max_age": null,
+      "low_income": null,
+      "special_identity": "遭遇困境的弱勢家庭兒少（須經縣市政府或社工評估）"
+    }
+  },
+  "disabled-preschooler-education-subsidy": {
+    "_why": "身心障礙的是幼兒，不是查詢的家長本人",
+    "conditions": {
+      "is_disabled": null,
+      "special_identity": "子女經鑑輔會鑑定為身心障礙幼兒"
+    }
+  },
+  "ev-license-tax-exemption": {
+    "_why": "只有純電動車免徵，一般汽機車車主不適用",
+    "conditions": {
+      "special_identity": "車輛為純電動（油電混合不適用）"
+    }
+  },
+  "taipei-elementary-new-student-registration-115": {
+    "_why": "5 月報到時，9 月 1 日前才滿 6 歲的孩子還是 5 歲",
+    "conditions": {
+      "child_age_min": 5
+    }
+  },
+  "nhi-labor-insurance-premium-monthly-deadline": {
+    "_why": "每月一次的繳款期限，資料模型沒有「每月」這種週期；標成每年 11/30 會在下個月顯示成明年，改為不列固定日期，細節留在期限說明",
+    "deadline": {
+      "type": "rolling",
+      "start_month": null,
+      "start_day": null,
+      "end_month": null,
+      "end_day": null
+    }
+  },
+  "national-pension-premium-bimonthly-deadline": {
+    "_why": "一年 6 期的繳款期限，同上，不列成每年固定一天",
+    "deadline": {
+      "type": "rolling",
+      "start_month": null,
+      "start_day": null,
+      "end_month": null,
+      "end_day": null
+    }
+  },
+  "driver-license-renewal-age-70-rule-2026": {
+    "_why": "期限依每個人滿 70／75 歲或審驗日計算，不是每年 5/31；職業駕照不限 70 歲以上",
+    "conditions": {
+      "min_age": null,
+      "is_elderly": null
+    },
+    "deadline": {
+      "type": "event_based",
+      "start_month": null,
+      "start_day": null,
+      "end_month": null,
+      "end_day": null
+    }
   }
 }

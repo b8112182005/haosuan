@@ -64,6 +64,8 @@ export interface SubsidyConditions {
   is_married?: boolean | null;
   is_elderly?: boolean | null;
   owns_vehicle?: string | null;
+  /** 試算精靈沒有問的身分（原住民、新住民、農民、純電動車車主…）。有填時引擎一律歸「可能符合」並請使用者自行確認 */
+  special_identity?: string | null;
   other?: string | null;
 }
 
