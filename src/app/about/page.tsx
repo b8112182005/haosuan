@@ -45,7 +45,7 @@ export default function AboutPage() {
         ))}
       </ul>
       <p>
-        app 啟動時會向網站下載最新資料檔，所以不用等 app 更新也能拿到修正後的金額與日期。
+        app 啟動時會向網站下載最新資料檔；既有項目的金額、期限或官方網址有調整時，該項目頁頂端會提示差異。新增的項目隨 app 更新提供。
         發現錯誤請寄信到 <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>，附上項目名稱與官方來源連結。
       </p>
 

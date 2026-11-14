@@ -110,7 +110,11 @@ GitHub Actions 會用 `github.run_number` 當 versionCode，AAB 在 workflow 的
 2. commit 後 `git tag v1.0.1 && git push origin v1.0.1`，或本機 `bash scripts/android/build-release.sh <更大的 versionCode>`
 3. Play Console 上傳新 AAB
 
-補助資料更新不需要發新版 app：改 `src/data/subsidies.json`（或重跑 `npm run data:build`）→ push 到 main → Vercel 部署後，app 啟動時會自己抓新資料。
+補助資料怎麼更新：改 `research/` 後跑 `npm run data:build -- --version YYYY-MM-DD`，push 到 main，Vercel 部署完成後——
+
+- **網站**：立刻是新資料。
+- **已安裝的 app**：啟動時會抓 `/data/subsidies.json`。既有項目的金額、期限、是否辦理、官方網址有變動時，該項目頁頂端會出現「有較新的資料」提示並列出差異。
+- **新增的項目、改寫的說明與問答**：是打包在 app 裡的頁面，要發新版 app（重跑第 1 節、versionCode 加 1）才會出現。
 
 ## 7. 自動上傳（選用）
 

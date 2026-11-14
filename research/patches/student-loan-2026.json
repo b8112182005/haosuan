@@ -1,0 +1,67 @@
+{
+  "id": "student-loan-2026",
+  "verdict": "confirmed",
+  "verified_at": "2026-11-14",
+  "checked": [
+    {
+      "field": "official_url",
+      "value_in_data": "https://www.edu.tw/helpdreams/",
+      "official_value": "HTTP 200",
+      "match": true,
+      "source_url": "https://www.edu.tw/helpdreams/"
+    },
+    {
+      "field": "amount.text（畢業後還款利率）",
+      "value_in_data": "畢業後還款利率0.775%（115/8/1起）",
+      "official_value": "政府負擔 1%，學生負擔利率由 1.775%調降至 0.775%",
+      "match": true,
+      "source_url": "https://www.ylvs.chc.edu.tw/ischool/rfile/367a0090fe3e3d9bb26f4251ae052406"
+    },
+    {
+      "field": "amount.text（高中職書籍費）",
+      "value_in_data": "高中職115學年度起由1,000元調為1,600元",
+      "official_value": "書籍費可貸額度：原 1,000 元 → 115 學年度起調整為 1,600 元（自由申貸）",
+      "match": true,
+      "source_url": "https://www.ylvs.chc.edu.tw/ischool/rfile/367a0090fe3e3d9bb26f4251ae052406"
+    },
+    {
+      "field": "amount.text（大專書籍費、校外住宿上限、生活費）",
+      "value_in_data": "書籍費大專3,000元；校外租屋上限22,500元/學期；低收入戶生活費40,000元、中低收入戶20,000元",
+      "official_value": "書籍費 3,000 元；「校外租屋」設定上限 22,500 元核貸金額；低收入家庭…可貸生活費40,000元，中低收入家庭可貸生活費20,000元(109年8月1日施行)",
+      "match": true,
+      "source_url": "https://inc.nttu.edu.tw/var/file/43/1043/img/2243/555940975.pdf"
+    },
+    {
+      "field": "amount.min / amount.max",
+      "value_in_data": "null / null",
+      "official_value": "無固定上下限，依註冊繳費單「就學貸款可貸金額」核貸",
+      "match": true,
+      "source_url": "https://inc.nttu.edu.tw/var/file/43/1043/img/2243/555940975.pdf"
+    },
+    {
+      "field": "deadline（上學期受理期間）",
+      "value_in_data": "8/1～9/30",
+      "official_value": "115學年度上學期就學貸款申辦作業自115年8月1日起至115年9月30日止",
+      "match": true,
+      "source_url": "https://www.cna.com.tw/business/chinese/440064"
+    },
+    {
+      "field": "deadline.note（對保與查調截止）",
+      "value_in_data": "對保截止9月底；下學期2月底；教育部查調最後截止116/3/31",
+      "official_value": "對保期限：上學期 9 月底前、下學期 2 月底前；下學期：116 年 3 月 11 日及 3 月 31 日（3/31 為最後截止日）",
+      "match": true,
+      "source_url": "https://www.ylvs.chc.edu.tw/ischool/rfile/367a0090fe3e3d9bb26f4251ae052406"
+    },
+    {
+      "field": "status_2026",
+      "value_in_data": "active",
+      "official_value": "115年8月1日起實施「學貸利息再調降」三項措施，115學年度照常受理",
+      "match": true,
+      "source_url": "https://sa.chu.edu.tw/p/406-1050-46307,r354.php?Lang=zh-tw"
+    }
+  ],
+  "corrections": [],
+  "official_url_ok": true,
+  "file_path": "/home/user/haosuan/research/patches/student-loan-2026.json",
+  "summary": "讀了國教署115學年度申請須知（學校轉載 PDF）、臺東大學115-1公告、中華大學轉教育部函、中央社臺銀新聞稿，金額項目、利率0.775%、受理期間8/1～9/30、對保與查調截止日都對得上，官方網址回 200。115學年度下學期（116年1～2月）臺銀受理起始日尚未查到公告，維持在 unverified_fields。"
+}

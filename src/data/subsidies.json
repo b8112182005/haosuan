@@ -1,6 +1,6 @@
 {
   "version": "2026-11-14",
-  "generated_at": "2026-11-14T17:06:38.912Z",
+  "generated_at": "2026-11-14T17:07:28.237Z",
   "items": [
     {
       "id": "rent-subsidy-central-300b",
@@ -10421,8 +10421,8 @@
         "下學期臺銀受理起始日"
       ],
       "topic": "youth-and-students",
-      "verified_at": null,
-      "verification_summary": null
+      "verified_at": "2026-11-14",
+      "verification_summary": "讀了國教署115學年度申請須知（學校轉載 PDF）、臺東大學115-1公告、中華大學轉教育部函、中央社臺銀新聞稿，金額項目、利率0.775%、受理期間8/1～9/30、對保與查調截止日都對得上，官方網址回 200。115學年度下學期（116年1～2月）臺銀受理起始日尚未查到公告，維持在 unverified_fields。"
     },
     {
       "id": "senior-high-tuition-free",

@@ -46,7 +46,7 @@ src/lib/reminders/       提醒儲存、通知排程
 src/lib/calculators/     30 種計算機的純函式
 src/data/subsidies.json  補助資料（app 內建）
 public/data/             同一份資料，網站部署後供 app 檢查更新
-research/                研究流程原始輸出（topics/、verified/），data:build 的輸入
+research/                研究與核對的原始輸出（topics/、patches/、overrides.json、removed.json），data:build 的輸入；說明見 research/README.md
 android/                 Capacitor Android 專案（含 release 簽章設定）
 resources/               圖示、啟動畫面 SVG 來源；scripts/android/gen-assets.mjs 產生各尺寸
 scripts/                 資料合併、Android 資產與簽章、商店截圖
@@ -56,8 +56,8 @@ scripts/                 資料合併、Android 資產與簽章、商店截圖
 
 1. 資料的單一來源是 `research/topics/*.json`（研究員輸出）與 `research/verified/<id>.json`（核對員修正版）。
 2. 人工修正寫在 `research/overrides.json`（`{ "<id>": { 欄位: 值 } }`），要下架的 id 放 `research/removed.json`。
-3. `npm run data:build --version YYYY-MM-DD` 會做 schema 檢查後寫出兩份資料檔。
-4. push 到 main → Vercel 部署 → app 啟動時抓 `/data/subsidies.json`，版本較新就在詳情頁提示差異。不用發新版 app。
+3. `npm run data:build -- --version YYYY-MM-DD` 會做 schema 檢查後寫出完整資料（兩份相同）與列表用的精簡索引。
+4. push 到 main → Vercel 部署 → 網站立刻是新資料；已安裝的 app 啟動時抓 `/data/subsidies.json`，既有項目的金額、期限、狀態有變動會在詳情頁提示差異。新增項目與改寫的說明是打包在 app 裡的頁面，要發新版 app 才會出現。
 
 每個項目都要有 `sources`；查不到官方依據的欄位放進 `unverified_fields` 並把 `confidence` 降為 medium／low，頁面會顯示「未驗證」。
 
