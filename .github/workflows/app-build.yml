@@ -56,7 +56,17 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
-      - uses: android-actions/setup-android@v3
+      # ubuntu-latest 已內建 Android SDK（ANDROID_HOME），這裡只補這個專案要的平台與 build-tools。
+      # 不用 android-actions/setup-android@v3：它預設會裝已經下架的 "tools" 套件，sdkmanager 直接失敗（2026-11-14 實跑確認）。
+      - name: Install Android SDK packages
+        run: |
+          SDKMANAGER="$(ls "$ANDROID_HOME"/cmdline-tools/*/bin/sdkmanager 2>/dev/null | sort -V | tail -1)"
+          if [ -n "$SDKMANAGER" ]; then
+            yes | "$SDKMANAGER" --licenses > /dev/null || true
+            "$SDKMANAGER" "platforms;android-36" "build-tools;36.0.0"
+          else
+            echo "找不到 sdkmanager，缺少的 SDK 元件交給 Gradle 自動下載"
+          fi
 
       # 快取 Gradle 依賴與 wrapper，少抓幾百 MB
       - uses: gradle/actions/setup-gradle@v4
