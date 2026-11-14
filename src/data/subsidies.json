@@ -1,6 +1,6 @@
 {
-  "version": "2026-11-11",
-  "generated_at": "2026-11-11T04:37:58.942Z",
+  "version": "2026-11-14",
+  "generated_at": "2026-11-14T17:00:38.335Z",
   "items": [
     {
       "id": "rent-subsidy-central-300b",
@@ -17221,6 +17221,518 @@
       "topic": "energy-appliance-vehicle",
       "verified_at": null,
       "verification_summary": null
+    },
+    {
+      "id": "citizen-digital-certificate",
+      "name": "自然人憑證（IC 卡）",
+      "short_name": "自然人憑證",
+      "category": "other",
+      "level": "central",
+      "city": null,
+      "agency": "內政部（憑證管理中心），各戶政事務所受理",
+      "summary": "一張晶片卡，插進讀卡機後可以在網路上證明「我是本人」。報稅、申請電子戶籍謄本、查勞保年資、登入 MyData 下載所得與財產資料都能用。到任一戶政事務所現場辦，工本費 250 元。",
+      "eligibility": [
+        "年滿 18 歲、在國內設有戶籍的國民",
+        "未受監護宣告",
+        "首次申辦要本人到場，不可委託他人"
+      ],
+      "amount": {
+        "text": "這不是補助，沒有可領的錢。申辦要付 IC 卡工本費 250 元；同時加辦行動自然人憑證，合併只收 250 元。",
+        "min": null,
+        "max": null,
+        "unit": null,
+        "formula": null
+      },
+      "conditions": {
+        "min_age": 18,
+        "other": "需在國內設有戶籍，且未受監護宣告"
+      },
+      "documents": [
+        "國民身分證正本",
+        "工本費 250 元",
+        "一組電子郵件信箱"
+      ],
+      "how_to_apply": [
+        "（可省略）先到內政部憑證管理中心網站線上預填申請資料並按「送件」，7 日內到戶所辦理",
+        "本人帶身分證正本、250 元到任一戶政事務所（不限戶籍地）",
+        "櫃檯核對身分、填申請資料表、設定 PIN 碼後當場領卡",
+        "回家在電腦接上晶片讀卡機，安裝 HiCOS 卡片管理工具後即可登入各機關網站"
+      ],
+      "channels": [
+        {
+          "type": "office",
+          "label": "全國任一戶政事務所（不限戶籍地）",
+          "url": null
+        },
+        {
+          "type": "online",
+          "label": "內政部憑證管理中心（預填資料、展期、換發）",
+          "url": "https://moica.nat.gov.tw/"
+        },
+        {
+          "type": "phone",
+          "label": "自然人憑證客服 0800-080-117",
+          "url": null
+        }
+      ],
+      "deadline": {
+        "type": "rolling",
+        "start_month": null,
+        "start_day": null,
+        "end_month": null,
+        "end_day": null,
+        "note": "全年可辦。憑證效期 5 年，可展延 3 年，合計 8 年；到期前 60 天至到期後 3 年內可辦展期。"
+      },
+      "faqs": [
+        {
+          "q": "自然人憑證要去哪裡辦？可以請家人代辦嗎？",
+          "a": "首次申辦要本人帶身分證正本到戶政事務所，全國任一間都可以，不限戶籍地，但不能委託別人。要帶的東西是身分證正本、工本費 250 元和一組電子郵件信箱。同一機關團體 5 人以上，有些戶所提供到場收件的集體申辦，可先打電話問當地戶所。",
+          "source_url": "https://slhr.gov.taipei/cp.aspx?n=FEA45C31BCBD735B"
+        },
+        {
+          "q": "憑證可以用幾年？到期怎麼辦？",
+          "a": "憑證使用期限是 5 年，可以再展延 3 年，合計 8 年。到期前 60 天到到期後 3 年內都能辦展期，可在內政部憑證管理中心網站線上辦，或帶身分證和 IC 卡到任一戶政事務所辦。不管哪一天辦，展期都從原到期日起算 3 年。滿 8 年後要重新申辦一張。",
+          "source_url": "https://ca.gov.taipei/News_Content.aspx?n=59F2E04A34FDA3E8&s=31E9DE69533474E6"
+        },
+        {
+          "q": "展期可以請別人代辦嗎？",
+          "a": "可以。展期和首次申辦不同，可委託他人。委託人和受委託人先填好「自然人憑證代辦事項委託書」並親筆簽名或蓋章，由受委託人帶委託書、委託人的 IC 卡、雙方身分證正本到任一戶政事務所辦理。這份說明來自臺北市民政局，頁面更新日期較早，出門前建議先打電話向戶所確認。",
+          "source_url": "https://ca.gov.taipei/News_Content.aspx?n=59F2E04A34FDA3E8&s=31E9DE69533474E6"
+        },
+        {
+          "q": "有了自然人憑證可以辦哪些事？",
+          "a": "戶政事務所列出的用途包括：個人綜合所得稅結算申報、申請電子戶籍謄本、身分證掛失、地政電子謄本、查詢勞保與農保投保年資和給付、勞退個人專戶、到財政部稅務入口網查所得與財產資料。申請補助時常要附的所得清單、財產清單、戶籍資料，也能用它登入 MyData 下載。",
+          "source_url": "https://slhr.gov.taipei/cp.aspx?n=FEA45C31BCBD735B"
+        },
+        {
+          "q": "同時想要卡片和手機版，要付兩次錢嗎？",
+          "a": "不用。內政部行動自然人憑證網站的問答寫明：只辦 IC 卡收 250 元；只辦行動自然人憑證收綁定裝置作業費 30 元；兩種同時辦，合併收 250 元。所以如果家裡沒有讀卡機、之後也可能要用電腦報稅，在櫃檯一次辦兩種比分兩次辦省 30 元。",
+          "source_url": "https://fido.moi.gov.tw/pt/qa"
+        }
+      ],
+      "pitfalls": [
+        "首次申辦不能委託，請家人代跑會白跑一趟；只有展期等事項可以用委託書代辦。",
+        "卡片要搭配晶片讀卡機和電腦元件（HiCOS）才能用，手機無法直接插卡；沒有讀卡機的人改辦行動自然人憑證比較實際。",
+        "過了 5 年沒展期，登入各機關網站會被擋；到期後 3 年內還能展期，超過就要重辦並再付工本費。",
+        "PIN 碼連續輸入錯誤會鎖卡；鎖卡後的解鎖方式與錯誤次數上限本次未在官方頁面核對，請以憑證管理中心說明為準。"
+      ],
+      "related_calculator": null,
+      "official_url": "https://moica.nat.gov.tw/",
+      "sources": [
+        {
+          "url": "https://slhr.gov.taipei/cp.aspx?n=FEA45C31BCBD735B",
+          "title": "自然人憑證專區（資料更新 115-06-11）",
+          "publisher": "臺北市士林區戶政事務所",
+          "accessed": "2026-11-11"
+        },
+        {
+          "url": "https://ca.gov.taipei/News_Content.aspx?n=59F2E04A34FDA3E8&s=31E9DE69533474E6",
+          "title": "常見問答－自然人憑證到期，要如何辦理展期？",
+          "publisher": "臺北市政府民政局",
+          "accessed": "2026-11-11"
+        },
+        {
+          "url": "https://fido.moi.gov.tw/pt/qa",
+          "title": "行動自然人憑證系統 FAQ",
+          "publisher": "內政部",
+          "accessed": "2026-11-11"
+        }
+      ],
+      "status_2026": "active",
+      "last_known_update": "2026-06-11",
+      "confidence": "medium",
+      "unverified_fields": [
+        "展期是否收費（搜尋摘要顯示不收費，moica.nat.gov.tw 問答頁被防火牆擋下，未能讀到原文）",
+        "線上換發費用（搜尋摘要為工本費 250 元加掛號郵資 28 元，未讀到官方原文）",
+        "PIN 碼鎖卡的錯誤次數上限",
+        "客服專線服務時間（戶所頁面與內政部頁面寫法不同）"
+      ],
+      "topic": "government-digital-access",
+      "verified_at": null,
+      "verification_summary": null
+    },
+    {
+      "id": "mobile-citizen-certificate-tw-fido",
+      "name": "行動自然人憑證（TW FidO）",
+      "short_name": "行動自然人憑證",
+      "category": "other",
+      "level": "central",
+      "city": null,
+      "agency": "內政部",
+      "summary": "把自然人憑證放進手機 App，登入政府網站時用指紋或臉部辨識確認身分，不用讀卡機、不用輸入密碼。沒有 IC 卡也能辦：帶手機和身分證到任一戶政事務所，付 30 元當場綁定。",
+      "eligibility": [
+        "年滿 18 歲（含）、設籍於國內的國民，且未受監護宣告",
+        "手機或平板的系統版本要在 Android 12 以上或 iOS 17 以上",
+        "裝置要支援並已設定指紋或臉部辨識（不能用 PIN 碼或圖形鎖代替）"
+      ],
+      "amount": {
+        "text": "這不是補助，沒有可領的錢。單獨臨櫃申辦收綁定裝置作業費 30 元；與 IC 卡同時辦合併收 250 元。到期前在 App 重新產製金鑰免費。",
+        "min": null,
+        "max": null,
+        "unit": null,
+        "formula": null
+      },
+      "conditions": {
+        "min_age": 18,
+        "other": "裝置需 Android 12 以上或 iOS 17 以上，並已設定生物辨識"
+      },
+      "documents": [
+        "國民身分證正本（不能用駕照等其他證件）",
+        "作業費 30 元",
+        "電子郵件信箱",
+        "已安裝「行動自然人憑證」App 並設定好指紋或臉部辨識的手機或平板"
+      ],
+      "how_to_apply": [
+        "路徑一（沒有 IC 卡）：先下載 App，本人帶身分證到任一戶政事務所櫃檯申請並繳費；在申請書上簽名後，用 App 的「掃描註冊啟用碼 QR Code」掃櫃檯列印的 QR Code，確認綁定成功再離開",
+        "路徑二（有卡號 TP07 開頭的 IC 卡、手機支援 NFC）：開啟手機 NFC，在 App 填身分證字號與 PIN 碼，把卡片靠在手機背面感應，核對後填電子信箱與手機號碼送出",
+        "路徑三（有效期內的 IC 卡＋讀卡機）：用電腦開啟行動自然人憑證網站，以自然人憑證登入並填信箱與手機，點「綁定行動裝置」產生 QR Code，再用 App 的「註冊裝置」掃描",
+        "之後登入支援的政府網站時選「行動自然人憑證」，手機收到推播後用指紋或臉部辨識確認"
+      ],
+      "channels": [
+        {
+          "type": "office",
+          "label": "全國任一戶政事務所（不限戶籍地，可跨縣市）",
+          "url": null
+        },
+        {
+          "type": "app",
+          "label": "行動自然人憑證 App（Android）",
+          "url": "https://play.google.com/store/apps/details?id=tw.gov.moi.tfido"
+        },
+        {
+          "type": "online",
+          "label": "內政部行動自然人憑證系統（申辦教學）",
+          "url": "https://fido.moi.gov.tw/pt/teaching"
+        },
+        {
+          "type": "phone",
+          "label": "服務熱線 0800-080-117",
+          "url": null
+        }
+      ],
+      "deadline": {
+        "type": "rolling",
+        "start_month": null,
+        "start_day": null,
+        "end_month": null,
+        "end_day": null,
+        "note": "全年可辦。每次簽發效期 1 年，到期前 60 天起可在 App 免費「重新產製」延長 1 年，最長累計 8 年；過期未辦要重新付費申辦。"
+      },
+      "faqs": [
+        {
+          "q": "我沒有自然人憑證卡片，可以直接辦手機版嗎？",
+          "a": "可以。113 年 12 月 2 日起全國戶政事務所都開放臨櫃申辦。本人帶身分證正本、作業費 30 元、電子信箱和手機，到任一戶政事務所辦理，不限戶籍地。建議出門前先下載「行動自然人憑證」App，並在手機設定好指紋或 Face ID，櫃檯列印 QR Code 後當場掃描就完成綁定。",
+          "source_url": "https://fido.moi.gov.tw/pt/qa"
+        },
+        {
+          "q": "效期多久？到期要再跑一趟戶政嗎？",
+          "a": "每次簽發效期 1 年。到期前 60、30、15、7 天到前 1 天，打開 App 會跳出「重新產製」視窗，用指紋或臉部辨識同意後效期延長 1 年，不用錢也不用跑戶政，最長可累計用 8 年。超過 1 年沒辦就失效，要本人再到戶所付費重辦。用 IC 卡綁定的，IC 卡到期後就不能再延長。",
+          "source_url": "https://fido.moi.gov.tw/pt/qa"
+        },
+        {
+          "q": "換新手機要怎麼把憑證移過去？",
+          "a": "舊手機還在手上時，打開 App 右上角選單，選「設定」>「裝置與憑證異動」>「新裝置綁定」，照指示用新手機掃碼綁定，再確認舊手機的憑證已註銷。如果是臨櫃單獨申辦的憑證，手機遺失、自己註銷憑證或把 App 刪掉，就要本人再到任一戶所付費重新申辦。",
+          "source_url": "https://fido.moi.gov.tw/pt/qa"
+        },
+        {
+          "q": "NFC 靠卡綁定一直失敗怎麼辦？",
+          "a": "先看卡號：NFC 靠卡只支援卡號 TP07 開頭的雙介面 IC 卡，其他卡號要改用電腦加讀卡機的 QR Code 方式。卡號符合但仍失敗，官方說明常見原因是感應到一半卡片移開，或卡片放在感應區邊緣。把卡片貼穩在手機背面，等 App 顯示完成再拿開。",
+          "source_url": "https://fido.moi.gov.tw/pt/teaching"
+        },
+        {
+          "q": "改名或換身分證字號後還能用嗎？",
+          "a": "不能。行動自然人憑證遇到變更姓名、身分證字號，會比照 IC 卡直接廢止，要重新申辦。另外，重新申辦之前如果舊憑證還沒過期，官方要求先把舊憑證註銷廢止，再辦新的。註銷手機版不會影響 IC 卡，兩者效期各自計算。",
+          "source_url": "https://fido.moi.gov.tw/pt/qa"
+        }
+      ],
+      "pitfalls": [
+        "臨櫃只收身分證正本，帶駕照或健保卡不受理。",
+        "手機系統低於 Android 12 或 iOS 17、或沒有設定指紋／臉部辨識，App 無法使用；出門前先在手機「設定」確認版本。",
+        "臨櫃單獨申辦的人把 App 刪掉或重置手機，憑證就沒了，要再付 30 元到戶所重辦；換機前先用 App 的「新裝置綁定」。",
+        "不是每個政府網站都支援手機版登入；各服務接受哪種驗證由該機關決定，送件前先看登入頁有沒有「行動自然人憑證」選項。"
+      ],
+      "related_calculator": null,
+      "official_url": "https://fido.moi.gov.tw/pt/",
+      "sources": [
+        {
+          "url": "https://fido.moi.gov.tw/pt/qa",
+          "title": "行動自然人憑證系統 FAQ",
+          "publisher": "內政部",
+          "accessed": "2026-11-11"
+        },
+        {
+          "url": "https://fido.moi.gov.tw/pt/teaching",
+          "title": "行動自然人憑證系統－功能教學（申辦教學）",
+          "publisher": "內政部",
+          "accessed": "2026-11-11"
+        }
+      ],
+      "status_2026": "active",
+      "last_known_update": null,
+      "confidence": "high",
+      "unverified_fields": [
+        "客服專線服務時間（內政部頁尾寫週一至週五 08:30-17:30，戶所頁面寫法不同）"
+      ],
+      "topic": "government-digital-access",
+      "verified_at": null,
+      "verification_summary": null
+    },
+    {
+      "id": "nhi-card-online-registration",
+      "name": "健保卡網路服務註冊（含健保快易通行動電話認證）",
+      "short_name": "健保卡網路註冊",
+      "category": "other",
+      "level": "central",
+      "city": null,
+      "agency": "衛生福利部中央健康保險署",
+      "summary": "幫健保卡設一組註冊密碼。完成後可以用「健保卡＋密碼」登入健保署網站、健保卡網路報稅，也能在「全民健保行動快易通｜健康存摺」App 查就醫與投保資料。有本人名下月租門號的人，用手機 4G/5G 幾分鐘就能完成，不用讀卡機。",
+      "eligibility": [
+        "持有健保卡的保險對象（外籍人士可用居留證號辦理）",
+        "走手機「行動電話認證」：門號要是本人申辦的月租型門號，並使用該門號的 4G/5G 行動網路",
+        "走電腦註冊：要有健保卡、晶片讀卡機，並知道戶口名簿戶號"
+      ],
+      "amount": {
+        "text": "這不是補助，沒有可領的錢。本次查到的健保署說明文件沒有提到收費。",
+        "min": null,
+        "max": null,
+        "unit": null,
+        "formula": null
+      },
+      "conditions": {
+        "other": "手機認證限本人申辦的月租型門號；預付卡、公司門號、非本人申辦的門號不適用"
+      },
+      "documents": [
+        "手機認證：健保卡（看卡號後 4 碼）、本人月租門號的手機、身分證字號或居留證號",
+        "電腦註冊：健保卡、晶片讀卡機、戶口名簿（看左上角戶號）、電子郵件信箱、聯絡電話與行動電話",
+        "外籍人士電腦註冊：居留證的核發日期、居留期限、背面流水號"
+      ],
+      "how_to_apply": [
+        "手機：安裝「全民健保行動快易通｜健康存摺」App，點「健保櫃檯／裝置認證／行動電話認證」",
+        "手機：關閉 Wi-Fi、個人熱點、飛航模式，只開 4G/5G；輸入健保卡後 4 碼、手機門號、身分證字號，核對無誤後設定密碼，即同時完成註冊與裝置綁定",
+        "電腦：到健保卡網路服務註冊網站，先依「電腦環境說明」安裝健保卡讀卡元件，點「註冊」並同意條款",
+        "電腦：插入健保卡按「讀取」，輸入戶號和戶籍鄉鎮里鄰；填電話與 E-Mail，按「寄送認證碼」，5 分鐘內把信箱收到的驗證碼填回；設定註冊密碼後按「確認申請」",
+        "電腦註冊後要用手機 App：登入註冊網站點「行動裝置認證」產生裝置認證碼，再到 App 輸入"
+      ],
+      "channels": [
+        {
+          "type": "app",
+          "label": "全民健保行動快易通｜健康存摺 App",
+          "url": "https://www.nhi.gov.tw/ch/cp-3166-56af4-2457-1.html"
+        },
+        {
+          "type": "online",
+          "label": "健保卡網路服務註冊網站（需讀卡機）",
+          "url": "https://cloudicweb.nhi.gov.tw/cloudic/system/SMC/mEventesite.aspx"
+        }
+      ],
+      "deadline": {
+        "type": "rolling",
+        "start_month": null,
+        "start_day": null,
+        "end_month": null,
+        "end_day": null,
+        "note": "全年可辦，沒有截止日。每年 5 月報稅或補助開放申請前先辦好，避開當天系統壅塞。"
+      },
+      "faqs": [
+        {
+          "q": "戶口名簿戶號在哪裡看？手邊沒有戶口名簿怎麼辦？",
+          "a": "戶號印在戶口名簿左上角。電腦註冊時，插入健保卡讀取後，要輸入戶號和戶籍的鄉鎮里鄰。手邊沒有戶口名簿的人，可以改走手機的「行動電話認證」，只要健保卡卡號後 4 碼、本人月租門號和身分證字號，不需要戶號；或向同戶家人問戶號。",
+          "source_url": "https://cloudicweb.nhi.gov.tw/cloudic/System/SMC/Document/%E5%81%A5%E4%BF%9D%E5%8D%A1%E7%B6%B2%E8%B7%AF%E6%9C%8D%E5%8B%99%E8%A8%BB%E5%86%8A%E4%BD%BF%E7%94%A8%E8%AA%AA%E6%98%8E.pdf"
+        },
+        {
+          "q": "行動電話認證資料都輸入正確，為什麼還是失敗？",
+          "a": "健保署列出的原因：手機沒有關 Wi-Fi、個人熱點或飛航模式；門號不是本人申辦的月租型門號；使用預付卡或公司門號；手機掛失或門號已退租。認證要靠 4G/5G 行動網路向電信業者比對 SIM 卡資料，所以過程中只能開行動網路。完成後平常使用 App 就能連 Wi-Fi。",
+          "source_url": "https://www.nhi.gov.tw/ch/dl-67461-046ab50869d9468a8836a46ed2c40b67-1.pdf"
+        },
+        {
+          "q": "門號是掛在爸媽或公司名下，怎麼註冊？",
+          "a": "非本人申辦的門號、公司門號、預付卡都不能用行動電話認證。改用電腦註冊：準備健保卡、晶片讀卡機、戶口名簿戶號和電子信箱，在健保卡網路服務註冊網站完成註冊，再用網站產生的「裝置認證碼」到 App 綁定手機。有自然人憑證的人也可以用憑證登入健保署個人網路服務綁定裝置。",
+          "source_url": "https://cloudicweb.nhi.gov.tw/cloudic/System/SMC/Document/%E5%81%A5%E4%BF%9D%E5%8D%A1%E7%B6%B2%E8%B7%AF%E6%9C%8D%E5%8B%99%E8%A8%BB%E5%86%8A%E4%BD%BF%E7%94%A8%E8%AA%AA%E6%98%8E.pdf"
+        },
+        {
+          "q": "註冊完除了看健康存摺，還能做什麼？",
+          "a": "健保署說明，完成註冊後除了在 App 查健康存摺、使用健保櫃檯，也可以輸入註冊密碼使用健保署網站的各項網路服務和健保卡網路報稅（電腦要裝元件並插入健保卡）。MyData 平臺也接受「健保卡＋讀卡機」「健保卡卡號＋戶口名簿戶號」「手機門號＋健保卡卡號」三種和健保卡有關的驗證。",
+          "source_url": "https://www.nhi.gov.tw/ch/dl-67461-046ab50869d9468a8836a46ed2c40b67-1.pdf"
+        },
+        {
+          "q": "一支手機可以綁全家人的健保卡嗎？",
+          "a": "健保署註冊說明寫明：一個身分證字號可以綁多個行動裝置並同時啟用，多組身分證字號也可以綁在同一個行動裝置上。登入註冊網站的「行動裝置管理作業」可以看到綁過的裝置，並設定啟用、停用或刪除。舊手機淘汰前，記得到這裡把它刪掉。",
+          "source_url": "https://cloudicweb.nhi.gov.tw/cloudic/System/SMC/Document/%E5%81%A5%E4%BF%9D%E5%8D%A1%E7%B6%B2%E8%B7%AF%E6%9C%8D%E5%8B%99%E8%A8%BB%E5%86%8A%E4%BD%BF%E7%94%A8%E8%AA%AA%E6%98%8E.pdf"
+        }
+      ],
+      "pitfalls": [
+        "行動電話認證時連著 Wi-Fi 會直接失敗；要關 Wi-Fi、熱點、飛航模式，只留 4G/5G。",
+        "信箱驗證碼要在 5 分鐘內輸入，超過要重寄；先開好信箱頁面再按「寄送認證碼」。",
+        "電腦沒裝健保卡讀卡元件時，按「讀取」不會有反應；先照網站右下方「電腦環境說明」安裝，Windows 要用系統管理者權限執行安裝檔。",
+        "註冊密碼和健保卡本身沒有關係，忘記時要走「忘記密碼」流程重設，不是去換卡。"
+      ],
+      "related_calculator": null,
+      "official_url": "https://www.nhi.gov.tw/",
+      "sources": [
+        {
+          "url": "https://cloudicweb.nhi.gov.tw/cloudic/System/SMC/Document/%E5%81%A5%E4%BF%9D%E5%8D%A1%E7%B6%B2%E8%B7%AF%E6%9C%8D%E5%8B%99%E8%A8%BB%E5%86%8A%E4%BD%BF%E7%94%A8%E8%AA%AA%E6%98%8E.pdf",
+          "title": "健保卡網路服務註冊使用說明（115/11/10 版）",
+          "publisher": "衛生福利部中央健康保險署",
+          "accessed": "2026-11-11"
+        },
+        {
+          "url": "https://www.nhi.gov.tw/ch/dl-67461-046ab50869d9468a8836a46ed2c40b67-1.pdf",
+          "title": "全民健保行動快易通｜健康存摺 APP 健保卡註冊行動電話認證問答集",
+          "publisher": "衛生福利部中央健康保險署",
+          "accessed": "2026-11-11"
+        },
+        {
+          "url": "https://mydata.nat.gov.tw/about_us",
+          "title": "關於 MyData（身分驗證方式）",
+          "publisher": "數位發展部",
+          "accessed": "2026-11-11"
+        }
+      ],
+      "status_2026": "active",
+      "last_known_update": "2026-11-10",
+      "confidence": "medium",
+      "unverified_fields": [
+        "是否收費（官方文件未提到費用，未見「免費」字樣）",
+        "channels 中註冊網站的確切網址（僅確認網域 cloudicweb.nhi.gov.tw，入口頁路徑未逐一開啟核對）",
+        "臨櫃或其他註冊管道（本次未查）"
+      ],
+      "topic": "government-digital-access",
+      "verified_at": null,
+      "verification_summary": null
+    },
+    {
+      "id": "mydata-and-egov-portal",
+      "name": "MyData 個人化資料自主運用平臺與我的E政府",
+      "short_name": "MyData／我的E政府",
+      "category": "other",
+      "level": "central",
+      "city": null,
+      "agency": "數位發展部",
+      "summary": "MyData 讓你在網路上驗證身分後，自己把政府手上的個人資料（戶籍、所得、財產、投保紀錄等）下載下來，或一次傳給受理補助的機關，省掉跑戶政、國稅局申請紙本的時間。我的E政府（gov.tw）是找各機關申辦服務的入口網站。",
+      "eligibility": [
+        "有可用的身分驗證工具：自然人憑證、行動自然人憑證、健保卡、晶片金融卡、金融憑證等其中之一",
+        "首次使用要通過兩種不同方式的身分驗證（二次驗證）",
+        "外籍人士可用居留證號與生日使用，但可選的驗證方式較少"
+      ],
+      "amount": {
+        "text": "這不是補助，沒有可領的錢。本次查到的平臺說明頁沒有提到收費。",
+        "min": null,
+        "max": null,
+        "unit": null,
+        "formula": null
+      },
+      "conditions": {
+        "other": "每份文件接受哪些驗證方式，由保存該資料的機關決定"
+      },
+      "documents": [
+        "身分驗證工具擇一：自然人憑證＋讀卡機、行動自然人憑證、健保卡＋讀卡機、晶片金融卡＋讀卡機、軟體或硬體金融憑證",
+        "免讀卡機的選項：健保卡卡號＋戶口名簿戶號（雙證件驗證），或手機門號＋健保卡卡號（行動化驗證）",
+        "首次使用另備第二種驗證工具"
+      ],
+      "how_to_apply": [
+        "到 mydata.nat.gov.tw 點右上「個人專區」，完成二次身分驗證註冊",
+        "下載自己留存：點「找文件」，選戶役政、財稅、健保等類別和文件，驗證並同意後，8 小時內可線上預覽或轉存到自己的電腦",
+        "線上申辦：點「找服務：線上服務」連到受理機關網站，填資料並同意後，平臺把你的個人文件傳給該機關",
+        "臨櫃申辦：點「找服務：臨櫃服務」取得一組條碼（有效 20 分鐘），到櫃檯出示；系統再發「驗證密碼」到你的手機或信箱，把密碼告訴櫃檯人員",
+        "想找某項補助在哪個機關辦：到我的E政府 gov.tw，依「人生大事」「日常生活」分類或搜尋服務名稱"
+      ],
+      "channels": [
+        {
+          "type": "online",
+          "label": "MyData 個人化資料自主運用平臺",
+          "url": "https://mydata.nat.gov.tw/"
+        },
+        {
+          "type": "online",
+          "label": "我的E政府",
+          "url": "https://www.gov.tw/"
+        },
+        {
+          "type": "phone",
+          "label": "MyData 客服 0800-009-868（週一至週五 09:00-12:00、13:30-18:00，例假日除外）",
+          "url": null
+        },
+        {
+          "type": "phone",
+          "label": "我的E政府客服 (02)2192-7111",
+          "url": null
+        }
+      ],
+      "deadline": {
+        "type": "rolling",
+        "start_month": null,
+        "start_day": null,
+        "end_month": null,
+        "end_day": null,
+        "note": "全年可用。下載的文件 8 小時內可預覽與轉存；臨櫃條碼有效 20 分鐘，過期要手動更新。"
+      },
+      "faqs": [
+        {
+          "q": "MyData 到底是什麼？和我申請補助有什麼關係？",
+          "a": "它是數位發展部的平臺。你在線上驗證身分並按同意後，平臺向保存資料的機關（例如內政部戶政司、財政部）取得你的個人文件，交給你自己，或單次即時傳給你指定的政府機關或企業。申請補助常要附戶籍資料、所得與財產清單，用它可以在家下載，不用分別跑戶政和國稅局。",
+          "source_url": "https://mydata.nat.gov.tw/about_us"
+        },
+        {
+          "q": "MyData 會不會把我的資料存起來一直給別人看？",
+          "a": "平臺常見問題寫明：平臺不留存你的個人化資料，你按的同意只有單次有效，不是永久授權。每次要傳資料給機關都要重新驗證並同意。你可以到「個人專區／使用紀錄」查自己操作過什麼、資料傳給了誰。平臺與機關之間的資料傳輸和檔案都有加密。",
+          "source_url": "https://mydata.nat.gov.tw/faq"
+        },
+        {
+          "q": "沒有讀卡機，可以用 MyData 嗎？",
+          "a": "有機會，但要看文件。平臺提供三種不用讀卡機的驗證：行動自然人憑證、健保卡卡號加戶口名簿戶號、手機門號加健保卡卡號。不過每份文件接受哪些方式，由保存資料的機關決定，敏感度高的文件可能只收憑證類。而且首次使用要過兩種不同的驗證，建議至少準備兩種工具。",
+          "source_url": "https://mydata.nat.gov.tw/about_us"
+        },
+        {
+          "q": "臨櫃服務的條碼怎麼用？",
+          "a": "在 MyData 選「找服務：臨櫃服務」，填資料、驗證身分並同意後，畫面會出現一組條碼，有效 20 分鐘，過期要手動更新。到櫃檯把條碼畫面或條碼序號給承辦人員，系統會再發一組「驗證密碼」到你的手機或信箱，把這組密碼唸給櫃檯人員，對方才能調出你的文件。",
+          "source_url": "https://mydata.nat.gov.tw/about_us"
+        },
+        {
+          "q": "下載的文件可以放多久？",
+          "a": "透過「找文件」取得的個人文件，可以在 8 小時內線上預覽，或按「轉存到我的電腦」存下來。這類下載是給自己保存和參考用的。要交給機關當申請附件時，機關收不收自己下載的檔案、還是要走「找服務」由平臺直接傳送，以該補助的申請須知為準。",
+          "source_url": "https://mydata.nat.gov.tw/about_us"
+        }
+      ],
+      "pitfalls": [
+        "首次使用要兩種驗證，只帶一張自然人憑證會卡在第二關；先備好健保卡卡號和戶口名簿戶號當第二種。",
+        "用手機門號加健保卡卡號驗證時，按下一步沒反應，多半是瀏覽器擋了彈出視窗；到 Safari 或 Chrome 設定關閉「阻擋彈出式視窗」再試。",
+        "臨櫃條碼 20 分鐘就過期，排隊時不要太早產生；輪到自己前再按更新。",
+        "行動自然人憑證驗證要在 2 分鐘內在手機上完成，逾時平臺會要求重新操作。"
+      ],
+      "related_calculator": null,
+      "official_url": "https://mydata.nat.gov.tw/",
+      "sources": [
+        {
+          "url": "https://mydata.nat.gov.tw/about_us",
+          "title": "關於 MyData",
+          "publisher": "數位發展部",
+          "accessed": "2026-11-11"
+        },
+        {
+          "url": "https://mydata.nat.gov.tw/faq",
+          "title": "MyData 常見問題",
+          "publisher": "數位發展部",
+          "accessed": "2026-11-11"
+        },
+        {
+          "url": "https://www.gov.tw/",
+          "title": "我的E政府 首頁",
+          "publisher": "數位發展部",
+          "accessed": "2026-11-11"
+        }
+      ],
+      "status_2026": "active",
+      "last_known_update": null,
+      "confidence": "medium",
+      "unverified_fields": [
+        "是否收費（官方頁面未提到費用）",
+        "MyData 目前可下載的文件項目數與介接機關數",
+        "我的E政府會員登入方式與可查詢的申辦進度範圍（本次只讀到首頁）",
+        "未成年人或由他人代為操作的規定"
+      ],
+      "topic": "government-digital-access",
+      "verified_at": null,
+      "verification_summary": null
     }
   ],
   "general_faqs": [
@@ -17793,6 +18305,215 @@
         "學校"
       ],
       "topic": "family-support-misc"
+    },
+    {
+      "q": "線上申請政府補助，要怎麼證明我是本人？有哪些方式？",
+      "a": "以 MyData 平臺列出的方式為例：自然人憑證加讀卡機、行動自然人憑證（手機指紋或臉部辨識）、健保卡加讀卡機、晶片金融卡加讀卡機、軟體或硬體金融憑證、健保卡卡號加戶口名簿戶號、手機門號加健保卡卡號。每項服務接受哪幾種由主管機關決定，送件前先看該服務的登入頁。",
+      "source_url": "https://mydata.nat.gov.tw/about_us",
+      "tags": [
+        "digital",
+        "身分驗證",
+        "自然人憑證",
+        "健保卡"
+      ],
+      "topic": "government-digital-access"
+    },
+    {
+      "q": "我沒有讀卡機，只有手機，可以辦哪一種？",
+      "a": "有兩條路。一是行動自然人憑證：帶身分證正本、30 元和手機到任一戶政事務所，當場綁定，之後用指紋或臉部辨識登入。二是健保快易通 App 的行動電話認證：門號是本人申辦的月租型門號，用 4G/5G 輸入健保卡後 4 碼、門號和身分證字號就能完成健保卡註冊。兩種都辦，遇到要二次驗證的平臺比較不會卡住。",
+      "source_url": "https://fido.moi.gov.tw/pt/qa",
+      "tags": [
+        "digital",
+        "行動自然人憑證",
+        "健保卡",
+        "手機"
+      ],
+      "topic": "government-digital-access"
+    },
+    {
+      "q": "自然人憑證多少錢？去哪裡辦？要帶什麼？",
+      "a": "工本費 250 元。年滿 18 歲、在國內設有戶籍、未受監護宣告的國民，本人帶身分證正本、250 元和一組電子信箱，到全國任一戶政事務所辦，不限戶籍地，不能委託。憑證使用期限 5 年，可再展延 3 年，合計 8 年。使用時要搭配晶片讀卡機和電腦。",
+      "source_url": "https://slhr.gov.taipei/cp.aspx?n=FEA45C31BCBD735B",
+      "tags": [
+        "digital",
+        "自然人憑證",
+        "戶政事務所",
+        "費用"
+      ],
+      "topic": "government-digital-access"
+    },
+    {
+      "q": "行動自然人憑證綁定手機的步驟是什麼？",
+      "a": "有三種。沒有 IC 卡：下載 App 後帶身分證到戶政櫃檯，簽申請書、掃櫃檯列印的 QR Code。有 TP07 開頭的 IC 卡且手機有 NFC：在 App 填身分證字號和 PIN 碼，卡片靠手機感應。有 IC 卡和讀卡機：用電腦登入行動自然人憑證網站，點「綁定行動裝置」，用 App「註冊裝置」掃畫面上的 QR Code。手機需 Android 12 或 iOS 17 以上。",
+      "source_url": "https://fido.moi.gov.tw/pt/teaching",
+      "tags": [
+        "digital",
+        "行動自然人憑證",
+        "TW FidO",
+        "綁定"
+      ],
+      "topic": "government-digital-access"
+    },
+    {
+      "q": "行動自然人憑證要每年重辦嗎？",
+      "a": "不用重辦，但要每年在 App 按一次。憑證每次簽發效期 1 年，到期前 60 天起打開 App 會跳出「重新產製」視窗，用指紋或臉部辨識同意後延長 1 年，免費，最長累計 8 年。忘了按、過了效期就失效，要本人再到戶政事務所付費申辦。建議在手機行事曆設一個到期前 30 天的提醒。",
+      "source_url": "https://fido.moi.gov.tw/pt/qa",
+      "tags": [
+        "digital",
+        "行動自然人憑證",
+        "效期"
+      ],
+      "topic": "government-digital-access"
+    },
+    {
+      "q": "用健保卡登入要先做什麼？戶口名簿戶號是哪一組數字？",
+      "a": "要先完成「健保卡網路服務註冊」設定密碼。電腦註冊要準備健保卡、讀卡機、電子信箱，插卡讀取後輸入戶號和戶籍鄉鎮里鄰；戶號就是戶口名簿左上角的號碼。有些平臺（例如 MyData）另外提供「健保卡卡號加戶口名簿戶號」的免讀卡機驗證，卡號是健保卡上的數字，兩樣先抄下來備用。",
+      "source_url": "https://cloudicweb.nhi.gov.tw/cloudic/System/SMC/Document/%E5%81%A5%E4%BF%9D%E5%8D%A1%E7%B6%B2%E8%B7%AF%E6%9C%8D%E5%8B%99%E8%A8%BB%E5%86%8A%E4%BD%BF%E7%94%A8%E8%AA%AA%E6%98%8E.pdf",
+      "tags": [
+        "digital",
+        "健保卡",
+        "戶口名簿戶號",
+        "註冊"
+      ],
+      "topic": "government-digital-access"
+    },
+    {
+      "q": "健保快易通的行動電話認證一直不過，怎麼排除？",
+      "a": "照健保署問答逐項檢查：一、關掉 Wi-Fi、個人熱點、飛航模式，只開 4G/5G；二、門號要是你本人申辦的月租型門號，預付卡、公司門號、家人名下的門號都不行；三、手機沒有掛失、門號沒有退租。都符合仍失敗，就改用電腦加讀卡機註冊，再用裝置認證碼綁定手機。",
+      "source_url": "https://www.nhi.gov.tw/ch/dl-67461-046ab50869d9468a8836a46ed2c40b67-1.pdf",
+      "tags": [
+        "digital",
+        "健保卡",
+        "行動電話認證",
+        "卡關"
+      ],
+      "topic": "government-digital-access"
+    },
+    {
+      "q": "MyData 是什麼？申請補助一定要用嗎？",
+      "a": "MyData 是數位發展部的平臺，讓你驗證身分並同意後，從各機關取回自己的戶籍、所得、財產、投保等資料，或單次傳給受理機關。不是每項補助都要用；有的補助由機關自己查調資料，有的要你附文件。申請須知寫「可用 MyData 取得」時，用它可以省掉臨櫃申請紙本的時間。",
+      "source_url": "https://mydata.nat.gov.tw/about_us",
+      "tags": [
+        "digital",
+        "MyData",
+        "附件"
+      ],
+      "topic": "government-digital-access"
+    },
+    {
+      "q": "第一次用 MyData 為什麼要驗證兩次？",
+      "a": "平臺規定首次使用要經過二次身分驗證，而且第二次不能和第一次用同一種方式；之後每次使用只要單次驗證加線上同意。常見組合是「自然人憑證或行動自然人憑證」加「健保卡卡號＋戶口名簿戶號」。外籍人士可選的第二種方式較少，卡關時可撥 MyData 客服 0800-009-868。",
+      "source_url": "https://mydata.nat.gov.tw/faq",
+      "tags": [
+        "digital",
+        "MyData",
+        "二次驗證"
+      ],
+      "topic": "government-digital-access"
+    },
+    {
+      "q": "我的E政府（gov.tw）可以做什麼？",
+      "a": "它是政府服務的入口網站。首頁把服務分成「人生大事」（出生、就學、就業、就養、終老）和「日常生活」（婚姻與身分、交通與旅遊、居住與環境、理財與納稅），也可以直接搜尋服務名稱，例如育兒津貼、租屋補助，再連到主管機關的申辦頁。實際送件和審核仍在各主管機關的系統進行。",
+      "source_url": "https://www.gov.tw/",
+      "tags": [
+        "digital",
+        "我的E政府",
+        "入口網站"
+      ],
+      "topic": "government-digital-access"
+    },
+    {
+      "q": "線上申請補助的共通流程是什麼？",
+      "a": "多數補助是五個步驟：一、到主管機關的申請網站確認資格和受理期間；二、選一種身分驗證方式登入；三、填申請表並上傳或授權取得附件（戶籍、所得、財產、存摺封面等）；四、送出後記下案件編號；五、留意簡訊、信箱或紙本通知，有補件要求就在期限內補。各補助細節不同，以該補助的申請須知為準。",
+      "source_url": null,
+      "tags": [
+        "process",
+        "流程",
+        "線上申請"
+      ],
+      "topic": "government-digital-access"
+    },
+    {
+      "q": "送件後多久會有結果？怎麼查進度？",
+      "a": "各補助會在申請須知寫審查天數，查進度通常是回到原申請網站用身分證字號或案件編號查，或打承辦機關電話。法律上的底線在行政程序法第 51 條：機關要訂處理期間並公告；沒訂的，處理期間是 2 個月，來不及可以延長一次，並要在期滿前把延長原因通知你。超過期間沒消息，可以打電話問案件編號目前的狀態。",
+      "source_url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=A0030055&flno=51",
+      "tags": [
+        "process",
+        "進度查詢",
+        "審查期間"
+      ],
+      "topic": "government-digital-access"
+    },
+    {
+      "q": "收到補件通知，有幾天可以補？沒補會怎樣？",
+      "a": "沒有全國統一的天數，每項補助不同，以通知書或簡訊上寫的期限為準（各補助的天數本次未逐一驗證）。逾期沒補，常見結果是駁回，或只用現有資料審查。補得晚也會影響起算月份：以低收入戶生活扶助為例，社會救助法第 10 條規定核准後「溯自備齊文件之當月生效」，文件晚一個月備齊就少領一個月。",
+      "source_url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=D0050078&flno=10",
+      "tags": [
+        "process",
+        "補件",
+        "期限"
+      ],
+      "topic": "government-digital-access"
+    },
+    {
+      "q": "審查所得和財產，是看哪一年的資料？",
+      "a": "多數補助用財稅機關提供的最近一年度資料，也就是已完成申報核定的那一年，通常比申請當年早一到兩年；確切年度寫在各補助的申請須知。以低收入戶為例，社會救助法第 5 條之 1 規定工作收入先看當年度實際收入和薪資證明，提不出證明才用最近一年度財稅資料。所以今年剛失業或減薪，要主動附薪資單、離職證明。",
+      "source_url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=D0050078&flno=5-1",
+      "tags": [
+        "process",
+        "所得認定",
+        "財稅資料",
+        "財產"
+      ],
+      "topic": "government-digital-access"
+    },
+    {
+      "q": "戶籍地和實際住的地方不同，要向哪裡申請？",
+      "a": "先分清楚補助看的是戶籍還是居住事實。社會福利類多半看戶籍：例如社會救助法第 4 條和第 10 條規定，低收入戶向「戶籍所在地」的直轄市、縣市主管機關申請。縣市政府自己編預算的加碼補助也常要求設籍滿一定期間。租金補貼這類看租屋地點的補助規則不同，要看該補助的申請須知。",
+      "source_url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=D0050078&flno=10",
+      "tags": [
+        "process",
+        "戶籍地",
+        "居住地"
+      ],
+      "topic": "government-digital-access"
+    },
+    {
+      "q": "可以請家人或代辦業者幫我申請嗎？",
+      "a": "臨櫃送紙本的補助，多數可以由家人帶委託書和雙方證件代送，細節看各補助規定。但身分驗證工具本身要本人辦：自然人憑證首次申辦不能委託，行動自然人憑證要本人帶手機到戶所。不要把憑證卡、PIN 碼、健保卡註冊密碼交給代辦業者，對方拿到後可以用你的名義登入報稅、查財產、下載個人資料。",
+      "source_url": "https://slhr.gov.taipei/cp.aspx?n=FEA45C31BCBD735B",
+      "tags": [
+        "process",
+        "代辦",
+        "委託",
+        "個資"
+      ],
+      "topic": "government-digital-access"
+    },
+    {
+      "q": "收到「補助已核發，請點連結登記」的簡訊，怎麼分辨真假？",
+      "a": "看三個地方。一、網址：數位發展部說明，網址首段以 gov.tw 結尾才是政府網站，例如 https://moda.gov.tw；像 https://xxx/mvdis.gov.tw 這種把 gov.tw 放在後段的是偽冒。二、發送號碼：政府簡訊平臺用短碼 111 發送。三、簡訊開頭：數位發展部 114 年 6 月公布，111 簡訊會標示你的手機末三碼和發送機關名稱。三項有一項不符就不要點。",
+      "source_url": "https://moda.gov.tw/press/clarification/4791",
+      "tags": [
+        "process",
+        "詐騙",
+        "簡訊",
+        "gov.tw",
+        "111"
+      ],
+      "topic": "government-digital-access"
+    },
+    {
+      "q": "對方說可以代領補助，要我提供提款卡或網銀密碼，是真的嗎？",
+      "a": "不是。政府補助是匯進申請人自己填的帳戶，申請時只需要存摺封面或帳號，不需要提款卡、提款卡密碼、網銀帳密或簡訊驗證碼。要求先付手續費、保證金，或要你到 ATM 操作「解除設定」的，都不是政府流程。遇到這類情況先掛電話，改撥 165 反詐騙專線或直接打主管機關公開的電話查證。",
+      "source_url": "https://moda.gov.tw/press/press-releases/16458",
+      "tags": [
+        "process",
+        "詐騙",
+        "代辦",
+        "165"
+      ],
+      "topic": "government-digital-access"
     },
     {
       "q": "健保費繳不出來，第一步該做什麼？",
