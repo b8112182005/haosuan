@@ -352,10 +352,13 @@
     }
   },
   "indigenous-housing-subsidies": {
-    "_why": "租金加碼要無自有住宅、修繕補助要有自有住宅，兩種都在這一項，不能用無自有住宅當門檻",
+    "_why": "租金加碼要無自有住宅、修繕補助要有自有住宅，兩種都在這一項，不能用無自有住宅當門檻 2026-11-15 獨立稽核：amount.min 4,000 是台北市租屋補貼的月額，max 24 萬是建購住宅的一次性金額，標題顯示成「4,000～24 萬元」把兩種金額混在一起。拿掉 min，標題只講建購住宅最高 24 萬元，其餘看金額說明。",
     "conditions": {
       "no_home_ownership": null,
       "special_identity": "原住民"
+    },
+    "amount": {
+      "min": null
     }
   },
   "indigenous-college-scholarship": {
