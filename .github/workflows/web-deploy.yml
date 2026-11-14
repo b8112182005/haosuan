@@ -30,5 +30,7 @@ jobs:
       - name: Unit tests
         run: npm test
 
+      # next/font 在 build 時向 Google Fonts 下載 Noto Sans TC，偶爾會連不上，整個 build 就以 module-not-found 失敗
+      # （2026-11-14 的 run 43645099267 發生過，和程式碼無關）。失敗時等 10 秒重試一次。
       - name: Build (web mode)
-        run: npm run build
+        run: npm run build || (echo "第一次 build 失敗，10 秒後重試一次" && sleep 10 && npm run build)

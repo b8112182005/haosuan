@@ -74,8 +74,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # 和 Web Deploy Check 一樣：build 時要向 Google Fonts 下載字型，連不上就失敗，重試一次
       - name: Build Next.js static export (app target)
-        run: npm run build:app
+        run: npm run build:app || (echo "第一次 build 失敗，10 秒後重試一次" && sleep 10 && npm run build:app)
 
       # 返回鍵、通知排程、通知點擊只在 WebView 有原生橋接時才會執行，一般測試跑不到。
       # 出包前用模擬的原生端對靜態輸出跑一次；沒過就不出 AAB。
