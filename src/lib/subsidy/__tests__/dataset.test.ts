@@ -121,6 +121,33 @@ describe("期限顯示（以 2026-11-15 為今天）", () => {
     }
   });
 
+  it("就學貸款有上、下學期兩段：11 月看到的是 1/15 開始的下學期", () => {
+    const st = state("student-loan-2026");
+    expect(st.kind).toBe("upcoming");
+    if (st.kind === "upcoming") {
+      expect(st.open).toBe(false);
+      expect(st.start).toEqual({ y: 2027, m: 1, d: 15 });
+      expect(st.date).toEqual({ y: 2027, m: 2, d: 28 });
+    }
+  });
+
+  it("只辦 115 年度的方案過了截止日顯示已截止，不會滾到 2027 年", () => {
+    const afterNewYear = { y: 2027, m: 1, d: 5 };
+    for (const id of [
+      "home-appliance-replacement-subsidy",
+      "electric-scooter-purchase-subsidy-moea",
+      "old-vehicle-replacement-moenv",
+      "taipei-electric-scooter-subsidy-2026",
+      "taoyuan-electric-scooter-subsidy-2026",
+      "taichung-low-carbon-vehicle-subsidy-2026",
+      "tainan-electric-two-wheeler-subsidy-2026",
+      "new-taipei-electric-scooter-subsidy-2026",
+    ]) {
+      expect(resolveDeadline(byId(id).deadline, afterNewYear).kind, id).toBe("ended");
+      expect(state(id).kind, `${id} 今天應該還在期間內`).toBe("upcoming");
+    }
+  });
+
   it("各縣市、各校自訂期限的項目不顯示倒數", () => {
     for (const id of [
       "old-house-renewal-repair-subsidy",
@@ -130,6 +157,10 @@ describe("期限顯示（以 2026-11-15 為今天）", () => {
       "elderly-denture-subsidy",
       "home-purchase-loan-interest-subsidy",
       "home-repair-loan-interest-subsidy",
+      "central-social-housing-rental",
+      "indigenous-college-scholarship",
+      "regional-revitalization-youth-station-2026",
+      "minimum-wage-2026",
     ]) {
       expect(state(id), id).toEqual({ kind: "none", label: "依公告為準" });
     }
@@ -234,6 +265,46 @@ describe("旗艦項目不能被誤判成不符合", () => {
   it("56 歲有舊制年資的人：勞保老年給付不會被藏起來", () => {
     notHidden("labor-insurance-old-age-pension-age", { ...renter, age: 56 });
     expect(evaluate(byId("labor-insurance-old-age-pension-age"), { ...renter, age: 45 }).verdict).toBe("not_eligible");
+  });
+
+  it("條文有例外的人不會被藏起來（2026-11-15 獨立稽核找到的項目）", () => {
+    // 離職退保後 1 年內生產
+    const newMom: Profile = { ...jobless, age: 30, isPregnantOrNewborn: true, hasLaborInsurance: false, hasNationalPension: false };
+    notHidden("labor-insurance-maternity-benefit", newMom);
+    notHidden("national-pension-maternity-benefit", newMom);
+    // 房東：名下有房、不是租屋
+    const landlord: Profile = { ...base, city: "台北市", age: 50, monthlyIncome: 80_000, isRenting: false, ownsHome: true };
+    notHidden("social-housing-sublet-management", landlord);
+    notHidden("rental-dispute-complaint-channels", landlord);
+    // 只有土地、名下沒有房子
+    notHidden("land-value-tax-november", { ...landlord, ownsHome: false });
+    // 名下有房但在外地租屋、或 2 年內剛買房
+    const ownerRenter: Profile = { ...renter, ownsHome: true };
+    notHidden("income-tax-rent-deduction", ownerRenter);
+    notHidden("home-purchase-loan-interest-subsidy", ownerRenter);
+    notHidden("central-social-housing-rental", ownerRenter);
+    notHidden("rent-subsidy-central-300b", ownerRenter);
+    // 62 歲已退休
+    const retired: Profile = { ...base, city: "台中市", age: 62, monthlyIncome: 0, isRenting: false, ownsHome: true, isUnemployed: true, hasLaborInsurance: false };
+    notHidden("labor-pension-voluntary-contribution", retired);
+    // 沒被雇主加保的勞工
+    notHidden("occupational-accident-and-wage-arrears", { ...renter, hasLaborInsurance: false });
+    // 一般戶但領有身障生活補助
+    notHidden("vulnerable-extra-living-allowance-2026", { ...renter, isDisabled: true, lowIncome: "none" });
+    // 找到工作、正要申請獎勵金的青年
+    notHidden("youth-stable-employment-bonus", { ...renter, age: 24, isUnemployed: false });
+    // 考到證照、沒有在學的新住民
+    notHidden("new-immigrant-scholarship", { ...renter, isStudent: false });
+    // 家長替 12 歲、今年年底才滿 13 歲的孩子查文化幣
+    notHidden("culture-coin-youth-2026", { ...parent, childrenAges: [12] });
+  });
+
+  it("桃園市原住民族租金補貼還在辦：桃園租屋族看得到，並標明限原住民", () => {
+    const s = byId("rent-subsidy-taoyuan-topup");
+    expect(s.status_2026).toBe("active");
+    const r = evaluate(s, { ...renter, city: "桃園市" });
+    expect(r.verdict).toBe("maybe");
+    expect(r.unknown.join(" ")).toContain("原住民");
   });
 
   it("地方項目照樣依縣市排除", () => {

@@ -42,6 +42,25 @@ export interface SubsidyAmount {
 
 export type LowIncomeStatus = "low" | "mid_low" | "either";
 
+/** conditions.exceptions 可以用的鍵：對應資格引擎的每一種硬條件 */
+export type ConditionExceptionKey =
+  | "age"
+  | "must_rent"
+  | "no_home_ownership"
+  | "must_own_home"
+  | "children"
+  | "is_pregnant_or_newborn"
+  | "is_married"
+  | "has_labor_insurance"
+  | "has_national_pension"
+  | "is_disabled"
+  | "low_income"
+  | "is_student"
+  | "is_unemployed"
+  | "is_employed"
+  | "income"
+  | "vehicle";
+
 export interface SubsidyConditions {
   min_age?: number | null;
   max_age?: number | null;
@@ -73,6 +92,12 @@ export interface SubsidyConditions {
    * 精靈沒有問這些身分，年齡落在兩個門檻之間的人歸「可能符合」，不直接判成不符合。
    */
   lower_age_for?: { age: number; who: string } | null;
+  /**
+   * 硬條件的例外：{ 條件: "例外的白話說明" }。使用者不符合那個條件時不直接判「不符合」，
+   * 改列「可能符合」並顯示例外。例：{ "has_labor_insurance": "退保後 1 年內生產也可以領" }。
+   * 只在條文明寫例外時用；例外其實是另一類主要對象時，應該把那個條件整個拿掉。
+   */
+  exceptions?: Partial<Record<ConditionExceptionKey, string>> | null;
   other?: string | null;
 }
 
@@ -95,6 +120,11 @@ export interface SubsidyDeadline {
    */
   start_year?: number | null;
   end_year?: number | null;
+  /**
+   * 一年有兩段以上申請期間時（就學貸款上、下學期），第二段以後放這裡，月日一樣沒有年份。
+   * app 取「現在開放中的那一段」，都沒開放就取最近要開始的那一段。
+   */
+  extra_windows?: Array<{ start_month: number; start_day: number; end_month: number; end_day: number }> | null;
   note: string;
 }
 

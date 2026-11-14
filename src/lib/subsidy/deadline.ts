@@ -72,6 +72,19 @@ export function resolveDeadline(deadline: SubsidyDeadline, today: LocalDate): De
     return { kind: "none", label: "全年受理" };
   }
 
+  // 沒有年份的期間：算「今年或明年的那一段」
+  const yearless = (sm: number | null, sd: number | null, endMonth: number, endDay: number) => {
+    let e = clampDay(today.y, endMonth, endDay);
+    if (toUtcMs(e) < toUtcMs(today)) e = clampDay(today.y + 1, endMonth, endDay);
+    let st: LocalDate | null = null;
+    if (sm) {
+      // 開放期間若跨年（例如 12/1 ～ 1/31），start 要用截止日那一年或前一年
+      st = clampDay(e.y, sm, sd ?? 1);
+      if (toUtcMs(st) > toUtcMs(e)) st = clampDay(e.y - 1, sm, sd ?? 1);
+    }
+    return { start: st, end: e };
+  };
+
   let end: LocalDate;
   let start: LocalDate | null = null;
   if (deadline.end_year) {
@@ -82,14 +95,18 @@ export function resolveDeadline(deadline: SubsidyDeadline, today: LocalDate): De
       start = clampDay(deadline.start_year, deadline.start_month, deadline.start_day ?? 1);
     }
   } else {
-    end = clampDay(today.y, em, ed);
-    if (toUtcMs(end) < toUtcMs(today)) end = clampDay(today.y + 1, em, ed);
-    if (deadline.start_month) {
-      const sd = deadline.start_day ?? 1;
-      // 開放期間若跨年（例如 12/1 ～ 1/31），start 要用截止日那一年或前一年
-      start = clampDay(end.y, deadline.start_month, sd);
-      if (toUtcMs(start) > toUtcMs(end)) start = clampDay(end.y - 1, deadline.start_month, sd);
-    }
+    // 一年有好幾段期間時：開放中的優先（取最快截止的那一段）；都沒開放就取最快開始的那一段
+    const windows = [
+      yearless(deadline.start_month, deadline.start_day, em, ed),
+      ...(deadline.extra_windows ?? []).map((w) => yearless(w.start_month, w.start_day, w.end_month, w.end_day)),
+    ];
+    const rank = (w: { start: LocalDate | null; end: LocalDate }) => {
+      const isOpen = w.start ? toUtcMs(today) >= toUtcMs(w.start) : true;
+      return isOpen ? diffDays(today, w.end) : 100_000 + diffDays(today, w.start as LocalDate);
+    };
+    const best = windows.reduce((a, w) => (rank(w) < rank(a) ? w : a));
+    end = best.end;
+    start = best.start;
   }
 
   const daysLeft = diffDays(today, end);
@@ -142,8 +159,11 @@ export function describeWindow(deadline: SubsidyDeadline): string {
   const end = deadline.end_month ? `${endYear}${deadline.end_month}/${deadline.end_day ?? "月底"}` : null;
   const start = deadline.start_month ? `${startYear}${deadline.start_month}/${deadline.start_day ?? 1}` : null;
   switch (deadline.type) {
-    case "fixed_annual":
-      return start && end ? `每年 ${start} ～ ${end}` : end ? `每年 ${end} 截止` : "每年固定期間";
+    case "fixed_annual": {
+      const extra = (deadline.extra_windows ?? []).map((w) => `${w.start_month}/${w.start_day} ～ ${w.end_month}/${w.end_day}`);
+      if (start && end) return `每年 ${[`${start} ～ ${end}`, ...extra].join("、")}`;
+      return end ? `每年 ${end} 截止` : "每年固定期間";
+    }
     case "window":
       // 只有結束年份、沒有開始年份的多年期方案（免稅到 2030 年）：開始的月日沒有意義，只講到哪一天
       if (deadline.end_year && !deadline.start_year) return end ? `到 ${end} 為止` : "限期受理";

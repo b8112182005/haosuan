@@ -1,11 +1,15 @@
 {
   "rent-subsidy-central-300b": {
-    "_why": "子女與低收身分是加碼條件，不是申請門檻；單身租屋族可申請",
+    "_why": "子女與低收身分是加碼條件，不是申請門檻；單身租屋族可申請 2026-11-15 獨立稽核：條文列出小面積共有房屋與未成年人兩種例外，原本會被判成不符合。改成例外。",
     "conditions": {
       "child_age_max": null,
       "child_age_min": null,
       "has_children": null,
-      "low_income": null
+      "low_income": null,
+      "exceptions": {
+        "no_home_ownership": "持有未滿 40 平方公尺、其他共有人不是家庭成員的共有房屋，視為沒有自有房屋",
+        "age": "安置結束無法返家，或由外籍、陸港澳人士監護的未成年人可以申請"
+      }
     }
   },
   "public-welfare-landlord-tax-benefits": {
@@ -15,22 +19,36 @@
     }
   },
   "social-housing-sublet-management": {
-    "_why": "一般戶也能承租（弱勢戶折扣較多）；目前沒租屋的人也能申請",
+    "_why": "一般戶也能承租（弱勢戶折扣較多）；目前沒租屋的人也能申請 2026-11-15 獨立稽核：房東是這個方案的主要對象之一，no_home_ownership=true 會把所有房東判成不符合。拿掉，房客的限制留在文字。",
     "conditions": {
       "low_income": null,
-      "must_rent": null
+      "must_rent": null,
+      "no_home_ownership": null
     }
   },
   "central-social-housing-rental": {
-    "_why": "一般戶可申請，低收／中低收是優先戶不是門檻",
+    "_why": "一般戶可申請，低收／中低收是優先戶不是門檻 2026-11-15 獨立稽核：社宅只查各案指定範圍內有無自有住宅；每季招租一次、每案受理約 1 個月，原本的 rolling 會顯示成隨到隨辦。條件改成例外，期限改成依公告為準。",
     "conditions": {
-      "low_income": null
+      "low_income": null,
+      "exceptions": {
+        "no_home_ownership": "只看該社宅指定範圍內有沒有自有住宅，範圍外的房子不影響"
+      }
+    },
+    "deadline": {
+      "type": "varies",
+      "start_month": null,
+      "start_day": null,
+      "end_month": null,
+      "end_day": null
     }
   },
   "home-purchase-loan-interest-subsidy": {
-    "_why": "看家庭年所得標準，不要求列冊低收／中低收 期限說明寫每年日期不固定（113 年度 8/1～8/30、115 年度 9/1～9/30），116 年度未公告。拿 9/30 當明年的截止日，如果改回 8 月就會錯過。改成依公告為準。",
+    "_why": "看家庭年所得標準，不要求列冊低收／中低收 期限說明寫每年日期不固定（113 年度 8/1～8/30、115 年度 9/1～9/30），116 年度未公告。拿 9/30 當明年的截止日，如果改回 8 月就會錯過。改成依公告為準。 2026-11-15 獨立稽核：條文寫申請日前 2 年內購屋並已辦貸款的人也能申請，no_home_ownership=true 會把他們判成不符合。改成例外。",
     "conditions": {
-      "low_income": null
+      "low_income": null,
+      "exceptions": {
+        "no_home_ownership": "名下只有 1 戶，而且是申請日前 2 年內買的並已辦貸款，也可以申請"
+      }
     },
     "deadline": {
       "type": "varies",
@@ -41,9 +59,12 @@
     }
   },
   "home-repair-loan-interest-subsidy": {
-    "_why": "看家庭年所得標準，不要求列冊低收／中低收 和自購住宅貸款利息補貼同一個受理期間，每年日期不固定（113 年度 8 月、115 年度 9 月）。改成依公告為準。",
+    "_why": "看家庭年所得標準，不要求列冊低收／中低收 和自購住宅貸款利息補貼同一個受理期間，每年日期不固定（113 年度 8 月、115 年度 9 月）。改成依公告為準。 2026-11-15 獨立稽核：問答寫房子在同戶籍直系親屬名下也能申請，must_own_home=true 會把自己名下沒房的人判成不符合。改成例外。",
     "conditions": {
-      "low_income": null
+      "low_income": null,
+      "exceptions": {
+        "must_own_home": "房子登記在配偶或同戶籍直系親屬名下，也可以由你申請"
+      }
     },
     "deadline": {
       "type": "varies",
@@ -67,11 +88,15 @@
     }
   },
   "rent-subsidy-new-taipei-youth": {
-    "_why": "單身、新婚、育有未成年子女三者擇一，子女不是門檻",
+    "_why": "單身、新婚、育有未成年子女三者擇一，子女不是門檻 2026-11-15 獨立稽核：期限說明寫 116 年度已自 115 年 10 月起受理到 116 年 12 月 31 日。沒填年份的話，過了今年底 app 會顯示成明年 10 月才開始。補上年份，以 116 年度的截止日為準。",
     "conditions": {
       "child_age_max": null,
       "child_age_min": null,
       "has_children": null
+    },
+    "deadline": {
+      "start_year": 2025,
+      "end_year": 2027
     }
   },
   "preschool-fee-cap-2-6": {
@@ -81,9 +106,13 @@
     }
   },
   "toddler-care-subsidy-0-2": {
-    "_why": "一般家庭即可領；低收／中低收是加碼金額",
+    "_why": "一般家庭即可領；低收／中低收是加碼金額 2026-11-15 獨立稽核：金額欄寫公共化的低收及弱勢是 9,000 元，摘要與算式卻寫低收再加 4,000 元，算起來是 11,000 元。對照新北市社會局公告：公共托育中心一般 7,000、中低收 9,000、低收及弱勢 9,000，最高補助上限 9,000 元。金額欄是對的，改摘要與算式。",
     "conditions": {
       "low_income": null
+    },
+    "summary": "孩子送到公設民營托嬰中心、社區公共托育家園（公共化）每月補助7,000元起；送到與政府簽約的準公共托嬰中心或準公共保母每月13,000元起。第2名子女加1,000元、第3名以上加2,000元。準公共依身分再加：中低收入戶2,000元、低收入戶及弱勢家庭4,000元（最高19,000元）；公共化的中低收、低收及弱勢家庭是9,000元，含胎次加發最高也是9,000元。每週送托30小時以上，送托後15日內向保母所屬居家托育服務中心或托嬰中心申請。滿2歲續托準公共保母或托嬰中心可延長補助到未滿3歲。不排富，不能與育兒津貼同領。",
+    "amount": {
+      "formula": "準公共：13,000＋胎次加發（第2名1,000／第3名以上2,000）＋身分加發（中低收2,000／低收及弱勢4,000）。公共化：一般7,000，中低收、低收及弱勢9,000，含胎次加發最高9,000（新北市公告）"
     }
   },
   "childcare-allowance-0-2": {
@@ -93,9 +122,12 @@
     }
   },
   "labor-insurance-maternity-benefit": {
-    "_why": "保險有效期間懷孕、退保後 1 年內分娩也能請領，不限在職",
+    "_why": "保險有效期間懷孕、退保後 1 年內分娩也能請領，不限在職 2026-11-15 獨立稽核：離職退保後 1 年內生產的人條文可領，has_labor_insurance=true 會把他們判成不符合。改成例外。",
     "conditions": {
-      "is_employed": null
+      "is_employed": null,
+      "exceptions": {
+        "has_labor_insurance": "在勞保加保期間懷孕、退保後 1 年內生產的人也可以領"
+      }
     }
   },
   "income-tax-longterm-care-deduction": {
@@ -115,9 +147,13 @@
     }
   },
   "unemployment-benefit": {
-    "_why": "失業者已退保，問「現在有沒有勞保」會把他們排除；條件是離職前有就業保險年資",
+    "_why": "失業者已退保，問「現在有沒有勞保」會把他們排除；條件是離職前有就業保險年資 2026-11-15 獨立稽核：問答寫領取期間打工、月收入未超過基本工資仍可領。改成例外。",
     "conditions": {
-      "has_labor_insurance": null
+      "has_labor_insurance": null,
+      "is_employed": null,
+      "exceptions": {
+        "is_unemployed": "領取期間有打工，月收入沒超過基本工資仍可以領，再認定時要主動申報"
+      }
     }
   },
   "vocational-training-living-allowance": {
@@ -140,9 +176,10 @@
     }
   },
   "occupational-accident-and-wage-arrears": {
-    "_why": "工資墊償發生在雇主歇業後，勞工當下是失業狀態",
+    "_why": "工資墊償發生在雇主歇業後，勞工當下是失業狀態 2026-11-15 獨立稽核：問答寫雇主沒申報加保仍可請領，工資墊償也不看勞保，has_labor_insurance=true 會把沒被加保的勞工判成不符合。拿掉。",
     "conditions": {
-      "is_employed": null
+      "is_employed": null,
+      "has_labor_insurance": null
     }
   },
   "disadvantaged-college-student-grant-2026": {
@@ -225,54 +262,88 @@
     }
   },
   "low-income-household-thresholds-2026": {
-    "_why": "這頁是教人怎麼申請低收／中低收資格，還不是低收的人最需要看",
+    "_why": "這頁是教人怎麼申請低收／中低收資格，還不是低收的人最需要看 2026-11-15 獨立稽核：期限說明把 116 年門檻的公告時間寫成 114 年底至 115 年底，年份不對。改成不寫時間。",
     "conditions": {
       "low_income": null,
       "owns_vehicle": null
+    },
+    "deadline": {
+      "note": "全年隨到隨辦（高雄市大寮區公所流程表寫明「隨到隨辦」）。資格核准後溯自備齊文件當月生效。各縣市每年年底辦理次年度總清查，116年門檻由衛福部另行公告。"
     }
   },
   "taichung-low-carbon-vehicle-subsidy-2026": {
-    "_why": "育兒與低收是加碼金額，不是門檻",
+    "_why": "育兒與低收是加碼金額，不是門檻 2026-11-15 獨立稽核：這是 115 年度（2026 年）的方案，116 年是否續辦未公告。沒填年份的話，過了今年的截止日 app 會把它滾到 2027 年同一天，顯示還有一年。補上 end_year。購買、報廢、領牌要在 12 月 31 日前完成；送件期限較晚的寫在期限說明。",
     "conditions": {
       "child_age_min": null,
       "child_age_max": null,
       "low_income": null
+    },
+    "deadline": {
+      "end_year": 2026,
+      "start_year": 2026
     }
   },
   "taipei-electric-scooter-subsidy-2026": {
-    "_why": "育兒與低收是加碼金額，不是門檻",
+    "_why": "育兒與低收是加碼金額，不是門檻 2026-11-15 獨立稽核：這是 115 年度（2026 年）的方案，116 年是否續辦未公告。沒填年份的話，過了今年的截止日 app 會把它滾到 2027 年同一天，顯示還有一年。補上 end_year。購買、報廢、領牌要在 12 月 31 日前完成；送件期限較晚的寫在期限說明。",
     "conditions": {
       "child_age_min": null,
       "child_age_max": null,
       "low_income": null
+    },
+    "deadline": {
+      "end_year": 2026,
+      "start_year": 2026
     }
   },
   "tainan-electric-two-wheeler-subsidy-2026": {
-    "_why": "低收是加碼金額，不是門檻",
+    "_why": "低收是加碼金額，不是門檻 2026-11-15 獨立稽核：這是 115 年度（2026 年）的方案，116 年是否續辦未公告。沒填年份的話，過了今年的截止日 app 會把它滾到 2027 年同一天，顯示還有一年。補上 end_year。購買、報廢、領牌要在 12 月 31 日前完成；送件期限較晚的寫在期限說明。",
     "conditions": {
       "low_income": null
+    },
+    "deadline": {
+      "end_year": 2026,
+      "start_year": 2026
     }
   },
   "taoyuan-electric-scooter-subsidy-2026": {
-    "_why": "育兒與低收是加碼金額，不是門檻",
+    "_why": "育兒與低收是加碼金額，不是門檻 2026-11-15 獨立稽核：這是 115 年度（2026 年）的方案，116 年是否續辦未公告。沒填年份的話，過了今年的截止日 app 會把它滾到 2027 年同一天，顯示還有一年。補上 end_year。購買、報廢、領牌要在 12 月 31 日前完成；送件期限較晚的寫在期限說明。",
     "conditions": {
       "child_age_min": null,
       "child_age_max": null,
       "low_income": null
+    },
+    "deadline": {
+      "end_year": 2026,
+      "start_year": 2026
     }
   },
   "kaohsiung-electric-scooter-subsidy-2026": {
-    "_why": "育兒是加碼金額，不是門檻",
+    "_why": "育兒是加碼金額，不是門檻 2026-11-15 獨立稽核：環保局 2026-08-11 公告補助金額已用罄，status_2026 已是 ended，期限欄還寫 12 月 31 日。改成已結束。",
     "conditions": {
       "child_age_min": null,
       "child_age_max": null
+    },
+    "deadline": {
+      "type": "ended",
+      "start_month": null,
+      "start_day": null,
+      "end_month": null,
+      "end_day": null
     }
   },
   "new-taipei-electric-scooter-subsidy-2026": {
-    "_why": "低收是加碼金額，不是門檻",
+    "_why": "低收是加碼金額，不是門檻 2026-11-15 獨立稽核：這是 115 年度（2026 年）的方案，116 年是否續辦未公告。沒填年份的話，過了今年的截止日 app 會把它滾到 2027 年同一天，顯示還有一年。補上 end_year。購買、報廢、領牌要在 12 月 31 日前完成；送件期限較晚的寫在期限說明。 2026-11-15 獨立稽核：摘要的最高 39,600 元和算式列的各項加總（39,300 元）對不上，沒查到新北市環保局的金額表，列入未驗證。",
     "conditions": {
       "low_income": null
-    }
+    },
+    "deadline": {
+      "end_year": 2026,
+      "start_year": 2026
+    },
+    "unverified_fields": [
+      "環保局新聞稿原頁（epd.ntpc.gov.tw）本次回應 503，39,600 元與早鳥／雙汰舊名額數字來自搜尋摘要與電動機車產業網轉載",
+      "雙汰舊方案最高 39,600 元的組成：照文字列的各項加總是 39,300 元"
+    ]
   },
   "elderly-farmer-allowance": {
     "_why": "農民身分精靈沒有問，標成特殊身分讓它落在「可能符合」",
@@ -288,16 +359,24 @@
     }
   },
   "indigenous-college-scholarship": {
-    "_why": "原住民身分精靈沒有問",
+    "_why": "原住民身分精靈沒有問 2026-11-15 獨立稽核：每學期都要申請，只填了第 1 學期的 9/14～10/14，第 2 學期日期沒查到。原本會在 11 月顯示成明年 9 月才開始。改成依公告為準，日期留在說明。",
     "conditions": {
       "special_identity": "原住民大專學生"
+    },
+    "deadline": {
+      "type": "varies",
+      "start_month": null,
+      "start_day": null,
+      "end_month": null,
+      "end_day": null
     }
   },
   "new-immigrant-scholarship": {
-    "_why": "清寒只是其中一類獎助，不是全部都要低收／中低收",
+    "_why": "清寒只是其中一類獎助，不是全部都要低收／中低收 2026-11-15 獨立稽核：證照獎勵金明寫不需要在學，is_student=true 會把考到證照的新住民本人判成不符合。拿掉。",
     "conditions": {
       "low_income": null,
-      "special_identity": "新住民或新住民子女"
+      "special_identity": "新住民或新住民子女",
+      "is_student": null
     }
   },
   "special-circumstances-family-assistance": {
@@ -331,13 +410,17 @@
     }
   },
   "ev-license-tax-exemption": {
-    "_why": "只有純電動車免徵，一般汽機車車主不適用 期限說明寫免徵到 2030 年 12 月 31 日，但月日沒有年份，app 會算成今年底截止（剩 46 天）。補上 end_year。",
+    "_why": "只有純電動車免徵，一般汽機車車主不適用 期限說明寫免徵到 2030 年 12 月 31 日，但月日沒有年份，app 會算成今年底截止（剩 46 天）。補上 end_year。 2026-11-15 獨立稽核：同一筆裡免徵上限對應的排氣量級距兩處寫法不同，沒對照使用牌照稅法稅額表，列入未驗證。",
     "conditions": {
       "special_identity": "車輛為純電動（油電混合不適用）"
     },
     "deadline": {
       "end_year": 2030
-    }
+    },
+    "unverified_fields": [
+      "各級距年稅額（7,120／11,230／28,220 元）為使用牌照稅法稅額表常見數字，本次未另行開啟稅額表頁面核對",
+      "免徵上限 11,230 元對應的排氣量級距：摘要寫相當於 2,400cc，算式寫 2,401～3,000cc"
+    ]
   },
   "taipei-elementary-new-student-registration-115": {
     "_why": "5 月報到時，9 月 1 日前才滿 6 歲的孩子還是 5 歲",
@@ -466,10 +549,15 @@
     }
   },
   "vulnerable-extra-living-allowance-2026": {
-    "_why": "發放期間是 115 年 1 月到 116 年 1 月底共 13 個月；沒有年份時 app 顯示成「1 月 31 日截止，尚未開放」。補上年份。",
+    "_why": "發放期間是 115 年 1 月到 116 年 1 月底共 13 個月；沒有年份時 app 顯示成「1 月 31 日截止，尚未開放」。補上年份。 2026-11-15 獨立稽核：每月 500 元那一類是領有指定津貼的人，不一定列冊低收或中低收，low_income 會把他們判成不符合。改成例外。",
     "deadline": {
       "start_year": 2026,
       "end_year": 2027
+    },
+    "conditions": {
+      "exceptions": {
+        "low_income": "領有身心障礙者生活補助、中低收入老人生活津貼、弱勢兒少生活扶助或特殊境遇家庭津貼的人也在加發對象內"
+      }
     }
   },
   "old-house-renewal-repair-subsidy": {
@@ -513,5 +601,259 @@
     "deadline": {
       "end_year": 2029
     }
+  },
+  "national-pension-maternity-benefit": {
+    "_why": "2026-11-15 獨立稽核：條文寫退保後 1 年內生產也可領，但 has_national_pension=true 會把已退保的人判成不符合。改成例外。has_labor_insurance=false 引擎不會用到，拿掉。",
+    "conditions": {
+      "has_labor_insurance": null,
+      "exceptions": {
+        "has_national_pension": "在國保加保期間懷孕、退保後 1 年內生產的人也可以領"
+      }
+    }
+  },
+  "rental-dispute-complaint-channels": {
+    "_why": "2026-11-15 獨立稽核：條文寫房東也能申請調處，must_rent=true 會把房東判成不符合。改成例外。",
+    "conditions": {
+      "exceptions": {
+        "must_rent": "房東也可以向縣市政府申請租賃爭議調處"
+      }
+    }
+  },
+  "income-tax-rent-deduction": {
+    "_why": "2026-11-15 獨立稽核：問答列出名下有房仍可扣的情形，no_home_ownership=true 會把這些人判成不符合。改成例外。",
+    "conditions": {
+      "exceptions": {
+        "no_home_ownership": "因就業、就學、就醫在外地租屋，而且全戶只有 1 間自住的房子，仍然可以扣"
+      }
+    }
+  },
+  "land-value-tax-november": {
+    "_why": "2026-11-15 獨立稽核：納稅人是土地所有權人，must_own_home=true 會把只有土地的人判成不符合，改成例外。常見卡關寫繳款書 11 月初寄出，和申請步驟寫的 10 月下旬（115 年自 10 月 19 日起）不一致，統一成後者。",
+    "conditions": {
+      "exceptions": {
+        "must_own_home": "只有土地、沒有房屋的人一樣要繳地價稅"
+      }
+    },
+    "pitfalls": [
+      "自用住宅2‰要在9月22日前申請，逾期申請隔年才適用，當年只能繳一般稅率，差距至少4倍。",
+      "戶籍遷出（例如小孩搬走、父母過世後除籍）會讓自用住宅資格消失，稅捐機關查到會改課一般用地稅率，要主動確認戶籍狀況。",
+      "本人、配偶、未成年子女全國只能1處自用住宅用地，第2間房即使自住也只能按一般用地課。",
+      "繳款書10月下旬起陸續寄出，掛號寄存郵局即視為送達，沒領也算期限起算。",
+      "約定轉帳在12月1日扣款，11月30日帳戶餘額不足就視同未繳。"
+    ]
+  },
+  "six-welfare-allowances-increase-2026": {
+    "_why": "2026-11-15 獨立稽核：調增對象含領有指定津貼的人，low_income 會把一般戶的領取者判成不符合，改成例外。問答與算式對調增基數的寫法不一致，查不到官方算式，列入未驗證。",
+    "conditions": {
+      "exceptions": {
+        "low_income": "領有身心障礙者生活補助、中低收入老人生活津貼、弱勢兒少生活扶助等指定津貼的人也在調增對象內"
+      }
+    },
+    "unverified_fields": [
+      "是否已於115年7月或其後實施",
+      "追加預算是否完成法定程序",
+      "實施後是否追溯補發",
+      "每2年檢討機制的法制化進度",
+      "調增後金額的算法：原金額乘 1.235 是否已含 115 年加發的 1,000／750／500 元，問答與算式兩處寫法不同"
+    ]
+  },
+  "youth-stable-employment-bonus": {
+    "_why": "2026-11-15 獨立稽核：獎勵金要在就業滿 90 日後申請，is_unemployed=true 會把已經找到工作、正要申請的人判成不符合。改成例外。",
+    "conditions": {
+      "is_employed": null,
+      "exceptions": {
+        "is_unemployed": "找到正職並做滿 90 日之後才申請獎勵金，申請當下是在職"
+      }
+    }
+  },
+  "rent-subsidy-kaohsiung-childcare": {
+    "_why": "2026-11-15 獨立稽核：條文寫已成年或未成年已結婚，min_age=18 會把未成年已婚者判成不符合。改成例外。",
+    "conditions": {
+      "exceptions": {
+        "age": "未成年已結婚的人也可以申請"
+      }
+    }
+  },
+  "labor-pension-voluntary-contribution": {
+    "_why": "2026-11-15 獨立稽核：這一筆同時講自提與 60 歲請領，請領的人多半已離職，is_employed=true 會把他們判成不符合。拿掉。",
+    "conditions": {
+      "is_employed": null
+    }
+  },
+  "culture-coin-youth-2026": {
+    "_why": "2026-11-15 獨立稽核：資格以出生年認定（民國 93 到 102 年出生），102 年 11、12 月出生的人今天實足 12 歲但可以領，min_age=13 會判成不符合。改成 12，出生年的規則本來就寫在 other。",
+    "conditions": {
+      "min_age": 12
+    }
+  },
+  "rent-subsidy-taoyuan-topup": {
+    "_why": "2026-11-15 獨立稽核：文字寫桃園市原住民族租金補貼 115 年度自 4 月 1 日起隨到隨辦，但 status_2026 是 ended，整筆被藏起來。改成 active、名稱改成實際還在辦的那一項，並用 special_identity 標明限原住民。一般戶沒有市府加碼這件事留在摘要。",
+    "name": "桃園市原住民族租金補貼（一般戶沒有市府加碼）",
+    "short_name": "桃園原民租金補貼",
+    "status_2026": "active",
+    "amount": {
+      "min": null
+    },
+    "conditions": {
+      "special_identity": "設籍桃園市的原住民"
+    }
+  },
+  "home-appliance-replacement-subsidy": {
+    "_why": "2026-11-15 獨立稽核：這是 115 年度（2026 年）的方案，116 年是否續辦未公告。沒填年份的話，過了今年的截止日 app 會把它滾到 2027 年同一天，顯示還有一年。補上 end_year。購買、報廢、領牌要在 12 月 31 日前完成；送件期限較晚的寫在期限說明。",
+    "deadline": {
+      "end_year": 2026,
+      "start_year": 2026
+    }
+  },
+  "electric-scooter-purchase-subsidy-moea": {
+    "_why": "2026-11-15 獨立稽核：這是 115 年度（2026 年）的方案，116 年是否續辦未公告。沒填年份的話，過了今年的截止日 app 會把它滾到 2027 年同一天，顯示還有一年。補上 end_year。購買、報廢、領牌要在 12 月 31 日前完成；送件期限較晚的寫在期限說明。",
+    "deadline": {
+      "end_year": 2026,
+      "start_year": 2026
+    }
+  },
+  "old-vehicle-replacement-moenv": {
+    "_why": "2026-11-15 獨立稽核：這是 115 年度（2026 年）的方案，116 年是否續辦未公告。沒填年份的話，過了今年的截止日 app 會把它滾到 2027 年同一天，顯示還有一年。補上 end_year。購買、報廢、領牌要在 12 月 31 日前完成；送件期限較晚的寫在期限說明。",
+    "deadline": {
+      "end_year": 2026,
+      "start_year": 2026
+    }
+  },
+  "regional-revitalization-youth-station-2026": {
+    "_why": "2026-11-15 獨立稽核：115 年度徵件已截止，但期限說明寫近年都在前一年 11～12 月徵件、116 年度預計 115 年底公告。原本的 ended 會顯示已結束。改成依公告為準。",
+    "deadline": {
+      "type": "varies",
+      "start_month": null,
+      "start_day": null,
+      "end_month": null,
+      "end_day": null
+    }
+  },
+  "minimum-wage-2026": {
+    "_why": "2026-11-15 獨立稽核：最低工資不是會截止的申請，12 月 31 日只是標準換年度。原本會顯示剩幾天。改成依公告為準（每年第 3 季審議、公告隔年標準）。",
+    "deadline": {
+      "type": "varies",
+      "start_month": null,
+      "start_day": null,
+      "end_month": null,
+      "end_day": null
+    }
+  },
+  "student-loan-2026": {
+    "_why": "2026-11-15 獨立稽核：一年有上、下學期兩段對保期間，原本只填上學期，11 月會顯示成明年 8 月才開始。對照臺灣銀行就學貸款入口網補上第二學期 1/15 到 2 月底。摘要寫在學期間一律免息，和資格欄寫的超過 148 萬元且僅 2 名在學子女要自付利息矛盾，改成和資格欄一致。",
+    "summary": "高中職以上學生可向臺灣銀行等承貸銀行貸學費、雜費、住宿費、書籍費等，依註冊繳費單上「就學貸款可貸金額」核貸。115年8月1日起三項新制：在學期間利息由政府全額負擔（大專家庭年所得超過148萬元且只有2名在學子女者要自付利息）；畢業後寬限期由1年延長為2年；畢業後還款利率由1.775%降為0.775%。申貸門檻：家庭年所得120萬元以下；超過120萬元但有至少1名兄弟姊妹或子女（未成年或在學）也可貸。115學年度上學期臺銀受理期間為115年8月1日至9月30日。還不出來可申請緩繳本息（月收入未達5萬元，1次1年最長12年）或只繳息不還本（無條件，最長12年）。",
+    "deadline": {
+      "extra_windows": [
+        {
+          "start_month": 1,
+          "start_day": 15,
+          "end_month": 2,
+          "end_day": 28
+        }
+      ],
+      "note": "臺灣銀行對保期間：第一學期每年8月1日至9月30日，第二學期每年1月15日至2月底（教育部查調最後截止116/3/31）。各校交件日期另訂，通常在開學前。"
+    },
+    "sources": [
+      {
+        "url": "https://sloan.bot.com.tw/newsloan/login/SLoanLogin.action",
+        "title": "臺灣銀行就學貸款入口網：申請流程與對保期限（第一學期8/1～9/30、第二學期1/15～2月底）",
+        "publisher": "臺灣銀行",
+        "accessed": "2026-11-15"
+      },
+      {
+        "url": "https://www.ylvs.chc.edu.tw/ischool/rfile/367a0090fe3e3d9bb26f4251ae052406",
+        "title": "115學年度就學貸款申請須知（引自教育部國教署115年7月20日臺教國署高字第1155403540號函）",
+        "publisher": "教育部國民及學前教育署（學校轉載）",
+        "accessed": "2026-11-08"
+      },
+      {
+        "url": "https://www.lksh.chc.edu.tw/var/file/5/1005/img/28/763107554.pdf",
+        "title": "115學年度高級中等學校學生申請就學貸款注意事項（115年7月1日）",
+        "publisher": "教育部國民及學前教育署（學校轉載）",
+        "accessed": "2026-11-08"
+      },
+      {
+        "url": "https://www.cna.com.tw/business/chinese/440064",
+        "title": "臺灣銀行115學年度上學期就學貸款即將開辦（2026-07-28）",
+        "publisher": "中央社／臺灣銀行",
+        "accessed": "2026-11-08"
+      },
+      {
+        "url": "https://inc.nttu.edu.tw/var/file/43/1043/img/2243/555940975.pdf",
+        "title": "115學年度第1學期就學貸款公告（大專版：所得級距、可貸項目、校外住宿上限、生活費）",
+        "publisher": "國立臺東大學（依教育部規定）",
+        "accessed": "2026-11-08"
+      },
+      {
+        "url": "https://sa.chu.edu.tw/p/406-1050-46307,r354.php?Lang=zh-tw",
+        "title": "115年8月1日起「學貸利息再調降」三大新措施暨就學貸款注意事項",
+        "publisher": "中華大學（依教育部函）",
+        "accessed": "2026-11-08"
+      }
+    ]
+  },
+  "income-tax-preschool-deduction": {
+    "_why": "2026-11-15 獨立稽核：問答寫 109 年以前出生不能扣，和同一則前面寫的 108 年 1 月 1 日以後出生都能扣矛盾。不能扣的是 107 年 12 月 31 日以前出生。",
+    "faqs": [
+      {
+        "q": "小孩今年剛滿6歲、或是年底才出生，可以扣嗎？",
+        "a": "以課稅年度12月31日的年齡為準。114年度（115年5月申報）只要是108年1月1日以後出生，不論是114年12月才出生，或114年內滿6歲，整年都能扣全額15萬或22.5萬元，不按月份比例計算。107年12月31日以前出生的子女不能扣。",
+        "source_url": "https://www.etax.nat.gov.tw/etwmain/tax-info/understanding/tax-saving-secret/ZJ1Zn0P"
+      },
+      {
+        "q": "「第2名及以上22.5萬」怎麼算？老大超過6歲還算第1名嗎？",
+        "a": "名次依6歲以下子女的出生順序計算，不含已超過6歲的子女。例如家中有8歲、4歲、1歲三個小孩，只有4歲和1歲可扣，4歲算第1名扣15萬元、1歲算第2名扣22.5萬元，合計37.5萬元。雙胞胎則依出生先後分別為第1名與第2名。",
+        "source_url": "https://www.etax.nat.gov.tw/etwmain/tax-info/understanding/tax-saving-secret/ZJ1Zn0P"
+      },
+      {
+        "q": "我的稅率是20%以上，還能扣幼兒學前特別扣除額嗎？",
+        "a": "可以。113年度起修法已取消排富，不論適用累進稅率20%、30%、40%，或股利按28%分開計稅、基本所得額超過750萬元，都能全額扣除。這點與長期照顧和房屋租金特別扣除額不同，那兩項仍有排富。",
+        "source_url": "https://announce.ndhu.edu.tw/message_8/1777858456/114%E5%B9%B4%E5%BA%A6%E7%B6%9C%E5%90%88%E6%89%80%E5%BE%97%E7%A8%85%E7%B5%90%E7%AE%97%E7%94%B3%E5%A0%B1%E6%B3%95%E4%BB%A4%E4%BB%8B%E7%B4%B9.pdf"
+      },
+      {
+        "q": "小孩沒上幼兒園、在家自己帶，也能扣嗎？需要收據嗎？",
+        "a": "可以，這項扣除額不看有沒有送托或上學，也不需任何收據，只要子女列在申報戶受扶養親屬即可。另外，政府發的育兒津貼或托育補助不是所得，不用申報，也不會從扣除額裡減掉。",
+        "source_url": "https://www.etax.nat.gov.tw/etwmain/tax-info/understanding/tax-saving-secret/ZJ1Zn0P"
+      }
+    ]
+  },
+  "birth-incentive-taoyuan": {
+    "_why": "2026-11-15 獨立稽核：問答問的是設籍 8 個月，回答開頭卻說可以走需要 10 個月的第(2)款，後面才說要改走第(3)款。改成直接講 8 個月走第(3)款，內容不變。",
+    "faqs": [
+      {
+        "q": "我剛從台北搬到桃園8個月就生了，可以領嗎？",
+        "a": "8個月還不到第(2)款要求的10個月（第(2)款：設籍桃園10個月以上未滿1年，且遷入前連續設籍台北市、新北市或基隆市，合併計算達1年）。改走第(3)款：出生前已設籍桃園，出生後繼續設籍到合計滿1年，然後在滿1年後2個月內申請。注意第(3)款只能算桃園自己的設籍時間。",
+        "source_url": "https://dowcd.tycg.gov.tw/News_Content.aspx?n=16422&s=1178219"
+      },
+      {
+        "q": "第2胎雙胞胎可以領多少？",
+        "a": "雙胞胎每名各算一名子女並各加1萬元。第2胎雙胞胎先出生的是第2名4萬元加1萬元、後出生的是第3名5萬元加1萬元，合計11萬元。排序以同一母親所生活產胎兒次序計算，並以申請時已完成戶籍登記為準。",
+        "source_url": "https://dowcd.tycg.gov.tw/News_Content.aspx?n=16422&s=1178219"
+      },
+      {
+        "q": "出生6個月內忘了申請，有補救嗎？",
+        "a": "婦幼發展局頁面寫「逾期視為放棄」，沒有正當理由延長的規定。唯一例外是第(3)款資格的家庭，期限是設籍合計滿1年後2個月內，不是出生後6個月。建議辦出生登記時就在戶政事務所一起送件，戶所可代收。",
+        "source_url": "https://dowcd.tycg.gov.tw/News_Content.aspx?n=16422&s=1178219"
+      },
+      {
+        "q": "承辦單位是社會局還是婦幼發展局？",
+        "a": "桃園市生育津貼目前由婦幼發展局主辦（03-3322101），較早的文件寫社會局，是機關改制前的名稱。實際送件地點仍是各區戶政事務所或區公所社會課，也可以在桃園網路e指通線上辦，頁面最後更新為115年11月6日。",
+        "source_url": "https://dowcd.tycg.gov.tw/News_Content.aspx?n=16422&s=1178219"
+      }
+    ]
+  },
+  "rent-subsidy-tainan-topup": {
+    "_why": "2026-11-15 獨立稽核：常見卡關拿永康與新化當級距不同的例子，但問答把這兩區列在同一組。拿掉錯的例子。",
+    "pitfalls": [
+      "誤以為台南有與台北、高雄同樣的市府加碼：目前沒有，試算只用中央金額。",
+      "租屋地址跨區：各區分屬不同級距（第一級 4,000 元、第二級 3,600 元），以租約地址所在區為準。",
+      "台南許多透天分租雅房、鐵皮加蓋：115 年起須有稅籍且已保存登記，先用合法租屋專區查門牌。"
+    ]
+  },
+  "youth-employment-support-2026": {
+    "_why": "2026-11-15 獨立稽核：金額欄寫合計最高 48,000 元，但列出的各項加總是 54,000 元，沒查到勞動部的算式，列入未驗證。",
+    "unverified_fields": [
+      "合計最高 48,000 元的組成：文字列的尋職津貼與三階段就業獎勵加總不是 48,000 元"
+    ]
   }
 }

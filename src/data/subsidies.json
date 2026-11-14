@@ -1,6 +1,6 @@
 {
-  "version": "2026-11-14",
-  "generated_at": "2026-11-14T18:01:54.191Z",
+  "version": "2026-11-15",
+  "generated_at": "2026-11-14T21:49:49.819Z",
   "items": [
     {
       "id": "rent-subsidy-central-300b",
@@ -52,7 +52,11 @@
         "must_own_home": false,
         "owns_vehicle": null,
         "cities": null,
-        "other": "租屋處須具房屋稅籍且已保存登記（或有合法建物證明），住家用稅率或登記用途含「住」等字樣；每月租金不超過縣市租金上限（台北 55,000、新北／桃園／台中／新竹 45,000、台南／高雄 40,000、其餘 39,000 元）；租約承租人須為申請人，房東不得為家庭成員或直系親屬；不可同時領社宅、包租代管或其他租金補貼。"
+        "other": "租屋處須具房屋稅籍且已保存登記（或有合法建物證明），住家用稅率或登記用途含「住」等字樣；每月租金不超過縣市租金上限（台北 55,000、新北／桃園／台中／新竹 45,000、台南／高雄 40,000、其餘 39,000 元）；租約承租人須為申請人，房東不得為家庭成員或直系親屬；不可同時領社宅、包租代管或其他租金補貼。",
+        "exceptions": {
+          "no_home_ownership": "持有未滿 40 平方公尺、其他共有人不是家庭成員的共有房屋，視為沒有自有房屋",
+          "age": "安置結束無法返家，或由外籍、陸港澳人士監護的未成年人可以申請"
+        }
       },
       "documents": [
         "申請書（線上申請免附；紙本需簽名或蓋章）",
@@ -113,6 +117,7 @@
         "end_day": 31,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "115 年度受理：115 年 1 月 1 日（四）上午 9 時至 12 月 31 日（四）下午 5 時，線上隨到隨辦；郵寄以郵戳為憑。計畫戶數 75 萬戶，核定數達計畫戶數可能停止受理（截至 115 年 4 月底已核定逾 83 萬戶，仍持續受理）。補貼期間最長到 115 年 12 月 31 日，116 年度須重新公告申請（舊戶由國土署帶入）。內政部 115 年 8 月表示 116 年度經費仍由中央負擔；行政院草案擬自 116 年起逐年調降戶數、121 年降至 50 萬戶，尚未定案。"
       },
       "faqs": [
@@ -345,6 +350,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "認定隨房客補貼核准隨到隨辦。地價稅優惠每年開徵 40 日前（約 9 月 22 日）申請。住宅法第 15、16 條的綜所稅與地價稅優惠依行政院 110 年 7 月 13 日院臺建字第 1100177116 號令實施至 2027 年 1 月 12 日，行政院得延長；2026 年 11 月 8 日尚未查到延長公告，請留意 2026 年底前的行政院公報。房屋稅 1.2% 依房屋稅條例，沒有期限。"
       },
       "faqs": [
@@ -532,6 +538,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "中央計畫執行期程至116年（2027）12月31日止，115年5月起由各縣市陸續受理；但各縣市自訂受理窗口且可能分梯次（如新北市115年6月15日至9月15日、台北市至115年8月28日、桃園與高雄首梯已截止），補助以中央都市更新基金年度預算為限，用完可能停止受理。請以所在縣市最新公告為準。"
       },
       "faqs": [
@@ -691,6 +698,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "法規常態適用，隨時可申訴。押金返還：租約結束、房客交還房屋並結清債務時房東就應返還。提前終止租約通知期：房東、房客原則上都要在 30 天前書面通知（房東因重建收回為 3 個月）。"
       },
       "faqs": [
@@ -844,7 +852,7 @@
         "low_income": null,
         "has_labor_insurance": null,
         "has_national_pension": null,
-        "no_home_ownership": true,
+        "no_home_ownership": null,
         "must_own_home": null,
         "must_rent": null,
         "owns_vehicle": null,
@@ -895,6 +903,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "全年隨到隨辦，由各縣市受委託業者受理。計畫分期辦理（第4期112年起、第5期115年10月1日啟動），每期開發期1～2年、管理期3年；各縣市每期名額用完會暫停受理新房東，請以當地公告為準。整體計畫執行至121年（有效契約目標25萬～32萬戶）。"
       },
       "faqs": [
@@ -1033,7 +1042,10 @@
         "must_rent": null,
         "owns_vehicle": null,
         "cities": null,
-        "other": "在社宅所在地區設籍、就學或就業；弱勢身分與婚育家庭有保留比例；已領租金補貼或購屋利息補貼者依招租須知可能不得申請"
+        "other": "在社宅所在地區設籍、就學或就業；弱勢身分與婚育家庭有保留比例；已領租金補貼或購屋利息補貼者依招租須知可能不得申請",
+        "exceptions": {
+          "no_home_ownership": "只看該社宅指定範圍內有沒有自有住宅，範圍外的房子不影響"
+        }
       },
       "documents": [
         "安居好室入口網會員註冊（自然人憑證或晶片金融卡，可介接MyData匯入所得資料）",
@@ -1073,13 +1085,14 @@
         }
       ],
       "deadline": {
-        "type": "rolling",
+        "type": "varies",
         "start_month": null,
         "start_day": null,
         "end_month": null,
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "中央社宅每季招租一次，每案受理約1個月。115年：第1季3/9–4/7（苗栗、雲林、台東）、第3季8/14–9/14（新北、南投、台南、高雄）。115年第4季及116年招租日期以國家住都中心公告為準。各縣市地方社宅另有自己的招租時程。"
       },
       "faqs": [
@@ -1261,6 +1274,7 @@
         "end_day": 31,
         "start_year": 2026,
         "end_year": 2029,
+        "extra_windows": null,
         "note": "青安3.0申辦期間：115年（2026）8月1日至118年（2029）7月31日，撥款最遲118年10月31日。115年7月31日以前申請者適用2.0舊方案。屆期是否再延長，財政部表示屆期前會再檢討。"
       },
       "faqs": [
@@ -1455,6 +1469,7 @@
         "end_day": 30,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "原民會建購及修繕住宅補助115年度受理3月1日至4月30日，逾期不受理，經費用完依申請順序額滿為止；116年度日期看各縣市公告。台北市都市原住民家庭租屋補貼每年4月1日至4月30日、8月1日至8月31日受理。300億租金補貼受理期間見中央租金補貼項目。"
       },
       "faqs": [
@@ -1559,7 +1574,10 @@
       },
       "conditions": {
         "must_rent": true,
-        "other": "訴訟扶助限近 2 年內有租金補貼核定函且調解／調處不成立的房客"
+        "other": "訴訟扶助限近 2 年內有租金補貼核定函且調解／調處不成立的房客",
+        "exceptions": {
+          "must_rent": "房東也可以向縣市政府申請租賃爭議調處"
+        }
       },
       "documents": [
         "租賃契約書（含附件、點交紀錄）",
@@ -1621,6 +1639,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "全年受理。法扶會住宅租賃糾紛專案由內政部委託，115 年（2026 年）1 月 1 日至 12 月 31 日有效，2027 年是否續辦請留意法扶會公告。地政局調處結果通知後 15 日內未向法院起訴，即依調處結果辦理（但無強制力）。"
       },
       "faqs": [
@@ -1763,7 +1782,10 @@
         "must_rent": null,
         "owns_vehicle": null,
         "cities": null,
-        "other": "無自有住宅，或僅有1戶申請日前2年內購買的住宅；弱勢身分適用第一類利率並有評點加分；同一年度與租金補貼、修繕補貼擇一"
+        "other": "無自有住宅，或僅有1戶申請日前2年內購買的住宅；弱勢身分適用第一類利率並有評點加分；同一年度與租金補貼、修繕補貼擇一",
+        "exceptions": {
+          "no_home_ownership": "名下只有 1 戶，而且是申請日前 2 年內買的並已辦貸款，也可以申請"
+        }
       },
       "documents": [
         "申請書（線上申請免紙本；郵寄用戶籍地縣市政府提供的115年度申請書）",
@@ -1815,6 +1837,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "115年度：115年9月1日上午9時至9月30日下午5時（已截止）。每年日期不固定：113年度為8/1–8/30，115年度改為9/1–9/30；116年度日期以內政部公告為準，通常受理前1個月公告。線上以送出時間、郵寄以郵戳為準。"
       },
       "faqs": [
@@ -1958,7 +1981,10 @@
         "must_rent": null,
         "owns_vehicle": null,
         "cities": null,
-        "other": "家庭成員只能有這1戶住宅，且使用執照核發逾10年；弱勢身分適用第一類利率"
+        "other": "家庭成員只能有這1戶住宅，且使用執照核發逾10年；弱勢身分適用第一類利率",
+        "exceptions": {
+          "must_own_home": "房子登記在配偶或同戶籍直系親屬名下，也可以由你申請"
+        }
       },
       "documents": [
         "申請書（線上免紙本；郵寄用115年度修繕住宅貸款利息補貼申請書）",
@@ -2005,6 +2031,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "115年度：115年9月1日至9月30日下午5時（已截止）。日期每年不同（113年度為8/1–8/30），116年度以內政部公告為準。"
       },
       "faqs": [
@@ -2174,6 +2201,7 @@
         "end_day": 31,
         "start_year": 2026,
         "end_year": 2027,
+        "extra_windows": null,
         "note": "臺北幸福租 115 年度受理：115 年 4 月 8 日（三）上午 9 時至 116 年 3 月 31 日（三）下午 5 時（跨年度）。輕鬆住分級補 115 年度受理期間未取得官方公告，114 年度為配合中央公告另行公告。"
       },
       "faqs": [
@@ -2335,6 +2363,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "台南市 115 年度查無市府自辦租金加碼；中央方案受理至 115 年 12 月 31 日下午 5 時。"
       },
       "faqs": [
@@ -2361,7 +2390,7 @@
       ],
       "pitfalls": [
         "誤以為台南有與台北、高雄同樣的市府加碼：目前沒有，試算只用中央金額。",
-        "租屋地址跨區：永康與新化等相鄰區級距不同（4,000 與 3,600 元），以租約地址所在區為準。",
+        "租屋地址跨區：各區分屬不同級距（第一級 4,000 元、第二級 3,600 元），以租約地址所在區為準。",
         "台南許多透天分租雅房、鐵皮加蓋：115 年起須有稅籍且已保存登記，先用合法租屋專區查門牌。"
       ],
       "related_calculator": null,
@@ -2399,8 +2428,8 @@
     },
     {
       "id": "rent-subsidy-taoyuan-topup",
-      "name": "桃園市租金補貼市府加碼（一般戶）",
-      "short_name": "桃園市加碼",
+      "name": "桃園市原住民族租金補貼（一般戶沒有市府加碼）",
+      "short_name": "桃園原民租金補貼",
       "category": "housing",
       "level": "local",
       "city": "桃園市",
@@ -2412,7 +2441,7 @@
       ],
       "amount": {
         "text": "一般戶市府加碼：0 元（已併入中央）。原住民族租金補貼：每月最高 4,000 元，與中央租金補貼二擇一。",
-        "min": 0,
+        "min": null,
         "max": 4000,
         "unit": "元/月",
         "formula": null
@@ -2443,7 +2472,8 @@
         "cities": [
           "桃園市"
         ],
-        "other": "原住民族租金補貼限設籍桃園市之原住民，且不得與中央租金補貼重複。"
+        "other": "原住民族租金補貼限設籍桃園市之原住民，且不得與中央租金補貼重複。",
+        "special_identity": "設籍桃園市的原住民"
       },
       "documents": [
         "一般戶：同中央 300 億租金補貼文件（租約、存摺封面、身分與加碼證明）。",
@@ -2478,6 +2508,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "一般戶無市府加碼。原住民族租金補貼 115 年度自 4 月 1 日起隨到隨辦，受理至計畫戶數用罄為止。"
       },
       "faqs": [
@@ -2536,7 +2567,7 @@
           "accessed": "2026-11-07"
         }
       ],
-      "status_2026": "ended",
+      "status_2026": "active",
       "last_known_update": "2026-05-03",
       "confidence": "medium",
       "unverified_fields": [
@@ -2598,7 +2629,10 @@
         "cities": [
           "高雄市"
         ],
-        "other": "須為中央 300 億租金補貼核定戶（或高雄增額租補核定戶、公辦社宅承租戶）且公告當月有撥款紀錄；租屋在高雄市；月租 40,000 元以下；不要求申請人設籍高雄，但設籍加碼需子女設籍高雄。"
+        "other": "須為中央 300 億租金補貼核定戶（或高雄增額租補核定戶、公辦社宅承租戶）且公告當月有撥款紀錄；租屋在高雄市；月租 40,000 元以下；不要求申請人設籍高雄，但設籍加碼需子女設籍高雄。",
+        "exceptions": {
+          "age": "未成年已結婚的人也可以申請"
+        }
       },
       "documents": [
         "申請意願切結書（都發局寄發之確認信函，勾選同意並簽名回傳；未勾選視為同意）",
@@ -2643,6 +2677,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "收到都發局確認信函次日起 3 個星期內回覆申請意願，逾期視為放棄。115 年度計畫執行 1 年，依預算滾動檢討。"
       },
       "faqs": [
@@ -2809,8 +2844,9 @@
         "start_day": 1,
         "end_month": 12,
         "end_day": 31,
-        "start_year": null,
-        "end_year": null,
+        "start_year": 2025,
+        "end_year": 2027,
+        "extra_windows": null,
         "note": "115 年度受理 114 年 10 月 1 日（三）至 115 年 12 月 31 日（四）下午 5 時；116 年度自 115 年 10 月起受理至 116 年 12 月 31 日，年度經費用罄即提前停止受理。"
       },
       "faqs": [
@@ -2984,6 +3020,7 @@
         "end_day": 31,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "115 年度受理 115 年 1 月 1 日（四）至 12 月 31 日（四）；線上至 12 月 31 日 23:59。年度經費用罄即停止辦理（民間整理稱計畫 16,240 戶，未驗證）。舊戶須在確認信核發起 2 個月內回覆。"
       },
       "faqs": [
@@ -3131,6 +3168,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "入學即減免，無申請期限；公立與非營利幼兒園招生每年約4至6月登記抽籤，錯過只能候補或改念準公共。"
       },
       "faqs": [
@@ -3285,6 +3323,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "適用115年1月1日以後分娩或早產。請求權時效官方頁未明載，比照生育給付5年規定前請向勞保局確認（列為待驗證）。"
       },
       "faqs": [
@@ -3356,7 +3395,7 @@
       "level": "central",
       "city": null,
       "agency": "衛生福利部社會及家庭署（初審：送托地居家托育服務中心或托嬰中心，核定：地方政府社會局）",
-      "summary": "孩子送到公設民營托嬰中心、社區公共托育家園（公共化）每月補助7,000元起；送到與政府簽約的準公共托嬰中心或準公共保母每月13,000元起。第2名子女加1,000元、第3名以上加2,000元；中低收入戶再加2,000元、低收入戶及弱勢家庭再加4,000元（準公共最高19,000元）。每週送托30小時以上，送托後15日內向保母所屬居家托育服務中心或托嬰中心申請。滿2歲續托準公共保母或托嬰中心可延長補助到未滿3歲。不排富，不能與育兒津貼同領。",
+      "summary": "孩子送到公設民營托嬰中心、社區公共托育家園（公共化）每月補助7,000元起；送到與政府簽約的準公共托嬰中心或準公共保母每月13,000元起。第2名子女加1,000元、第3名以上加2,000元。準公共依身分再加：中低收入戶2,000元、低收入戶及弱勢家庭4,000元（最高19,000元）；公共化的中低收、低收及弱勢家庭是9,000元，含胎次加發最高也是9,000元。每週送托30小時以上，送托後15日內向保母所屬居家托育服務中心或托嬰中心申請。滿2歲續托準公共保母或托嬰中心可延長補助到未滿3歲。不排富，不能與育兒津貼同領。",
       "eligibility": [
         "未滿2歲兒童（續托準公共居家托育人員或托嬰中心者可延長至未滿3歲）",
         "送托對象為公設民營托嬰中心、社區公共托育家園、與政府簽約的準公共私立托嬰中心或準公共居家托育人員（保母）",
@@ -3370,7 +3409,7 @@
         "min": 7000,
         "max": 19000,
         "unit": "元/月",
-        "formula": "基本額（公共7,000／準公共13,000）＋胎次加發（第2名1,000／第3名以上2,000）＋身分加發（中低收2,000／低收及弱勢4,000）"
+        "formula": "準公共：13,000＋胎次加發（第2名1,000／第3名以上2,000）＋身分加發（中低收2,000／低收及弱勢4,000）。公共化：一般7,000，中低收、低收及弱勢9,000，含胎次加發最高9,000（新北市公告）"
       },
       "conditions": {
         "min_age": null,
@@ -3442,6 +3481,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "托育事實發生（開始送托）後15日內提出申請；逾期自申請當月起算，前面的月份不補。"
       },
       "faqs": [
@@ -3598,6 +3638,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "園所向縣市政府申請的期間：第1學期9月1日至10月15日，第2學期3月1日至4月15日。家長交件給園所的期限由各縣市另訂，通常更早，以園所通知為準。"
       },
       "faqs": [
@@ -3743,6 +3784,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "全年隨到隨辦。依社家署網站整理，出生後60天內完成戶籍登記並提出申請，津貼可從出生月份起算；超過60天則從申請當月起發，不回溯。60天規則出自2023年社家署網站文章，未在作業要點原文核對，列為待驗證。"
       },
       "faqs": [
@@ -3906,6 +3948,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "生活扶助與緊急生活扶助全年受理。醫療補助：出院日或醫療行為結束日起6個月內，逾期不補助。托育及臨時托育補助：托育事實發生日起15日內申請可從當天起算，逾期從文件備齊送達日起算。加發500元到116年1月為止。調到每月5,000元的方案原訂115年7月實施，實際生效日未驗證。"
       },
       "faqs": [
@@ -4097,6 +4140,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "緊急生活扶助、兒童托育津貼：事實發生後6個月內申請。傷病醫療補助：傷病發生後3個月內。法律訴訟補助：事實發生後3個月內。子女生活津貼：初次申請隨時可提出，延長補助要在會計年度開始前2個月提出，身分每年重新認定。116年最低工資調為30,900元，子女生活津貼會跟著調整（換算3,090元）。"
       },
       "faqs": [
@@ -4237,7 +4281,7 @@
         "is_elderly": null,
         "is_disabled": null,
         "is_married": null,
-        "has_labor_insurance": false,
+        "has_labor_insurance": null,
         "has_national_pension": true,
         "low_income": null,
         "no_home_ownership": null,
@@ -4245,7 +4289,10 @@
         "must_own_home": null,
         "owns_vehicle": null,
         "cities": null,
-        "other": "限女性被保險人本人；欠費會從給付扣除"
+        "other": "限女性被保險人本人；欠費會從給付扣除",
+        "exceptions": {
+          "has_national_pension": "在國保加保期間懷孕、退保後 1 年內生產的人也可以領"
+        }
       },
       "documents": [
         "國民年金保險生育給付暨加給補助申請書及給付收據（紙本申請時）",
@@ -4289,6 +4336,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "依國民年金法第28條，請求權自分娩或早產次日起5年內，逾期勞保局核定不予給付。加給補助適用115年1月1日以後分娩或早產者。"
       },
       "faqs": [
@@ -4403,7 +4451,10 @@
         "must_own_home": null,
         "owns_vehicle": null,
         "cities": null,
-        "other": "限女性被保險人本人；分娩時勞保滿280日或早產滿181日（補助部分放寬）"
+        "other": "限女性被保險人本人；分娩時勞保滿280日或早產滿181日（補助部分放寬）",
+        "exceptions": {
+          "has_labor_insurance": "在勞保加保期間懷孕、退保後 1 年內生產的人也可以領"
+        }
       },
       "documents": [
         "勞工保險生育給付申請書暨給付收據（紙本申請時）",
@@ -4449,6 +4500,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "請求權自得請領之日（分娩或早產日）起5年內，逾期消滅不給付。勞工生育補助適用115年1月1日以後生產者。"
       },
       "faqs": [
@@ -4626,6 +4678,7 @@
         "end_day": 27,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "115 學年度：5/22 上午 9 時公告缺額；5/25 上午 9 時至 5/27 中午 12 時登記；5/27 下午 3 時抽籤；5/27 下午 3 時 30 分至 5/29 下午 4 時報到；6/2 上午 9 時至 6/3 下午 4 時備取登記。2026 年已結束。116 學年度（2027 年）日期未公告，依往年在 5 月下旬，未驗證。"
       },
       "faqs": [
@@ -4776,6 +4829,7 @@
         "end_day": 8,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "115 學年度：5/8 各校公告入學名冊；5/19 寄發入學通知單；5/30（六）至 6/8（一）新生報到；額滿學校 6/30 前依候補名冊遞補。2026 年已結束。116 學年度（2027 年）日期未公告，依往年在 5 月底到 6 月初，未驗證。其他縣市日期各自公告。"
       },
       "faqs": [
@@ -4928,6 +4982,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "須在懷孕期間（預產期前）申請；乘車金效期台北市到預產期後1年、台中市到預產期後6個月、高雄市到孩子滿1歲。"
       },
       "faqs": [
@@ -5085,12 +5140,13 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "出生前已設籍滿1年（或併計北北基滿1年）者：出生後6個月內；出生前已設籍但未滿1年者：出生後持續設籍合計滿1年後2個月內。逾期視為放棄。"
       },
       "faqs": [
         {
           "q": "我剛從台北搬到桃園8個月就生了，可以領嗎？",
-          "a": "可以，走第(2)款：設籍桃園達10個月以上未滿1年，且遷入前連續設籍台北市、新北市或基隆市，合併計算達1年即可。但8個月未滿10個月，就改走第(3)款：出生前已設籍桃園，出生後繼續設籍到合計滿1年，然後在滿1年後2個月內申請。注意第(3)款只能算桃園自己的設籍時間。",
+          "a": "8個月還不到第(2)款要求的10個月（第(2)款：設籍桃園10個月以上未滿1年，且遷入前連續設籍台北市、新北市或基隆市，合併計算達1年）。改走第(3)款：出生前已設籍桃園，出生後繼續設籍到合計滿1年，然後在滿1年後2個月內申請。注意第(3)款只能算桃園自己的設籍時間。",
           "source_url": "https://dowcd.tycg.gov.tw/News_Content.aspx?n=16422&s=1178219"
         },
         {
@@ -5226,6 +5282,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "新生兒出生之日起1年內申請，逾期不予受理。"
       },
       "faqs": [
@@ -5374,6 +5431,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "新生兒出生次日起1年內提出，逾期不受理。"
       },
       "faqs": [
@@ -5520,6 +5578,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "新生兒出生後6個月內申請，逾期不受理；有正當理由經戶政事務所核准者可延至出生後1年內。"
       },
       "faqs": [
@@ -5661,6 +5720,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "申請期限未能在縣府官網核對（官網本次連線失敗），請向公所確認；建議辦出生登記後儘速申請。"
       },
       "faqs": [
@@ -5798,6 +5858,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "新生兒出生次日起6個月內，逾期視為放棄。"
       },
       "faqs": [
@@ -5941,6 +6002,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "出生登記者：出生日次日起60日內申請，有正當理由經核准可延長為1年；初設戶籍者：出生日次日起1年內。死產：死產日次日起60日內。"
       },
       "faqs": [
@@ -6094,6 +6156,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "新生兒出生後180日內申請；逾期視為放棄，但有正當理由經戶政事務所核准者不在此限。"
       },
       "faqs": [
@@ -6246,6 +6309,7 @@
         "end_day": 31,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "自用汽機車每年7月1日至7月31日；營業車每季3、6、9、12月初開徵。115年期限7月31日（星期五）。逾期未繳約10月寄補繳通知，115年部分監理所補繳期限為10月31日；仍未繳者處300元至3,000元罰鍰並移送強制執行。114年底公路法修正更名，115年7月首次以新名稱開徵。"
       },
       "faqs": [
@@ -6399,12 +6463,13 @@
         "end_day": 31,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "隨綜所稅結算申報辦理；115年截止日順延到6月1日。金額自113年度起未變動，115年度（116年申報）財政部未公告調整。"
       },
       "faqs": [
         {
           "q": "小孩今年剛滿6歲、或是年底才出生，可以扣嗎？",
-          "a": "以課稅年度12月31日的年齡為準。114年度（115年5月申報）只要是108年1月1日以後出生，不論是114年12月才出生，或114年內滿6歲，整年都能扣全額15萬或22.5萬元，不按月份比例計算。109年以前出生的子女不能扣。",
+          "a": "以課稅年度12月31日的年齡為準。114年度（115年5月申報）只要是108年1月1日以後出生，不論是114年12月才出生，或114年內滿6歲，整年都能扣全額15萬或22.5萬元，不按月份比例計算。107年12月31日以前出生的子女不能扣。",
           "source_url": "https://www.etax.nat.gov.tw/etwmain/tax-info/understanding/tax-saving-secret/ZJ1Zn0P"
         },
         {
@@ -6497,7 +6562,10 @@
         "must_rent": null,
         "must_own_home": true,
         "owns_vehicle": null,
-        "other": "以8月31日為納稅義務基準日；自用住宅優惠稅率申請期限為開徵40日前（9月22日）。"
+        "other": "以8月31日為納稅義務基準日；自用住宅優惠稅率申請期限為開徵40日前（9月22日）。",
+        "exceptions": {
+          "must_own_home": "只有土地、沒有房屋的人一樣要繳地價稅"
+        }
       },
       "documents": [
         "繳款書（紙本或電子）；未收到可線上查繳或申請補發",
@@ -6549,6 +6617,7 @@
         "end_day": 30,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "每年11月1日至11月30日，末日遇假日順延（114年曾順延至12月1日；115年11月30日為星期一不順延）。逾期每3日加1%滯納金最高10%，逾30日移送強制執行。自用住宅2‰申請期限為每年9月22日。"
       },
       "faqs": [
@@ -6577,7 +6646,7 @@
         "自用住宅2‰要在9月22日前申請，逾期申請隔年才適用，當年只能繳一般稅率，差距至少4倍。",
         "戶籍遷出（例如小孩搬走、父母過世後除籍）會讓自用住宅資格消失，稅捐機關查到會改課一般用地稅率，要主動確認戶籍狀況。",
         "本人、配偶、未成年子女全國只能1處自用住宅用地，第2間房即使自住也只能按一般用地課。",
-        "繳款書11月初寄出，掛號寄存郵局即視為送達，沒領也算期限起算。",
+        "繳款書10月下旬起陸續寄出，掛號寄存郵局即視為送達，沒領也算期限起算。",
         "約定轉帳在12月1日扣款，11月30日帳戶餘額不足就視同未繳。"
       ],
       "related_calculator": null,
@@ -6720,6 +6789,7 @@
         "end_day": 30,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "自用車每年4月1日至4月30日。115年期限4月30日（星期四）未因5月1日勞動節順延，但5月1日至3日繳納屬逾期不加滯納金，5月4日起每3日加1%。營業用車下期10月1日至10月31日（115年順延至11月2日）。"
       },
       "faqs": [
@@ -6842,7 +6912,10 @@
         "must_rent": true,
         "must_own_home": false,
         "owns_vehicle": null,
-        "other": "受扶養直系親屬（例如父母）名下有房屋也會讓整戶不能扣，除非符合5種例外。"
+        "other": "受扶養直系親屬（例如父母）名下有房屋也會讓整戶不能扣，除非符合5種例外。",
+        "exceptions": {
+          "no_home_ownership": "因就業、就學、就醫在外地租屋，而且全戶只有 1 間自住的房子，仍然可以扣"
+        }
       },
       "documents": [
         "承租房屋的租賃契約書影本",
@@ -6876,6 +6949,7 @@
         "end_day": 31,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "隨綜所稅結算申報辦理；115年截止日順延到6月1日，附件6月11日前送達。18萬元上限自113年度起適用，115年度未公告調整。"
       },
       "faqs": [
@@ -7043,6 +7117,7 @@
         "end_day": 31,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "每年5月1日至5月31日，末日遇假日順延。115年期截止6月1日，6月2日至4日繳不加滯納金，6月5日起每3日加1%最高10%，逾30日移送強制執行。自住稅率申請與設籍期限為每年3月22日（115年為3月23日）。"
       },
       "faqs": [
@@ -7192,6 +7267,7 @@
         "end_day": 31,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "隨綜所稅結算申報辦理；115年截止日順延到6月1日。18萬元自114年度起適用，115年度未公告再調整。"
       },
       "faqs": [
@@ -7325,6 +7401,7 @@
         "end_day": 31,
         "start_year": null,
         "end_year": 2030,
+        "extra_windows": null,
         "note": "免徵至 2030 年（民國 119 年）12 月 31 日。每年使用牌照稅開徵期為 4 月 1 日至 4 月 30 日（純電動車免徵者不會收到繳款書）。2031 年起是否延長未定。"
       },
       "faqs": [
@@ -7381,7 +7458,8 @@
       "last_known_update": "2025-12",
       "confidence": "high",
       "unverified_fields": [
-        "各級距年稅額（7,120／11,230／28,220 元）為使用牌照稅法稅額表常見數字，本次未另行開啟稅額表頁面核對"
+        "各級距年稅額（7,120／11,230／28,220 元）為使用牌照稅法稅額表常見數字，本次未另行開啟稅額表頁面核對",
+        "免徵上限 11,230 元對應的排氣量級距：摘要寫相當於 2,400cc，算式寫 2,401～3,000cc"
       ],
       "topic": "energy-appliance-vehicle",
       "verified_at": null,
@@ -7463,6 +7541,7 @@
         "end_day": 31,
         "start_year": null,
         "end_year": 2030,
+        "extra_windows": null,
         "note": "免徵期間至 2030 年（民國 119 年）12 月 31 日止，修正條文 2026-01-01 生效。這是第 5 次延長；2031 年起是否再延長未定。"
       },
       "faqs": [
@@ -7615,6 +7694,7 @@
         "end_day": 20,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "每年固定三批：7月31日、10月31日前後（115年為10月30日）、隔年1月20日。第1批退稅憑單兌領期間7月31日至9月30日。要進第1批，必須在5月截止日前完成網路申報。"
       },
       "faqs": [
@@ -7781,6 +7861,7 @@
         "end_day": 31,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "每年5月1日至5月31日；末日遇假日順延。115年因5月31日是星期日，截止日為6月1日。網路申報6月1日24時前上傳，附件6月11日前送達。116年5月申報115年度所得時，免稅額調為10.1萬元、標準扣除額13.6萬元（夫妻27.2萬）、薪資與身障特別扣除額22.7萬元，級距改為61萬／138萬／277萬／519萬元。"
       },
       "faqs": [
@@ -7982,6 +8063,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "114年9月1日起生效，115年持續受理，官方未公告截止日。個人計畫期間為上傳文件次日起90日，津貼申請期限分別為37、67、97日內，就業獎勵為受僱期滿次日起60日內。"
       },
       "faqs": [
@@ -8042,7 +8124,9 @@
       "status_2026": "active",
       "last_known_update": "2026-05-19",
       "confidence": "high",
-      "unverified_fields": [],
+      "unverified_fields": [
+        "合計最高 48,000 元的組成：文字列的尋職津貼與三階段就業獎勵加總不是 48,000 元"
+      ],
       "topic": "youth-and-students",
       "verified_at": null,
       "verification_summary": null
@@ -8130,6 +8214,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "產檢假與陪產檢假在懷孕期間請；陪產假須在配偶分娩當日及前後合計15日內請畢。"
       },
       "faqs": [
@@ -8256,13 +8341,14 @@
         }
       ],
       "deadline": {
-        "type": "fixed_annual",
-        "start_month": 1,
-        "start_day": 1,
-        "end_month": 12,
-        "end_day": 31,
+        "type": "varies",
+        "start_month": null,
+        "start_day": null,
+        "end_month": null,
+        "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "2026-01-01至2026-12-31適用29,500元／196元；2027-01-01起適用30,900元／205元（勞動部2026-10-16發布）。每年第3季由最低工資審議會審議隔年標準。"
       },
       "faqs": [
@@ -8414,6 +8500,7 @@
         "end_day": 2,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "115年度：2025-12-15 08:00 至 2026-01-02 24:00（網路）；臨櫃為期間內上班日9:00-17:00；郵寄以郵戳為憑。此期間已過。116年度方案截至2026-11-08尚未公告，往年都在12月5日前後公告、12月15日前後開放，每年確切日期以勞動部公告為準。"
       },
       "faqs": [
@@ -8517,7 +8604,7 @@
         "is_married": null,
         "is_pregnant_or_newborn": null,
         "is_student": null,
-        "is_employed": true,
+        "is_employed": null,
         "is_unemployed": null,
         "has_labor_insurance": null,
         "has_national_pension": null,
@@ -8574,6 +8661,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "自願提繳全年隨時申報，申報次月1日生效。退休金年滿60歲後隨時可申請。"
       },
       "faqs": [
@@ -8747,6 +8835,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "達法定年齡並離職退保後隨時可申請；請求權時效5年。提前最多5年、延後最多5年。"
       },
       "faqs": [
@@ -8849,7 +8938,7 @@
         "is_married": null,
         "is_pregnant_or_newborn": null,
         "is_student": null,
-        "is_employed": false,
+        "is_employed": null,
         "is_unemployed": true,
         "has_labor_insurance": null,
         "has_national_pension": null,
@@ -8861,7 +8950,10 @@
         "owns_vehicle": null,
         "cities": null,
         "low_income": null,
-        "other": "非自願離職；離職前3年就保年資滿1年；滿45歲或身心障礙者給付期間延長為9個月"
+        "other": "非自願離職；離職前3年就保年資滿1年；滿45歲或身心障礙者給付期間延長為9個月",
+        "exceptions": {
+          "is_unemployed": "領取期間有打工，月收入沒超過基本工資仍可以領，再認定時要主動申報"
+        }
       },
       "documents": [
         "失業（再）認定、失業給付申請書及給付收據（就業服務站提供）",
@@ -8904,6 +8996,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "離職退保後2年內要辦理求職登記並申請失業認定；給付自求職登記第15日起算，愈晚登記愈晚開始領。每月需辦失業再認定。"
       },
       "faqs": [
@@ -9084,6 +9177,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "子女滿3歲前須辦妥留停；津貼請求權依就業保險法第24條自得請領之日起2年內，逾期消滅。留停開始後儘快申請，勞保局按月於期初發給。"
       },
       "faqs": [
@@ -9259,6 +9353,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "就業加保滿3個月之日起2年內申請，逾期請求權消滅。"
       },
       "faqs": [
@@ -9402,6 +9497,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "離職退保後2年內辦理求職登記並由就服站安排參訓；津貼依受訓起迄按月發給，最長6個月。"
       },
       "faqs": [
@@ -9498,7 +9594,7 @@
         "is_student": null,
         "is_employed": null,
         "is_unemployed": null,
-        "has_labor_insurance": true,
+        "has_labor_insurance": null,
         "has_national_pension": null,
         "is_disabled": null,
         "is_elderly": null,
@@ -9551,6 +9647,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "職災傷病給付請求權自得請領之日起5年內；墊償請求權依積欠工資墊償基金提繳及墊償管理辦法，請在確認歇業／破產後儘速申請。"
       },
       "faqs": [
@@ -9706,6 +9803,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "教育部計畫規定每學年上學期申請一次，實際收件日由各校公告，多落在9月開學後至10月中（屏科大至10/5、宜蘭大學8/17～9/30、另有學校至10/18）。115學年度已截止，下次為116學年度上學期（2027年9月前後）。"
       },
       "faqs": [
@@ -9804,7 +9902,7 @@
         "formula": null
       },
       "conditions": {
-        "min_age": 13,
+        "min_age": 12,
         "max_age": 22,
         "is_student": null,
         "has_children": null,
@@ -9869,6 +9967,7 @@
         "end_day": 31,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "115年1月1日上午8點起開放領取，115年12月31日前使用完畢，逾期失效。文化部已宣布13～22歲常態化發放，116年是否沿用相同日期與點數尚未見公告。"
       },
       "faqs": [
@@ -10004,6 +10103,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "免申請，每學期註冊時自動扣抵。自112學年度第2學期起實施，115學年度持續辦理。"
       },
       "faqs": [
@@ -10146,6 +10246,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "每學期一次，依各校公告的申請期限（第一學期多在8月底～9月底、第二學期多在1月底～2月底）；逾期多數學校不受理，只能下學期再申請。"
       },
       "faqs": [
@@ -10302,6 +10403,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "全年受理，向銀行申請即可。各縣市利息補貼方案（竹挺利、雄挺利等）另有各自的申請期間與預算額度。"
       },
       "faqs": [
@@ -10416,7 +10518,7 @@
         "is_married": null,
         "is_pregnant_or_newborn": null,
         "is_student": false,
-        "is_employed": false,
+        "is_employed": null,
         "is_unemployed": true,
         "has_labor_insurance": null,
         "has_national_pension": null,
@@ -10428,7 +10530,10 @@
         "owns_vehicle": null,
         "cities": null,
         "low_income": null,
-        "other": "失業連續6個月以上（含低薪兼職期間）；就業後同一雇主滿90日"
+        "other": "失業連續6個月以上（含低薪兼職期間）；就業後同一雇主滿90日",
+        "exceptions": {
+          "is_unemployed": "找到正職並做滿 90 日之後才申請獎勵金，申請當下是在職"
+        }
       },
       "documents": [
         "青年職得好評計畫申請書（就服站提供或勞動力發展署網站下載）",
@@ -10468,6 +10573,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "全年受理。獎勵金須於連續受僱同一雇主滿90日之次日起90日內申請。放寬規定自2026-01-01生效。"
       },
       "faqs": [
@@ -10608,13 +10714,14 @@
         }
       ],
       "deadline": {
-        "type": "fixed_annual",
-        "start_month": 9,
-        "start_day": 14,
-        "end_month": 10,
-        "end_day": 14,
+        "type": "varies",
+        "start_month": null,
+        "start_day": null,
+        "end_month": null,
+        "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "115學年度第1學期：系統填報115年9月14日至10月14日23:59（銘傳大學公告，紙本交校內截止10月15日），系統10月15日公告線上申請已截止。第2學期申請期間本次未讀到公告，往年在開學後受理，以申請系統最新消息與學校公告為準。各校校內收件日可能比系統截止日早。"
       },
       "faqs": [
@@ -10695,7 +10802,7 @@
       "level": "central",
       "city": null,
       "agency": "教育部（承貸銀行：臺灣銀行等）",
-      "summary": "高中職以上學生可向臺灣銀行等承貸銀行貸學費、雜費、住宿費、書籍費等，依註冊繳費單上「就學貸款可貸金額」核貸。115年8月1日起三項新制：符合資格者在學期間一律免息（政府全額負擔）；畢業後寬限期由1年延長為2年；畢業後還款利率由1.775%降為0.775%。申貸門檻：家庭年所得120萬元以下；超過120萬元但有至少1名兄弟姊妹或子女（未成年或在學）也可貸。115學年度上學期臺銀受理期間為115年8月1日至9月30日。還不出來可申請緩繳本息（月收入未達5萬元，1次1年最長12年）或只繳息不還本（無條件，最長12年）。",
+      "summary": "高中職以上學生可向臺灣銀行等承貸銀行貸學費、雜費、住宿費、書籍費等，依註冊繳費單上「就學貸款可貸金額」核貸。115年8月1日起三項新制：在學期間利息由政府全額負擔（大專家庭年所得超過148萬元且只有2名在學子女者要自付利息）；畢業後寬限期由1年延長為2年；畢業後還款利率由1.775%降為0.775%。申貸門檻：家庭年所得120萬元以下；超過120萬元但有至少1名兄弟姊妹或子女（未成年或在學）也可貸。115學年度上學期臺銀受理期間為115年8月1日至9月30日。還不出來可申請緩繳本息（月收入未達5萬元，1次1年最長12年）或只繳息不還本（無條件，最長12年）。",
       "eligibility": [
         "就讀國內高級中等以上學校（高中職、五專、大學、碩博士班）具正式學籍的學生",
         "家庭年所得總額120萬元以下；或家庭年所得超過120萬元，但學生有至少1名兄弟姊妹或子女（未成年、或已成年且在學）",
@@ -10783,7 +10890,15 @@
         "end_day": 30,
         "start_year": null,
         "end_year": null,
-        "note": "115學年度上學期臺銀受理115/8/1～9/30，對保截止9月底；下學期對保截止2月底（教育部查調最後截止116/3/31）。各校交件日期另訂，通常在開學前。"
+        "extra_windows": [
+          {
+            "start_month": 1,
+            "start_day": 15,
+            "end_month": 2,
+            "end_day": 28
+          }
+        ],
+        "note": "臺灣銀行對保期間：第一學期每年8月1日至9月30日，第二學期每年1月15日至2月底（教育部查調最後截止116/3/31）。各校交件日期另訂，通常在開學前。"
       },
       "faqs": [
         {
@@ -10822,6 +10937,12 @@
       "related_calculator": null,
       "official_url": "https://www.edu.tw/helpdreams/",
       "sources": [
+        {
+          "url": "https://sloan.bot.com.tw/newsloan/login/SLoanLogin.action",
+          "title": "臺灣銀行就學貸款入口網：申請流程與對保期限（第一學期8/1～9/30、第二學期1/15～2月底）",
+          "publisher": "臺灣銀行",
+          "accessed": "2026-11-15"
+        },
         {
           "url": "https://www.ylvs.chc.edu.tw/ischool/rfile/367a0090fe3e3d9bb26f4251ae052406",
           "title": "115學年度就學貸款申請須知（引自教育部國教署115年7月20日臺教國署高字第1155403540號函）",
@@ -10947,6 +11068,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "免申請，每學期註冊時自動減免。112學年度第2學期起實施，115學年度持續。"
       },
       "faqs": [
@@ -11086,13 +11208,14 @@
         }
       ],
       "deadline": {
-        "type": "ended",
-        "start_month": 11,
-        "start_day": 24,
-        "end_month": 1,
-        "end_day": 5,
+        "type": "varies",
+        "start_month": null,
+        "start_day": null,
+        "end_month": null,
+        "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "115年度徵件：114年11月24日（一）上午10時至115年1月5日（一）中午12時，已截止。近年都在前一年11～12月徵件，116年度徵件預計115年底公告（未經官方確認），請追蹤國發會官網。"
       },
       "faqs": [
@@ -11187,7 +11310,7 @@
         "child_age_min": null,
         "child_age_max": null,
         "is_pregnant_or_newborn": null,
-        "is_student": true,
+        "is_student": null,
         "is_employed": null,
         "is_unemployed": null,
         "has_labor_insurance": null,
@@ -11243,6 +11366,7 @@
         "end_day": 23,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "114學年度計畫：系統報名115年2月23日至3月23日，紙本收件截止115年3月30日，獲獎名單預計115年5月底公告，115年度已截止。115學年度計畫（預計116年2～3月報名）的日期尚未讀到公告，以移民署網站為準。線上報名和寄紙本兩項都要完成，只做一項視為未報名。"
       },
       "faqs": [
@@ -11392,6 +11516,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "115 年 10 月 1 日第一階段開打，11 月 2 日第二階段（50～64 歲無高風險慢性病成人），接種至疫苗用罄為止。疾管署 2026-11-03 新聞稿：截至 11 月 2 日已接種逾 474.7 萬人次。"
       },
       "faqs": [
@@ -11547,6 +11672,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "依學年：第 1 劑於入學次年 9 月校園接種，第 2 劑間隔 6 個月以上（約隔年 5 月）。錯過校園場次的補接種期限由各縣市衛生局訂定（例如臺中市 112 學年女生須於 115 年 6 月 15 日前申請補接種），過期即需自費。"
       },
       "faqs": [
@@ -11700,6 +11826,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "全年可做，依各癌別間隔：大腸、乳、口腔、肺每 2 年；子宮頸 25～29 歲每 3 年、30 歲以上每年；HPV 檢測限 35、45、65 歲各 1 次；胃癌終身 1 次。"
       },
       "faqs": [
@@ -11875,6 +12002,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "補助跟著失業給付／職訓生活津貼的領取月份走；失業給付最長 6 個月（離職時滿 45 歲或領有身心障礙證明最長 9 個月）。失業給付本身須在離職退保 2 年內申請。"
       },
       "faqs": [
@@ -12019,6 +12147,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "依孕週使用：第8、12、16、20、24、28、30、32、34、36、37、38、39、40週各1次；超音波限8至16週、20週前後、32週後各1次；錯過的週數不補。"
       },
       "faqs": [
@@ -12152,6 +12281,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "全年可做，依年齡層間隔：30～39 歲每 5 年、40～64 歲每 3 年、65 歲以上每年。"
       },
       "faqs": [
@@ -12307,6 +12437,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "免申請、按月套用。醫療費用補助（現行辦法）須在就醫或出院後6個月內申請。"
       },
       "faqs": [
@@ -12480,6 +12611,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "隨時可申請，但健保署提醒要在「催繳期間內」提出；欠費移送行政執行後就不能用網路簡易分期，只能臨櫃處理。經濟困難認定 1 年後若狀況未改善要重新申請。"
       },
       "faqs": [
@@ -12658,6 +12790,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "全年可註冊使用；健康幣專區 115 年 10 月 1 日上線。"
       },
       "faqs": [
@@ -12828,6 +12961,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "每月一次，欄位填的是最近一期：115 年 10 月份保費，115 年 11 月 30 日前繳，寬限到 115 年 12 月 15 日。通則：當月保費在次月底前繳，寬限 15 日。勞保局舉例：115 年 9 月 25 日前寄發 8 月保費繳款單，最晚 115 年 10 月 15 日前繳。健保寬限期最後一天遇假日，順延到假日結束的隔天。2027 年沿用同一規則。"
       },
       "faqs": [
@@ -13000,6 +13134,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "全年適用，取得身分資格後由補助機關按月送名單，補助隨保費帳單自動扣減。"
       },
       "faqs": [
@@ -13169,6 +13304,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "全年可向公所申請；核定後補助自受理當月起至次年底，每兩個年度總清查一次，要重新確認資格。月投保金額依消費者物價指數累計達 5% 調整，115 年 1 月 1 日起為 21,103 元。"
       },
       "faqs": [
@@ -13334,6 +13470,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "一年 6 期，欄位填的是最近一期。全年：1～2 月保費→3 月底寄單→4/30 前繳；3～4 月→5 月底寄→6/30；5～6 月→7 月底寄→8/31；7～8 月→9 月底寄→10/31；9～10 月→11 月底寄→12/31；11～12 月→隔年 1 月底寄→隔年 2 月底。115 年 9～10 月保費在 115 年 11 月底寄單，115 年 12 月 31 日前繳。2027 年沿用同一規則。月底遇假日是否順延，本次未驗證。"
       },
       "faqs": [
@@ -13499,6 +13636,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "全年隨到隨辦，自備齊文件當月起算。每年由縣市重新調查，門檻金額（最低生活費）每年1月調整。"
       },
       "faqs": [
@@ -13680,6 +13818,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "滿65歲後隨時可申請，自受理當月起算、不溯及之前月份；越早申請越早領。修法追溯115年7月1日的差額，須待公布施行後由勞保局公告補發方式。"
       },
       "faqs": [
@@ -13853,6 +13992,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "全年隨到隨辦，補助自備齊文件當月起算；越晚送件越晚起算，不會往前補。"
       },
       "faqs": [
@@ -14029,6 +14169,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "全年可辦。免牌照稅自核准日起算，4月開徵前辦好才不用先繳再退。"
       },
       "faqs": [
@@ -14186,6 +14327,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "全年受理。核定後6個月內要完成購買並請款，逾期不補助。"
       },
       "faqs": [
@@ -14343,6 +14485,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "全年受理。喘息服務額度以「年」計、照顧服務額度以「月」計，當期未用完不累積。"
       },
       "faqs": [
@@ -14527,6 +14670,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "全年可申請。喘息服務額度以「年」計算，當年沒用完不能留到隔年。"
       },
       "faqs": [
@@ -14705,6 +14849,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "隨時可申請，自申請當月起發給，不追溯之前月份。"
       },
       "faqs": [
@@ -14884,6 +15029,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "臺北市全年受理，每人每年上限10萬元。高雄市115年3月1日起篩檢、6月30日止、額滿即停（一般老人3月7日已額滿），裝置須於11月30日前完成。多數縣市年初開放、預算用完即止，建議1～3月送件。"
       },
       "faqs": [
@@ -15047,6 +15193,7 @@
         "end_day": 31,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "重陽禮金115年10月2日起匯款與臨櫃領取至10月31日，補領11月2日～12月31日；設籍截止6月30日。敬老卡全年可辦。"
       },
       "faqs": [
@@ -15204,6 +15351,7 @@
         "end_day": 31,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "重陽禮金匯款帳戶登記至8月27日，重陽節（115年10月18日）前後發放；現金由區公所排定。敬老卡全年可辦。"
       },
       "faqs": [
@@ -15359,6 +15507,7 @@
         "end_day": 31,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "115年重陽禮金：8月14日前登記匯款、9月1日入帳；靠卡9月7～18日；定點領現金10月15～17日；11月13日前登記匯款、12月1日入帳；12月31日前可申請補發，過期視為放棄。116年時程未公告。敬老卡全年可辦。"
       },
       "faqs": [
@@ -15485,7 +15634,10 @@
         "must_rent": null,
         "owns_vehicle": null,
         "cities": null,
-        "other": "免申請；由地方政府主動檢核匯款。"
+        "other": "免申請；由地方政府主動檢核匯款。",
+        "exceptions": {
+          "low_income": "領有身心障礙者生活補助、中低收入老人生活津貼、弱勢兒少生活扶助或特殊境遇家庭津貼的人也在加發對象內"
+        }
       },
       "documents": [
         "免申請、免檢附文件；若帳戶資料有變更，向戶籍地區公所或社會局更新撥款帳戶"
@@ -15521,6 +15673,7 @@
         "end_day": 31,
         "start_year": 2026,
         "end_year": 2027,
+        "extra_windows": null,
         "note": "發放期間115年1月至116年1月底，共13個月；116年1月為最後一個月。衛福部3月提出的六大社福津貼調增方案擬把這筆加發併入常態金額（23.5%調增含加發），若方案實施，加發會被調增後的金額取代而非疊加。"
       },
       "faqs": [
@@ -15636,7 +15789,10 @@
         "must_rent": null,
         "owns_vehicle": null,
         "cities": null,
-        "other": "方案尚待追加預算完成法定程序。"
+        "other": "方案尚待追加預算完成法定程序。",
+        "exceptions": {
+          "low_income": "領有身心障礙者生活補助、中低收入老人生活津貼、弱勢兒少生活扶助等指定津貼的人也在調增對象內"
+        }
       },
       "documents": [
         "免申請"
@@ -15665,6 +15821,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "原訂115年7月實施，需先完成115年度追加預算；截至115年11月未見衛福部公告實施日期，各縣市公告金額仍為調整前數字。116年經費規劃335.6億元。"
       },
       "faqs": [
@@ -15736,7 +15893,8 @@
         "是否已於115年7月或其後實施",
         "追加預算是否完成法定程序",
         "實施後是否追溯補發",
-        "每2年檢討機制的法制化進度"
+        "每2年檢討機制的法制化進度",
+        "調增後金額的算法：原金額乘 1.235 是否已含 115 年加發的 1,000／750／500 元，問答與算式兩處寫法不同"
       ],
       "topic": "low-income-thresholds",
       "verified_at": null,
@@ -15841,6 +15999,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "資格隨到隨辦，補助按月發放。就學生活補助每學期要送在學證明（台北市上學期8/1～12/31、下學期2/1～6/30受理）。金額依社會救助法第11條每4年按CPI調整，113年1月調整後適用至116年；若六大社福津貼調增23.5%方案完成追加預算，金額會再變動。"
       },
       "faqs": [
@@ -16068,7 +16227,8 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
-        "note": "全年隨到隨辦（高雄市大寮區公所流程表寫明「隨到隨辦」）。資格核准後溯自備齊文件當月生效。各縣市每年年底辦理次年度總清查，116年門檻會在114年底至115年底間由衛福部另行公告。"
+        "extra_windows": null,
+        "note": "全年隨到隨辦（高雄市大寮區公所流程表寫明「隨到隨辦」）。資格核准後溯自備齊文件當月生效。各縣市每年年底辦理次年度總清查，116年門檻由衛福部另行公告。"
       },
       "faqs": [
         {
@@ -16283,6 +16443,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "急難事由發生後3個月內申請；因傷病住院者從出院日起算3個月。超過3個月改走縣市政府急難救助。"
       },
       "faqs": [
@@ -16438,6 +16599,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "一年 3 次，都是節前 5 日內匯入。115 年發放日：春節 2/11（重審後取得資格者 4/1 補發）、端午 6/12、中秋 9/18，三次都已發完。116 年（2027 年）發放日未公告，依往年在春節、端午、中秋前 5 日內，未驗證。"
       },
       "faqs": [
@@ -16587,8 +16749,9 @@
         "start_day": 1,
         "end_month": 12,
         "end_day": 31,
-        "start_year": null,
-        "end_year": null,
+        "start_year": 2026,
+        "end_year": 2026,
+        "extra_windows": null,
         "note": "購買（發票日）期間 2023-01-01 至 2026-12-31；申請受理至 2027-01-31。經費用罄時經濟部得公告提前終止。2026-10-10 能源署表示額度剩不到 2 成，且無展延計畫；2027 年起不再有此 3,000 元補助，僅剩貨物稅退稅。"
       },
       "faqs": [
@@ -16745,6 +16908,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "每輛車日期不同：行車執照上的指定檢驗日期前後各 1 個月內（共約 2 個月）。滿 10 年的自用小客車每年有 2 個指定日期。逾 10 年的營業大客車只能在指定日期前 1 個月內驗。規定全年適用，2027 年沒有已公告的變動。"
       },
       "faqs": [
@@ -16881,8 +17045,9 @@
         "start_day": 1,
         "end_month": 12,
         "end_day": 10,
-        "start_year": null,
-        "end_year": null,
+        "start_year": 2026,
+        "end_year": 2026,
+        "extra_windows": null,
         "note": "補助期間 2022-12-11 至 2026-12-31；2026 年度購車須於 2026-12-10 前透過經銷商提出申請，逾期不補助。2027 年以後是否有新一期計畫尚未公告。"
       },
       "faqs": [
@@ -17027,6 +17192,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "115 年 5 月 31 日已滿 70 歲未滿 75 歲的人：自 115 年 5 月 31 日起 2 年內辦完，大約到 117 年（2028 年）5 月底，確切末日以監理機關通知為準（未驗證）。之後滿 70 歲的人：駕照有效期間屆滿（滿 70 歲）前 1 個月到屆滿後 2 年內。滿 75 歲：每 3 年一次，屆滿前後 1 個月內。職業駕照：每 3 年審驗日期前後 1 個月內，滿 60 歲每年一次。115 年 12 月 31 日起，75 歲以上有違規肇事紀錄的人換照前要先上駕訓課。"
       },
       "faqs": [
@@ -17186,6 +17352,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "每輛車日期不同：行車執照原發照月份的前 1 個月 1 日起，到後 1 個月月底止。例：發照月份 3 月，檢驗期限 2 月 1 日至 4 月 30 日。規定全年適用，2027 年沒有已公告的變動。"
       },
       "faqs": [
@@ -17335,8 +17502,9 @@
         "start_day": 1,
         "end_month": 12,
         "end_day": 31,
-        "start_year": null,
-        "end_year": null,
+        "start_year": 2026,
+        "end_year": 2026,
+        "extra_windows": null,
         "note": "補助期間至 2026-12-31 止，申請最晚 2027-01-10（逾期不受理）；另有「完成汰舊換新後 2 年內」的申請時限。空污抵換補助期間為 2025-01-01 至 2026-12-31。各收購方的收購量有限，額滿會關閉選項。2027 年以後是否延長未公告。"
       },
       "faqs": [
@@ -17526,6 +17694,7 @@
         "end_day": 31,
         "start_year": null,
         "end_year": 2029,
+        "extra_windows": null,
         "note": "發票交易日次日起 6 個月內提出申請，逾期不得退稅。法源（貨物稅條例第 11 條之 1）適用購買日到 2029 年（民國 118 年）12 月 31 日止，2029 年底前買的最晚可申請到 2030 年 6 月底。"
       },
       "faqs": [
@@ -17692,6 +17861,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "全年販售，隨買隨用（購票後30日內啟用，啟用起30日有效）。行政院已核定115～118年TPASS執行計畫（連結標題載363.8億元），115年初中央總預算延宕期間基北北桃由地方墊付未中斷。綠色運輸服務平臺加碼：115/12/31前完成註冊最高享3%加碼回饋。"
       },
       "faqs": [
@@ -17857,8 +18027,9 @@
         "start_day": 1,
         "end_month": 12,
         "end_day": 31,
-        "start_year": null,
-        "end_year": null,
+        "start_year": 2026,
+        "end_year": 2026,
+        "extra_windows": null,
         "note": "補助期間 2026-01-01 至 2026-12-31（發票須 2026 年開立，舊車須 2026 年內報廢回收），申請最晚 2027-01-10；領牌可到 2027-01-10。依申請順序辦理，當年度經費用罄得不予補助。"
       },
       "faqs": [
@@ -18011,8 +18182,9 @@
         "start_day": 1,
         "end_month": 12,
         "end_day": 31,
-        "start_year": null,
-        "end_year": null,
+        "start_year": 2026,
+        "end_year": 2026,
+        "extra_windows": null,
         "note": "115 年度補助期間 2026-01-01 至 2026-12-31（購車、報廢須在期間內完成），申請最晚 2027-01-10。每年預算約 1.565 億元依申請順序用罄為止。113～115 年計畫到 2026 年底結束，2027 年方案未公告。"
       },
       "faqs": [
@@ -18173,8 +18345,9 @@
         "start_day": 1,
         "end_month": 12,
         "end_day": 31,
-        "start_year": null,
-        "end_year": null,
+        "start_year": 2026,
+        "end_year": 2026,
+        "extra_windows": null,
         "note": "實施期間 2026-01-01 至 2026-12-31，補助受理至 2027-01-10。淘汰宣導報廢獎勵金有件數上限（2003 年前出廠 1,500 件、2004～2007 年 6 月出廠 5,000 件），其他項目名額有限。"
       },
       "faqs": [
@@ -18328,8 +18501,9 @@
         "start_day": 11,
         "end_month": 12,
         "end_day": 31,
-        "start_year": null,
-        "end_year": null,
+        "start_year": 2026,
+        "end_year": 2026,
+        "extra_windows": null,
         "note": "購車發票日 2026-01-01 至 2026-12-31；申請受理 2026-01-11 至 2027-01-10（以環保局受理日為準）。新購 6,000 名、各專案名額有限，用罄即止，剩餘名額可在申辦系統查詢。"
       },
       "faqs": [
@@ -18475,13 +18649,14 @@
         }
       ],
       "deadline": {
-        "type": "budget_until_exhausted",
-        "start_month": 1,
-        "start_day": 1,
-        "end_month": 12,
-        "end_day": 31,
+        "type": "ended",
+        "start_month": null,
+        "start_day": null,
+        "end_month": null,
+        "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "原補助期間 2026-01-01 至 2026-12-31；環保局 2026-08-11 更新公告「補助金額已用罄」，是否追加預算或恢復受理未公告。2027 年方案未公告。"
       },
       "faqs": [
@@ -18637,8 +18812,9 @@
         "start_day": 1,
         "end_month": 12,
         "end_day": 31,
-        "start_year": null,
-        "end_year": null,
+        "start_year": 2026,
+        "end_year": 2026,
+        "extra_windows": null,
         "note": "第一階段線上登錄 2026-01-01 至 2026-12-31；第二階段補件最晚 2027-01-10。早鳥 4,500 名、雙汰舊 1,000 名、新購 7,000 名依順序用罄即止；官網 2026 年已提示早鳥名額將額滿。"
       },
       "faqs": [
@@ -18696,7 +18872,8 @@
       "last_known_update": "2025-12",
       "confidence": "high",
       "unverified_fields": [
-        "環保局新聞稿原頁（epd.ntpc.gov.tw）本次回應 503，39,600 元與早鳥／雙汰舊名額數字來自搜尋摘要與電動機車產業網轉載"
+        "環保局新聞稿原頁（epd.ntpc.gov.tw）本次回應 503，39,600 元與早鳥／雙汰舊名額數字來自搜尋摘要與電動機車產業網轉載",
+        "雙汰舊方案最高 39,600 元的組成：照文字列的各項加總是 39,300 元"
       ],
       "topic": "energy-appliance-vehicle",
       "verified_at": null,
@@ -18763,6 +18940,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "全年可辦。憑證效期 5 年，可展延 3 年，合計 8 年；到期前 60 天至到期後 3 年內可辦展期。"
       },
       "faqs": [
@@ -18900,6 +19078,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "全年可辦。每次簽發效期 1 年，到期前 60 天起可在 App 免費「重新產製」延長 1 年，最長累計 8 年；過期未辦要重新付費申辦。"
       },
       "faqs": [
@@ -19017,6 +19196,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "全年可辦，沒有截止日。每年 5 月報稅或補助開放申請前先辦好，避開當天系統壅塞。"
       },
       "faqs": [
@@ -19152,6 +19332,7 @@
         "end_day": null,
         "start_year": null,
         "end_year": null,
+        "extra_windows": null,
         "note": "全年可用。下載的文件 8 小時內可預覽與轉存；臨櫃條碼有效 20 分鐘，過期要手動更新。"
       },
       "faqs": [

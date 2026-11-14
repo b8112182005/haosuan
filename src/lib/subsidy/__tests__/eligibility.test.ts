@@ -255,6 +255,56 @@ describe("evaluate：特定身分的年齡放寬（lower_age_for）", () => {
   });
 });
 
+describe("evaluate：硬條件的例外（conditions.exceptions）", () => {
+  const maternity = makeSubsidy({
+    conditions: { has_labor_insurance: true, exceptions: { has_labor_insurance: "退保後 1 年內生產也可以領" } },
+  });
+
+  it("不符合有例外的條件 → 可能符合，並把例外講出來", () => {
+    const r = evaluate(maternity, { ...renter, hasLaborInsurance: false });
+    expect(r.verdict).toBe("maybe");
+    expect(r.failed).toEqual([]);
+    expect(r.unknown.some((u) => u.includes("你沒有勞保") && u.includes("例外：退保後 1 年內生產也可以領"))).toBe(true);
+  });
+
+  it("符合條件時照常列為相符，不會多出待確認", () => {
+    const r = evaluate(maternity, { ...renter, hasLaborInsurance: true });
+    expect(r.verdict).toBe("eligible");
+    expect(r.unknown).toEqual([]);
+  });
+
+  it("別的條件沒有例外時，照樣判不符合", () => {
+    const s = makeSubsidy({
+      conditions: { has_labor_insurance: true, must_rent: true, exceptions: { has_labor_insurance: "退保後 1 年內生產也可以領" } },
+    });
+    const r = evaluate(s, { ...renter, hasLaborInsurance: false, isRenting: false });
+    expect(r.verdict).toBe("not_eligible");
+    expect(r.failed).toEqual(["限租屋者，你不是租屋"]);
+  });
+
+  it("年齡、名下有房、低收、失業的例外都會生效", () => {
+    const cases: Array<[Parameters<typeof makeSubsidy>[0]["conditions"], Partial<Profile>]> = [
+      [{ min_age: 18, exceptions: { age: "未成年已結婚也可以" } }, { age: 17 }],
+      [{ no_home_ownership: true, exceptions: { no_home_ownership: "小面積共有房屋不算" } }, { ownsHome: true }],
+      [{ low_income: "either", exceptions: { low_income: "領有指定津貼的人也算" } }, { lowIncome: "none" }],
+      [{ is_unemployed: true, exceptions: { is_unemployed: "打工收入低於基本工資仍可領" } }, { isUnemployed: false }],
+      [{ must_own_home: true, exceptions: { must_own_home: "只有土地也要繳" } }, { ownsHome: false }],
+    ];
+    for (const [conditions, patch] of cases) {
+      const r = evaluate(makeSubsidy({ conditions }), { ...renter, ...patch });
+      expect(r.verdict, JSON.stringify(conditions)).toBe("maybe");
+      expect(r.unknown.join(" "), JSON.stringify(conditions)).toContain("例外：");
+    }
+  });
+
+  it("地方項目的縣市與方案已結束沒有例外", () => {
+    const local = makeSubsidy({ city: "高雄市", conditions: { exceptions: { age: "不相干" } } });
+    expect(evaluate(local, renter).verdict).toBe("not_eligible");
+    const ended = makeSubsidy({ status_2026: "ended", conditions: { exceptions: { age: "不相干" } } });
+    expect(evaluate(ended, renter).verdict).toBe("not_eligible");
+  });
+});
+
 describe("evaluate：家長替子女查", () => {
   it("學生項目：本人不是學生但有學齡子女 → maybe", () => {
     const loan = makeSubsidy({ conditions: { is_student: true } });
@@ -357,6 +407,34 @@ describe("deadline", () => {
     // 一年內到期時照常顯示剩幾天
     const near = resolveDeadline(loan, { y: 2029, m: 7, d: 1 });
     expect(near.label).toBe("剩 30 天");
+  });
+
+  it("一年有兩段期間：開放中的優先，都沒開放就取最快開始的那一段", () => {
+    // 就學貸款：上學期 8/1～9/30、下學期 1/15～2 月底
+    const loan = {
+      type: "fixed_annual" as const,
+      start_month: 8,
+      start_day: 1,
+      end_month: 9,
+      end_day: 30,
+      extra_windows: [{ start_month: 1, start_day: 15, end_month: 2, end_day: 28 }],
+      note: "",
+    };
+    const november = resolveDeadline(loan, { y: 2026, m: 11, d: 15 });
+    expect(november.kind === "upcoming" && !november.open).toBe(true);
+    expect(november.label).toBe("每年 1/15 開始");
+    if (november.kind === "upcoming") expect(november.date).toEqual({ y: 2027, m: 2, d: 28 });
+
+    const february = resolveDeadline(loan, { y: 2027, m: 2, d: 1 });
+    expect(february.kind === "upcoming" && february.open).toBe(true);
+    expect(february.label).toBe("剩 27 天");
+
+    const august = resolveDeadline(loan, { y: 2027, m: 8, d: 20 });
+    expect(august.kind === "upcoming" && august.open && august.date.m === 9).toBe(true);
+
+    const march = resolveDeadline(loan, { y: 2027, m: 3, d: 10 });
+    expect(march.label).toBe("每年 8/1 開始");
+    expect(describeWindow(loan)).toBe("每年 8/1 ～ 9/30、1/15 ～ 2/28");
   });
 
   it("varies 不給日期", () => {

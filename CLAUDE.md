@@ -37,6 +37,7 @@ npx cap sync android && cd android && ./gradlew assembleDebug
 - 新增會蓋住畫面的面板或多步驟流程時，用 `useBackHandler` 接 Android 返回鍵；不要讓返回鍵直接換頁。
 - `android:allowBackup` 維持 `false`；隱私權政策寫的是資料不離開裝置、解除安裝即刪除。
 - 特定身分有較低年齡門檻（原住民 55 歲）時用 `conditions.lower_age_for`，不要把 `min_age` 寫死成一般門檻就算了。
+- 硬條件在條文裡有例外（退保後 1 年內仍可領、小面積共有房屋不算有房）時用 `conditions.exceptions`；條件只適用方案其中一類對象時整個拿掉。寫法見 `research/README.md`。
 - 期限：跨年度的一次性期間要填 `deadline.end_year`；各縣市、各校自訂或每年不固定的用 `type: "varies"`，不要填概估的月日（寫法見 `research/README.md`）。
 - `capacitor.config.ts` 的 `appId` 上架後不能改。
 - 金鑰（`android/*.jks`、`android/keystore.properties`）不進 git；CI 用 Secrets。

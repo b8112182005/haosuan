@@ -33,6 +33,7 @@ const CATEGORY_ORDER = ["housing", "family", "tax", "labor", "youth", "health", 
 const LEVELS = ["central", "local"];
 const STATUSES = ["active", "ended", "pending", "unknown"];
 const CONFIDENCES = ["high", "medium", "low"];
+const EXCEPTION_KEYS = ["age", "must_rent", "no_home_ownership", "must_own_home", "children", "is_pregnant_or_newborn", "is_married", "has_labor_insurance", "has_national_pension", "is_disabled", "low_income", "is_student", "is_unemployed", "is_employed", "income", "vehicle"];
 const DEADLINE_TYPES = ["fixed_annual", "rolling", "window", "budget_until_exhausted", "event_based", "varies", "ended", "unknown"];
 const CHANNEL_TYPES = ["online", "office", "mail", "phone", "app", "bank", "other"];
 const REQUIRED = [
@@ -70,6 +71,16 @@ function validateItem(item, origin) {
   }
   check(!(dl.end_year && !dl.end_month), `${where}: deadline.end_year 有填但沒有 end_month`);
   check(!(dl.start_year && !dl.end_year), `${where}: deadline.start_year 要搭配 end_year`);
+  for (const w of dl.extra_windows ?? []) {
+    const okMonth = (v) => Number.isInteger(v) && v >= 1 && v <= 12;
+    const okDay = (v) => Number.isInteger(v) && v >= 1 && v <= 31;
+    check(okMonth(w.start_month) && okDay(w.start_day) && okMonth(w.end_month) && okDay(w.end_day), `${where}: deadline.extra_windows 的月日不完整`);
+  }
+  check(!(dl.extra_windows?.length && dl.end_year), `${where}: deadline.extra_windows 不能和 end_year 一起用`);
+  // conditions.exceptions 的鍵打錯字會靜靜失效，在這裡擋
+  for (const key of Object.keys(item.conditions?.exceptions ?? {})) {
+    check(EXCEPTION_KEYS.includes(key), `${where}: conditions.exceptions 的鍵「${key}」不在清單`);
+  }
   // varies 不該帶月日：帶了會讓人以為有固定日期
   if (dl.type === "varies") check(dl.end_month == null && dl.start_month == null, `${where}: deadline.type=varies 不要填月日，日期寫在 note`);
   check(typeof item.official_url === "string" && /^https?:\/\//.test(item.official_url), `${where}: official_url 不是網址`);
@@ -103,6 +114,8 @@ function normalizeItem(item) {
       // 只辦一次、跨年度的期間才有年份（見 research/README.md）
       start_year: d.start_year ?? null,
       end_year: d.end_year ?? null,
+      // 一年有兩段以上申請期間時的第二段以後（見 research/README.md）
+      extra_windows: d.extra_windows ?? null,
       note: d.note ?? "",
     },
     faqs: (item.faqs ?? []).map((f) => ({ q: f.q, a: f.a, source_url: f.source_url ?? null })),
