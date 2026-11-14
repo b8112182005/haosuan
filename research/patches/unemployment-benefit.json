@@ -1,0 +1,53 @@
+{
+  "id": "unemployment-benefit",
+  "verdict": "confirmed",
+  "verified_at": "2026-11-14",
+  "checked": [
+    {
+      "field": "amount.text",
+      "value_in_data": "離職退保當月起前6個月平均月投保薪資的60%，按月發給，最長6個月；已滿45歲或領有身心障礙證明者最長9個月；每扶養1名眷屬加給10%，最多20%",
+      "official_value": "失業給付每月按申請人離職辦理本保險退保之當月起前6個月平均月投保薪資60%發給…每1人…10%加給給付，最多計至20%。失業給付最長發給6個月。但…已年滿45歲或領有社政主管機關核發之身心障礙證明者，最長發給9個月。",
+      "match": true,
+      "source_url": "https://www.bli.gov.tw/0005071.html"
+    },
+    {
+      "field": "amount.max",
+      "value_in_data": "27480",
+      "official_value": "官方頁面沒有直接寫每月最高金額；就業保險投保薪資上限現行為45,800元（中央社2026-05-07報導，勞動部仍在評估調高，尚未修法），45,800 × 60% = 27,480",
+      "match": true,
+      "source_url": "https://www.cna.com.tw/news/ahel/202605070067.aspx"
+    },
+    {
+      "field": "deadline.note",
+      "value_in_data": "離職退保後2年內要辦理求職登記並申請失業認定；給付自求職登記第15日起算",
+      "official_value": "就業保險法第25條：被保險人於離職退保後二年內…親自向公立就業服務機構辦理求職登記、申請失業認定；勞保局：自申請人向公立就業服務機構辦理求職登記之第15日起算",
+      "match": true,
+      "source_url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=N0050021"
+    },
+    {
+      "field": "deadline.type",
+      "value_in_data": "event_based",
+      "official_value": "沒有固定申請月日，依離職退保日起算2年內辦理",
+      "match": true,
+      "source_url": "https://www.bli.gov.tw/0005071.html"
+    },
+    {
+      "field": "status_2026",
+      "value_in_data": "active",
+      "official_value": "就業保險法最後修正日期為民國111年01月12日，第11、16、25條現行有效；勞保局失業給付頁面仍在線上。等待期14日縮為7日、提高投保薪資上限的修法只到草案與評估階段，查不到三讀或施行日期",
+      "match": true,
+      "source_url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=N0050021"
+    },
+    {
+      "field": "official_url",
+      "value_in_data": "https://www.bli.gov.tw/0015717.html",
+      "official_value": "HTTP 200",
+      "match": true,
+      "source_url": "https://www.bli.gov.tw/0015717.html"
+    }
+  ],
+  "corrections": [],
+  "official_url_ok": true,
+  "file_path": "/home/user/haosuan/research/patches/unemployment-benefit.json",
+  "summary": "看了勞保局「給付標準及期限」(0005071)、「失業給付如何領？領多久？」(0017377) 與全國法規資料庫的就業保險法第11、16、25條，60%、眷屬加給10%至多20%、6或9個月、離職退保後2年內辦求職登記、第15日起算都與資料相同，official_url 回 200。每月最高27,480元官方頁面沒有直接寫，是用投保薪資上限45,800元推算，維持在 unverified_fields。縮短等待期為7日與調高就保投保薪資上限的修法截至2026-11-14查不到通過或施行的依據，之後要再追。"
+}

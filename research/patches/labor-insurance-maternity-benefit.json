@@ -1,0 +1,53 @@
+{
+  "id": "labor-insurance-maternity-benefit",
+  "verdict": "confirmed",
+  "verified_at": "2026-11-14",
+  "checked": [
+    {
+      "field": "official_url",
+      "value_in_data": "https://child.bli.gov.tw/0000000025.html",
+      "official_value": "HTTP 200，頁面為勞保局給付資訊站「勞保生育給付」，內容含勞工生育補助說明",
+      "match": true,
+      "source_url": "https://child.bli.gov.tw/0000000025.html"
+    },
+    {
+      "field": "amount.text",
+      "value_in_data": "分娩或早產當月起前6個月平均月投保薪資 × 60日（2個月），一次給付；115年起每胎合計不足10萬元者補足至10萬元；雙生以上按比例增給（雙胞胎4個月、補足至20萬元）",
+      "official_value": "按被保險人分娩或早產當月（退保後生產者為退保當月）起，前6個月之平均月投保薪資一次給與生育給付60日（頁面最後更新日期 2025-10-31）",
+      "match": true,
+      "source_url": "https://www.bli.gov.tw/0017641.html"
+    },
+    {
+      "field": "amount.min",
+      "value_in_data": "100000",
+      "official_value": "自115年1月1日起實施「生育給付加給補助至10萬元」……政府另加給生育補助補足至每胎10萬元；給付資訊站：總共可以拿到10萬元（會和生育給付一起發，不用另外申請），多胞胎按比例增加",
+      "match": true,
+      "source_url": "https://events.bli.gov.tw/Activities/202601_04/"
+    },
+    {
+      "field": "deadline.note",
+      "value_in_data": "請求權自得請領之日（分娩或早產日）起5年內，逾期消滅不給付。勞工生育補助適用115年1月1日以後生產者。",
+      "official_value": "生育給付之請求權，自得請領之日起，因5年間不行使而消滅。／媽媽是在民國115年1月1日以後生下寶寶……可以在申請勞保生育給付時，同時申請勞工生育補助",
+      "match": true,
+      "source_url": "https://www.bli.gov.tw/0021402.html"
+    },
+    {
+      "field": "deadline.type",
+      "value_in_data": "event_based（無固定月日）",
+      "official_value": "無固定申請月日，以分娩或早產日起算5年請求權",
+      "match": true,
+      "source_url": "https://www.bli.gov.tw/0021402.html"
+    },
+    {
+      "field": "status_2026",
+      "value_in_data": "active",
+      "official_value": "勞保局三個頁面 2026-11-14 均可開啟且仍列出115年1月1日起每胎補足至10萬元；搜尋未找到115年下半年或116年停辦、調整金額的公告",
+      "match": true,
+      "source_url": "https://child.bli.gov.tw/0000000025.html"
+    }
+  ],
+  "corrections": [],
+  "official_url_ok": true,
+  "file_path": "/home/user/haosuan/research/patches/labor-insurance-maternity-benefit.json",
+  "summary": "看了勞保局給付資訊站（child.bli.gov.tw）、勞保FAQ 給付標準頁與請領時效頁、115年加給補助活動頁，官方網址回 200。60日給付、每胎補足至10萬元、115年1月1日以後生產適用、請求權5年都與資料一致，沒有要修正的欄位；WebSearch 也沒找到116年調整或停辦的公告。"
+}

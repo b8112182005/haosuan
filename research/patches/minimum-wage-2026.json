@@ -1,0 +1,60 @@
+{
+  "id": "minimum-wage-2026",
+  "verdict": "confirmed",
+  "verified_at": "2026-11-14",
+  "checked": [
+    {
+      "field": "amount.text / amount.min / amount.max（115 年月薪）",
+      "value_in_data": "月薪 29,500 元（min 29500、max 29500，2025 年為 28,590 元）",
+      "official_value": "自115年1月1日起，每月最低工資由28,590元調整至29,500元，調升910元",
+      "match": true,
+      "source_url": "https://www.mol.gov.tw/1607/1632/1633/84947/post"
+    },
+    {
+      "field": "amount.formula（115 年時薪）",
+      "value_in_data": "時薪 196 元（2025 年為 190 元）",
+      "official_value": "每小時最低工資則比照每月最低工資之調幅，由190元調整至196元",
+      "match": true,
+      "source_url": "https://www.mol.gov.tw/1607/1632/1633/84947/post"
+    },
+    {
+      "field": "amount.text（116 年起金額）",
+      "value_in_data": "2027年1月1日起：月薪30,900元、時薪205元（調幅4.745%）",
+      "official_value": "自116年1月1日起，每月最低工資由29,500元調整至30,900元，調升1,400元，調幅4.745％；每小時由196元調整至205元",
+      "match": true,
+      "source_url": "https://www.mol.gov.tw/1607/1632/1633/99195/"
+    },
+    {
+      "field": "deadline（適用期間 1/1～12/31）",
+      "value_in_data": "fixed_annual，1月1日至12月31日；2026-01-01至2026-12-31適用29,500元／196元，2027-01-01起適用30,900元／205元",
+      "official_value": "115 年標準「自115年1月1日起」；116 年標準「自116年1月1日起」",
+      "match": true,
+      "source_url": "https://www.mol.gov.tw/1607/1632/1633/99195/"
+    },
+    {
+      "field": "deadline.note（審議會決議日）",
+      "value_in_data": "最低工資審議會2026年9月24日決議",
+      "official_value": "勞動部新聞稿發布日期:2026-09-24",
+      "match": true,
+      "source_url": "https://www.mol.gov.tw/1607/1632/1633/99195/"
+    },
+    {
+      "field": "status_2026",
+      "value_in_data": "active",
+      "official_value": "115 年標準 29,500 元／196 元施行中，116 年 1 月 1 日才換新標準",
+      "match": true,
+      "source_url": "https://www.mol.gov.tw/1607/1632/1633/84947/post"
+    },
+    {
+      "field": "official_url",
+      "value_in_data": "https://www.mol.gov.tw/1607/1632/1633/84947/post",
+      "official_value": "HTTP 200，頁面標題為「最低工資連十漲!審議會決定自115年1月1日起，每月最低工資調升至29,500元，每小時最低工資調升至196元」",
+      "match": true,
+      "source_url": "https://www.mol.gov.tw/1607/1632/1633/84947/post"
+    }
+  ],
+  "corrections": [],
+  "official_url_ok": true,
+  "file_path": "/home/user/haosuan/research/patches/minimum-wage-2026.json",
+  "summary": "讀了勞動部 115 年與 116 年最低工資兩則新聞稿，115 年月薪 29,500 元、時薪 196 元，116 年 1 月 1 日起 30,900 元、205 元，金額與適用期間都和資料相同，官方網址回 200。資料裡「勞動部 2026-10-16 發布」這個日期在這兩頁找不到（新聞稿只寫將陳報行政院核定，搜尋結果顯示行政院已核定），沒有官方頁面顯示不同，所以未列修正。"
+}

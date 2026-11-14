@@ -1,6 +1,6 @@
 {
   "version": "2026-11-14",
-  "generated_at": "2026-11-14T17:00:38.335Z",
+  "generated_at": "2026-11-14T17:04:53.421Z",
   "items": [
     {
       "id": "rent-subsidy-central-300b",
@@ -3466,8 +3466,8 @@
         "公共化托育低收入戶／弱勢家庭加發後金額（以新北市公告9,000元為準，衛福部全國要點原文未核對）"
       ],
       "topic": "childcare-and-birth",
-      "verified_at": null,
-      "verification_summary": null
+      "verified_at": "2026-11-14",
+      "verification_summary": "看了衛福部專區（115-07-13 更新，HTTP 200）與新北市社會局補助頁：公共化 7,000 元起、準公共 13,000 元起、胎次與身分加發、送托後 15 日內申請，都與資料一致，115 年仍在辦理。搜尋 1 次沒找到 115 年下半年或 116 年調整金額的公告。formula 寫公共化低收及弱勢加 4,000 元，但公共化每月上限是 9,000 元（amount.text 已寫對），這點只有新北市頁面為據，衛福部作業要點原文這次沒打開，unverified_fields 那一項維持不變。"
     },
     {
       "id": "disabled-preschooler-education-subsidy",
@@ -4476,8 +4476,8 @@
         "勞工生育補助差額補發的實際入帳時程（勞動部僅說明需待預算完成審議）"
       ],
       "topic": "childcare-and-birth",
-      "verified_at": null,
-      "verification_summary": null
+      "verified_at": "2026-11-14",
+      "verification_summary": "看了勞保局給付資訊站（child.bli.gov.tw）、勞保FAQ 給付標準頁與請領時效頁、115年加給補助活動頁，官方網址回 200。60日給付、每胎補足至10萬元、115年1月1日以後生產適用、請求權5年都與資料一致，沒有要修正的欄位；WebSearch 也沒找到116年調整或停辦的公告。"
     },
     {
       "id": "maternity-taxi-subsidy",
@@ -7912,8 +7912,8 @@
         "最低工資法罰鍰範圍2萬至100萬元（依法條記憶，未在本次讀取頁面核對）"
       ],
       "topic": "labor-benefits",
-      "verified_at": null,
-      "verification_summary": null
+      "verified_at": "2026-11-14",
+      "verification_summary": "讀了勞動部 115 年與 116 年最低工資兩則新聞稿，115 年月薪 29,500 元、時薪 196 元，116 年 1 月 1 日起 30,900 元、205 元，金額與適用期間都和資料相同，官方網址回 200。資料裡「勞動部 2026-10-16 發布」這個日期在這兩頁找不到（新聞稿只寫將陳報行政院核定，搜尋結果顯示行政院已核定），沒有官方頁面顯示不同，所以未列修正。"
     },
     {
       "id": "labor-insurance-relief-loan",
@@ -8576,8 +8576,8 @@
         "投保薪資分級表上限45,800元對應之每月最高給付27,480元為依分級表推算"
       ],
       "topic": "labor-benefits",
-      "verified_at": null,
-      "verification_summary": null
+      "verified_at": "2026-11-14",
+      "verification_summary": "看了勞保局「給付標準及期限」(0005071)、「失業給付如何領？領多久？」(0017377) 與全國法規資料庫的就業保險法第11、16、25條，60%、眷屬加給10%至多20%、6或9個月、離職退保後2年內辦求職登記、第15日起算都與資料相同，official_url 回 200。每月最高27,480元官方頁面沒有直接寫，是用投保薪資上限45,800元推算，維持在 unverified_fields。縮短等待期為7日與調高就保投保薪資上限的修法截至2026-11-14查不到通過或施行的依據，之後要再追。"
     },
     {
       "id": "parental-leave-allowance",
@@ -8747,8 +8747,8 @@
       "confidence": "high",
       "unverified_fields": [],
       "topic": "childcare-and-birth",
-      "verified_at": null,
-      "verification_summary": null
+      "verified_at": "2026-11-14",
+      "verification_summary": "看了勞保局就保FAQ（0020785，2026-10-27 更新）、勞保局彈性育嬰留停活動頁、就業保險法第24條。60%津貼＋20%補助合計8成、每人最長6個月、父母合計12個月、不足月按日數/30計算、請求權2年，都與資料相符；115年仍辦理，搜尋一次未見116年調整公告。"
     },
     {
       "id": "early-reemployment-bonus",
@@ -15323,8 +15323,8 @@
         "申復期限各縣市規定（僅高雄市流程表載明文到30日內，其他縣市依各自作業規定）"
       ],
       "topic": "low-income-thresholds",
-      "verified_at": null,
-      "verification_summary": null
+      "verified_at": "2026-11-14",
+      "verification_summary": "讀了衛福部「115年度低收入戶、中低收入戶資格審核標準」與「115年度低收入戶類別條件一覽表」兩份 PDF，以及高雄市大寮區公所申請流程表。8 個地區的低收、中低收所得上限、動產與不動產限額共 48 個數字逐一對上，申請期間為隨到隨辦，官方網址回 200。搜尋 1 次沒找到 116 年度門檻公告，這部分未能確認，資料不需修正。"
     },
     {
       "id": "emergency-relief-and-hardship-aid",
