@@ -209,6 +209,8 @@ export interface SubsidyDataset {
   /** 資料版本，YYYY-MM-DD；app 用它判斷遠端資料是否較新 */
   version: string;
   generated_at: string;
+  /** 內容雜湊；版本日期相同時用來分辨內容有沒有變 */
+  hash?: string;
   items: Subsidy[];
   general_faqs: GeneralFaq[];
 }

@@ -6,9 +6,12 @@ import { CATEGORY_ORDER } from "./types";
  * 精簡索引：client component 可以直接 import（會進 client bundle，約完整資料的四分之一）。
  * 完整資料（文件、步驟、問答、來源）在 ./data.ts，只給 server component 用。
  */
-const INDEX = index as unknown as { version: string; items: SubsidySummary[] };
+const INDEX = index as unknown as { version: string; generated_at?: string; hash?: string; items: SubsidySummary[] };
 
 export const DATA_VERSION = INDEX.version;
+/** 內建資料的產生時間與內容雜湊：版本日期相同時，用來判斷網站上的資料是不是同一天稍晚重建的 */
+export const DATA_GENERATED_AT = INDEX.generated_at ?? "";
+export const DATA_HASH = INDEX.hash ?? "";
 
 export const SUBSIDY_INDEX: SubsidySummary[] = INDEX.items;
 

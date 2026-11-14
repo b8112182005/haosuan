@@ -12,15 +12,23 @@ function formatNumber(n: number): string {
   return n.toLocaleString("zh-TW");
 }
 
-/** 「元/月（未加碼之基本上限）」→「元/月」；不是金額或點數的單位回 null */
+/**
+ * 「元/月（未加碼之基本上限）」→「元/月」；不是金額或點數的單位回 null。
+ * 括號裡註明是罰鍰、家長自付、自提、付給院所的金額、門檻時也回 null：
+ * 那些數字不是民眾領到的錢，拿來當「補助金額」的標題會誤導（定期檢驗的逾期罰鍰曾顯示成 900～1,800 元）。
+ */
 function shortUnit(unit: string | null): string | null {
   if (!unit) return "元";
+  if (/[（(][^）)]*(罰|自付|自提|院所|門檻)/.test(unit)) return null;
   const u = unit.replace(/[（(].*$/, "").replace(/／/g, "/").replace(/；.*$/, "").trim();
   return /^[元點]/.test(u) ? u : null;
 }
 
 function firstClause(text: string, max = 28): string {
-  const clause = text.split(/[；;。\n]/)[0].trim();
+  let clause = text.split(/[；;。\n]/)[0].trim();
+  // 分號落在括號裡時會切出「全額免繳學費（公立學校註冊時直接免收」這種半截括號，把沒收尾的括號整段拿掉
+  const open = clause.lastIndexOf("（");
+  if (open > 0 && !clause.slice(open).includes("）")) clause = clause.slice(0, open).trim();
   return clause.length > max ? `${clause.slice(0, max)}…` : clause;
 }
 
@@ -30,7 +38,13 @@ export function amountHeadline(amount: SubsidyAmount): string {
   if (unit && max != null && max > 0) {
     // 「1,500 萬」後面直接接「元」，不留空格（1,500 萬元）；一般數字與單位之間留一格
     const withUnit = (n: string) => (n.endsWith("萬") ? `${n}${unit}` : `${n} ${unit}`);
-    if (min != null && min > 0 && min !== max) return `${formatNumber(min)}～${withUnit(formatNumber(max))}`;
+    if (min != null && min > 0 && min !== max) {
+      // 兩端一個用「萬」一個不用（1,500～12 萬元）很難讀：這時兩端都寫完整數字
+      const lo = formatNumber(min);
+      const hi = formatNumber(max);
+      if (lo.endsWith("萬") !== hi.endsWith("萬")) return `${min.toLocaleString("zh-TW")}～${max.toLocaleString("zh-TW")} ${unit}`;
+      return `${lo}～${withUnit(hi)}`;
+    }
     if (min != null && min === max) return withUnit(formatNumber(max));
     return `最高 ${withUnit(formatNumber(max))}`;
   }

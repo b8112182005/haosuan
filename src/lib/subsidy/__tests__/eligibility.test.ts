@@ -305,6 +305,77 @@ describe("evaluate：硬條件的例外（conditions.exceptions）", () => {
   });
 });
 
+describe("evaluate：資料寫 false 的條件是「不能有」", () => {
+  it("限沒有勞保、國保的人（無保險生母補助）", () => {
+    const s = makeSubsidy({ conditions: { is_pregnant_or_newborn: true, has_labor_insurance: false, has_national_pension: false } });
+    const mom = { ...renter, isPregnantOrNewborn: true };
+    const insured = evaluate(s, { ...mom, hasLaborInsurance: true, hasNationalPension: false });
+    expect(insured.verdict).toBe("not_eligible");
+    expect(insured.failed).toEqual(["限沒有勞保的人，你有勞保"]);
+    expect(evaluate(s, { ...mom, hasLaborInsurance: false, hasNationalPension: true }).verdict).toBe("not_eligible");
+    expect(evaluate(s, { ...mom, hasLaborInsurance: false, hasNationalPension: false }).verdict).toBe("eligible");
+    expect(evaluate(s, { ...mom, hasLaborInsurance: null, hasNationalPension: null }).verdict).toBe("maybe");
+  });
+
+  it("限未在學的人", () => {
+    const s = makeSubsidy({ conditions: { is_student: false } });
+    expect(evaluate(s, { ...renter, isStudent: true }).verdict).toBe("not_eligible");
+    expect(evaluate(s, { ...renter, isStudent: false }).verdict).toBe("eligible");
+    expect(evaluate(s, { ...renter, isStudent: null }).verdict).toBe("maybe");
+  });
+
+  it("is_employed:false 等同限沒有工作的人", () => {
+    const s = makeSubsidy({ conditions: { is_employed: false } });
+    expect(evaluate(s, { ...renter, isUnemployed: false }).verdict).toBe("not_eligible");
+    expect(evaluate(s, { ...renter, isUnemployed: true }).verdict).toBe("eligible");
+  });
+
+  it("must_own_home:false、is_elderly:false 沒有意義，不影響結果", () => {
+    const s = makeSubsidy({ conditions: { must_own_home: false, is_elderly: false } });
+    expect(evaluate(s, { ...renter, ownsHome: true, age: 80 }).verdict).toBe("eligible");
+  });
+});
+
+describe("evaluate：所得門檻、懷孕、期限已過", () => {
+  it("有所得門檻類型但沒有數字：歸可能符合並顯示門檻說明", () => {
+    const s = makeSubsidy({ conditions: { must_rent: true, income_limit_type: "per_capita_monthly", income_limit_note: "每人每月平均所得低於最低生活費 3 倍" } });
+    const r = evaluate(s, { ...renter, monthlyIncome: 300_000 });
+    expect(r.verdict).toBe("maybe");
+    expect(r.unknown.join(" ")).toContain("每人每月平均所得低於最低生活費 3 倍");
+  });
+
+  it("門檻類型是 none、列冊身分，或根本沒寫類型時不算條件", () => {
+    for (const income_limit_type of ["none", "listed_household", null]) {
+      const s = makeSubsidy({ conditions: { income_limit_type, income_limit_note: "不排富" } });
+      expect(evaluate(s, renter).verdict, String(income_limit_type)).toBe("eligible");
+    }
+  });
+
+  it("懷第二胎：現在的孩子超過年齡，0 歲起算的子女條件歸可能符合", () => {
+    const s = makeSubsidy({ conditions: { has_children: true, child_age_min: 0, child_age_max: 2 } });
+    const pregnantWithOlder = { ...renter, hasChildren: true, childrenAges: [5], isPregnantOrNewborn: true };
+    const r = evaluate(s, pregnantWithOlder);
+    expect(r.verdict).toBe("maybe");
+    expect(r.unknown.join(" ")).toContain("出生後即符合");
+    // 沒有懷孕就照常不符合；條件不是從 0 歲起算的也不適用
+    expect(evaluate(s, { ...pregnantWithOlder, isPregnantOrNewborn: false }).verdict).toBe("not_eligible");
+    const school = makeSubsidy({ conditions: { has_children: true, child_age_min: 6, child_age_max: 12 } });
+    expect(evaluate(school, pregnantWithOlder).verdict).toBe("not_eligible");
+  });
+
+  it("給了今天的日期時，期限已過的項目判不符合", () => {
+    const s = makeSubsidy({
+      deadline: { type: "window", start_month: 1, start_day: 1, end_month: 12, end_day: 31, end_year: 2026, note: "" },
+    });
+    expect(evaluate(s, renter, { y: 2026, m: 12, d: 31 }).verdict).toBe("eligible");
+    const after = evaluate(s, renter, { y: 2027, m: 1, d: 1 });
+    expect(after.verdict).toBe("not_eligible");
+    expect(after.failed[0]).toContain("申請期限已過");
+    // 沒給日期（單筆判斷）不看期限
+    expect(evaluate(s, renter).verdict).toBe("eligible");
+  });
+});
+
 describe("evaluate：家長替子女查", () => {
   it("學生項目：本人不是學生但有學齡子女 → maybe", () => {
     const loan = makeSubsidy({ conditions: { is_student: true } });

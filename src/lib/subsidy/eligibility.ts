@@ -38,8 +38,15 @@ const fmt = (n: number) => n.toLocaleString("zh-TW");
 type Fail = (field: ConditionExceptionKey, text: string) => void;
 
 function checkIncome(c: SubsidyConditions, p: Profile, out: Evaluation, fail: Fail) {
-  if (c.income_limit_value == null) return;
   const type = (c.income_limit_type ?? "").toLowerCase();
+  if (c.income_limit_value == null) {
+    // 資料寫了門檻類型（每人每月平均所得、家庭總收入…）卻沒有可比對的數字：門檻確實存在，app 判斷不了，
+    // 不能當成沒有條件。none 是沒有門檻；listed_* 是「列冊低收」這類身分，已由 low_income 處理。
+    if (type && type !== "none" && !type.startsWith("listed") && c.income_limit_note) {
+      out.unknown.push(`所得或財產門檻：${c.income_limit_note}（要用全家資料核對）`);
+    }
+    return;
+  }
   const limit = c.income_limit_value;
 
   // 稅率門檻（例如「適用稅率 20% 以上不能扣」）：不是金額，交給使用者對照自己的報稅級距
@@ -109,6 +116,8 @@ function checkChildren(c: SubsidyConditions, p: Profile, out: Evaluation, fail: 
   }
   const hit = p.childrenAges.some((a) => a >= min && a <= max);
   if (hit) out.matched.push(`有${rangeLabel}`);
+  // 懷第二胎：現在的孩子超過年齡，但即將出生的那一個會符合
+  else if (p.isPregnantOrNewborn && min === 0) out.unknown.push(`需有${rangeLabel}；你的子女 ${p.childrenAges.join("、")} 歲不在範圍，但你懷孕中或有新生兒，出生後即符合`);
   else fail("children", `需有${rangeLabel}，你的子女 ${p.childrenAges.join("、")} 歲不在範圍`);
 }
 
@@ -198,6 +207,13 @@ function checkAge(c: SubsidyConditions, p: Profile, out: Evaluation, fail: Fail)
  * 本人不是學生但有 6～24 歲子女時歸 maybe，不直接排除。
  */
 function checkStudent(c: SubsidyConditions, p: Profile, out: Evaluation, fail: Fail) {
+  if (c.is_student === false) {
+    // 限未在學（初次尋職、青年就業獎勵這類）
+    if (p.isStudent === null) out.unknown.push("限未在學的人，你沒填");
+    else if (p.isStudent) fail("is_student", "限未在學的人，你是在學學生");
+    else out.matched.push("未在學");
+    return;
+  }
   if (c.is_student !== true) return;
   if (p.isStudent === true) {
     out.matched.push("在學學生");
@@ -226,7 +242,29 @@ function checkBool(
   else fail(field, labels.fail);
 }
 
-export function evaluate<S extends SubsidySummary>(subsidy: S, profile: Profile): Evaluation<S> {
+/**
+ * 資料寫 false 的條件＝「不能有」：無保險生母補助限沒有勞保、國保的人，國保保費補助限沒有勞保的人。
+ * 只用在勞保與國保；其他欄位的 false 是研究員寫的「不需要」，沒有意義（must_own_home:false、is_elderly:false）。
+ */
+function checkMustNot(
+  field: ConditionExceptionKey,
+  required: boolean | null | undefined,
+  value: boolean | null,
+  labels: { ok: string; fail: string; unknown: string },
+  out: Evaluation,
+  fail: Fail
+) {
+  if (required !== false) return;
+  if (value === null) out.unknown.push(labels.unknown);
+  else if (value) fail(field, labels.fail);
+  else out.matched.push(labels.ok);
+}
+
+/**
+ * today 有給的時候，申請期限已過的項目（有 end_year 而且過了、或期限型別是 ended）直接判不符合：
+ * 內建資料要等發新版 app 才會換掉，過期的項目不能一直掛在「條件相符」。
+ */
+export function evaluate<S extends SubsidySummary>(subsidy: S, profile: Profile, today?: LocalDate): Evaluation<S> {
   const out: Evaluation<S> = { subsidy, verdict: "maybe", matched: [], failed: [], unknown: [], notes: [] };
   const c = subsidy.conditions ?? {};
   const exceptions = c.exceptions ?? {};
@@ -236,9 +274,12 @@ export function evaluate<S extends SubsidySummary>(subsidy: S, profile: Profile)
     else out.failed.push(text);
   };
 
-  // 方案結束與地方項目的縣市是沒有例外的硬條件，直接記在 failed
+  // 方案結束、期限已過與地方項目的縣市是沒有例外的硬條件，直接記在 failed
   if (subsidy.status_2026 === "ended") {
     out.failed.push("方案已結束");
+  } else if (today) {
+    const deadline = resolveSubsidyDeadline(subsidy, today);
+    if (deadline.kind === "ended") out.failed.push(`申請期限已過（${deadline.label}）`);
   }
 
   // 縣市：地方項目（subsidy.city）是硬條件；全國項目附的 cities 只是資料整理到的代表縣市
@@ -271,10 +312,14 @@ export function evaluate<S extends SubsidySummary>(subsidy: S, profile: Profile)
   // 身分
   checkBool("has_labor_insurance", c.has_labor_insurance, profile.hasLaborInsurance, { ok: "勞保被保險人", fail: "限勞保被保險人，你沒有勞保", unknown: "限勞保被保險人，你沒填" }, out, fail);
   checkBool("has_national_pension", c.has_national_pension, profile.hasNationalPension, { ok: "國民年金被保險人", fail: "限國民年金被保險人，你沒有國保", unknown: "限國民年金被保險人，你沒填" }, out, fail);
+  checkMustNot("has_labor_insurance", c.has_labor_insurance, profile.hasLaborInsurance, { ok: "沒有勞保", fail: "限沒有勞保的人，你有勞保", unknown: "限沒有勞保的人，你沒填" }, out, fail);
+  checkMustNot("has_national_pension", c.has_national_pension, profile.hasNationalPension, { ok: "沒有國保", fail: "限沒有國民年金保險的人，你有國保", unknown: "限沒有國民年金保險的人，你沒填" }, out, fail);
   checkBool("is_disabled", c.is_disabled, profile.isDisabled, { ok: "領有身心障礙證明", fail: "限領有身心障礙證明者", unknown: "限領有身心障礙證明者，你沒填" }, out, fail);
   checkLowIncome(c, profile, out, fail);
   checkStudent(c, profile, out, fail);
-  checkBool("is_unemployed", c.is_unemployed, profile.isUnemployed, { ok: "目前沒有工作", fail: "限目前沒有工作（待業或失業）的人", unknown: "限待業或失業中，你沒填" }, out, fail);
+  // is_employed:false 和 is_unemployed:true 是同一件事，資料裡兩種寫法都有
+  const needUnemployed = c.is_unemployed === true || c.is_employed === false;
+  checkBool("is_unemployed", needUnemployed, profile.isUnemployed, { ok: "目前沒有工作", fail: "限目前沒有工作（待業或失業）的人", unknown: "限待業或失業中，你沒填" }, out, fail);
   if (c.is_employed === true) {
     if (profile.isUnemployed === null) out.unknown.push("限在職者，你沒填");
     else if (profile.isUnemployed) fail("is_employed", "限在職者，你目前失業中");
@@ -305,7 +350,7 @@ const VERDICT_RANK: Record<Verdict, number> = { eligible: 0, maybe: 1, not_eligi
  * today 由呼叫端（client）提供，才能依使用者裝置的日期排序。
  */
 export function evaluateAll<S extends SubsidySummary>(subsidies: S[], profile: Profile, today: LocalDate): Evaluation<S>[] {
-  const rows = subsidies.map((s) => evaluate(s, profile));
+  const rows = subsidies.map((s) => evaluate(s, profile, today));
   const daysOf = (s: S) => {
     const st = resolveSubsidyDeadline(s, today);
     return st.kind === "upcoming" && st.open ? st.daysLeft : 10_000;

@@ -40,6 +40,8 @@ export default function CheckWizard() {
   const [profile, setProfile] = useState<Profile>(EMPTY_PROFILE);
   const [stepIndex, setStepIndex] = useState(0);
   const [mode, setMode] = useState<"loading" | "wizard" | "results">("loading");
+  // 從結果頁按「修改條件」進來的：這時第 1 題按返回鍵要回結果頁，而不是離開試算
+  const [editing, setEditing] = useState(false);
 
   // 上次填過就直接顯示結果（條件還能改）
   useEffect(() => {
@@ -58,14 +60,12 @@ export default function CheckWizard() {
     };
   }, []);
 
-  // Android 返回鍵：答到第 2 題以後按返回是回上一題，不是離開試算（第 1 題才離開）
-  useBackHandler(mode === "wizard" && stepIndex > 0, () => setStepIndex((i) => Math.max(0, i - 1)));
-
   const step = STEPS[stepIndex];
   const update = (patch: Partial<Profile>) => setProfile((p) => ({ ...p, ...patch }));
 
   const finish = async () => {
     await saveProfile(profile);
+    setEditing(false);
     setMode("results");
     if (typeof window !== "undefined") window.scrollTo({ top: 0 });
   };
@@ -74,8 +74,16 @@ export default function CheckWizard() {
     await clearProfile();
     setProfile(EMPTY_PROFILE);
     setStepIndex(0);
+    setEditing(false);
     setMode("wizard");
   };
+
+  // Android 返回鍵：答到第 2 題以後按返回是回上一題，不是離開試算。
+  // 第 1 題：第一次填的人照常離開；修改條件的人回結果頁，改過的答案一起存（不存的話改了等於沒改）。
+  useBackHandler(mode === "wizard" && (stepIndex > 0 || editing), () => {
+    if (stepIndex > 0) setStepIndex((i) => Math.max(0, i - 1));
+    else void finish();
+  });
 
   const evaluations = useMemo<Evaluation[] | null>(() => {
     if (mode !== "results" || !today) return null;
@@ -87,7 +95,7 @@ export default function CheckWizard() {
   }
 
   if (mode === "results") {
-    return <Results evaluations={evaluations} profile={profile} onEdit={() => { setStepIndex(0); setMode("wizard"); }} onReset={reset} />;
+    return <Results evaluations={evaluations} profile={profile} onEdit={() => { setStepIndex(0); setEditing(true); setMode("wizard"); }} onReset={reset} />;
   }
 
   return (
@@ -299,10 +307,19 @@ function Results({
     profile.age !== null ? `${profile.age} 歲` : null,
     profile.monthlyIncome !== null ? `月收入 ${profile.monthlyIncome.toLocaleString("zh-TW")}` : null,
     profile.isRenting ? "租屋" : profile.ownsHome ? "有房" : null,
+    profile.isMarried ? "已婚" : null,
     profile.hasChildren ? `子女 ${profile.childrenAges.length || "有"}` : null,
+    profile.isPregnantOrNewborn ? "懷孕或有新生兒" : null,
+    profile.hasLaborInsurance ? "有勞保" : null,
+    profile.hasNationalPension ? "有國保" : null,
+    profile.isStudent ? "學生" : null,
+    profile.isUnemployed ? "待業中" : null,
     profile.isDisabled ? "身障" : null,
     profile.lowIncome === "low" ? "低收" : profile.lowIncome === "mid_low" ? "中低收" : null,
+    profile.ownsVehicle === "scooter" ? "有機車" : profile.ownsVehicle === "car" ? "有汽車" : profile.ownsVehicle === "both" ? "有汽機車" : null,
   ].filter(Boolean) as string[];
+  // 回答「沒有」「不是」也算有回答，只是不會變成標籤
+  const answered = Object.entries(profile).filter(([key, value]) => key !== "childrenAges" && value !== null && value !== "").length;
 
   return (
     <div className="space-y-6">
@@ -311,8 +328,10 @@ function Results({
           <div>
             <p className="text-sm text-muted-foreground">你的條件</p>
             <div className="mt-1 flex flex-wrap gap-1.5">
-              {summaryChips.length === 0 ? (
-                <span className="text-sm text-muted-foreground">沒有填任何條件，結果都會是「可能符合」</span>
+              {answered === 0 ? (
+                <span className="text-sm text-muted-foreground">沒有填任何條件，有門檻的項目都會列在「可能符合」</span>
+              ) : summaryChips.length === 0 ? (
+                <span className="text-sm text-muted-foreground">已回答 {answered} 題</span>
               ) : (
                 summaryChips.map((c) => (
                   <span key={c} className="rounded-full bg-muted px-2.5 py-1 text-xs">{c}</span>
@@ -535,7 +554,9 @@ function Toggle({ label, value, onChange }: { label: string; value: boolean | nu
 }
 
 function ChildrenAges({ ages, onChange }: { ages: number[]; onChange: (ages: number[]) => void }) {
-  const options = [0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 18];
+  // 0～24 歲每一歲都要能選：很多門檻卡在特定歲數（17 歲以下、6 歲以下、22 歲以下），
+  // 只給 15、18 的話 17 歲的孩子只能選 18，結果會被判成不符合
+  const options = Array.from({ length: 25 }, (_, age) => age);
   return (
     <div>
       <div className="flex flex-wrap gap-2">

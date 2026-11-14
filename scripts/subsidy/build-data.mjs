@@ -14,6 +14,7 @@
  * 輸出 src/data/subsidies.json 與 public/data/subsidies.json（兩份相同），以及列表用的精簡索引 src/data/subsidies-index.json。
  * 這支腳本會做 schema 檢查：缺必要欄位、enum 值不對、id 重複都會直接失敗，不讓壞資料進 app。
  */
+import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -27,12 +28,20 @@ const argValue = (name, fallback) => {
 const researchDir = path.resolve(ROOT, argValue("--research", "research"));
 const today = new Date().toISOString().slice(0, 10);
 const version = argValue("--version", today);
+if (!/^\d{4}-\d{2}-\d{2}$/.test(version)) {
+  console.error(`--version 要是 YYYY-MM-DD，收到「${version}」。app 用字串比大小判斷哪一版比較新。`);
+  process.exit(1);
+}
 
 const CATEGORIES = ["housing", "family", "tax", "labor", "senior_disability", "energy_transport", "youth", "health", "low_income", "other"];
 const CATEGORY_ORDER = ["housing", "family", "tax", "labor", "youth", "health", "senior_disability", "low_income", "energy_transport", "other"];
 const LEVELS = ["central", "local"];
 const STATUSES = ["active", "ended", "pending", "unknown"];
 const CONFIDENCES = ["high", "medium", "low"];
+// 和 src/lib/subsidy/types.ts 的 TAIWAN_CITIES 同一份清單；資料一律寫「台」不寫「臺」，試算是用字串比對縣市
+const TAIWAN_CITIES = ["台北市", "新北市", "桃園市", "台中市", "台南市", "高雄市", "基隆市", "新竹市", "嘉義市", "新竹縣", "苗栗縣", "彰化縣", "南投縣", "雲林縣", "嘉義縣", "屏東縣", "宜蘭縣", "花蓮縣", "台東縣", "澎湖縣", "金門縣", "連江縣"];
+const okMonth = (v) => Number.isInteger(v) && v >= 1 && v <= 12;
+const okDay = (v) => Number.isInteger(v) && v >= 1 && v <= 31;
 const EXCEPTION_KEYS = ["age", "must_rent", "no_home_ownership", "must_own_home", "children", "is_pregnant_or_newborn", "is_married", "has_labor_insurance", "has_national_pension", "is_disabled", "low_income", "is_student", "is_unemployed", "is_employed", "income", "vehicle"];
 const DEADLINE_TYPES = ["fixed_annual", "rolling", "window", "budget_until_exhausted", "event_based", "varies", "ended", "unknown"];
 const CHANNEL_TYPES = ["online", "office", "mail", "phone", "app", "bank", "other"];
@@ -71,9 +80,23 @@ function validateItem(item, origin) {
   }
   check(!(dl.end_year && !dl.end_month), `${where}: deadline.end_year 有填但沒有 end_month`);
   check(!(dl.start_year && !dl.end_year), `${where}: deadline.start_year 要搭配 end_year`);
+  // 下面這些形狀錯了建置不會壞，但前端會判錯或丟例外（縣市比對不到、cities 不是陣列時 .includes 會炸、13 月 31 日）
+  check(item.city == null || TAIWAN_CITIES.includes(item.city), `${where}: city「${item.city}」不在縣市清單（要寫「台北市」，不是「臺北市」）`);
+  const cities = item.conditions?.cities;
+  check(cities == null || (Array.isArray(cities) && cities.every((c) => TAIWAN_CITIES.includes(c))), `${where}: conditions.cities 要是縣市名稱的陣列（用「台」）`);
+  check(dl.start_month == null || okMonth(dl.start_month), `${where}: deadline.start_month 要是 1～12`);
+  check(dl.end_month == null || okMonth(dl.end_month), `${where}: deadline.end_month 要是 1～12`);
+  check(dl.start_day == null || okDay(dl.start_day), `${where}: deadline.start_day 要是 1～31`);
+  check(dl.end_day == null || okDay(dl.end_day), `${where}: deadline.end_day 要是 1～31`);
+  check(!(dl.start_year && dl.end_year && dl.start_year > dl.end_year), `${where}: deadline.start_year 比 end_year 晚`);
+  for (const k of ["min", "max"]) check(item.amount?.[k] == null || typeof item.amount[k] === "number", `${where}: amount.${k} 要是數字或 null`);
+  for (const k of ["name", "summary", "agency"]) check(typeof item[k] === "string" && item[k].trim() !== "", `${where}: ${k} 是空的`);
+  check(Array.isArray(item.eligibility) && item.eligibility.every((e) => typeof e === "string"), `${where}: eligibility 要是字串陣列`);
+  check(item.conditions?.low_income == null || ["low", "mid_low", "either"].includes(item.conditions.low_income), `${where}: conditions.low_income 只能是 low／mid_low／either`);
+  for (const k of ["min_age", "max_age", "child_age_min", "child_age_max", "income_limit_value"]) {
+    check(item.conditions?.[k] == null || typeof item.conditions[k] === "number", `${where}: conditions.${k} 要是數字或 null`);
+  }
   for (const w of dl.extra_windows ?? []) {
-    const okMonth = (v) => Number.isInteger(v) && v >= 1 && v <= 12;
-    const okDay = (v) => Number.isInteger(v) && v >= 1 && v <= 31;
     check(okMonth(w.start_month) && okDay(w.start_day) && okMonth(w.end_month) && okDay(w.end_day), `${where}: deadline.extra_windows 的月日不完整`);
   }
   check(!(dl.extra_windows?.length && dl.end_year), `${where}: deadline.extra_windows 不能和 end_year 一起用`);
@@ -285,7 +308,18 @@ items.sort((a, b) => {
   return a.name.localeCompare(b.name, "zh-Hant");
 });
 
-const dataset = { version, generated_at: new Date().toISOString(), items, general_faqs: generalFaqs };
+// 版本只有日期，同一天重建兩次會是同一個版本字串，已安裝的 app 分不出哪一份比較新。
+// 所以另外帶內容雜湊與產生時間：版本相同時，雜湊不同而且產生時間較晚的才算新。
+// 內容沒變就沿用上次的產生時間，重跑建置不會讓沒改過的資料看起來變新，也不會每次都產生 git 差異。
+const hash = crypto.createHash("sha256").update(JSON.stringify({ items, general_faqs: generalFaqs })).digest("hex").slice(0, 16);
+let generatedAt = new Date().toISOString();
+try {
+  const previous = JSON.parse(fs.readFileSync(path.join(ROOT, "src/data/subsidies.json"), "utf8"));
+  if (previous.hash === hash && previous.version === version && typeof previous.generated_at === "string") generatedAt = previous.generated_at;
+} catch {
+  // 第一次建置，沒有舊檔
+}
+const dataset = { version, generated_at: generatedAt, hash, items, general_faqs: generalFaqs };
 const json = JSON.stringify(dataset, null, 2) + "\n";
 for (const out of ["src/data/subsidies.json", "public/data/subsidies.json"]) {
   const target = path.join(ROOT, out);
@@ -298,6 +332,8 @@ for (const out of ["src/data/subsidies.json", "public/data/subsidies.json"]) {
 const INDEX_FIELDS = ["id", "name", "short_name", "category", "level", "city", "agency", "summary", "eligibility", "amount", "conditions", "deadline", "status_2026", "confidence", "topic"];
 const index = {
   version,
+  generated_at: generatedAt,
+  hash,
   items: items.map((item) => Object.fromEntries(INDEX_FIELDS.map((k) => [k, item[k]]))),
 };
 fs.writeFileSync(path.join(ROOT, "src/data/subsidies-index.json"), JSON.stringify(index) + "\n");

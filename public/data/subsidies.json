@@ -1,6 +1,7 @@
 {
   "version": "2026-11-15",
-  "generated_at": "2026-11-14T21:52:04.598Z",
+  "generated_at": "2026-11-14T22:24:10.305Z",
+  "hash": "0d1a16f0548f7d72",
   "items": [
     {
       "id": "rent-subsidy-central-300b",
@@ -4671,7 +4672,7 @@
         }
       ],
       "deadline": {
-        "type": "window",
+        "type": "fixed_annual",
         "start_month": 5,
         "start_day": 25,
         "end_month": 5,
@@ -4822,7 +4823,7 @@
         }
       ],
       "deadline": {
-        "type": "window",
+        "type": "fixed_annual",
         "start_month": 5,
         "start_day": 30,
         "end_month": 6,
@@ -5214,7 +5215,7 @@
         "text": "每名新生兒30,000元，不分胎次；雙胞胎6萬元",
         "min": 30000,
         "max": 30000,
-        "unit": "元/胎（一次給）",
+        "unit": "元/名（一次給）",
         "formula": "30,000 × 新生兒人數"
       },
       "conditions": {
@@ -5540,7 +5541,10 @@
         "cities": [
           "新竹市"
         ],
-        "other": "父或母連續設籍新竹市滿1年"
+        "other": "父或母連續設籍新竹市滿1年",
+        "exceptions": {
+          "is_pregnant_or_newborn": "懷孕滿 20 週以上死產也可以申請"
+        }
       },
       "documents": [
         "申請人身分證、印章",
@@ -5962,7 +5966,10 @@
         "cities": [
           "台北市"
         ],
-        "other": "父或母連續設籍台北市滿10個月（可併計新北市、基隆市）"
+        "other": "父或母連續設籍台北市滿10個月（可併計新北市、基隆市）",
+        "exceptions": {
+          "is_pregnant_or_newborn": "懷孕滿 20 週以上死產也可以申請"
+        }
       },
       "documents": [
         "生育補助申請書",
@@ -8019,7 +8026,10 @@
         "no_home_ownership": null,
         "owns_vehicle": null,
         "cities": null,
-        "other": "初次尋職（無勞保／就保／職災保加保紀錄），畢業後連續未就業60日以上，未在學"
+        "other": "初次尋職（無勞保／就保／職災保加保紀錄），畢業後連續未就業60日以上，未在學",
+        "exceptions": {
+          "has_labor_insurance": "曾經加保但月投保薪資低於第一級，或在學期間加保、畢業後沒有再加保的人也可以參加"
+        }
       },
       "documents": [
         "台灣就業通會員帳號並完成至少1項職業心理測驗（三擇一）",
@@ -12954,14 +12964,81 @@
         }
       ],
       "deadline": {
-        "type": "rolling",
-        "start_month": null,
-        "start_day": null,
-        "end_month": null,
-        "end_day": null,
+        "type": "fixed_annual",
+        "start_month": 1,
+        "start_day": 1,
+        "end_month": 1,
+        "end_day": 31,
         "start_year": null,
         "end_year": null,
-        "extra_windows": null,
+        "extra_windows": [
+          {
+            "start_month": 2,
+            "start_day": 1,
+            "end_month": 2,
+            "end_day": 28
+          },
+          {
+            "start_month": 3,
+            "start_day": 1,
+            "end_month": 3,
+            "end_day": 31
+          },
+          {
+            "start_month": 4,
+            "start_day": 1,
+            "end_month": 4,
+            "end_day": 30
+          },
+          {
+            "start_month": 5,
+            "start_day": 1,
+            "end_month": 5,
+            "end_day": 31
+          },
+          {
+            "start_month": 6,
+            "start_day": 1,
+            "end_month": 6,
+            "end_day": 30
+          },
+          {
+            "start_month": 7,
+            "start_day": 1,
+            "end_month": 7,
+            "end_day": 31
+          },
+          {
+            "start_month": 8,
+            "start_day": 1,
+            "end_month": 8,
+            "end_day": 31
+          },
+          {
+            "start_month": 9,
+            "start_day": 1,
+            "end_month": 9,
+            "end_day": 30
+          },
+          {
+            "start_month": 10,
+            "start_day": 1,
+            "end_month": 10,
+            "end_day": 31
+          },
+          {
+            "start_month": 11,
+            "start_day": 1,
+            "end_month": 11,
+            "end_day": 30
+          },
+          {
+            "start_month": 12,
+            "start_day": 1,
+            "end_month": 12,
+            "end_day": 31
+          }
+        ],
         "note": "每月一次，欄位填的是最近一期：115 年 10 月份保費，115 年 11 月 30 日前繳，寬限到 115 年 12 月 15 日。通則：當月保費在次月底前繳，寬限 15 日。勞保局舉例：115 年 9 月 25 日前寄發 8 月保費繳款單，最晚 115 年 10 月 15 日前繳。健保寬限期最後一天遇假日，順延到假日結束的隔天。2027 年沿用同一規則。"
       },
       "faqs": [
@@ -13463,14 +13540,45 @@
         }
       ],
       "deadline": {
-        "type": "rolling",
-        "start_month": null,
-        "start_day": null,
-        "end_month": null,
-        "end_day": null,
+        "type": "fixed_annual",
+        "start_month": 3,
+        "start_day": 1,
+        "end_month": 4,
+        "end_day": 30,
         "start_year": null,
         "end_year": null,
-        "extra_windows": null,
+        "extra_windows": [
+          {
+            "start_month": 5,
+            "start_day": 1,
+            "end_month": 6,
+            "end_day": 30
+          },
+          {
+            "start_month": 7,
+            "start_day": 1,
+            "end_month": 8,
+            "end_day": 31
+          },
+          {
+            "start_month": 9,
+            "start_day": 1,
+            "end_month": 10,
+            "end_day": 31
+          },
+          {
+            "start_month": 11,
+            "start_day": 1,
+            "end_month": 12,
+            "end_day": 31
+          },
+          {
+            "start_month": 1,
+            "start_day": 1,
+            "end_month": 2,
+            "end_day": 28
+          }
+        ],
         "note": "一年 6 期，欄位填的是最近一期。全年：1～2 月保費→3 月底寄單→4/30 前繳；3～4 月→5 月底寄→6/30；5～6 月→7 月底寄→8/31；7～8 月→9 月底寄→10/31；9～10 月→11 月底寄→12/31；11～12 月→隔年 1 月底寄→隔年 2 月底。115 年 9～10 月保費在 115 年 11 月底寄單，115 年 12 月 31 日前繳。2027 年沿用同一規則。月底遇假日是否順延，本次未驗證。"
       },
       "faqs": [
@@ -17265,7 +17373,8 @@
         "deadline.end_month／end_day（2 年期限的確切末日）",
         "amount（換照規費、體檢與講習費用）",
         "逾期駕車與職業駕照逾期審驗的罰鍰金額",
-        "道路交通安全講習的時數與報名方式"
+        "道路交通安全講習的時數與報名方式",
+        "75 歲換照的辦理期間：資格欄寫屆滿前 1 個月到屆滿後 3 年內，期限說明寫屆滿前後 1 個月內，兩處不同"
       ],
       "topic": "annual-calendar-2026-2027",
       "verified_at": null,

@@ -2,7 +2,10 @@
 
 import { useEffect, useState } from "react";
 import type { Subsidy, SubsidyDataset } from "./types";
-import { DATA_VERSION } from "./index-data";
+import { DATA_GENERATED_AT, DATA_HASH, DATA_VERSION } from "./index-data";
+import { isNewerDataset } from "./version";
+
+const LOCAL = { version: DATA_VERSION, generatedAt: DATA_GENERATED_AT, hash: DATA_HASH };
 import { REMOTE_DATA_URL, SITE_URL } from "@/lib/site";
 import { amountHeadline } from "./format";
 
@@ -30,7 +33,7 @@ export async function getCachedRemoteDataset(): Promise<SubsidyDataset | null> {
     const { Preferences } = await import("@capacitor/preferences");
     const { value } = await Preferences.get({ key: CACHE_KEY });
     const parsed = value ? JSON.parse(value) : null;
-    memoryCache = isDataset(parsed) && parsed.version > DATA_VERSION ? parsed : null;
+    memoryCache = isDataset(parsed) && isNewerDataset(parsed, LOCAL) ? parsed : null;
   } catch {
     memoryCache = null;
   }
@@ -72,7 +75,7 @@ export async function refreshRemoteDataset(force = false): Promise<{ updated: bo
     const data = await fetchRemote();
     await Preferences.set({ key: LAST_CHECK_KEY, value: String(Date.now()) });
     if (!isDataset(data)) return { updated: false, version: null };
-    if (data.version <= DATA_VERSION) {
+    if (!isNewerDataset(data, LOCAL)) {
       // 遠端沒有比較新：清掉舊快取，避免拿舊的遠端資料蓋掉新 app 的內建資料
       await Preferences.remove({ key: CACHE_KEY });
       memoryCache = null;

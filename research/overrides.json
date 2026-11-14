@@ -426,33 +426,136 @@
     ]
   },
   "taipei-elementary-new-student-registration-115": {
-    "_why": "5 月報到時，9 月 1 日前才滿 6 歲的孩子還是 5 歲",
+    "_why": "5 月報到時，9 月 1 日前才滿 6 歲的孩子還是 5 歲 2026-11-15 獨立稽核：115 學年度已結束、116 學年度日期未公告。原本的 window 會顯示成確定的日期（5/25 開始）。改成 fixed_annual：標籤會寫「每年」，詳情頁會註明這一期的日期是照上一期推算的。",
     "conditions": {
       "child_age_min": 5
+    },
+    "deadline": {
+      "type": "fixed_annual"
     }
   },
   "nhi-labor-insurance-premium-monthly-deadline": {
-    "_why": "每月一次的繳款期限，資料模型沒有「每月」這種週期；標成每年 11/30 會在下個月顯示成明年，改為不列固定日期，細節留在期限說明",
+    "_why": "每月一次的繳款期限，資料模型沒有「每月」這種週期；標成每年 11/30 會在下個月顯示成明年，改為不列固定日期，細節留在期限說明 2026-11-15 獨立稽核：當月保費要在次月底前繳（另有 15 日寬限），原本填 rolling 會顯示隨到隨辦。改成每個月月底一個期限，app 顯示距離這個月底還有幾天；寬限期寫在期限說明。",
     "deadline": {
-      "type": "rolling",
-      "start_month": null,
-      "start_day": null,
-      "end_month": null,
-      "end_day": null
+      "type": "fixed_annual",
+      "start_month": 1,
+      "start_day": 1,
+      "end_month": 1,
+      "end_day": 31,
+      "extra_windows": [
+        {
+          "start_month": 2,
+          "start_day": 1,
+          "end_month": 2,
+          "end_day": 28
+        },
+        {
+          "start_month": 3,
+          "start_day": 1,
+          "end_month": 3,
+          "end_day": 31
+        },
+        {
+          "start_month": 4,
+          "start_day": 1,
+          "end_month": 4,
+          "end_day": 30
+        },
+        {
+          "start_month": 5,
+          "start_day": 1,
+          "end_month": 5,
+          "end_day": 31
+        },
+        {
+          "start_month": 6,
+          "start_day": 1,
+          "end_month": 6,
+          "end_day": 30
+        },
+        {
+          "start_month": 7,
+          "start_day": 1,
+          "end_month": 7,
+          "end_day": 31
+        },
+        {
+          "start_month": 8,
+          "start_day": 1,
+          "end_month": 8,
+          "end_day": 31
+        },
+        {
+          "start_month": 9,
+          "start_day": 1,
+          "end_month": 9,
+          "end_day": 30
+        },
+        {
+          "start_month": 10,
+          "start_day": 1,
+          "end_month": 10,
+          "end_day": 31
+        },
+        {
+          "start_month": 11,
+          "start_day": 1,
+          "end_month": 11,
+          "end_day": 30
+        },
+        {
+          "start_month": 12,
+          "start_day": 1,
+          "end_month": 12,
+          "end_day": 31
+        }
+      ]
     }
   },
   "national-pension-premium-bimonthly-deadline": {
-    "_why": "一年 6 期的繳款期限，同上，不列成每年固定一天",
+    "_why": "一年 6 期的繳款期限，同上，不列成每年固定一天 2026-11-15 獨立稽核：一年 6 期、每期有固定的繳款期限（4/30、6/30、8/31、10/31、12/31、隔年 2 月底），原本填 rolling 會顯示隨到隨辦。改成 6 段期間；每段的開始日填上一期截止的隔天，讓 app 一律顯示距離下一個繳款期限還有幾天。月底遇假日是否順延仍列在未驗證。",
     "deadline": {
-      "type": "rolling",
-      "start_month": null,
-      "start_day": null,
-      "end_month": null,
-      "end_day": null
+      "type": "fixed_annual",
+      "start_month": 3,
+      "start_day": 1,
+      "end_month": 4,
+      "end_day": 30,
+      "extra_windows": [
+        {
+          "start_month": 5,
+          "start_day": 1,
+          "end_month": 6,
+          "end_day": 30
+        },
+        {
+          "start_month": 7,
+          "start_day": 1,
+          "end_month": 8,
+          "end_day": 31
+        },
+        {
+          "start_month": 9,
+          "start_day": 1,
+          "end_month": 10,
+          "end_day": 31
+        },
+        {
+          "start_month": 11,
+          "start_day": 1,
+          "end_month": 12,
+          "end_day": 31
+        },
+        {
+          "start_month": 1,
+          "start_day": 1,
+          "end_month": 2,
+          "end_day": 28
+        }
+      ]
     }
   },
   "driver-license-renewal-age-70-rule-2026": {
-    "_why": "期限依每個人滿 70／75 歲或審驗日計算，不是每年 5/31；職業駕照不限 70 歲以上",
+    "_why": "期限依每個人滿 70／75 歲或審驗日計算，不是每年 5/31；職業駕照不限 70 歲以上 2026-11-15 獨立稽核：75 歲換照的辦理期間兩處寫法不同，沒對照駕駛執照管理規則，列入未驗證。",
     "conditions": {
       "min_age": null,
       "is_elderly": null
@@ -463,7 +566,14 @@
       "start_day": null,
       "end_month": null,
       "end_day": null
-    }
+    },
+    "unverified_fields": [
+      "deadline.end_month／end_day（2 年期限的確切末日）",
+      "amount（換照規費、體檢與講習費用）",
+      "逾期駕車與職業駕照逾期審驗的罰鍰金額",
+      "道路交通安全講習的時數與報名方式",
+      "75 歲換照的辦理期間：資格欄寫屆滿前 1 個月到屆滿後 3 年內，期限說明寫屆滿前後 1 個月內，兩處不同"
+    ]
   },
   "taipei-senior-card-and-chongyang": {
     "_why": "2026-11-14 對照臺北市社會局重陽節禮金頁（資料更新 115-10-14）：1,500 元級距的原住民年齡是 55 至 74 歲，原摘要寫成 55～84 歲，和 75～88 歲領 3,000 元重疊。同頁確認三個金額級距、115 年 7 月 18 日設籍門檻、各領取方式日期與 12 月 31 日補發期限，所以把原本標成「只在新聞看到」的未驗證項拿掉，並補上 11 月 13 日前登記、12 月 1 日入帳這一梯。annual-calendar 主題的 taipei-chongyang-gift-2026-schedule 與本項重複，已列入 removed.json，日期併到這裡。 條文寫原住民 55 歲起，資料的 min_age 是 65，55 到 64 歲的原住民會被判成不符合。加 lower_age_for 後這個年齡段歸「可能符合」。",
@@ -854,9 +964,42 @@
     ]
   },
   "youth-employment-support-2026": {
-    "_why": "2026-11-15 獨立稽核：金額欄寫合計最高 48,000 元，但列出的各項加總是 54,000 元，沒查到勞動部的算式，列入未驗證。",
+    "_why": "2026-11-15 獨立稽核：金額欄寫合計最高 48,000 元，但列出的各項加總是 54,000 元，沒查到勞動部的算式，列入未驗證。 2026-11-15 獨立稽核：資格欄寫曾加保但投保薪資低於第一級、或在學期間加保畢業後未再加保者可參加。has_labor_insurance=false 現在會把有勞保的人判成不符合，所以把這兩種情形寫成例外。",
     "unverified_fields": [
       "合計最高 48,000 元的組成：文字列的尋職津貼與三階段就業獎勵加總不是 48,000 元"
-    ]
+    ],
+    "conditions": {
+      "exceptions": {
+        "has_labor_insurance": "曾經加保但月投保薪資低於第一級，或在學期間加保、畢業後沒有再加保的人也可以參加"
+      }
+    }
+  },
+  "taipei-public-kindergarten-enrollment-115": {
+    "_why": "2026-11-15 獨立稽核：115 學年度已結束、116 學年度日期未公告。原本的 window 會顯示成確定的日期（5/25 開始）。改成 fixed_annual：標籤會寫「每年」，詳情頁會註明這一期的日期是照上一期推算的。",
+    "deadline": {
+      "type": "fixed_annual"
+    }
+  },
+  "birth-incentive-taipei": {
+    "_why": "2026-11-15 獨立稽核：條文列了死產可申請，is_pregnant_or_newborn=true 會把死產後的家庭判成不符合。改成例外。",
+    "conditions": {
+      "exceptions": {
+        "is_pregnant_or_newborn": "懷孕滿 20 週以上死產也可以申請"
+      }
+    }
+  },
+  "birth-incentive-hsinchu-city": {
+    "_why": "2026-11-15 獨立稽核：條文列了妊娠滿 20 週死產可申請，is_pregnant_or_newborn=true 會把死產後的家庭判成不符合。改成例外。",
+    "conditions": {
+      "exceptions": {
+        "is_pregnant_or_newborn": "懷孕滿 20 週以上死產也可以申請"
+      }
+    }
+  },
+  "birth-incentive-kaohsiung": {
+    "_why": "2026-11-15 獨立稽核：金額是按每名新生兒算（雙胞胎 6 萬元），單位原本寫元/胎。改成元/名。",
+    "amount": {
+      "unit": "元/名（一次給）"
+    }
   }
 }

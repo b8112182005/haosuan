@@ -10,34 +10,49 @@ import { CATEGORY_LABELS, CATEGORY_ORDER, TAIWAN_CITIES } from "@/lib/subsidy/ty
 import { useToday } from "@/lib/subsidy/useToday";
 import { resolveSubsidyDeadline } from "@/lib/subsidy/deadline";
 import { refreshRemoteDataset } from "@/lib/subsidy/remote";
+import { matchesTerms, normalizeSearchText, searchTerms } from "@/lib/subsidy/search";
 import SubsidyCard from "./SubsidyCard";
-
-function matches(q: string, s: SubsidySummary): boolean {
-  const needle = q.trim().toLowerCase();
-  if (!needle) return true;
-  const hay = [s.name, s.short_name, s.summary, s.agency, s.city ?? "", ...s.eligibility]
-    .join("\n")
-    .toLowerCase();
-  return hay.includes(needle);
-}
 
 const PAGE_SIZE = 30;
 
 // 資料直接 import 精簡索引，不走 props（避免整份資料被序列化進頁面 HTML）
 const subsidies = SUBSIDY_INDEX;
 
+// 每筆的搜尋文字只正規化一次；打字時每按一個鍵都重算 119 筆會頓
+const searchText = new Map<string, string>(
+  subsidies.map((s) => [s.id, normalizeSearchText([s.name, s.short_name, s.summary, s.agency, s.city ?? "", ...s.eligibility].join("\n"))])
+);
+
+/**
+ * 上一次的篩選狀態。點進項目再按返回時元件會重新掛載，state 全部重設，
+ * 使用者得把分類、縣市、關鍵字重選一次。放在模組層：同一次開啟期間留著，整頁重新載入就清掉。
+ */
+interface SavedFilters {
+  category: SubsidyCategory | "all";
+  city: string;
+  query: string;
+  activeOnly: boolean;
+  limit: number;
+}
+let savedFilters: SavedFilters | null = null;
+
 export default function SubsidyBrowser() {
   const params = useSearchParams();
   const initialCat = params.get("cat") as SubsidyCategory | null;
-  const [category, setCategory] = useState<SubsidyCategory | "all">(
-    initialCat && CATEGORY_ORDER.includes(initialCat) ? initialCat : "all"
-  );
-  const [city, setCity] = useState<string>("");
-  const [query, setQuery] = useState("");
-  const [activeOnly, setActiveOnly] = useState(true);
+  // 網址帶 ?cat= 是從首頁的分類入口進來的，以它為準；否則還原上一次的篩選
+  const fromUrl = initialCat && CATEGORY_ORDER.includes(initialCat) ? initialCat : null;
+  const restored = fromUrl ? null : savedFilters;
+  const [category, setCategory] = useState<SubsidyCategory | "all">(fromUrl ?? restored?.category ?? "all");
+  const [city, setCity] = useState<string>(restored?.city ?? "");
+  const [query, setQuery] = useState(restored?.query ?? "");
+  const [activeOnly, setActiveOnly] = useState(restored?.activeOnly ?? true);
   // 一次畫 99 張卡片，低階手機捲動會頓；先畫 30 張
-  const [limit, setLimit] = useState(PAGE_SIZE);
+  const [limit, setLimit] = useState(restored?.limit ?? PAGE_SIZE);
   const today = useToday();
+
+  useEffect(() => {
+    savedFilters = { category, city, query, activeOnly, limit };
+  }, [category, city, query, activeOnly, limit]);
 
   // 進站時順手檢查一次遠端資料（6 小時內只抓一次）
   useEffect(() => {
@@ -50,12 +65,15 @@ export default function SubsidyBrowser() {
   }, []);
 
   const list = useMemo(() => {
+    const terms = searchTerms(query);
     let rows = subsidies.filter((s) => {
       if (activeOnly && s.status_2026 === "ended") return false;
+      // 期限已過的（有截止年份而且過了）也不算進行中；內建資料要等發新版才會更新狀態
+      if (activeOnly && today && resolveSubsidyDeadline(s, today).kind === "ended") return false;
       if (category !== "all" && s.category !== category) return false;
       // 選了縣市：顯示全國性 + 該縣市；沒選：全部
       if (city && s.city && s.city !== city) return false;
-      return matches(query, s);
+      return matchesTerms(searchText.get(s.id) ?? "", terms);
     });
     if (today) {
       const days = (s: SubsidySummary) => {

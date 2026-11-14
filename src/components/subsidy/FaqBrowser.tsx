@@ -1,8 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { Search, X, ExternalLink } from "lucide-react";
+import { matchesTerms, normalizeSearchText, searchTerms } from "@/lib/subsidy/search";
 
 export interface FaqEntry {
   q: string;
@@ -17,20 +18,29 @@ export interface FaqEntry {
 
 const PAGE_SIZE = 40;
 
+// 點進某一則的補助頁再返回時，保留搜尋字、分組與已展開的則數（理由同 SubsidyBrowser）
+let savedFaqState: { query: string; group: string; limit: number } | null = null;
+
 export default function FaqBrowser({ entries, groups }: { entries: FaqEntry[]; groups: string[] }) {
-  const [query, setQuery] = useState("");
-  const [group, setGroup] = useState<string>("all");
+  const [query, setQuery] = useState(savedFaqState?.query ?? "");
+  const [group, setGroup] = useState<string>(savedFaqState && groups.includes(savedFaqState.group) ? savedFaqState.group : "all");
   // 五百多則一次畫出來，手機捲動會頓；先畫 40 則，按鈕再加
-  const [limit, setLimit] = useState(PAGE_SIZE);
+  const [limit, setLimit] = useState(savedFaqState?.limit ?? PAGE_SIZE);
+
+  useEffect(() => {
+    savedFaqState = { query, group, limit };
+  }, [query, group, limit]);
+
+  // 六百多則問答的搜尋文字只正規化一次
+  const haystacks = useMemo(() => entries.map((e) => normalizeSearchText(`${e.q}\n${e.a}\n${e.subsidyName ?? ""}`)), [entries]);
 
   const list = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    return entries.filter((e) => {
+    const terms = searchTerms(query);
+    return entries.filter((e, i) => {
       if (group !== "all" && e.group !== group) return false;
-      if (!q) return true;
-      return `${e.q}\n${e.a}\n${e.subsidyName ?? ""}`.toLowerCase().includes(q);
+      return matchesTerms(haystacks[i], terms);
     });
-  }, [entries, query, group]);
+  }, [entries, haystacks, query, group]);
 
   return (
     <div className="space-y-4">

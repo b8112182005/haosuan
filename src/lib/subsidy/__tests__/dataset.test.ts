@@ -299,6 +299,35 @@ describe("旗艦項目不能被誤判成不符合", () => {
     notHidden("culture-coin-youth-2026", { ...parent, childrenAges: [12] });
   });
 
+  it("有勞保的孕婦不會看到無保險生母補助列為相符；沒有任何保險的人看得到", () => {
+    const s = byId("uninsured-mother-birth-subsidy-100k");
+    const mom: Profile = { ...renter, isPregnantOrNewborn: true };
+    expect(evaluate(s, { ...mom, hasLaborInsurance: true }).verdict).toBe("not_eligible");
+    notHidden("uninsured-mother-birth-subsidy-100k", { ...mom, hasLaborInsurance: false, hasNationalPension: false });
+  });
+
+  it("月收入 30 萬的租屋族：中央租金補貼不會列為條件相符，並顯示所得門檻", () => {
+    const r = evaluate(byId("rent-subsidy-central-300b"), { ...renter, monthlyIncome: 300_000 });
+    expect(r.verdict).toBe("maybe");
+    expect(r.unknown.join(" ")).toContain("所得");
+  });
+
+  it("懷第二胎、老大 5 歲：育兒津貼與托育補助不會被藏起來", () => {
+    const secondChild: Profile = { ...parent, childrenAges: [5], isPregnantOrNewborn: true };
+    notHidden("childcare-allowance-0-2", secondChild);
+    notHidden("toddler-care-subsidy-0-2", secondChild);
+  });
+
+  it("2027 年 1 月 5 日：只辦 115 年度的購車與家電補助不再列為相符", () => {
+    const rows = evaluateAll(items.filter((s) => s.status_2026 !== "ended"), { ...renter, ownsVehicle: "both" }, { y: 2027, m: 1, d: 5 });
+    const expired = ["home-appliance-replacement-subsidy", "electric-scooter-purchase-subsidy-moea", "old-vehicle-replacement-moenv", "taipei-electric-scooter-subsidy-2026"];
+    for (const id of expired) {
+      const row = rows.find((r) => r.subsidy.id === id);
+      expect(row?.verdict, id).toBe("not_eligible");
+      expect(row?.failed.join(" "), id).toContain("申請期限已過");
+    }
+  });
+
   it("桃園市原住民族租金補貼還在辦：桃園租屋族看得到，並標明限原住民", () => {
     const s = byId("rent-subsidy-taoyuan-topup");
     expect(s.status_2026).toBe("active");
