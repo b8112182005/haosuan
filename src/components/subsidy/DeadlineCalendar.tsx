@@ -90,7 +90,7 @@ export default function DeadlineCalendar() {
                       {daysLeft === 0 ? "今天截止" : `剩 ${daysLeft} 天（${formatLocalDate(end)}）`}
                     </span>
                     <AddReminderButton
-                      title={`${subsidy.short_name || subsidy.name}截止`}
+                      title={subsidy.short_name || subsidy.name}
                       targetDate={toDateString(end)}
                       url={`/subsidy/${subsidy.id}`}
                       source={{ type: "subsidy", id: subsidy.id }}

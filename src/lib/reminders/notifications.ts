@@ -14,7 +14,7 @@ import {
 import { Preferences } from '@capacitor/preferences';
 import type { Reminder } from './types';
 import { MAX_DAYS_BEFORE_COUNT } from './types';
-import { addDays, formatDate, splitDate, toCompactDate } from './dates';
+import { addDays, addYears, formatDate, nextYearlyOccurrence, splitDate, toCompactDate, todayLocal } from './dates';
 
 /** 寫進每則通知的 extra.module，用來在 getPending 裡認出自己排的 */
 export const NOTIFICATION_MODULE = 'reminders';
@@ -23,11 +23,23 @@ export const NOTIFICATION_MODULE = 'reminders';
 export const NOTIFY_HOUR = 9;
 
 /**
+ * 一次最多排幾則。Android 的 AlarmManager 對每個 app 有 500 個鬧鐘的上限，超過會丟例外。
+ * 超過這個數字時只排最早要響的那些；之後每次開 app 重排，後面的會遞補上來。
+ */
+export const MAX_SCHEDULED = 400;
+
+/**
  * 上一次排程的通知 id 清單。
  * 另外存一份是因為部分 Android 機型 getPending 回來的資料沒有 extra，
  * 只靠 extra.module 認人會漏掉；漏掉的通知會在提醒刪除後照樣響。
  */
 const SCHEDULED_IDS_KEY = 'haoti.reminders.scheduledIds.v1';
+
+/** 上一次處理過的通知點擊（id@觸發時間），用來擋掉系統重送的同一則 */
+const LAST_TAP_KEY = 'haoti.reminders.lastTap.v1';
+
+/** 沒有連結的提醒（自訂提醒）點通知後去哪裡：提醒清單，至少看得到是哪一筆 */
+const FALLBACK_TAP_URL = '/reminders';
 
 export type NotificationPermissionState = 'granted' | 'denied' | 'prompt' | 'unsupported';
 
@@ -104,8 +116,9 @@ export function notificationTitle(title: string, daysBefore: number): string {
 }
 
 export function notificationBody(reminder: Pick<Reminder, 'note' | 'targetDate'>): string {
+  // 期限放最前面：收合的通知只顯示一行，日期要落在那一行裡
   const deadline = `期限 ${formatDate(reminder.targetDate)}`;
-  return reminder.note ? `${reminder.note}・${deadline}` : deadline;
+  return reminder.note ? `${deadline}・${reminder.note}` : deadline;
 }
 
 /** 提醒 × 提前天數 → 該則通知的本地觸發時間（09:00） */
@@ -115,35 +128,82 @@ export function notificationFireAt(targetDate: string, daysBefore: number): Date
   return new Date(p.y, p.m - 1, p.d - daysBefore, NOTIFY_HOUR, 0, 0, 0);
 }
 
+/** 這個提前天數的通知時間是不是還沒到 */
+export function isUpcomingFireTime(targetDate: string, daysBefore: number, now: Date = new Date()): boolean {
+  const fireAt = notificationFireAt(targetDate, daysBefore);
+  return !!fireAt && fireAt.getTime() > now.getTime();
+}
+
+/** 這組日期與提前天數實際排得出幾則通知（時間已過的不算）。加入提醒前用來檢查，免得存了一筆永遠不會響的提醒 */
+export function countUpcomingNotifications(targetDate: string, daysBefore: number[], now: Date = new Date()): number {
+  return daysBefore.slice(0, ID_BLOCK).filter((days) => isUpcomingFireTime(targetDate, days, now)).length;
+}
+
+/** 加入提醒面板上的提前天數選項；0 = 當天 */
+export const DAY_OPTIONS: readonly number[] = [30, 14, 7, 3, 1, 0];
+
 /**
- * 純函式：把未完成提醒展開成要排的通知。已過去的時間點不排。
+ * 面板預設勾哪些提前天數。只留通知時間還沒到的：
+ * 期限剩 2 天時預設的「前 30、14、3 天」全部已經過了，照勾的話這一期一則通知都排不出來。
+ * 全部都過了就改勾最接近期限、還來得及的那一個。
+ *
+ * 每年重複的提醒保留全部預設值（明年那一輪用得到），這一期一個都來不及時再補上還來得及的那一個。
+ */
+export function pickDefaultDaysBefore(
+  defaults: readonly number[],
+  targetDate: string | undefined,
+  yearly: boolean,
+  now: Date = new Date(),
+): number[] {
+  if (!targetDate) return [...defaults];
+  // 每年重複且今年已過：存檔時會排到下一次，用那個日期算
+  const effective = yearly ? nextYearlyOccurrence(targetDate, todayLocal(now)) : targetDate;
+  const upcoming = defaults.filter((days) => isUpcomingFireTime(effective, days, now));
+  if (upcoming.length > 0) return yearly ? [...defaults] : upcoming;
+  const fallback = DAY_OPTIONS.find((days) => isUpcomingFireTime(effective, days, now));
+  if (fallback === undefined) return [...defaults];
+  return yearly ? [...defaults, fallback] : [fallback];
+}
+
+/** 把一筆提醒在某個期限日的那一輪通知加進 out。idSeed 決定這一輪用哪一組通知 id */
+function pushCycle(out: LocalNotificationSchema[], reminder: Reminder, targetDate: string, idSeed: string, now: Date): void {
+  reminder.daysBefore.slice(0, ID_BLOCK).forEach((days, index) => {
+    const fireAt = notificationFireAt(targetDate, days);
+    if (!fireAt || fireAt.getTime() <= now.getTime()) return;
+    out.push({
+      id: notificationId(idSeed, index),
+      title: notificationTitle(reminder.title, days),
+      body: notificationBody({ note: reminder.note, targetDate }),
+      schedule: { at: fireAt, allowWhileIdle: true },
+      // 不用精確鬧鐘：Play 政策對 SCHEDULE_EXACT_ALARM 有審查，提醒差幾分鐘沒差
+      isExactNotification: false,
+      autoCancel: true,
+      extra: {
+        module: NOTIFICATION_MODULE,
+        reminderId: reminder.id,
+        url: reminder.url ?? FALLBACK_TAP_URL,
+        daysBefore: days,
+      },
+    });
+  });
+}
+
+/**
+ * 純函式：把提醒展開成要排的通知。已過去的時間點不排。
  * 抽出來是為了測試不用碰 Capacitor。
+ *
+ * 每年重複的提醒多排一輪「明年同一天」：只排這一輪的話，明年的通知要等期限過後使用者再開一次 app
+ * 才會排，報稅這種一年才開一次 app 的用法，隔年會整輪收不到。已打勾完成的每年提醒也照排明年那一輪。
  */
 export function planNotifications(reminders: Reminder[], now: Date = new Date()): LocalNotificationSchema[] {
   const out: LocalNotificationSchema[] = [];
   for (const reminder of reminders) {
-    if (reminder.done) continue;
-    reminder.daysBefore.slice(0, ID_BLOCK).forEach((days, index) => {
-      const fireAt = notificationFireAt(reminder.targetDate, days);
-      if (!fireAt || fireAt.getTime() <= now.getTime()) return;
-      out.push({
-        id: notificationId(reminder.id, index),
-        title: notificationTitle(reminder.title, days),
-        body: notificationBody(reminder),
-        schedule: { at: fireAt, allowWhileIdle: true },
-        // 不用精確鬧鐘：Play 政策對 SCHEDULE_EXACT_ALARM 有審查，提醒差幾分鐘沒差
-        isExactNotification: false,
-        autoCancel: true,
-        extra: {
-          module: NOTIFICATION_MODULE,
-          reminderId: reminder.id,
-          url: reminder.url,
-          daysBefore: days,
-        },
-      });
-    });
+    if (!reminder.done) pushCycle(out, reminder, reminder.targetDate, reminder.id, now);
+    if (reminder.repeatYearly) pushCycle(out, reminder, addYears(reminder.targetDate, 1), `${reminder.id}:next`, now);
   }
-  return out;
+  if (out.length <= MAX_SCHEDULED) return out;
+  const fireTime = (n: LocalNotificationSchema) => (n.schedule?.at instanceof Date ? n.schedule.at.getTime() : 0);
+  return [...out].sort((a, b) => fireTime(a) - fireTime(b)).slice(0, MAX_SCHEDULED);
 }
 
 // ── 排程 ────────────────────────────────────────────────────────────────
@@ -248,9 +308,22 @@ export function initNotificationTapHandler(navigate: Navigate): () => void {
     const handle = LocalNotifications.addListener('localNotificationActionPerformed', (action) => {
       const extra = action.notification?.extra as { module?: unknown; url?: unknown } | undefined;
       if (extra?.module !== NOTIFICATION_MODULE) return;
-      if (typeof extra.url !== 'string' || !extra.url) return;
-      const current = navigators[navigators.length - 1];
-      current?.(extra.url);
+      const url = typeof extra.url === 'string' && extra.url ? extra.url : FALLBACK_TAP_URL;
+      const at = (action.notification?.schedule as { at?: unknown } | undefined)?.at;
+      const tapKey = `${action.notification?.id}@${typeof at === 'string' ? at : ''}`;
+      void (async () => {
+        // 用點通知冷啟動之後，Activity 被系統回收再重建時會帶著同一個 Intent，外掛會把同一次點擊再送一遍；
+        // 不擋的話使用者隔天從桌面回到 app，又被帶去昨天那則通知的頁面
+        try {
+          const { value } = await Preferences.get({ key: LAST_TAP_KEY });
+          if (value === tapKey) return;
+          await Preferences.set({ key: LAST_TAP_KEY, value: tapKey });
+        } catch {
+          // 讀寫失敗就當成沒處理過，寧可多導一次也不要點了沒反應
+        }
+        const current = navigators[navigators.length - 1];
+        current?.(url);
+      })();
     });
     listenerHandle = handle;
     handle.catch(() => {

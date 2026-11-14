@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { daysUntil, formatDate } from '@/lib/reminders/dates';
 import { downloadIcs, googleCalendarUrl } from '@/lib/reminders/notifications';
+import { resolveSubsidyPath } from '@/lib/subsidy/paths';
 import type { Reminder } from '@/lib/reminders/types';
 
 export interface ReminderCardProps {
@@ -42,6 +43,8 @@ export default function ReminderCard({ reminder, onToggleDone, onRemove, showCal
   const [confirming, setConfirming] = useState(false);
   const days = daysUntil(reminder.targetDate);
   const isInternalUrl = reminder.url?.startsWith('/') ?? false;
+  // 存的是加入當時的路徑；那個補助頁在這一版已經不在時改到補助列表，不要點下去是 404
+  const internalHref = isInternalUrl && reminder.url ? resolveSubsidyPath(reminder.url) : '';
 
   // 刪除確認沒按就 4 秒後收回，避免列表上留著一排「確定刪除？」
   useEffect(() => {
@@ -115,7 +118,7 @@ export default function ReminderCard({ reminder, onToggleDone, onRemove, showCal
           {reminder.url &&
             (isInternalUrl ? (
               <Link
-                href={reminder.url}
+                href={internalHref}
                 className="inline-flex items-center gap-1 font-medium text-primary hover:underline"
               >
                 前往

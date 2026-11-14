@@ -9,12 +9,18 @@ import { cn } from '@/lib/utils';
 import { useBackHandler } from '@/lib/useBackHandler';
 import { useReminders } from '@/lib/reminders/useReminders';
 import { useIsNativePlatform } from '@/lib/reminders/useIsNativePlatform';
-import { daysUntil, formatDate, todayLocal } from '@/lib/reminders/dates';
+import { daysUntil, formatDate, nextYearlyOccurrence, todayLocal } from '@/lib/reminders/dates';
 import { DEFAULT_DAYS_BEFORE, type Reminder, type ReminderSource } from '@/lib/reminders/types';
-import { downloadIcs, googleCalendarUrl, isNativePlatform } from '@/lib/reminders/notifications';
-
-/** 面板上的提前天數選項；0 = 當天 */
-const DAY_OPTIONS = [30, 14, 7, 3, 1, 0] as const;
+import {
+  DAY_OPTIONS,
+  countUpcomingNotifications,
+  downloadIcs,
+  getPermissionState,
+  googleCalendarUrl,
+  isNativePlatform,
+  isUpcomingFireTime,
+  pickDefaultDaysBefore,
+} from '@/lib/reminders/notifications';
 
 export interface AddReminderButtonProps {
   title: string;
@@ -70,16 +76,21 @@ export default function AddReminderButton({
   const [dateValue, setDateValue] = useState(targetDate ?? '');
   const [selectedDays, setSelectedDays] = useState<number[]>(defaultDaysBefore ?? [...DEFAULT_DAYS_BEFORE]);
   const [yearly, setYearly] = useState(repeatYearly);
+  // 使用者自己點過提前天數之後，改日期就不再替他重選
+  const [daysTouched, setDaysTouched] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState<Reminder | null>(null);
   const [toast, setToast] = useState<string | null>(null);
 
   const isCustom = source.type === 'custom';
-  // 同一個補助已經在清單裡（且還沒完成）：按鈕改顯示狀態，再按會更新那一筆而不是新增
+  // 同一個補助已經在清單裡（還沒完成、期限也還沒過）：按鈕改顯示狀態，再按會更新那一筆而不是新增。
+  // 過期的單次提醒不算：它已經不會再響，按鈕若還寫「已加入提醒」，使用者會以為下一期有人提醒
   const existing =
     source.type === 'subsidy'
-      ? reminders.find((r) => r.source.type === 'subsidy' && r.source.id === source.id && !r.done)
+      ? reminders.find(
+          (r) => r.source.type === 'subsidy' && r.source.id === source.id && !r.done && (r.repeatYearly || daysUntil(r.targetDate) >= 0),
+        )
       : undefined;
 
   // 面板開著時鎖住背景捲動、Esc 關閉
@@ -102,17 +113,23 @@ export default function AddReminderButton({
 
   useEffect(() => {
     if (!toast) return;
-    const timer = window.setTimeout(() => setToast(null), 2000);
+    // 字多的訊息（「會通知 2 次（其餘時間已過）」）留久一點，2 秒讀不完
+    const timer = window.setTimeout(() => setToast(null), Math.max(2000, toast.length * 160));
     return () => window.clearTimeout(timer);
   }, [toast]);
+
+  const baseDefaults = defaultDaysBefore ?? DEFAULT_DAYS_BEFORE;
 
   const openSheet = () => {
     // 每次打開都從 props 重設，避免上次沒送出的輸入殘留
     setTitleValue(title);
     setNoteValue(note ?? '');
     setDateValue(targetDate ?? '');
-    setSelectedDays(existing?.daysBefore ?? defaultDaysBefore ?? [...DEFAULT_DAYS_BEFORE]);
-    setYearly(existing?.repeatYearly ?? repeatYearly);
+    const nextYearly = existing?.repeatYearly ?? repeatYearly;
+    setSelectedDays(existing?.daysBefore ?? pickDefaultDaysBefore(baseDefaults, targetDate, nextYearly));
+    setYearly(nextYearly);
+    // 已經存過的提醒：那組天數是使用者選的，不要替他改
+    setDaysTouched(!!existing);
     setError(null);
     setSaved(null);
     setStep('form');
@@ -120,6 +137,7 @@ export default function AddReminderButton({
   };
 
   const toggleDay = (days: number) => {
+    setDaysTouched(true);
     setSelectedDays((current) =>
       current.includes(days) ? current.filter((d) => d !== days) : [...current, days],
     );
@@ -144,10 +162,20 @@ export default function AddReminderButton({
       return;
     }
 
+    // 每年重複且今年已過的日期，存檔時會排到下一次；通知時間要用那個日期算
+    const effectiveDate = yearly ? nextYearlyOccurrence(dateValue) : dateValue;
+    const upcomingCount = countUpcomingNotifications(effectiveDate, selectedDays);
+    // 每年重複的不擋：這一期來不及，明年那一輪照樣會通知
+    if (native && upcomingCount === 0 && !yearly) {
+      setError('你選的提醒時間都已經過了（通知在當天早上 9 點發）。請改選沒有刪除線的時間，或把日期往後改。');
+      return;
+    }
+
     setError(null);
     setSaving(true);
     try {
-      let permissionNow = permission;
+      // 權限狀態當場再問一次原生端：這個按鈕剛掛載時 state 還是初始值，直接用會跳過權限視窗
+      let permissionNow = native ? await getPermissionState() : permission;
       if (native && permissionNow === 'prompt') {
         permissionNow = await requestPermission();
       }
@@ -165,7 +193,13 @@ export default function AddReminderButton({
       if (native) {
         setOpen(false);
         setToast(
-          permissionNow === 'granted' ? '已加入提醒' : '已加入提醒，但通知權限沒開，不會推播',
+          permissionNow !== 'granted'
+            ? '已加入提醒，但通知權限沒開，不會推播'
+            : upcomingCount === 0
+              ? '已加入提醒。這一期的提醒時間已過，明年開始通知'
+              : upcomingCount < selectedDays.length
+                ? `已加入提醒，這一期會通知 ${upcomingCount} 次（其餘時間已過）`
+                : '已加入提醒',
         );
       } else {
         // 網頁版沒有推播，留在面板上給行事曆連結，關掉就看不到了
@@ -248,7 +282,10 @@ export default function AddReminderButton({
                     id={dateInputId}
                     type="date"
                     value={dateValue}
-                    onChange={(e) => setDateValue(e.target.value)}
+                    onChange={(e) => {
+                      setDateValue(e.target.value);
+                      if (!daysTouched) setSelectedDays(pickDefaultDaysBefore(baseDefaults, e.target.value || undefined, yearly));
+                    }}
                     min={yearly ? undefined : todayLocal()}
                     required
                   />
@@ -271,6 +308,9 @@ export default function AddReminderButton({
                   <div className="flex flex-wrap gap-2">
                     {DAY_OPTIONS.map((days) => {
                       const active = selectedDays.includes(days);
+                      // 通知時間已經過了的選項畫上刪除線：勾了這一期也不會響，讓人看得出來為什麼。
+                      // 每年重複的不畫：明年那一輪用得到
+                      const past = !yearly && !!dateValue && !isUpcomingFireTime(dateValue, days);
                       return (
                         <button
                           key={days}
@@ -282,9 +322,11 @@ export default function AddReminderButton({
                             active
                               ? 'border-primary bg-primary text-primary-foreground'
                               : 'border-border text-muted-foreground hover:border-foreground hover:text-foreground',
+                            past && 'line-through opacity-50',
                           )}
                         >
                           {dayOptionLabel(days)}
+                          {past && <span className="sr-only">（時間已過）</span>}
                         </button>
                       );
                     })}
@@ -295,13 +337,16 @@ export default function AddReminderButton({
                   <input
                     type="checkbox"
                     checked={yearly}
-                    onChange={(e) => setYearly(e.target.checked)}
+                    onChange={(e) => {
+                      setYearly(e.target.checked);
+                      if (!daysTouched) setSelectedDays(pickDefaultDaysBefore(baseDefaults, dateValue || undefined, e.target.checked));
+                    }}
                     className="mt-0.5 size-4 shrink-0 accent-primary"
                   />
                   <span>
                     每年重複
                     <span className="block text-xs text-muted-foreground">
-                      報稅、牌照稅這類固定日期：過期後自動排到明年
+                      報稅、牌照稅這類固定日期：明年同一天的通知會先排好
                     </span>
                   </span>
                 </label>

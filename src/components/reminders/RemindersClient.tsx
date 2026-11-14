@@ -11,7 +11,7 @@ import ReminderCard from './ReminderCard';
 import NotificationTapListener from './NotificationTapListener';
 
 export default function RemindersClient() {
-  const { reminders, loading, permission, markDone, remove, requestPermission, refresh } = useReminders();
+  const { reminders, loading, permission, markDone, remove, requestPermission, refresh } = useReminders({ rollover: true });
   const native = useIsNativePlatform();
 
   const active = reminders.filter((r) => !r.done);
@@ -62,6 +62,12 @@ export default function RemindersClient() {
             </Button>
           </div>
         </div>
+      )}
+
+      {native && permission === 'granted' && reminders.length > 0 && (
+        <p className="mb-6 text-xs leading-relaxed text-muted-foreground">
+          超過 3 個月沒開 app，Android 可能暫停這個 app 的背景活動，提醒就不會響。到「設定 → 應用程式 → 好耶」關掉「未使用時暫停應用程式活動」，或在期限前開一次 app。
+        </p>
       )}
 
       {!native && !loading && reminders.length > 0 && (

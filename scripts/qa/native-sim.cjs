@@ -305,16 +305,19 @@ async function main() {
   await check("提醒存進 Preferences", async () => reminders.length === 1 || reminders.length);
   const reminder = reminders[0] || { daysBefore: [], targetDate: "" };
   const scheduled = await pendingNow();
-  await check("排了通知，數量不超過提前天數的數量", async () =>
-    (scheduled.length > 0 && scheduled.length <= reminder.daysBefore.length) || { scheduled: scheduled.length, daysBefore: reminder.daysBefore });
+  // 每年重複的提醒會多排明年同一天那一輪
+  const cycles = reminder.repeatYearly ? 2 : 1;
+  await check("排了通知，數量不超過提前天數 × 輪數", async () =>
+    (scheduled.length > 0 && scheduled.length <= reminder.daysBefore.length * cycles) || { scheduled: scheduled.length, daysBefore: reminder.daysBefore, cycles });
+  const [y, m, d] = (reminder.targetDate || "0-0-0").split("-").map(Number);
+  // 腳本的 Node 時區不一定是台北，所以用 UTC 換算：台北 09:00 = UTC 01:00
+  const fireUtc = (yearOffset, daysBefore) => Date.UTC(y + yearOffset, m - 1, d - daysBefore, 1, 0, 0);
   await check("每則通知：當地早上 9 點、日期 = 期限 − 提前天數、非精確鬧鐘、帶站內連結", async () => {
     const problems = [];
-    const [y, m, d] = reminder.targetDate.split("-").map(Number);
     for (const n of scheduled) {
       const at = new Date(n.schedule.at);
-      // 腳本的 Node 時區不一定是台北，所以用 UTC 換算：台北 09:00 = UTC 01:00
-      const expected = Date.UTC(y, m - 1, d - n.extra.daysBefore, 1, 0, 0);
-      if (at.getTime() !== expected) problems.push(`時間不對 id=${n.id} at=${n.schedule.at} 預期=${new Date(expected).toISOString()}`);
+      const expected = [fireUtc(0, n.extra.daysBefore), ...(reminder.repeatYearly ? [fireUtc(1, n.extra.daysBefore)] : [])];
+      if (!expected.includes(at.getTime())) problems.push(`時間不對 id=${n.id} at=${n.schedule.at} 預期=${expected.map((t) => new Date(t).toISOString()).join(" 或 ")}`);
       if (n.isExactNotification !== false) problems.push(`id=${n.id} 沒有指定非精確鬧鐘`);
       if (n.schedule.allowWhileIdle !== true) problems.push(`id=${n.id} 沒有 allowWhileIdle`);
       if (n.extra.module !== "reminders" || typeof n.extra.url !== "string" || !n.extra.url.startsWith("/subsidy/")) problems.push(`id=${n.id} extra 不對 ${JSON.stringify(n.extra)}`);
@@ -323,6 +326,19 @@ async function main() {
     }
     if (new Set(scheduled.map((n) => n.id)).size !== scheduled.length) problems.push("id 重複");
     return problems.length === 0 || problems;
+  });
+  await check("每年固定的期限（牌照稅）：明年同一天那一輪也先排好，每個提前天數各一則", async () => {
+    if (!reminder.repeatYearly) return "牌照稅的提醒沒有設成每年重複";
+    const nextYear = scheduled.filter((n) => new Date(n.schedule.at).getTime() === fireUtc(1, n.extra.daysBefore));
+    return nextYear.length === reminder.daysBefore.length || { nextYear: nextYear.length, daysBefore: reminder.daysBefore };
+  });
+  await check("通知內文第一行是期限日期", async () => {
+    const bad = scheduled.filter((n) => !/^期限 \d{4}\/\d{2}\/\d{2}/.test(n.body));
+    return bad.length === 0 || bad.map((n) => n.body);
+  });
+  await check("通知標題不重複「截止」兩次", async () => {
+    const bad = scheduled.filter((n) => (n.title.match(/截止/g) || []).length !== 1);
+    return bad.length === 0 || bad.map((n) => n.title);
   });
   await check("按鈕變成「已加入提醒」", async () => page.getByRole("button", { name: "已加入提醒" }).first().isVisible());
 
@@ -351,15 +367,45 @@ async function main() {
     await check("app 開著時點通知：站內換頁到該補助", async () =>
       (pathNow().startsWith("/subsidy/vehicle-license-tax-april") && (await page.locator("h1").first().innerText()).includes("牌照稅")) || pathNow());
   }
-  if (tapped) {
+  // 冷啟動用另一則通知：同一則通知只點得到一次（點了就消失），同一則再來一次是系統重送
+  const coldTapped = scheduled[1];
+  const retainTap = (n) =>
+    page.evaluate((notification) => {
+      localStorage.setItem("__retained:LocalNotifications:localNotificationActionPerformed", JSON.stringify({ actionId: "tap", notification }));
+    }, n);
+  if (coldTapped) {
     // 冷啟動：事件在 app 掛監聽器之前就發生，原生端會留到監聽器掛上再送
-    await page.evaluate((n) => {
-      localStorage.setItem("__retained:LocalNotifications:localNotificationActionPerformed", JSON.stringify({ actionId: "tap", notification: n }));
-    }, tapped);
+    await retainTap(coldTapped);
     await page.goto(`${ORIGIN}/`, { waitUntil: "networkidle" });
     await settle(1500);
     await check("app 沒開時點通知（冷啟動）：開起來後導到該補助", async () => pathNow().startsWith("/subsidy/vehicle-license-tax-april") || pathNow());
+
+    // Activity 被系統回收後重建，會帶著同一個 Intent，外掛把同一次點擊再送一遍
+    await retainTap(coldTapped);
+    await page.goto(`${ORIGIN}/`, { waitUntil: "networkidle" });
+    await settle(1500);
+    await check("同一次點擊被系統重送：留在首頁，不再導頁第二次", async () => pathNow() === "/" || pathNow());
+  } else {
+    await check("至少排了兩則通知可以測冷啟動", async () => `只排了 ${scheduled.length} 則`);
   }
+
+  // 提醒存的是加入當時的路徑；資料換版後那個補助頁可能已經不在
+  await fire("LocalNotifications", "localNotificationActionPerformed", {
+    actionId: "tap",
+    notification: { id: 987001, title: "舊提醒", body: "", schedule: { at: "2025-01-01T01:00:00.000Z" }, extra: { module: "reminders", url: "/subsidy/removed-item-2019", daysBefore: 0 } },
+  });
+  await settle(1200);
+  await check("點到已下架補助的通知：改到補助列表，不是空白頁或首頁", async () =>
+    (/^\/subsidy\/?$/.test(pathNow()) && (await page.locator("main h1").first().isVisible())) || pathNow());
+
+  // 回到前景時再對一次排程（app 常駐背景好幾天，期限過了的每年提醒要推到明年）
+  await tab("首頁");
+  await page.waitForURL((u) => new URL(u).pathname === "/");
+  await settle(400);
+  await clearLog();
+  await page.evaluate(() => document.dispatchEvent(new Event("visibilitychange")));
+  await settle(800);
+  await check("從背景回到前景：再向原生端對一次排程", async () => (await calls("LocalNotifications.getPending")).length >= 1);
 
   // 7. 試算精靈的返回鍵 ──────────────────────────────────────────────────────────────────────
   console.log("\n# 試算精靈");
@@ -400,6 +446,42 @@ async function main() {
     return scheduled.every((n) => cancelled.has(n.id)) || { cancelled: [...cancelled], scheduled: scheduled.map((n) => n.id) };
   });
   await check("Preferences 裡的提醒清空", async () => (await storedReminders()).length === 0);
+
+  // 8b. 自訂提醒：期限很近時預設的提前天數要自動換成還來得及的 ───────────────────────────────────
+  console.log("\n# 自訂提醒");
+  await page.getByRole("button", { name: "加入提醒" }).first().click();
+  await page.getByLabel("提醒什麼").fill("換濾心");
+  // 兩天後（以台北的今天為準）：預設的前 30、14、3 天都已經過了，只剩「當天」來得及
+  const inTwoDays = await page.evaluate(() => {
+    const t = new Date();
+    const x = new Date(t.getFullYear(), t.getMonth(), t.getDate() + 2);
+    return `${x.getFullYear()}-${String(x.getMonth() + 1).padStart(2, "0")}-${String(x.getDate()).padStart(2, "0")}`;
+  });
+  await page.getByLabel("截止日期").fill(inTwoDays);
+  await check("選了兩天後的日期：已經過了的提前天數自動取消，只留還來得及的", async () => {
+    const pressed = await page.locator('[role="dialog"] button[aria-pressed="true"]').allInnerTexts();
+    return (pressed.length === 1 && pressed[0].includes("當天")) || pressed;
+  });
+  await page.getByRole("button", { name: "確認加入" }).click();
+  await settle(1200);
+  const custom = await pendingNow();
+  await check("自訂提醒排出 1 則通知，沒有連結時點了會到提醒清單", async () =>
+    (custom.length === 1 && custom[0].extra.url === "/reminders" && custom[0].title === "今天截止：換濾心") || custom.map((n) => ({ title: n.title, extra: n.extra })));
+  await tab("首頁");
+  await page.waitForURL((u) => new URL(u).pathname === "/");
+  await settle(400);
+  if (custom[0]) {
+    await fire("LocalNotifications", "localNotificationActionPerformed", { actionId: "tap", notification: custom[0] });
+    await settle(1200);
+    await check("點自訂提醒的通知：到提醒清單", async () => /^\/reminders\/?$/.test(pathNow()) || pathNow());
+  }
+  await tab("提醒");
+  await page.waitForURL(/\/reminders/);
+  await settle(600);
+  await page.getByRole("button", { name: "刪除" }).first().click();
+  await page.getByRole("button", { name: "刪除" }).first().click();
+  await settle(1000);
+  await check("刪掉自訂提醒後沒有殘留的通知", async () => ((await pendingNow()).length === 0 && (await storedReminders()).length === 0) || { pending: (await pendingNow()).length, stored: (await storedReminders()).length });
 
   // 9. 權限被拒 ─────────────────────────────────────────────────────────────────────────────
   console.log("\n# 通知權限被拒");

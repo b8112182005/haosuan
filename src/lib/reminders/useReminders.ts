@@ -37,7 +37,12 @@ export interface UseRemindersResult {
   refresh: () => Promise<void>;
 }
 
-export function useReminders(): UseRemindersResult {
+/**
+ * rollover：掛載時要不要把過期的每年提醒推到下一年並重排通知。
+ * 只有提醒頁需要（app 啟動時 NativeBridge 已經做過一次）。行事曆頁有三十幾個「加入提醒」按鈕，
+ * 每個都重排的話一進頁面原生端的鬧鐘就被整批取消重建三十幾次。
+ */
+export function useReminders({ rollover = false }: { rollover?: boolean } = {}): UseRemindersResult {
   const [reminders, setReminders] = useState<Reminder[]>([]);
   const [loading, setLoading] = useState(true);
   const [permission, setPermission] = useState<NotificationPermissionState>('unsupported');
@@ -61,8 +66,9 @@ export function useReminders(): UseRemindersResult {
 
   useEffect(() => {
     mountedRef.current = true;
-    // 先把過期的每年提醒推到明年，再讀列表，畫面才不會先閃一下「已過期」
-    void rolloverReminders().then(refresh, refresh);
+    // 提醒頁：先把過期的每年提醒推到明年，再讀列表，畫面才不會先閃一下「已過期」
+    const prepared: Promise<unknown> = rollover ? rolloverReminders() : Promise.resolve();
+    void prepared.then(refresh, refresh);
 
     const unsubscribe = subscribeReminders(() => {
       void refresh();
@@ -77,7 +83,7 @@ export function useReminders(): UseRemindersResult {
       unsubscribe();
       document.removeEventListener('visibilitychange', onVisibility);
     };
-  }, [refresh]);
+  }, [refresh, rollover]);
 
   const requestPermission = useCallback(async () => {
     const state = await requestNotificationPermission();

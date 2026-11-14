@@ -11,7 +11,8 @@
  *   <research>/overrides.json       人工覆寫（{ "<id>": { ...欄位 } }），最後套用
  *   <research>/removed.json         要排除的 id 清單（跨主題重複、已失效的項目）
  *
- * 輸出 src/data/subsidies.json 與 public/data/subsidies.json（兩份相同），以及列表用的精簡索引 src/data/subsidies-index.json。
+ * 輸出 src/data/subsidies.json 與 public/data/subsidies.json（兩份相同）、列表用的精簡索引 src/data/subsidies-index.json、
+ * 只有 id 的清單 src/data/subsidy-ids.json。
  * 這支腳本會做 schema 檢查：缺必要欄位、enum 值不對、id 重複都會直接失敗，不讓壞資料進 app。
  */
 import crypto from "node:crypto";
@@ -26,10 +27,11 @@ const argValue = (name, fallback) => {
   return i >= 0 && args[i + 1] ? args[i + 1] : fallback;
 };
 const researchDir = path.resolve(ROOT, argValue("--research", "research"));
-const today = new Date().toISOString().slice(0, 10);
-const version = argValue("--version", today);
-if (!/^\d{4}-\d{2}-\d{2}$/.test(version)) {
-  console.error(`--version 要是 YYYY-MM-DD，收到「${version}」。app 用字串比大小判斷哪一版比較新。`);
+// 版本是台灣的日期。用 UTC 算的話，台灣早上 8 點前在雲端或 CI 重建會得到前一天，版本字串往回走。
+const today = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Taipei" }).format(new Date());
+const requestedVersion = argValue("--version", null);
+if (requestedVersion !== null && !/^\d{4}-\d{2}-\d{2}$/.test(requestedVersion)) {
+  console.error(`--version 要是 YYYY-MM-DD，收到「${requestedVersion}」。app 用字串比大小判斷哪一版比較新。`);
   process.exit(1);
 }
 
@@ -312,13 +314,32 @@ items.sort((a, b) => {
 // 所以另外帶內容雜湊與產生時間：版本相同時，雜湊不同而且產生時間較晚的才算新。
 // 內容沒變就沿用上次的產生時間，重跑建置不會讓沒改過的資料看起來變新，也不會每次都產生 git 差異。
 const hash = crypto.createHash("sha256").update(JSON.stringify({ items, general_faqs: generalFaqs })).digest("hex").slice(0, 16);
-let generatedAt = new Date().toISOString();
+let previous = null;
 try {
-  const previous = JSON.parse(fs.readFileSync(path.join(ROOT, "src/data/subsidies.json"), "utf8"));
-  if (previous.hash === hash && previous.version === version && typeof previous.generated_at === "string") generatedAt = previous.generated_at;
+  previous = JSON.parse(fs.readFileSync(path.join(ROOT, "src/data/subsidies.json"), "utf8"));
 } catch {
   // 第一次建置，沒有舊檔
 }
+const previousVersion = typeof previous?.version === "string" ? previous.version : "";
+const unchanged = previous?.hash === hash;
+
+// 已安裝的 app 用字串比大小判斷哪一版新，版本只能往前。
+// 沒指定版本時：內容沒變就沿用上一版的日期（重跑建置不產生差異）；內容變了用今天，但不早於上一版。
+let version;
+if (requestedVersion !== null) {
+  if (previousVersion && requestedVersion < previousVersion) {
+    console.error(`--version ${requestedVersion} 比上一版 ${previousVersion} 舊。已安裝的 app 會把它當成舊資料而不更新。`);
+    process.exit(1);
+  }
+  version = requestedVersion;
+} else if (unchanged && previousVersion) {
+  version = previousVersion;
+} else {
+  version = previousVersion > today ? previousVersion : today;
+}
+
+let generatedAt = new Date().toISOString();
+if (unchanged && previousVersion === version && typeof previous.generated_at === "string") generatedAt = previous.generated_at;
 const dataset = { version, generated_at: generatedAt, hash, items, general_faqs: generalFaqs };
 const json = JSON.stringify(dataset, null, 2) + "\n";
 for (const out of ["src/data/subsidies.json", "public/data/subsidies.json"]) {
@@ -337,6 +358,10 @@ const index = {
   items: items.map((item) => Object.fromEntries(INDEX_FIELDS.map((k) => [k, item[k]]))),
 };
 fs.writeFileSync(path.join(ROOT, "src/data/subsidies-index.json"), JSON.stringify(index) + "\n");
+
+// 只有 id 的清單（約 3 KB）。提醒頁與通知點擊要判斷「這個補助頁在這一版還在不在」，
+// 為了這件事載入 370 KB 的精簡索引不划算。
+fs.writeFileSync(path.join(ROOT, "src/data/subsidy-ids.json"), JSON.stringify(items.map((item) => item.id)) + "\n");
 
 const byCat = {};
 for (const i of items) byCat[i.category] = (byCat[i.category] ?? 0) + 1;

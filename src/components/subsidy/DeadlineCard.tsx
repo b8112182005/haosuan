@@ -100,10 +100,11 @@ export default function DeadlineCard({ subsidy }: { subsidy: DeadlineCardSubsidy
       {state && state.kind !== "ended" && (
         <div className="mt-3 flex flex-wrap items-center gap-2">
           <AddReminderButton
-            title={`${subsidy.short_name || subsidy.name}截止`}
+            // 標題只放項目名稱：通知會自己接上「3 天後截止」，再加「截止」會變成「牌照稅截止 3 天後截止」。
+            // 期限說明不帶進提醒：那是一整段某一年度的說明，會把通知第一行的期限日期擠掉，隔年也不適用
+            title={subsidy.short_name || subsidy.name}
             targetDate={reminderDate}
             url={`/subsidy/${subsidy.id}`}
-            note={subsidy.deadline.note || undefined}
             source={{ type: "subsidy", id: subsidy.id }}
             defaultDaysBefore={state.kind === "upcoming" ? [30, 14, 3] : [7]}
             repeatYearly={yearly}
