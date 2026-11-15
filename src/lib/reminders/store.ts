@@ -9,7 +9,7 @@ import { Preferences } from '@capacitor/preferences';
 import type { NewReminderInput, Reminder, ReminderPatch, ReminderSource } from './types';
 import { DEFAULT_DAYS_BEFORE, MAX_DAYS_BEFORE_COUNT } from './types';
 import { daysUntil, isDateString, nextYearlyOccurrence, todayLocal } from './dates';
-import { syncScheduledNotifications } from './notifications';
+import { dismissDelivered, staleDeliveredIds, syncScheduledNotifications } from './notifications';
 
 export type { NewReminderInput, Reminder, ReminderPatch, ReminderSource } from './types';
 export { DEFAULT_DAYS_BEFORE } from './types';
@@ -149,9 +149,12 @@ async function writeAll(list: Reminder[]): Promise<boolean> {
 
 /** 寫入 → 重排通知 → 通知訂閱者。排程失敗不算寫入失敗：資料已在裝置上，下次開 app 會補排。 */
 async function commit(list: Reminder[]): Promise<void> {
+  // 先記下異動前的樣子：存完之後要知道哪些已經響過的通知不再成立，把它們從通知欄收掉
+  const previous = await readAll();
   const ok = await writeAll(list);
   if (!ok) throw new Error('提醒沒有存進裝置，請再試一次');
   try {
+    await dismissDelivered(staleDeliveredIds(previous, list));
     await syncScheduledNotifications(list);
   } catch (err) {
     console.warn('[reminders] 重排通知失敗', err);

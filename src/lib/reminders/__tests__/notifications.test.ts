@@ -46,6 +46,7 @@ import {
   DELIVERY_GRACE_MS,
   planSync,
   recentlyDue,
+  staleDeliveredIds,
   type ScheduledEntry,
 } from '../notifications';
 import type { Reminder } from '../types';
@@ -318,6 +319,34 @@ describe('展開排程', () => {
     expect(fresh.cancel).toEqual([]);
     expect(fresh.ledger.map((e) => e.id)).toEqual(fresh.schedule.map((n) => n.id));
     expect(fresh.ledger.map((e) => e.id)).not.toContain(due);
+  });
+
+  it('staleDeliveredIds：打勾、刪除、改期限、取消提前天數之後，已經響過的那一則要從通知欄收掉', () => {
+    // 11/15 09:30。期限 11/20、提前 5、3、0 天：「前 5 天」09:00 已經響過
+    const reminder = makeReminder({ targetDate: '2026-11-20', daysBefore: [5, 3, 0] });
+    const delivered = notificationId(reminder.id, '2026-11-20', 5);
+    const now = new Date(2026, 10, 15, 9, 30);
+
+    expect(staleDeliveredIds([reminder], [{ ...reminder, done: true }], now)).toEqual([delivered]);
+    expect(staleDeliveredIds([reminder], [], now)).toEqual([delivered]);
+    expect(staleDeliveredIds([reminder], [{ ...reminder, targetDate: '2026-11-18' }], now)).toEqual([delivered]);
+    expect(staleDeliveredIds([reminder], [{ ...reminder, daysBefore: [3, 0] }], now)).toEqual([delivered]);
+    // 推到下一年（每年提醒期限過了）也算：去年那一輪響過的不再成立
+    expect(staleDeliveredIds([reminder], [{ ...reminder, targetDate: '2027-11-20' }], now)).toEqual([delivered]);
+  });
+
+  it('staleDeliveredIds：提醒本身沒變、或只是多選了一個提前天數，響過的那一則留著；還沒響的不歸它管', () => {
+    const reminder = makeReminder({ targetDate: '2026-11-20', daysBefore: [5, 3, 0] });
+    const other = makeReminder({ id: 'other', targetDate: '2026-12-01', daysBefore: [3] });
+    const now = new Date(2026, 10, 15, 9, 30);
+
+    expect(staleDeliveredIds([reminder, other], [reminder, other], now)).toEqual([]);
+    // 別筆提醒被刪掉，這一筆響過的通知不受影響；other 的通知還沒響，不在清單裡
+    expect(staleDeliveredIds([reminder, other], [reminder], now)).toEqual([]);
+    expect(staleDeliveredIds([reminder], [{ ...reminder, daysBefore: [7, 5, 3, 0] }], now)).toEqual([]);
+    expect(staleDeliveredIds([reminder], [{ ...reminder, title: '換個標題' }], now)).toEqual([]);
+    // 原本就已完成的提醒，通知早就不該在了，不重複處理
+    expect(staleDeliveredIds([{ ...reminder, done: true }], [], now)).toEqual([]);
   });
 
   it('沒有連結的自訂提醒，點通知會到提醒清單', () => {

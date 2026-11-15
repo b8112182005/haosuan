@@ -183,7 +183,7 @@ const PLUGIN_HEADERS = [
   header("Preferences", ["configure", "get", "set", "remove", "clear", "keys", "migrate", "removeOld"]),
   header("LocalNotifications", [
     "schedule", "update", "cancel", "cancelAll", "getPending", "registerActionTypes", "areEnabled",
-    "getDeliveredNotifications", "removeDeliveredNotifications", "removeAllDeliveredNotifications",
+    "getDeliveredNotifications", "getByIds", "getAll", "removeDeliveredNotifications", "removeDeliveredNotificationsById", "removeAllDeliveredNotifications",
     "createChannel", "deleteChannel", "listChannels", "checkPermissions", "requestPermissions",
     "changeExactNotificationSetting", "checkExactNotificationSetting",
   ]),
@@ -513,6 +513,26 @@ async function main() {
   await page.getByRole("button", { name: "刪除" }).first().click();
   await settle(1000);
   await check("刪掉自訂提醒後沒有殘留的通知", async () => ((await pendingNow()).length === 0 && (await storedReminders()).length === 0) || { pending: (await pendingNow()).length, stored: (await storedReminders()).length });
+
+  // 已經響過的通知：提醒打勾完成之後，要從通知欄收掉（外掛的 cancel 只取消還沒響的鬧鐘）
+  await page.getByRole("button", { name: "加入提醒" }).first().click();
+  await page.getByLabel("提醒什麼").fill("繳費");
+  await page.getByLabel("截止日期").fill(inTwoDays);
+  // 手動加選「前 3 天」：它的時間是昨天早上 9 點，等於一則已經響過的通知
+  await page.locator('[role="dialog"] button[aria-pressed]', { hasText: "前 3 天" }).click();
+  await page.getByRole("button", { name: "確認加入" }).click();
+  await settle(1200);
+  await clearLog();
+  await page.getByRole("checkbox", { name: /標為完成/ }).first().click();
+  await settle(1000);
+  await check("打勾完成：已經響過的那一則從通知欄收掉，還沒響的取消", async () => {
+    const removed = (await calls("LocalNotifications.removeDeliveredNotifications")).flatMap((c) => c.options.notifications.map((n) => n.id));
+    const pending = await pendingNow();
+    return (removed.length === 1 && Number.isInteger(removed[0]) && pending.length === 0) || { removed, pending: pending.length };
+  });
+  await page.getByRole("button", { name: "刪除" }).first().click();
+  await page.getByRole("button", { name: "刪除" }).first().click();
+  await settle(1000);
 
   // 9. 權限被拒 ─────────────────────────────────────────────────────────────────────────────
   console.log("\n# 通知權限被拒");

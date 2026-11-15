@@ -282,6 +282,50 @@ export function planSync(reminders: Reminder[], known: ScheduledEntry[], granted
   };
 }
 
+/**
+ * 純函式：提醒異動之後，哪些「已經響過」的通知不該再留在通知欄。
+ *
+ * 外掛的 cancel() 只取消還沒響的鬧鐘，不會收掉已經送到通知欄的通知。使用者把提醒打勾完成、刪掉、
+ * 改了期限或取消某個提前天數之後，通知欄那一則如果還掛著，寫的是舊狀態（「驗車 5 天後截止・期限 11/20」，
+ * 而期限已經改成 11/18）。這裡比對異動前後：異動前該響過、異動後不再成立的那幾則要收掉。
+ * 提醒本身沒變的（只是別筆提醒有異動）不會被動到。
+ */
+export function staleDeliveredIds(before: Reminder[], after: Reminder[], now: Date = new Date()): number[] {
+  const stillValid = new Set<string>();
+  for (const reminder of after) {
+    if (reminder.done) continue;
+    for (const days of reminder.daysBefore.slice(0, MAX_PER_CYCLE)) {
+      const fireAt = notificationFireAt(reminder.targetDate, days);
+      if (fireAt) stillValid.add(`${notificationId(reminder.id, reminder.targetDate, days)}@${fireAt.getTime()}`);
+    }
+  }
+  const out = new Set<number>();
+  for (const reminder of before) {
+    if (reminder.done) continue;
+    for (const days of reminder.daysBefore.slice(0, MAX_PER_CYCLE)) {
+      const fireAt = notificationFireAt(reminder.targetDate, days);
+      // 還沒到觸發時間的不在通知欄裡，那些由 planSync 的 cancel 處理
+      if (!fireAt || fireAt.getTime() > now.getTime()) continue;
+      const id = notificationId(reminder.id, reminder.targetDate, days);
+      if (!stillValid.has(`${id}@${fireAt.getTime()}`)) out.add(id);
+    }
+  }
+  return [...out];
+}
+
+/** 把通知欄裡指定 id 的通知收掉。失敗不影響其他流程（頂多舊通知多留一下） */
+export async function dismissDelivered(ids: number[]): Promise<void> {
+  if (!isNativePlatform() || ids.length === 0) return;
+  try {
+    // Android 端只讀 id；title、body 是型別要求的欄位
+    await LocalNotifications.removeDeliveredNotifications({
+      notifications: ids.map((id) => ({ id, title: '', body: '' })),
+    });
+  } catch (err) {
+    console.warn('[reminders] 收掉舊通知失敗', err);
+  }
+}
+
 // ── 排程 ────────────────────────────────────────────────────────────────
 
 async function readJson(key: string): Promise<unknown> {

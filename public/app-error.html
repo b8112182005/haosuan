@@ -81,7 +81,8 @@
         var links = document.getElementById('missing').getElementsByTagName('a');
         for (var i = 0; i < links.length; i++) {
           links[i].onclick = function () {
-            try { window.sessionStorage.setItem('haoye.errorLeft', String(window.history.length)); } catch (e4) {}
+            // 瀏覽紀錄最多算到 50 筆，滿了之後筆數不再增加，分不出新舊：這時不記旗標，寧可之後多看一次說明
+            try { if (window.history.length < 50) window.sessionStorage.setItem('haoye.errorLeft', String(window.history.length)); } catch (e4) {}
             window.location.replace(this.href);
             return false;
           };
