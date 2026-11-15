@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
 import { useBackHandler } from '@/lib/useBackHandler';
+import { showToast } from '@/lib/toast';
 import { useReminders } from '@/lib/reminders/useReminders';
 import { useIsNativePlatform } from '@/lib/reminders/useIsNativePlatform';
 import { daysUntil, formatDate, nextYearlyOccurrence, todayLocal } from '@/lib/reminders/dates';
@@ -81,15 +82,18 @@ export default function AddReminderButton({
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState<Reminder | null>(null);
-  const [toast, setToast] = useState<string | null>(null);
 
   const isCustom = source.type === 'custom';
-  // 同一個補助已經在清單裡（還沒完成、期限也還沒過）：按鈕改顯示狀態，再按會更新那一筆而不是新增。
-  // 過期的單次提醒不算：它已經不會再響，按鈕若還寫「已加入提醒」，使用者會以為下一期有人提醒
+  // 同一個補助已經在清單裡、而且之後還會通知：按鈕改顯示狀態，再按會更新那一筆而不是新增。
+  // - 每年重複的一律算（就算這一期已打勾完成，明年那一輪通知也排著）。
+  // - 單次的要還沒完成、期限也還沒過：過期的已經不會再響，按鈕若還寫「已加入提醒」，使用者會以為下一期有人提醒。
   const existing =
     source.type === 'subsidy'
       ? reminders.find(
-          (r) => r.source.type === 'subsidy' && r.source.id === source.id && !r.done && (r.repeatYearly || daysUntil(r.targetDate) >= 0),
+          (r) =>
+            r.source.type === 'subsidy' &&
+            r.source.id === source.id &&
+            (r.repeatYearly || (!r.done && daysUntil(r.targetDate) >= 0)),
         )
       : undefined;
 
@@ -110,13 +114,6 @@ export default function AddReminderButton({
 
   // Android 返回鍵：面板開著時先關面板，不要整頁跳回上一頁
   useBackHandler(open, () => setOpen(false));
-
-  useEffect(() => {
-    if (!toast) return;
-    // 字多的訊息（「會通知 2 次（其餘時間已過）」）留久一點，2 秒讀不完
-    const timer = window.setTimeout(() => setToast(null), Math.max(2000, toast.length * 160));
-    return () => window.clearTimeout(timer);
-  }, [toast]);
 
   const baseDefaults = defaultDaysBefore ?? DEFAULT_DAYS_BEFORE;
 
@@ -192,7 +189,7 @@ export default function AddReminderButton({
 
       if (native) {
         setOpen(false);
-        setToast(
+        showToast(
           permissionNow !== 'granted'
             ? '已加入提醒，但通知權限沒開，不會推播'
             : upcomingCount === 0
@@ -428,17 +425,6 @@ export default function AddReminderButton({
                 </div>
               )
             )}
-          </div>
-        </div>
-      )}
-
-      {toast && (
-        <div
-          role="status"
-          className="pointer-events-none fixed inset-x-0 bottom-[calc(var(--tabs-h)+1rem+var(--safe-bottom))] z-[80] flex justify-center px-4"
-        >
-          <div className="rounded-full bg-foreground px-4 py-2 text-sm text-background shadow-lg animate-in fade-in slide-in-from-bottom-2 duration-200">
-            {toast}
           </div>
         </div>
       )}

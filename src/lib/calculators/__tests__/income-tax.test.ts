@@ -62,6 +62,14 @@ describe("calculateIncomeTax - 115 年度", () => {
     expect(r.spouseExemption).toBe(101000);
   });
 
+  it("人數打成負數時當成 0，免稅額不會變成負的", () => {
+    const base = { annualSalary: 480000, hasSpouse: false };
+    const normal = calculateIncomeTax({ ...base, numDependents: 0, numElderlyDependents: 0 });
+    const negative = calculateIncomeTax({ ...base, numDependents: -1, numElderlyDependents: -1 });
+    expect(negative.dependentExemption).toBe(0);
+    expect(negative.taxAmount).toBe(normal.taxAmount);
+  });
+
   it("低於免稅額門檻：稅額為 0", () => {
     const r = calculateIncomeTax({
       annualSalary: 300000,

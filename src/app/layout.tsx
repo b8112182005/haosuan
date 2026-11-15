@@ -5,6 +5,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import BottomTabs from "@/components/layout/BottomTabs";
 import InstallPWA from "@/components/common/InstallPWA";
+import Toaster from "@/components/common/Toaster";
 import ServiceWorkerRegister from "@/components/common/ServiceWorkerRegister";
 import PlatformScript from "@/components/app/PlatformScript";
 import NativeBridge from "@/components/app/NativeBridge";
@@ -77,6 +78,7 @@ export default function RootLayout({
         </main>
         <Footer />
         <BottomTabs />
+        <Toaster />
         <NativeBridge />
         {!isAppBuild && <InstallPWA />}
         {!isAppBuild && <ServiceWorkerRegister />}

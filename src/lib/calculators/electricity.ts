@@ -79,7 +79,8 @@ export function calculateElectricity(
 
   for (let i = 0; i < tiers.length; i++) {
     const { max, rate } = tiers[i];
-    const tierSize = max === Infinity ? remaining : Math.min(remaining, max - prevMax);
+    // 度數取到小數 2 位：輸入 330.1 度時，逐段相減會得到 0.10000000000002274 這種浮點數誤差
+    const tierSize = Math.round((max === Infinity ? remaining : Math.min(remaining, max - prevMax)) * 100) / 100;
     if (tierSize <= 0) break;
 
     const charge = Math.round(tierSize * rate * 100) / 100;

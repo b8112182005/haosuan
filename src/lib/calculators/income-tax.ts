@@ -64,12 +64,10 @@ const DEDUCTIONS = {
  * 試算薪資所得稅
  */
 export function calculateIncomeTax(input: IncomeTaxInput): IncomeTaxResult {
-  const {
-    annualSalary,
-    numDependents,
-    hasSpouse,
-    numElderlyDependents,
-  } = input;
+  const { annualSalary, hasSpouse } = input;
+  // 人數不會是負的；輸入框打了負號時當成 0，不要讓免稅額變成負數
+  const numDependents = Math.max(0, input.numDependents);
+  const numElderlyDependents = Math.max(0, input.numElderlyDependents);
 
   // 1. 薪資所得特別扣除額（不超過薪資本身）
   const salaryDeduction = Math.min(annualSalary, DEDUCTIONS.salarySpecial);

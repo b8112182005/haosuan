@@ -117,6 +117,42 @@ describe('store：新增與讀取', () => {
     expect(list[0].daysBefore).toEqual([7, 0]);
   });
 
+  it('已打勾完成的每年提醒，同一期再存一次：完成狀態留著，只換提前天數', async () => {
+    const date = addDays(todayLocal(), 10);
+    const first = await addReminder({ title: '牌照稅', targetDate: date, repeatYearly: true, source: { type: 'subsidy', id: 'license-tax' } });
+    const done = await markDone(first.id, true);
+    const again = await addReminder({
+      title: '牌照稅',
+      targetDate: date,
+      daysBefore: [7, 0],
+      repeatYearly: true,
+      source: { type: 'subsidy', id: 'license-tax' },
+    });
+    expect(again.id).toBe(first.id);
+    expect(again.done).toBe(true);
+    expect(again.doneAt).toBe(done?.doneAt);
+    expect(again.daysBefore).toEqual([7, 0]);
+  });
+
+  it('單次提醒、或換了日期的每年提醒，再存一次會回到未完成', async () => {
+    const date = addDays(todayLocal(), 10);
+    const single = await addReminder({ title: '租金補貼', targetDate: date, source: { type: 'subsidy', id: 'rent' } });
+    await markDone(single.id, true);
+    const singleAgain = await addReminder({ title: '租金補貼', targetDate: date, source: { type: 'subsidy', id: 'rent' } });
+    expect(singleAgain.done).toBe(false);
+
+    const yearly = await addReminder({ title: '牌照稅', targetDate: date, repeatYearly: true, source: { type: 'subsidy', id: 'license-tax' } });
+    await markDone(yearly.id, true);
+    const moved = await addReminder({
+      title: '牌照稅',
+      targetDate: addDays(date, 5),
+      repeatYearly: true,
+      source: { type: 'subsidy', id: 'license-tax' },
+    });
+    expect(moved.done).toBe(false);
+    expect(moved.doneAt).toBeUndefined();
+  });
+
   it('自訂提醒可以重複加入', async () => {
     await addReminder({ title: '換濾心', targetDate: addDays(todayLocal(), 90) });
     await addReminder({ title: '換濾心', targetDate: addDays(todayLocal(), 180) });

@@ -16,7 +16,7 @@ export default function InsuranceCalculator() {
 
   const isValid =
     !isNaN(salary) && salary > 0 &&
-    !isNaN(deps) && deps >= 0 && deps <= 5;
+    !isNaN(deps) && deps >= 0 && deps <= 20;
 
   const result = isValid ? calculateInsurance(salary, deps) : null;
 
@@ -46,7 +46,7 @@ export default function InsuranceCalculator() {
               value={dependents}
               onChange={(e) => setDependents(e.target.value)}
               min={0}
-              max={5}
+              max={20}
             />
             <p className="text-xs text-muted-foreground">
               配偶或未成年子女等隨本人加保的眷屬；超過 {MAX_COUNTED_DEPENDENTS} 人，健保費以 {MAX_COUNTED_DEPENDENTS} 人計
@@ -97,7 +97,7 @@ export default function InsuranceCalculator() {
               </p>
               <p>
                 依 {INSURANCE_YEAR_LABEL}的費率與投保級距計算：勞保普通事故 11.5% 加就業保險 1%，自付 20%；健保 5.17%，自付 30%。
-                雇主、外籍移工等不參加就業保險的人，勞保費會少一些。
+                雇主、外籍移工等不適用就業保險的人，勞保普通事故費率是 12.5%，自付金額和這裡相同或只差 1 元。
               </p>
               <p>實際扣款以公司申報的投保薪資為準，獎金、津貼有沒有計入會影響級距。</p>
             </div>

@@ -6,7 +6,8 @@
       平台預設是黑底：深色按鈕疊在黑底上，返回／主畫面／最近使用三顆按鈕幾乎看不到。
       這裡把底色設成白的，和底部分頁列接在一起。
 
-      只放在 v27 以上：API 24～26 的主題不支援 windowLightNavigationBar，白底會配到白色按鈕。
+      windowLightNavigationBar 是 API 27 才有的主題屬性；API 26 另外有 values-v26（只設底色）。
+      API 24、25 沒有深色導覽按鈕，白底會配到白色按鈕，所以不設。
       Android 15 以上是 edge-to-edge，系統會忽略 navigationBarColor，不受影響。
       其餘三行與 values/styles.xml 的 AppTheme.NoActionBar 相同（同名 style 在這裡是整個取代，不是合併）。
     -->

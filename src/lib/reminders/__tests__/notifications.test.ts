@@ -43,6 +43,10 @@ import {
   isUpcomingFireTime,
   pickDefaultDaysBefore,
   MAX_SCHEDULED,
+  DELIVERY_GRACE_MS,
+  cycleSeed,
+  planSync,
+  recentlyDueIds,
 } from '../notifications';
 import type { Reminder } from '../types';
 
@@ -148,6 +152,23 @@ describe('展開排程', () => {
     expect(next.every((n) => n.body === '期限 2027/04/30')).toBe(true);
   });
 
+  it('每一輪用自己的一組 id：推到下一年之後，原本那一輪的 id 不變，新的一輪不會用到同一組', () => {
+    const yearly = makeReminder({ repeatYearly: true, targetDate: '2026-04-30', daysBefore: [14, 3, 0] });
+    const before = planNotifications([yearly], new Date(2026, 3, 1));
+    const idsOf = (plan: typeof before, year: number) =>
+      plan.filter((n) => (n.schedule!.at as Date).getFullYear() === year).map((n) => n.id).sort();
+    expect(idsOf(before, 2026)).toEqual([0, 1, 2].map((i) => notificationId(cycleSeed(yearly.id, '2026-04-30'), i)).sort());
+
+    // 2026/5/1 推到下一年：2027 那一輪從「明年那一輪」變成「這一輪」，id 要和原本排的一樣
+    const rolled = { ...yearly, targetDate: '2027-04-30' };
+    const after = planNotifications([rolled], new Date(2026, 4, 1));
+    expect(idsOf(after, 2027)).toEqual(idsOf(before, 2027));
+    // 2028 那一輪是新的一組，不會把通知欄裡 2027 那幾則收掉
+    const overlap = idsOf(after, 2028).filter((id) => idsOf(before, 2027).includes(id) || idsOf(before, 2026).includes(id));
+    expect(overlap).toEqual([]);
+    expect(idsOf(after, 2028)).toHaveLength(3);
+  });
+
   it('每年重複：期限當天之後沒再開 app，明年那一輪仍然在排程裡', () => {
     const yearly = makeReminder({ repeatYearly: true, targetDate: '2026-04-30', daysBefore: [14, 3, 0] });
     // 4/30 早上 9 點過後：這一輪三則都過了，只剩明年的三則
@@ -183,6 +204,70 @@ describe('展開排程', () => {
     const year2026 = plan.filter((n) => (n.schedule!.at as Date).getFullYear() === 2026);
     expect(year2026).toHaveLength(240);
     expect(new Set(plan.map((n) => n.id)).size).toBe(MAX_SCHEDULED);
+  });
+
+  it('recentlyDueIds：只有未完成提醒、觸發時間剛過 2 小時內的那幾則', () => {
+    const reminder = makeReminder({ targetDate: '2026-01-20', daysBefore: [3, 0] });
+    const id = (index: number) => notificationId(cycleSeed(reminder.id, '2026-01-20'), index);
+    // 1/17 09:02：「前 3 天」那則 2 分鐘前該響
+    expect(recentlyDueIds([reminder], new Date(2026, 0, 17, 9, 2))).toEqual([id(0)]);
+    // 09:00 整也算
+    expect(recentlyDueIds([reminder], new Date(2026, 0, 17, 9, 0))).toEqual([id(0)]);
+    // 還沒到、或超過 2 小時
+    expect(recentlyDueIds([reminder], new Date(2026, 0, 17, 8, 59))).toEqual([]);
+    expect(recentlyDueIds([reminder], new Date(2026, 0, 17, 9, 0, 0, DELIVERY_GRACE_MS))).toEqual([]);
+    // 已完成的不保留
+    expect(recentlyDueIds([{ ...reminder, done: true }], new Date(2026, 0, 17, 9, 2))).toEqual([]);
+  });
+
+  it('planSync：觸發時間剛過、提醒還有效的那一則不取消（系統可能還沒送出），之後仍留在帳本裡', () => {
+    const reminder = makeReminder({ targetDate: '2026-01-20', daysBefore: [3, 0] });
+    const due = notificationId(cycleSeed(reminder.id, '2026-01-20'), 0);
+    const later = notificationId(cycleSeed(reminder.id, '2026-01-20'), 1);
+    const now = new Date(2026, 0, 17, 9, 2);
+
+    const plan = planSync([reminder], [due, later], true, now);
+    expect(plan.cancel).toEqual([later]);
+    expect(plan.schedule.map((n) => n.id)).toEqual([later]);
+    expect(plan.ledger.sort()).toEqual([due, later].sort());
+
+    // 兩小時後再重排：那一則照常取消（已經送出的話，取消不影響通知欄）
+    const afterGrace = planSync([reminder], [due, later], true, new Date(2026, 0, 17, 11, 30));
+    expect(afterGrace.cancel.sort()).toEqual([due, later].sort());
+    expect(afterGrace.ledger).toEqual([later]);
+  });
+
+  it('planSync：剛打勾完成或刪掉的提醒，剛到期的那一則照樣取消', () => {
+    const reminder = makeReminder({ targetDate: '2026-01-20', daysBefore: [3, 0] });
+    const due = notificationId(cycleSeed(reminder.id, '2026-01-20'), 0);
+    const later = notificationId(cycleSeed(reminder.id, '2026-01-20'), 1);
+    const now = new Date(2026, 0, 17, 9, 2);
+
+    const done = planSync([{ ...reminder, done: true }], [due, later], true, now);
+    expect(done.cancel.sort()).toEqual([due, later].sort());
+    expect(done.schedule).toEqual([]);
+    expect(done.ledger).toEqual([]);
+
+    const removed = planSync([], [due, later], true, now);
+    expect(removed.cancel.sort()).toEqual([due, later].sort());
+    expect(removed.ledger).toEqual([]);
+  });
+
+  it('planSync：權限沒開時全部取消、不排；原生端沒有的 id 不會憑空進帳本', () => {
+    const reminder = makeReminder({ targetDate: '2026-01-20', daysBefore: [3, 0] });
+    const due = notificationId(cycleSeed(reminder.id, '2026-01-20'), 0);
+    const now = new Date(2026, 0, 17, 9, 2);
+
+    const denied = planSync([reminder], [due, 12345], false, now);
+    expect(denied.cancel.sort()).toEqual([due, 12345].sort());
+    expect(denied.schedule).toEqual([]);
+    expect(denied.ledger).toEqual([]);
+
+    // 那一則從來沒排過（例如提醒是 09:01 才加的）：不在 known 裡，就不放進帳本
+    const fresh = planSync([reminder], [], true, now);
+    expect(fresh.cancel).toEqual([]);
+    expect(fresh.ledger).toEqual(fresh.schedule.map((n) => n.id));
+    expect(fresh.ledger).not.toContain(due);
   });
 
   it('沒有連結的自訂提醒，點通知會到提醒清單', () => {

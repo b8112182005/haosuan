@@ -58,7 +58,38 @@
         } catch (e2) {
           booted = true;
         }
-        if (!booted && !tried) window.location.replace('/');
+        if (!booted && !tried) { window.location.replace('/'); return; }
+
+        // 瀏覽紀錄現在是［…、出錯前那一頁、404 的網址、這一頁］。
+        // 直接退一步會回到 404 的網址，又被帶回這一頁，所以要一次退兩步。
+        var skipBack = function () {
+          if (window.history.length > 2) window.history.go(-2);
+          else window.location.replace('/');
+        };
+
+        // 從這一頁點連結離開過、之後按返回又回到這裡：使用者已經看過這張說明，直接退回出錯前那一頁
+        var left = false;
+        try {
+          left = window.sessionStorage.getItem('haoye.errorLeft') === '1';
+          if (left) window.sessionStorage.removeItem('haoye.errorLeft');
+        } catch (e3) {}
+        if (left) { skipBack(); return; }
+
+        // 連結用 replace 開，這一頁不留在瀏覽紀錄裡
+        var links = document.getElementById('missing').getElementsByTagName('a');
+        for (var i = 0; i < links.length; i++) {
+          links[i].onclick = function () {
+            try { window.sessionStorage.setItem('haoye.errorLeft', '1'); } catch (e4) {}
+            window.location.replace(this.href);
+            return false;
+          };
+        }
+
+        // Android 返回鍵：這一頁沒有載入 app 的程式，沒人接返回鍵時 Capacitor 會退一步（回到 404 的網址）。
+        // 原生橋接自己帶的 Capacitor.addListener 不需要 app 的程式就能用。
+        if (window.Capacitor && typeof window.Capacitor.addListener === 'function') {
+          window.Capacitor.addListener('App', 'backButton', skipBack);
+        }
       }
     } catch (e) {}
   })();

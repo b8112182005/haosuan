@@ -15,6 +15,7 @@ import { Preferences } from '@capacitor/preferences';
 import type { Reminder } from './types';
 import { MAX_DAYS_BEFORE_COUNT } from './types';
 import { addDays, addYears, formatDate, nextYearlyOccurrence, splitDate, toCompactDate, todayLocal } from './dates';
+import { resolveSubsidyPath } from '../subsidy/paths';
 
 /** 寫進每則通知的 extra.module，用來在 getPending 裡認出自己排的 */
 export const NOTIFICATION_MODULE = 'reminders';
@@ -35,8 +36,19 @@ export const MAX_SCHEDULED = 400;
  */
 const SCHEDULED_IDS_KEY = 'haoti.reminders.scheduledIds.v1';
 
-/** 上一次處理過的通知點擊（id@觸發時間），用來擋掉系統重送的同一則 */
-const LAST_TAP_KEY = 'haoti.reminders.lastTap.v1';
+/**
+ * 最近處理過的通知點擊（id@觸發時間），用來擋掉系統重送的同一則。
+ * 要記好幾筆：重送的是「當初用來冷啟動 app 的那一則」，中間使用者可能又點過別的通知，只記最後一筆擋不住。
+ */
+const RECENT_TAPS_KEY = 'haoti.reminders.recentTaps.v1';
+const TAP_HISTORY_SIZE = 50;
+
+/**
+ * 剛到觸發時間的通知，重排時保留多久不取消（毫秒）。
+ * 鬧鐘是非精確的，09:00 的通知系統可能晚幾分鐘才送。使用者剛好在這段時間開 app 的話，
+ * 「全部取消、只排未來的」會把還沒送出的那一則取消掉，而它的時間已過、不會再排，這則通知就不見了。
+ */
+export const DELIVERY_GRACE_MS = 2 * 60 * 60 * 1000;
 
 /** 沒有連結的提醒（自訂提醒）點通知後去哪裡：提醒清單，至少看得到是哪一筆 */
 const FALLBACK_TAP_URL = '/reminders';
@@ -165,8 +177,18 @@ export function pickDefaultDaysBefore(
   return yearly ? [...defaults, fallback] : [fallback];
 }
 
-/** 把一筆提醒在某個期限日的那一輪通知加進 out。idSeed 決定這一輪用哪一組通知 id */
-function pushCycle(out: LocalNotificationSchema[], reminder: Reminder, targetDate: string, idSeed: string, now: Date): void {
+/**
+ * 一輪通知的 id 種子：提醒 id 加上那一輪期限的年份。
+ * 每一輪用自己的一組 id：原生端 schedule() 會先把通知欄裡同 id 的通知收掉，如果明年那一輪固定用同一組 id，
+ * 每年提醒推到下一年時，剛響過還留在通知欄的那幾則會被後年那一輪收走。
+ */
+export function cycleSeed(reminderId: string, targetDate: string): string {
+  return `${reminderId}:${targetDate.slice(0, 4)}`;
+}
+
+/** 把一筆提醒在某個期限日的那一輪通知加進 out */
+function pushCycle(out: LocalNotificationSchema[], reminder: Reminder, targetDate: string, now: Date): void {
+  const idSeed = cycleSeed(reminder.id, targetDate);
   reminder.daysBefore.slice(0, ID_BLOCK).forEach((days, index) => {
     const fireAt = notificationFireAt(targetDate, days);
     if (!fireAt || fireAt.getTime() <= now.getTime()) return;
@@ -198,12 +220,54 @@ function pushCycle(out: LocalNotificationSchema[], reminder: Reminder, targetDat
 export function planNotifications(reminders: Reminder[], now: Date = new Date()): LocalNotificationSchema[] {
   const out: LocalNotificationSchema[] = [];
   for (const reminder of reminders) {
-    if (!reminder.done) pushCycle(out, reminder, reminder.targetDate, reminder.id, now);
-    if (reminder.repeatYearly) pushCycle(out, reminder, addYears(reminder.targetDate, 1), `${reminder.id}:next`, now);
+    if (!reminder.done) pushCycle(out, reminder, reminder.targetDate, now);
+    if (reminder.repeatYearly) pushCycle(out, reminder, addYears(reminder.targetDate, 1), now);
   }
   if (out.length <= MAX_SCHEDULED) return out;
   const fireTime = (n: LocalNotificationSchema) => (n.schedule?.at instanceof Date ? n.schedule.at.getTime() : 0);
   return [...out].sort((a, b) => fireTime(a) - fireTime(b)).slice(0, MAX_SCHEDULED);
+}
+
+/**
+ * 觸發時間剛過、系統可能還沒送出的通知 id：未完成的提醒在過去 DELIVERY_GRACE_MS 內該響的那幾則。
+ * 已完成或已刪除的提醒不在裡面，那些要照常取消（剛打勾的提醒不該再響）。
+ */
+export function recentlyDueIds(reminders: Reminder[], now: Date = new Date()): number[] {
+  const out: number[] = [];
+  for (const reminder of reminders) {
+    if (reminder.done) continue;
+    const idSeed = cycleSeed(reminder.id, reminder.targetDate);
+    reminder.daysBefore.slice(0, ID_BLOCK).forEach((days, index) => {
+      const fireAt = notificationFireAt(reminder.targetDate, days);
+      if (!fireAt) return;
+      const age = now.getTime() - fireAt.getTime();
+      if (age >= 0 && age < DELIVERY_GRACE_MS) out.push(notificationId(idSeed, index));
+    });
+  }
+  return out;
+}
+
+export interface SyncPlan {
+  cancel: number[];
+  schedule: LocalNotificationSchema[];
+  /** 這次重排之後原生端還留著、下次要能取消的全部 id */
+  ledger: number[];
+}
+
+/**
+ * 純函式：決定這次重排要取消哪些、排哪些、帳本記哪些。
+ * known 是原生端目前可能還有的 id（上次的帳本 ∪ getPending 裡認得出是我們的）。
+ */
+export function planSync(reminders: Reminder[], known: number[], granted: boolean, now: Date = new Date()): SyncPlan {
+  if (!granted) return { cancel: [...new Set(known)], schedule: [], ledger: [] };
+  const keep = new Set(recentlyDueIds(reminders, now));
+  const kept = [...new Set(known)].filter((id) => keep.has(id));
+  const schedule = planNotifications(reminders, now);
+  return {
+    cancel: [...new Set(known)].filter((id) => !keep.has(id)),
+    schedule,
+    ledger: [...new Set([...schedule.map((n) => n.id), ...kept])],
+  };
 }
 
 // ── 排程 ────────────────────────────────────────────────────────────────
@@ -246,6 +310,7 @@ let syncQueue: Promise<unknown> = Promise.resolve();
  * 以目前所有提醒為準，重排本模組的全部通知：
  * 先取消上次排的（ledger ∪ getPending 裡 extra.module 是我們的），再整批 schedule。
  * 全部重排而不是比對差異，是因為差異比對的 bug 會變成「刪掉的提醒還在響」，重排不會。
+ * 唯一不取消的是觸發時間剛過、提醒仍然有效的那幾則（見 DELIVERY_GRACE_MS）。
  *
  * 多次呼叫會照呼叫順序一個一個跑。啟動時的重排和使用者刪除提醒觸發的重排如果交錯執行，
  * 先開始的那次可能在後面才 schedule，把剛刪掉的提醒又排回去；排隊之後最後生效的一定是最新的清單。
@@ -261,28 +326,24 @@ async function runSync(reminders: Reminder[]): Promise<SyncResult> {
   if (!isNativePlatform()) return { scheduled: 0, cancelled: 0, skipped: 'web' };
   try {
     const [pending, ledger] = await Promise.all([LocalNotifications.getPending(), readScheduledIds()]);
-    const toCancel = new Set<number>(ledger);
+    const known = new Set<number>(ledger);
     for (const n of pending.notifications) {
-      if (isOurs(n)) toCancel.add(n.id);
-    }
-    if (toCancel.size > 0) {
-      await LocalNotifications.cancel({ notifications: [...toCancel].map((id) => ({ id })) });
+      if (isOurs(n)) known.add(n.id);
     }
 
     // 權限不是 granted 就不排：8.3 之後 schedule() 會自己跳權限視窗，
     // 在 app 一開啟就跳出來會嚇到人，要問應該由畫面上的按鈕來問。
-    const permission = await getPermissionState();
-    if (permission !== 'granted') {
-      await writeScheduledIds([]);
-      return { scheduled: 0, cancelled: toCancel.size, skipped: 'permission' };
-    }
+    const granted = (await getPermissionState()) === 'granted';
+    const plan = planSync(reminders, [...known], granted);
 
-    const plan = planNotifications(reminders);
-    if (plan.length > 0) {
-      await LocalNotifications.schedule({ notifications: plan });
+    if (plan.cancel.length > 0) {
+      await LocalNotifications.cancel({ notifications: plan.cancel.map((id) => ({ id })) });
     }
-    await writeScheduledIds(plan.map((n) => n.id));
-    return { scheduled: plan.length, cancelled: toCancel.size, skipped: null };
+    if (plan.schedule.length > 0) {
+      await LocalNotifications.schedule({ notifications: plan.schedule });
+    }
+    await writeScheduledIds(plan.ledger);
+    return { scheduled: plan.schedule.length, cancelled: plan.cancel.length, skipped: granted ? null : 'permission' };
   } catch (err) {
     console.warn('[reminders] 通知排程失敗', err);
     return { scheduled: 0, cancelled: 0, skipped: null };
@@ -293,9 +354,20 @@ async function runSync(reminders: Reminder[]): Promise<SyncResult> {
 
 type Navigate = (url: string) => void;
 
+/** 讀出最近處理過的點擊；存的東西壞掉就當成沒有 */
+function parseTapHistory(value: string | null): string[] {
+  if (!value) return [];
+  try {
+    const parsed: unknown = JSON.parse(value);
+    return Array.isArray(parsed) ? parsed.filter((k): k is string => typeof k === 'string') : [];
+  } catch {
+    return [];
+  }
+}
+
 /**
- * 可能同時有多個元件註冊（layout 一個、提醒頁一個），
- * 但 plugin 監聽器只掛一個，點擊時只叫最後註冊的那個，避免導頁兩次。
+ * 可能同時有多個元件註冊，但 plugin 監聽器只掛一個，點擊時只叫最後註冊的那個，避免導頁兩次。
+ * 站內路徑在這裡統一轉過（已下架的補助頁改到補助列表），每個註冊的人拿到的都是能開的路徑。
  */
 const navigators: Navigate[] = [];
 let listenerHandle: Promise<PluginListenerHandle> | null = null;
@@ -315,14 +387,15 @@ export function initNotificationTapHandler(navigate: Navigate): () => void {
         // 用點通知冷啟動之後，Activity 被系統回收再重建時會帶著同一個 Intent，外掛會把同一次點擊再送一遍；
         // 不擋的話使用者隔天從桌面回到 app，又被帶去昨天那則通知的頁面
         try {
-          const { value } = await Preferences.get({ key: LAST_TAP_KEY });
-          if (value === tapKey) return;
-          await Preferences.set({ key: LAST_TAP_KEY, value: tapKey });
+          const { value } = await Preferences.get({ key: RECENT_TAPS_KEY });
+          const seen = parseTapHistory(value);
+          if (seen.includes(tapKey)) return;
+          await Preferences.set({ key: RECENT_TAPS_KEY, value: JSON.stringify([...seen, tapKey].slice(-TAP_HISTORY_SIZE)) });
         } catch {
           // 讀寫失敗就當成沒處理過，寧可多導一次也不要點了沒反應
         }
         const current = navigators[navigators.length - 1];
-        current?.(url);
+        current?.(/^https?:\/\//i.test(url) ? url : resolveSubsidyPath(url));
       })();
     });
     listenerHandle = handle;

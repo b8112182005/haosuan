@@ -8,7 +8,6 @@ import { useReminders } from '@/lib/reminders/useReminders';
 import { useIsNativePlatform } from '@/lib/reminders/useIsNativePlatform';
 import AddReminderButton from './AddReminderButton';
 import ReminderCard from './ReminderCard';
-import NotificationTapListener from './NotificationTapListener';
 
 export default function RemindersClient() {
   const { reminders, loading, permission, markDone, remove, requestPermission, refresh } = useReminders({ rollover: true });
@@ -19,7 +18,6 @@ export default function RemindersClient() {
 
   return (
     <div>
-      <NotificationTapListener />
 
       <div className="mb-6 flex items-start justify-between gap-4">
         <div>

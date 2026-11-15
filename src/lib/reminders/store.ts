@@ -190,6 +190,10 @@ export async function addReminder(input: NewReminderInput): Promise<Reminder> {
       ? list.findIndex((r) => r.source.type === 'subsidy' && r.source.id === source.id)
       : -1;
   const existing = existingIndex >= 0 ? list[existingIndex] : null;
+  // 已打勾完成的每年提醒，同一期再存一次（例如只是改提前天數）：這一期的完成狀態留著，
+  // 不然繳完稅、打過勾的那一期，剩下的通知會被重新排回來
+  const keepDone =
+    !!existing && existing.done && existing.repeatYearly && repeatYearly && existing.targetDate === targetDate;
 
   const reminder: Reminder = {
     id: existing?.id ?? generateId(),
@@ -201,8 +205,8 @@ export async function addReminder(input: NewReminderInput): Promise<Reminder> {
     source,
     repeatYearly,
     createdAt: existing?.createdAt ?? new Date().toISOString(),
-    done: false,
-    doneAt: undefined,
+    done: keepDone,
+    doneAt: keepDone ? existing?.doneAt : undefined,
   };
 
   const next = existing ? list.map((r, i) => (i === existingIndex ? reminder : r)) : [...list, reminder];

@@ -62,6 +62,15 @@ describe("calculateElectricity", () => {
     expect(calculateElectricity(57, "non-summer").minimumApplied).toBe(false);
   });
 
+  it("帶小數的度數：各段的度數不帶浮點數誤差", () => {
+    const r = calculateElectricity(330.1, "non-summer");
+    expect(r.breakdown.map((t) => t.units)).toEqual([120, 210, 0.1]);
+    const r2 = calculateElectricity(345.6, "summer");
+    expect(r2.breakdown.map((t) => t.units)).toEqual([120, 210, 15.6]);
+    // 各段金額相加等於合計
+    expect(r2.breakdown.reduce((sum, t) => sum + t.charge, 0)).toBeCloseTo(r2.totalCharge, 2);
+  });
+
   it("平均單價 = 總費用 / 度數", () => {
     const r = calculateElectricity(300, "non-summer");
     expect(r.avgPricePerUnit).toBeCloseTo(

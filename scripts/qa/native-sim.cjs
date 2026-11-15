@@ -394,6 +394,15 @@ async function main() {
     await page.goto(`${ORIGIN}/`, { waitUntil: "networkidle" });
     await settle(1500);
     await check("同一次點擊被系統重送：留在首頁，不再導頁第二次", async () => pathNow() === "/" || pathNow());
+
+    // 重送的是「當初冷啟動 app 的那一則」。中間又點過別則通知之後，重送的那一則仍然要擋得住
+    const another = scheduled[2] || tapped;
+    await fire("LocalNotifications", "localNotificationActionPerformed", { actionId: "tap", notification: another });
+    await settle(1000);
+    await retainTap(coldTapped);
+    await page.goto(`${ORIGIN}/`, { waitUntil: "networkidle" });
+    await settle(1500);
+    await check("中間點過別則通知之後，當初冷啟動的那一則被重送：仍然留在首頁", async () => pathNow() === "/" || pathNow());
   } else {
     await check("至少排了兩則通知可以測冷啟動", async () => `只排了 ${scheduled.length} 則`);
   }
@@ -405,6 +414,18 @@ async function main() {
   });
   await settle(1200);
   await check("點到已下架補助的通知：改到補助列表，不是空白頁或首頁", async () =>
+    (/^\/subsidy\/?$/.test(pathNow()) && (await page.locator("main h1").first().isVisible())) || pathNow());
+
+  // 同一件事在提醒頁再測一次：以前提醒頁自己掛了一個不會轉路徑的監聽器，停在這一頁時走的是它
+  await tab("提醒");
+  await page.waitForURL(/\/reminders/);
+  await settle(600);
+  await fire("LocalNotifications", "localNotificationActionPerformed", {
+    actionId: "tap",
+    notification: { id: 987002, title: "舊提醒", body: "", schedule: { at: "2025-01-02T01:00:00.000Z" }, extra: { module: "reminders", url: "/subsidy/removed-item-2020", daysBefore: 0 } },
+  });
+  await settle(1200);
+  await check("停在提醒頁時點到已下架補助的通知：一樣改到補助列表", async () =>
     (/^\/subsidy\/?$/.test(pathNow()) && (await page.locator("main h1").first().isVisible())) || pathNow());
 
   // 回到前景時再對一次排程（app 常駐背景好幾天，期限過了的每年提醒要推到明年）
@@ -661,11 +682,28 @@ async function main() {
     return (await page.getByRole("link", { name: "看補助列表" }).isVisible()) && !(await page.getByRole("heading", { name: "需要更新系統元件" }).isVisible());
   });
   await shot("error-page-missing");
+
+  // 瀏覽紀錄是［…、睡眠計算機、404 的網址、錯誤頁］。退一步會回到 404 的網址、又被帶回錯誤頁，所以錯誤頁要自己退兩步
+  await back(true);
+  await page.waitForURL(/\/life\/sleep\//, { timeout: 5000 }).catch(() => {});
+  await settle(600);
+  await check("在錯誤頁按返回鍵：回到出錯前那一頁，不是再看一次錯誤頁", async () =>
+    (pathNow().startsWith("/life/sleep") && (await page.locator("nav.bottom-tabs").isVisible())) || page.url());
+
+  await page.goto(`${ORIGIN}/subsidy/removed-item-2019/`, { waitUntil: "networkidle" }).catch(() => {});
+  await page.getByRole("heading", { name: "找不到這一頁" }).waitFor({ state: "visible", timeout: 5000 }).catch(() => {});
   await page.getByRole("link", { name: "看補助列表" }).click();
   await page.waitForURL(/\/subsidy\/index\.html$/);
   await settle(800);
   await check("從錯誤頁按「看補助列表」回到 app", async () =>
     ((await page.locator("nav.bottom-tabs").isVisible()) && (await page.evaluate(() => document.documentElement.dataset.platform)) === "android") || pathNow());
+
+  // 從補助列表再按返回：紀錄裡的上一筆是 404 的網址，會再被帶到錯誤頁；錯誤頁認得這是回頭路，直接退回出錯前那一頁
+  await back(true);
+  await page.waitForURL(/\/life\/sleep\//, { timeout: 6000 }).catch(() => {});
+  await settle(600);
+  await check("從錯誤頁點連結離開後再按返回：不再停在錯誤頁，回到出錯前那一頁", async () =>
+    (pathNow().startsWith("/life/sleep") && (await page.getByRole("heading", { name: "找不到這一頁" }).count()) === 0) || page.url());
   page.off("response", onResponse);
 
   // Capacitor 的最低 WebView 版本檢查誤判時，會在啟動時直接載入錯誤頁（它是這個 WebView 的第一頁）

@@ -81,7 +81,8 @@ export default function ElectricityCalculator() {
                   <span className="text-muted-foreground">
                     {tier.tier} ({tier.units} 度 × {tier.rate} 元)
                   </span>
-                  <span className="font-mono">NT${tier.charge.toFixed(0)}</span>
+                  {/* 和合計用同一種取法（到小數 2 位）：各段四捨五入成整數的話，214 + 407 會和合計 620.4 對不起來 */}
+                  <span className="font-mono">NT${tier.charge.toLocaleString("zh-TW", { maximumFractionDigits: 2 })}</span>
                 </div>
               ))}
 
