@@ -51,7 +51,7 @@ cd /c/Users/b8112/Projects/haosuan && base64 -w0 android/upload-keystore.jks | c
 cd /c/Users/b8112/Projects/haosuan && npm ci && bash scripts/android/build-release.sh 1
 ```
 
-最後一個參數是 versionCode，每次上傳 Play 都要比上一次大（1、2、3…）。
+最後一個參數是 versionCode，每次上傳 Play 都要比上一次大。我交付的 `haoye-1.0.0-b6` 是 6，本機再出包從 7 開始。
 輸出：`android/app/build/outputs/bundle/release/app-release.aab`。
 
 或者交給 CI：
@@ -60,12 +60,12 @@ cd /c/Users/b8112/Projects/haosuan && npm ci && bash scripts/android/build-relea
 cd /c/Users/b8112/Projects/haosuan && git tag v1.0.0 && git push origin v1.0.0
 ```
 
-GitHub Actions 會用 `github.run_number` 當 versionCode，AAB 在 workflow 的 Artifacts 裡下載。
+GitHub Actions 用 `100 + run_number` 當 versionCode（artifact 名稱結尾的 `v104` 這類數字就是它），一定比本機出過的 1～6 大，兩種方式混用不會被 Play 拒收。AAB 在 workflow 的 Artifacts 裡下載。
 出包前 CI 會先跑 `npm run qa:native`：用模擬的 Android 原生端檢查返回鍵、通知排程、通知點擊，沒過就不出 AAB。
 
 ## 1.5 先裝到自己的手機測（10 分鐘）
 
-把交付的 `haoye-1.0.0-b5.apk` 傳到手機，點開安裝（第一次要允許「安裝未知應用程式」）。這幾項只有實機看得到，請走一遍：
+把交付的 `haoye-1.0.0-b6.apk` 傳到手機，點開安裝（第一次要允許「安裝未知應用程式」）。這幾項只有實機看得到，請走一遍：
 
 | 檢查 | 怎麼做 | 應該看到 |
 |---|---|---|

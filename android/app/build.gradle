@@ -3,7 +3,7 @@ import groovy.json.JsonSlurper
 apply plugin: 'com.android.application'
 
 // ---- 版本號 ----
-// versionCode：每次上傳 Play 都要比上次大。CI 用 -PversionCode=<github.run_number> 傳進來，本機沒傳就是 1。
+// versionCode：每次上傳 Play 都要比上次大。CI 傳 -PversionCode=<100 + github.run_number>（避開本機出過的 1～6），本機沒傳就是 1。
 // versionName：-PversionName=1.2.3 可覆寫（CI 從 tag v1.2.3 帶入）；沒傳就讀 repo 根目錄 package.json 的 version，
 // 讓網頁和 app 共用同一個版本號，不用在兩邊各改一次。
 def packageJson = new JsonSlurper().parse(rootProject.file('../package.json'))
