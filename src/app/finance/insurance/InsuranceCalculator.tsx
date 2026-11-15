@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
-import { calculateInsurance } from "@/lib/calculators/insurance";
+import { INSURANCE_YEAR_LABEL, MAX_COUNTED_DEPENDENTS, calculateInsurance } from "@/lib/calculators/insurance";
 import CopyButton from "@/components/common/CopyButton";
 
 export default function InsuranceCalculator() {
@@ -49,7 +49,7 @@ export default function InsuranceCalculator() {
               max={5}
             />
             <p className="text-xs text-muted-foreground">
-              配偶或未成年子女等隨本人加保的眷屬（0-5 人）
+              配偶或未成年子女等隨本人加保的眷屬；超過 {MAX_COUNTED_DEPENDENTS} 人，健保費以 {MAX_COUNTED_DEPENDENTS} 人計
             </p>
           </div>
         </div>
@@ -66,7 +66,7 @@ export default function InsuranceCalculator() {
               </div>
               <div className="flex justify-center pt-1">
                 <CopyButton
-                  value={`月薪：${salary.toLocaleString("zh-TW")} 元\n勞保費：${result.laborInsurance.toLocaleString("zh-TW")} 元\n健保費：${result.healthInsurance.toLocaleString("zh-TW")} 元\n合計扣除：${result.totalDeduction.toLocaleString("zh-TW")} 元\n實領薪資：${result.netSalary.toLocaleString("zh-TW")} 元`}
+                  value={`月薪：${salary.toLocaleString("zh-TW")} 元\n勞保＋就保：${result.laborInsurance.toLocaleString("zh-TW")} 元（投保薪資 ${result.laborGrade.toLocaleString("zh-TW")}）\n健保費：${result.healthInsurance.toLocaleString("zh-TW")} 元（投保金額 ${result.healthGrade.toLocaleString("zh-TW")}）\n合計扣除：${result.totalDeduction.toLocaleString("zh-TW")} 元\n實領薪資：${result.netSalary.toLocaleString("zh-TW")} 元`}
                   label="複製結果"
                 />
               </div>
@@ -74,7 +74,7 @@ export default function InsuranceCalculator() {
 
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
               {[
-                { label: "勞保費（自付）", value: `NT$${result.laborInsurance.toLocaleString("zh-TW")}` },
+                { label: "勞保＋就保（自付）", value: `NT$${result.laborInsurance.toLocaleString("zh-TW")}` },
                 { label: "健保費（自付）", value: `NT$${result.healthInsurance.toLocaleString("zh-TW")}` },
                 { label: "合計扣除", value: `NT$${result.totalDeduction.toLocaleString("zh-TW")}` },
                 { label: "實領薪資", value: `NT$${result.netSalary.toLocaleString("zh-TW")}`, color: "text-primary" },
@@ -88,8 +88,18 @@ export default function InsuranceCalculator() {
               ))}
             </div>
 
-            <div className="rounded-lg bg-amber-500/10 border border-amber-500/20 p-3 text-xs text-amber-600 dark:text-amber-400">
-              本計算以 2024 年費率直接以月薪計算，實際勞健保依投保薪資分級表對應級距，結果可能略有差異，僅供參考。
+            <div className="space-y-1 rounded-lg border border-border p-3 text-xs leading-relaxed text-muted-foreground">
+              <p>
+                勞保月投保薪資 {result.laborGrade.toLocaleString("zh-TW")} 元
+                {salary > result.laborGrade ? "（最高一級，月薪更高也用這一級算）" : ""}
+                ；健保投保金額 {result.healthGrade.toLocaleString("zh-TW")} 元
+                {deps > result.countedDependents ? `，眷屬以 ${result.countedDependents} 人計` : ""}。
+              </p>
+              <p>
+                依 {INSURANCE_YEAR_LABEL}的費率與投保級距計算：勞保普通事故 11.5% 加就業保險 1%，自付 20%；健保 5.17%，自付 30%。
+                雇主、外籍移工等不參加就業保險的人，勞保費會少一些。
+              </p>
+              <p>實際扣款以公司申報的投保薪資為準，獎金、津貼有沒有計入會影響級距。</p>
             </div>
           </>
         )}

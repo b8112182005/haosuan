@@ -668,6 +668,16 @@ async function main() {
     ((await page.locator("nav.bottom-tabs").isVisible()) && (await page.evaluate(() => document.documentElement.dataset.platform)) === "android") || pathNow());
   page.off("response", onResponse);
 
+  // Capacitor 的最低 WebView 版本檢查誤判時，會在啟動時直接載入錯誤頁（它是這個 WebView 的第一頁）
+  const firstLoad = await context.newPage();
+  await firstLoad.goto(`${ORIGIN}/${errorPath}`, { waitUntil: "networkidle" }).catch(() => {});
+  await firstLoad.waitForTimeout(1200);
+  await check("錯誤頁是啟動後的第一頁、WebView 又夠新：直接進 app 首頁", async () => {
+    const p = new URL(firstLoad.url()).pathname;
+    return (p === "/" && (await firstLoad.locator("nav.bottom-tabs").isVisible())) || p;
+  });
+  await firstLoad.close();
+
   await check("全程沒有未捕捉的 JS 錯誤", async () => pageErrors.length === 0 || pageErrors.slice(0, 5));
 
   // 15. WebView 太舊（沒有 @layer，Chrome 99 以前）：蓋一層說明，不留壞掉的畫面 ─────────────────────

@@ -45,6 +45,20 @@
       if (typeof window.CSSLayerBlockRule === 'undefined') {
         document.getElementById('missing').className = 'hide';
         document.getElementById('outdated').className = '';
+      } else {
+        // WebView 夠新，而且這次開 app 還沒有任何一頁載入過（app 的每一頁都會寫 haoye.booted）：
+        // 代表這一頁是啟動時被直接載入的。Capacitor 的最低 WebView 版本檢查在 Android 7 是用套件名稱猜的，
+        // 猜錯時就會這樣。這種情況直接進 app，不要讓人一打開就看到「找不到這一頁」。只試一次，避免來回跳。
+        var booted = true;
+        var tried = true;
+        try {
+          booted = window.sessionStorage.getItem('haoye.booted') === '1';
+          tried = window.sessionStorage.getItem('haoye.errorRedirected') === '1';
+          if (!booted && !tried) window.sessionStorage.setItem('haoye.errorRedirected', '1');
+        } catch (e2) {
+          booted = true;
+        }
+        if (!booted && !tried) window.location.replace('/');
       }
     } catch (e) {}
   })();

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
-import { calculateElectricity, getCurrentSeason, type Season } from "@/lib/calculators/electricity";
+import { MIN_CHARGE, RATE_EFFECTIVE_LABEL, calculateElectricity, getCurrentSeason, type Season } from "@/lib/calculators/electricity";
 import CopyButton from "@/components/common/CopyButton";
 
 export default function ElectricityCalculator() {
@@ -66,16 +66,13 @@ export default function ElectricityCalculator() {
               <p className="text-xs text-muted-foreground mt-1">
                 約等於 {Math.round(result.totalCharge / 60)} 杯珍珠奶茶的價格（以 60 元/杯計算）
               </p>
-              <div className="text-xs text-muted-foreground">費率依台電 2024 年住宅累進費率計算，如有調整請以台電官網公告為準</div>
+              <div className="text-xs text-muted-foreground">
+                用的是台電{RATE_EFFECTIVE_LABEL}的住宅累進電價（一般電表，不是時間電價）。之後如有調整，以台電公告為準
+              </div>
             </div>
 
             {/* 費用明細 */}
             <div className="space-y-2">
-              <div className="flex justify-between text-sm py-1 border-b border-border">
-                <span className="text-muted-foreground">基本費</span>
-                <span className="font-mono">NT${result.baseCharge}</span>
-              </div>
-
               {result.breakdown.map((tier) => (
                 <div
                   key={tier.tier}
@@ -87,6 +84,13 @@ export default function ElectricityCalculator() {
                   <span className="font-mono">NT${tier.charge.toFixed(0)}</span>
                 </div>
               ))}
+
+              {result.minimumApplied && (
+                <div className="flex justify-between text-sm py-1 border-b border-border/50">
+                  <span className="text-muted-foreground">當月電費未滿 {MIN_CHARGE} 元，以 {MIN_CHARGE} 元計收</span>
+                  <span className="font-mono">NT${MIN_CHARGE}</span>
+                </div>
+              )}
 
               <div className="flex justify-between font-semibold pt-2">
                 <span>合計</span>

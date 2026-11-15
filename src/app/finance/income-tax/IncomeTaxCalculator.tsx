@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
-import { calculateIncomeTax } from "@/lib/calculators/income-tax";
+import { TAX_YEAR_LABEL, calculateIncomeTax } from "@/lib/calculators/income-tax";
 import CopyButton from "@/components/common/CopyButton";
 
 function formatTWD(n: number) {
@@ -202,7 +202,7 @@ export default function IncomeTaxCalculator() {
 
         <div className="space-y-1 border-t border-border/50 pt-4">
           <p className="text-xs text-muted-foreground">
-            * 依財政部 114 年度（2025 年所得、2026 年 5 月申報）標準計算：免稅額、標準扣除額、薪資所得特別扣除額與課稅級距。
+            * 依財政部公告的 {TAX_YEAR_LABEL}金額計算：免稅額 101,000、標準扣除額 136,000（有配偶 272,000）、薪資所得特別扣除額 227,000，課稅級距 61 萬／138 萬／277 萬／519 萬。
           </p>
           <p className="text-xs text-muted-foreground">
             * 本工具僅就「薪資所得 + 標準扣除額」概算，未含列舉扣除額、其他類別所得、儲蓄投資／幼兒學前／長照等特別扣除額及基本生活費差額。實際應納稅額請以{" "}

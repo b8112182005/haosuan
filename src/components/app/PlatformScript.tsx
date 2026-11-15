@@ -10,11 +10,15 @@
 //    （有副檔名，本機伺服器會回正確的檔案；檔案不存在時 Capacitor 會改載 app-error.html）。
 //    網頁版的伺服器會回正確的頁面，不需要這段。
 //
+//    每一頁也順手在 sessionStorage 記下 haoye.booted：app-error.html 靠它分辨「app 已經開起來之後才遇到 404」
+//    和「一啟動就被載入錯誤頁」（後者直接導回首頁）。
+//
 // 3. 樣式全部包在 @layer 裡（Tailwind 4），Chrome／WebView 99 以前不認得，整頁沒有版面：圖示放到整個螢幕寬、
 //    分頁列疊在內容上。關掉自動更新的 Android 8、9 手機會遇到。CSSLayerBlockRule 是同一版才有的介面，
 //    沒有它就蓋一層說明，告訴使用者要更新什麼，不要留一個壞掉的畫面。
 const code =
-  "(function(){try{var c=window.Capacitor;var n=!!(c&&typeof c.isNativePlatform==='function'&&c.isNativePlatform());" +
+  "(function(){try{try{window.sessionStorage.setItem('haoye.booted','1');}catch(s){}" +
+  "var c=window.Capacitor;var n=!!(c&&typeof c.isNativePlatform==='function'&&c.isNativePlatform());" +
   "document.documentElement.setAttribute('data-platform',n?c.getPlatform():'web');" +
   "if(n){var p=location.pathname;if(p!=='/'&&!/\\.html$/.test(p)){location.replace(p.replace(/\\/?$/,'/')+'index.html'+location.search+location.hash);return;}}" +
   "if(typeof window.CSSLayerBlockRule==='undefined'){var d=document.createElement('div');d.setAttribute('role','alert');" +

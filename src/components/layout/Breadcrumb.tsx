@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronRight, Home } from "lucide-react";
 import { normalizePath } from "@/lib/platform";
+import { tools } from "@/lib/tools-registry";
 
 const segmentLabels: Record<string, string> = {
   life: "生活",
@@ -42,6 +43,9 @@ const segmentLabels: Record<string, string> = {
   "date-diff": "日期天數",
 };
 
+// 上面沒列到的計算機用工具清單裡的名稱，不要把網址裡的英文（insurance、retirement）直接顯示出來
+const toolNames = new Map(tools.map((tool) => [tool.slug, tool.name]));
+
 export default function Breadcrumb() {
   const pathname = usePathname();
   const segments = normalizePath(pathname).split("/").filter(Boolean);
@@ -51,7 +55,7 @@ export default function Breadcrumb() {
   // 計算機分類（/life、/finance…）沒有獨立頁面，中間層連到工具總覽，避免 404
   const categorySegments = new Set(["life", "finance", "renovation", "convert", "math"]);
   const crumbs = segments.map((seg, i) => ({
-    label: segmentLabels[seg] ?? seg,
+    label: segmentLabels[seg] ?? toolNames.get(seg) ?? seg,
     href: i === 0 && categorySegments.has(seg) ? "/tools" : "/" + segments.slice(0, i + 1).join("/"),
   }));
 
