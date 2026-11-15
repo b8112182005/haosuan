@@ -4,6 +4,7 @@ import {
   listReminders,
   markDone as markDoneInStore,
   removeReminder,
+  resyncNotifications,
   rolloverReminders,
   subscribeReminders,
   updateReminder,
@@ -11,7 +12,6 @@ import {
 import {
   getPermissionState,
   requestPermission as requestNotificationPermission,
-  syncScheduledNotifications,
   type NotificationPermissionState,
 } from './notifications';
 import type { NewReminderInput, Reminder, ReminderPatch } from './types';
@@ -59,7 +59,7 @@ export function useReminders({ rollover = false }: { rollover?: boolean } = {}):
     // 使用者去系統設定把通知打開再切回來：visibilitychange 會進到這裡，把通知補上
     const previous = lastPermissionRef.current;
     if (perm === 'granted' && previous !== null && previous !== 'granted') {
-      void syncScheduledNotifications(list);
+      void resyncNotifications();
     }
     lastPermissionRef.current = perm;
   }, []);
@@ -90,7 +90,7 @@ export function useReminders({ rollover = false }: { rollover?: boolean } = {}):
     if (!mountedRef.current) return state;
     setPermission(state);
     if (state === 'granted' && lastPermissionRef.current !== 'granted') {
-      void listReminders().then(syncScheduledNotifications);
+      void resyncNotifications();
     }
     lastPermissionRef.current = state;
     return state;

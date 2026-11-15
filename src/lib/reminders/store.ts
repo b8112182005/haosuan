@@ -147,7 +147,27 @@ async function writeAll(list: Reminder[]): Promise<boolean> {
   }
 }
 
-/** 寫入 → 重排通知 → 通知訂閱者。排程失敗不算寫入失敗：資料已在裝置上，下次開 app 會補排。 */
+// ── 寫入排隊 ─────────────────────────────────────────────────────────────
+
+/**
+ * 每個異動都是「讀出整份清單 → 改 → 寫回」，這裡讓它們一次只跑一個。
+ * 不排隊的話，兩個異動交錯（連續把兩筆提醒打勾、開 app 推移每年提醒的同時使用者刪了一筆）
+ * 會讀到同一份舊清單，後寫的把先寫的蓋掉，先改的那一筆就不見了。
+ *
+ * 會寫入清單或重排通知的公開函式都要包在 mutate 裡。task 裡不要再呼叫其他包了 mutate 的函式：
+ * 它會排在自己後面，而自己在等它，兩邊永遠等不完。
+ * 只能擋同一個 JS 環境裡的交錯；網頁版同時開兩個分頁各自寫 localStorage 不在這裡處理。
+ */
+let mutationQueue: Promise<unknown> = Promise.resolve();
+
+function mutate<T>(task: () => Promise<T>): Promise<T> {
+  const run = mutationQueue.then(task);
+  // 一個異動失敗（例如寫入失敗丟錯）不能卡住後面排隊的
+  mutationQueue = run.catch(() => undefined);
+  return run;
+}
+
+/** 寫入 → 重排通知 → 通知訂閱者。排程失敗不算寫入失敗：資料已在裝置上，下次開 app 會補排。只在 mutate 裡呼叫。 */
 async function commit(list: Reminder[]): Promise<void> {
   // 先記下異動前的樣子：存完之後要知道哪些已經響過的通知不再成立，把它們從通知欄收掉
   const previous = await readAll();
@@ -187,71 +207,77 @@ export async function addReminder(input: NewReminderInput): Promise<Reminder> {
   const targetDate = repeatYearly ? nextYearlyOccurrence(input.targetDate) : input.targetDate;
   const source = normalizeSource(input.source);
 
-  const list = await readAll();
-  const existingIndex =
-    source.type === 'subsidy'
-      ? list.findIndex((r) => r.source.type === 'subsidy' && r.source.id === source.id)
-      : -1;
-  const existing = existingIndex >= 0 ? list[existingIndex] : null;
-  // 已打勾完成的每年提醒，同一期再存一次（例如只是改提前天數）：這一期的完成狀態留著，
-  // 不然繳完稅、打過勾的那一期，剩下的通知會被重新排回來
-  const keepDone =
-    !!existing && existing.done && existing.repeatYearly && repeatYearly && existing.targetDate === targetDate;
+  return mutate(async () => {
+    const list = await readAll();
+    const existingIndex =
+      source.type === 'subsidy'
+        ? list.findIndex((r) => r.source.type === 'subsidy' && r.source.id === source.id)
+        : -1;
+    const existing = existingIndex >= 0 ? list[existingIndex] : null;
+    // 已打勾完成的每年提醒，同一期再存一次（例如只是改提前天數）：這一期的完成狀態留著，
+    // 不然繳完稅、打過勾的那一期，剩下的通知會被重新排回來
+    const keepDone =
+      !!existing && existing.done && existing.repeatYearly && repeatYearly && existing.targetDate === targetDate;
 
-  const reminder: Reminder = {
-    id: existing?.id ?? generateId(),
-    title,
-    note: normalizeText(input.note),
-    targetDate,
-    daysBefore: normalizeDaysBefore(input.daysBefore),
-    url: normalizeUrl(input.url),
-    source,
-    repeatYearly,
-    createdAt: existing?.createdAt ?? new Date().toISOString(),
-    done: keepDone,
-    doneAt: keepDone ? existing?.doneAt : undefined,
-  };
+    const reminder: Reminder = {
+      id: existing?.id ?? generateId(),
+      title,
+      note: normalizeText(input.note),
+      targetDate,
+      daysBefore: normalizeDaysBefore(input.daysBefore),
+      url: normalizeUrl(input.url),
+      source,
+      repeatYearly,
+      createdAt: existing?.createdAt ?? new Date().toISOString(),
+      done: keepDone,
+      doneAt: keepDone ? existing?.doneAt : undefined,
+    };
 
-  const next = existing ? list.map((r, i) => (i === existingIndex ? reminder : r)) : [...list, reminder];
-  await commit(next);
-  return reminder;
+    const next = existing ? list.map((r, i) => (i === existingIndex ? reminder : r)) : [...list, reminder];
+    await commit(next);
+    return reminder;
+  });
 }
 
-export async function updateReminder(id: string, patch: ReminderPatch): Promise<Reminder | null> {
-  const list = await readAll();
-  const index = list.findIndex((r) => r.id === id);
-  if (index < 0) return null;
-  const current = list[index];
+export function updateReminder(id: string, patch: ReminderPatch): Promise<Reminder | null> {
+  return mutate(async () => {
+    const list = await readAll();
+    const index = list.findIndex((r) => r.id === id);
+    if (index < 0) return null;
+    const current = list[index];
 
-  const title = patch.title === undefined ? current.title : normalizeText(patch.title);
-  if (!title) throw new Error('提醒標題不能是空的');
-  const targetDate = patch.targetDate === undefined ? current.targetDate : patch.targetDate;
-  if (!isDateString(targetDate)) throw new Error('日期格式要是 YYYY-MM-DD');
+    const title = patch.title === undefined ? current.title : normalizeText(patch.title);
+    if (!title) throw new Error('提醒標題不能是空的');
+    const targetDate = patch.targetDate === undefined ? current.targetDate : patch.targetDate;
+    if (!isDateString(targetDate)) throw new Error('日期格式要是 YYYY-MM-DD');
 
-  const updated: Reminder = {
-    ...current,
-    title,
-    targetDate,
-    note: 'note' in patch ? normalizeText(patch.note) : current.note,
-    daysBefore: patch.daysBefore === undefined ? current.daysBefore : normalizeDaysBefore(patch.daysBefore),
-    url: 'url' in patch ? normalizeUrl(patch.url) : current.url,
-    source: patch.source === undefined ? current.source : normalizeSource(patch.source),
-    repeatYearly: patch.repeatYearly === undefined ? current.repeatYearly : patch.repeatYearly === true,
-    done: patch.done === undefined ? current.done : patch.done === true,
-    doneAt: 'doneAt' in patch ? (typeof patch.doneAt === 'string' ? patch.doneAt : undefined) : current.doneAt,
-  };
+    const updated: Reminder = {
+      ...current,
+      title,
+      targetDate,
+      note: 'note' in patch ? normalizeText(patch.note) : current.note,
+      daysBefore: patch.daysBefore === undefined ? current.daysBefore : normalizeDaysBefore(patch.daysBefore),
+      url: 'url' in patch ? normalizeUrl(patch.url) : current.url,
+      source: patch.source === undefined ? current.source : normalizeSource(patch.source),
+      repeatYearly: patch.repeatYearly === undefined ? current.repeatYearly : patch.repeatYearly === true,
+      done: patch.done === undefined ? current.done : patch.done === true,
+      doneAt: 'doneAt' in patch ? (typeof patch.doneAt === 'string' ? patch.doneAt : undefined) : current.doneAt,
+    };
 
-  const next = list.map((r, i) => (i === index ? updated : r));
-  await commit(next);
-  return updated;
+    const next = list.map((r, i) => (i === index ? updated : r));
+    await commit(next);
+    return updated;
+  });
 }
 
-export async function removeReminder(id: string): Promise<boolean> {
-  const list = await readAll();
-  const next = list.filter((r) => r.id !== id);
-  if (next.length === list.length) return false;
-  await commit(next);
-  return true;
+export function removeReminder(id: string): Promise<boolean> {
+  return mutate(async () => {
+    const list = await readAll();
+    const next = list.filter((r) => r.id !== id);
+    if (next.length === list.length) return false;
+    await commit(next);
+    return true;
+  });
 }
 
 export async function markDone(id: string, done: boolean): Promise<Reminder | null> {
@@ -265,19 +291,20 @@ export async function markDone(id: string, done: boolean): Promise<Reminder | nu
  * 每年重複且已過期的提醒：推到下一次、取消完成狀態、重排通知。回傳異動筆數。
  * 沒有異動也會重排一次通知：手機重開機或系統清掉排程後，開 app 就補回來。
  */
-export async function rolloverReminders(): Promise<number> {
-  const list = await readAll();
-  const today = todayLocal();
-  let changed = 0;
-  const next = list.map((r) => {
-    if (!r.repeatYearly || daysUntil(r.targetDate, today) >= 0) return r;
-    changed += 1;
-    return {
-      ...r,
-      targetDate: nextYearlyOccurrence(r.targetDate, today),
-      done: false,
-      doneAt: undefined,
-    };
+export function rolloverReminders(): Promise<number> {
+  return mutate(async () => {
+    const list = await readAll();
+    const today = todayLocal();
+    let changed = 0;
+    const next = list.map((r) => {
+      if (!r.repeatYearly || daysUntil(r.targetDate, today) >= 0) return r;
+      changed += 1;
+      return {
+        ...r,
+        targetDate: nextYearlyOccurrence(r.targetDate, today),
+        done: false,
+        doneAt: undefined,
+      };
   });
 
   if (changed > 0) {
@@ -290,4 +317,19 @@ export async function rolloverReminders(): Promise<number> {
     }
   }
   return changed;
+  });
+}
+
+/**
+ * 用裝置上最新的清單重排通知（通知權限剛打開時用）。
+ * 先讀清單、再等權限結果才排的話，中間如果有人刪了提醒，舊清單會把刪掉的通知排回來，所以和寫入排在同一列。
+ */
+export function resyncNotifications(): Promise<void> {
+  return mutate(async () => {
+    try {
+      await syncScheduledNotifications(await readAll());
+    } catch (err) {
+      console.warn('[reminders] 重排通知失敗', err);
+    }
+  });
 }

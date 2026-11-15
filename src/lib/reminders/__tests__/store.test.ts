@@ -304,3 +304,58 @@ describe('store：壞資料', () => {
     expect(list[0].source).toEqual({ type: 'custom' });
   });
 });
+
+describe('store：同時發生的異動', () => {
+  // 每個異動都是「讀出整份清單 → 改 → 寫回」。兩個異動交錯時，會讀到同一份舊清單，後寫的把先寫的蓋掉
+  it('連續把兩筆提醒打勾：兩筆都是完成，不會有一筆被蓋回未完成', async () => {
+    const a = await addReminder({ title: '牌照稅', targetDate: addDays(todayLocal(), 10) });
+    const b = await addReminder({ title: '房屋稅', targetDate: addDays(todayLocal(), 20) });
+    await Promise.all([markDone(a.id, true), markDone(b.id, true)]);
+    const list = await listReminders();
+    expect(list.map((r) => [r.title, r.done])).toEqual([
+      ['牌照稅', true],
+      ['房屋稅', true],
+    ]);
+  });
+
+  it('同時新增、刪除、改日期：結果和一個一個做相同', async () => {
+    const a = await addReminder({ title: '換濾心', targetDate: addDays(todayLocal(), 10) });
+    const b = await addReminder({ title: '驗車', targetDate: addDays(todayLocal(), 20) });
+    const newDate = addDays(todayLocal(), 30);
+    await Promise.all([
+      removeReminder(a.id),
+      updateReminder(b.id, { targetDate: newDate }),
+      addReminder({ title: '繳保費', targetDate: addDays(todayLocal(), 5) }),
+    ]);
+    const list = await listReminders();
+    expect(list.map((r) => r.title).sort()).toEqual(['繳保費', '驗車']);
+    expect(list.find((r) => r.title === '驗車')?.targetDate).toBe(newDate);
+  });
+
+  it('開 app 的每年提醒推移和使用者打勾同時發生：兩邊的異動都留著', async () => {
+    const yearly = await addReminder({ title: '綜所稅', targetDate: addDays(todayLocal(), 3), repeatYearly: true });
+    const other = await addReminder({ title: '換濾心', targetDate: addDays(todayLocal(), 10) });
+    // 把每年提醒的期限改成去年，模擬「期限已過、還沒推到下一年」
+    const raw = JSON.parse(memory.get(STORAGE_KEY)!) as Array<{ id: string; targetDate: string }>;
+    const lastYear = addDays(todayLocal(), -300);
+    raw.find((r) => r.id === yearly.id)!.targetDate = lastYear;
+    memory.set(STORAGE_KEY, JSON.stringify(raw));
+
+    const [changed] = await Promise.all([rolloverReminders(), markDone(other.id, true)]);
+    expect(changed).toBe(1);
+    const list = await listReminders();
+    expect(list.find((r) => r.id === yearly.id)?.targetDate).toBe(nextYearlyOccurrence(lastYear));
+    expect(list.find((r) => r.id === other.id)?.done).toBe(true);
+  });
+
+  it('其中一個異動失敗，後面排隊的照常執行', async () => {
+    const a = await addReminder({ title: '牌照稅', targetDate: addDays(todayLocal(), 10) });
+    const results = await Promise.allSettled([
+      updateReminder(a.id, { title: '   ' }),
+      markDone(a.id, true),
+    ]);
+    expect(results[0].status).toBe('rejected');
+    expect(results[1].status).toBe('fulfilled');
+    expect((await getReminder(a.id))?.done).toBe(true);
+  });
+});
