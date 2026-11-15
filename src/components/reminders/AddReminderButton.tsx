@@ -34,6 +34,11 @@ export interface AddReminderButtonProps {
   repeatYearly?: boolean;
   className?: string;
   variant?: 'primary' | 'ghost';
+  /**
+   * 面板開關時通知外層。提醒頁的空清單用它：加完第一筆之後清單不再是空的，
+   * 但面板還開著（網頁版要停在「放進行事曆」那一步）時，放按鈕的區塊不能跟著被卸載。
+   */
+  onOpenChange?: (open: boolean) => void;
 }
 
 function dayOptionLabel(days: number): string {
@@ -62,6 +67,7 @@ export default function AddReminderButton({
   repeatYearly = false,
   className,
   variant = 'primary',
+  onOpenChange,
 }: AddReminderButtonProps) {
   const { reminders, add, permission, requestPermission } = useReminders();
   const native = useIsNativePlatform();
@@ -96,6 +102,10 @@ export default function AddReminderButton({
             (r.repeatYearly || (!r.done && daysUntil(r.targetDate) >= 0)),
         )
       : undefined;
+
+  useEffect(() => {
+    onOpenChange?.(open);
+  }, [open, onOpenChange]);
 
   // 面板開著時鎖住背景捲動、Esc 關閉
   useEffect(() => {
@@ -189,14 +199,18 @@ export default function AddReminderButton({
 
       if (native) {
         setOpen(false);
+        const head = existing ? '已更新提醒' : '已加入提醒';
         showToast(
           permissionNow !== 'granted'
-            ? '已加入提醒，但通知權限沒開，不會推播'
-            : upcomingCount === 0
-              ? '已加入提醒。這一期的提醒時間已過，明年開始通知'
-              : upcomingCount < selectedDays.length
-                ? `已加入提醒，這一期會通知 ${upcomingCount} 次（其餘時間已過）`
-                : '已加入提醒',
+            ? `${head}，但通知權限沒開，不會推播`
+            : reminder.done
+              ? // 已打勾完成的每年提醒：這一期不再通知，排的是明年那一輪
+                `${head}。這一期已完成，明年開始通知`
+              : upcomingCount === 0
+                ? `${head}。這一期的提醒時間已過，明年開始通知`
+                : upcomingCount < selectedDays.length
+                  ? `${head}，這一期會通知 ${upcomingCount} 次（其餘時間已過）`
+                  : head,
         );
       } else {
         // 網頁版沒有推播，留在面板上給行事曆連結，關掉就看不到了

@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { BellOff, BellRing, CalendarClock } from 'lucide-react';
 import { Button, buttonVariants } from '@/components/ui/button';
@@ -12,6 +13,9 @@ import ReminderCard from './ReminderCard';
 export default function RemindersClient() {
   const { reminders, loading, permission, markDone, remove, requestPermission, refresh } = useReminders({ rollover: true });
   const native = useIsNativePlatform();
+  // 空清單裡那個「加入提醒」的面板是不是開著。加完第一筆之後清單不再是空的，但面板還開著時
+  // （網頁版停在「放進行事曆」那一步），空清單區塊要留著，不然面板會跟著它一起消失
+  const [emptySheetOpen, setEmptySheetOpen] = useState(false);
 
   const active = reminders.filter((r) => !r.done);
   const finished = reminders.filter((r) => r.done);
@@ -81,7 +85,7 @@ export default function RemindersClient() {
             <li key={i} className="h-28 animate-pulse rounded-xl bg-muted/60" />
           ))}
         </ul>
-      ) : reminders.length === 0 ? (
+      ) : reminders.length === 0 || emptySheetOpen ? (
         <div className="rounded-2xl border border-dashed border-border p-8 text-center">
           <CalendarClock className="mx-auto size-10 text-muted-foreground" />
           <h2 className="mt-4 text-lg font-semibold">還沒有提醒</h2>
@@ -93,7 +97,13 @@ export default function RemindersClient() {
             <Link href="/subsidy" className={cn(buttonVariants({ variant: 'outline', size: 'lg' }))}>
               去看補助
             </Link>
-            <AddReminderButton title="" source={{ type: 'custom' }} variant="primary" className="h-9" />
+            <AddReminderButton
+              title=""
+              source={{ type: 'custom' }}
+              variant="primary"
+              className="h-9"
+              onOpenChange={setEmptySheetOpen}
+            />
           </div>
         </div>
       ) : (

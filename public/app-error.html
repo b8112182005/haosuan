@@ -67,19 +67,21 @@
           else window.location.replace('/');
         };
 
-        // 從這一頁點連結離開過、之後按返回又回到這裡：使用者已經看過這張說明，直接退回出錯前那一頁
-        var left = false;
+        // 從這一頁點連結離開過、之後按返回又回到這裡：使用者已經看過這張說明，直接退回出錯前那一頁。
+        // 旗標記的是點連結當下的紀錄筆數：按返回繞回來時筆數和當時一樣；
+        // 之後才遇到的另一次 404，筆數一定比較多，那就是新的一次，要照常顯示說明。
+        var left = null;
         try {
-          left = window.sessionStorage.getItem('haoye.errorLeft') === '1';
-          if (left) window.sessionStorage.removeItem('haoye.errorLeft');
+          left = window.sessionStorage.getItem('haoye.errorLeft');
+          if (left !== null) window.sessionStorage.removeItem('haoye.errorLeft');
         } catch (e3) {}
-        if (left) { skipBack(); return; }
+        if (left !== null && left === String(window.history.length)) { skipBack(); return; }
 
         // 連結用 replace 開，這一頁不留在瀏覽紀錄裡
         var links = document.getElementById('missing').getElementsByTagName('a');
         for (var i = 0; i < links.length; i++) {
           links[i].onclick = function () {
-            try { window.sessionStorage.setItem('haoye.errorLeft', '1'); } catch (e4) {}
+            try { window.sessionStorage.setItem('haoye.errorLeft', String(window.history.length)); } catch (e4) {}
             window.location.replace(this.href);
             return false;
           };

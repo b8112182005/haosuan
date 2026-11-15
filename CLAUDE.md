@@ -45,7 +45,7 @@ npx cap sync android && cd android && ./gradlew assembleDebug
 - 網頁版 CSP 在 `next.config.ts`；新增外部請求時同步更新 `connect-src`。
 - 計算機裡的法定數字每年會變（勞健保投保級距與費率、住宅電價、所得稅免稅額與級距）。改數字時同步改畫面用的年度標示（`INSURANCE_YEAR_LABEL`、`RATE_EFFECTIVE_LABEL`、`TAX_YEAR_LABEL`）、頁面問答裡的金額與測試；來源網址寫在各檔案開頭的註解，查不到官方原表的部分照實寫出核對到哪裡。
 - 畫面底部的短訊息用 `showToast`（`src/lib/toast.ts`），不要把訊息的 state 放在觸發它的元件裡：元件被卸載時訊息會跟著消失。
-- 通知 id 的種子帶期限年份（`cycleSeed`）；重排通知的取消與排程由 `planSync` 決定，改這兩處要跑 `npm run qa:native`。
+- 通知 id 由（提醒 id、期限年份、提前天數）決定（`notificationId`）；重排通知的取消與排程由 `planSync` 決定，帳本同時記 id 與觸發時間。改這兩處要跑 `npm run qa:native`。
 
 ## 已知事項
 

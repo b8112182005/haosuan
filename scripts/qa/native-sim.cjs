@@ -573,6 +573,50 @@ async function main() {
   await settle(1000);
   await check("getPending 沒有 extra 時，刪除提醒仍取消全部通知", async () => (await pendingNow()).length === 0 || (await pendingNow()).map((n) => n.id));
 
+  // 12b. 已打勾完成的每年提醒 ───────────────────────────────────────────────────────────────
+  console.log("\n# 已完成的每年提醒");
+  await page.evaluate(() => localStorage.removeItem("__pending_no_extra"));
+  await page.goto(`${ORIGIN}/subsidy/vehicle-license-tax-april/`, { waitUntil: "networkidle" });
+  await settle(800);
+  await page.getByRole("button", { name: "加入提醒" }).first().click();
+  await page.getByRole("button", { name: "確認加入" }).click();
+  await settle(1200);
+  const yearlyStored = (await storedReminders())[0] || { targetDate: "", daysBefore: [] };
+  const thisYear = Number(yearlyStored.targetDate.slice(0, 4));
+  const yearOf = (n) => Number(new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Taipei", year: "numeric" }).format(new Date(n.schedule.at)));
+  await tab("提醒");
+  await page.waitForURL(/\/reminders/);
+  await settle(600);
+  // 打勾的那一顆是 role="checkbox"
+  await page.getByRole("checkbox", { name: /標為完成/ }).first().click();
+  await settle(1000);
+  await check("打勾完成後：這一期的通知取消，明年那一輪還排著", async () => {
+    const pending = await pendingNow();
+    const years = pending.map(yearOf);
+    return (pending.length === yearlyStored.daysBefore.length && years.every((y) => y === thisYear + 1)) || { years, expect: thisYear + 1 };
+  });
+  await page.goto(`${ORIGIN}/subsidy/vehicle-license-tax-april/`, { waitUntil: "networkidle" });
+  await settle(800);
+  await check("補助頁的按鈕顯示「已加入提醒」（明年那一輪還會通知）", async () => page.getByRole("button", { name: "已加入提醒" }).first().isVisible());
+  await page.getByRole("button", { name: "已加入提醒" }).first().click();
+  await page.getByRole("button", { name: "更新提醒" }).click();
+  await check("再存一次：提示寫明這一期已完成，不說「這一期會通知幾次」", async () => {
+    await page.getByText("這一期已完成，明年開始通知").first().waitFor({ state: "visible", timeout: 3000 });
+  });
+  await settle(800);
+  await check("存完仍是完成狀態，這一期沒有被排回來", async () => {
+    const stored = (await storedReminders())[0];
+    const years = (await pendingNow()).map(yearOf);
+    return (stored && stored.done === true && years.length > 0 && years.every((y) => y === thisYear + 1)) || { done: stored && stored.done, years };
+  });
+  await tab("提醒");
+  await page.waitForURL(/\/reminders/);
+  await settle(600);
+  await page.getByRole("button", { name: "刪除" }).first().click();
+  await page.getByRole("button", { name: "刪除" }).first().click();
+  await settle(1000);
+  await check("刪掉之後兩輪通知都取消", async () => (await pendingNow()).length === 0 || (await pendingNow()).map((n) => n.id));
+
   // 13. 網站上有比 app 內建更新的資料 ─────────────────────────────────────────────────────────
   console.log("\n# 線上資料更新");
   await check("網站還沒有資料檔（404）時，詳情頁照常顯示、不出現更新提示", async () => {
@@ -704,6 +748,20 @@ async function main() {
   await settle(600);
   await check("從錯誤頁點連結離開後再按返回：不再停在錯誤頁，回到出錯前那一頁", async () =>
     (pathNow().startsWith("/life/sleep") && (await page.getByRole("heading", { name: "找不到這一頁" }).count()) === 0) || page.url());
+
+  // 從錯誤頁點連結離開、沒有按返回、繼續用 app，之後又遇到另一個不存在的頁：要照常顯示說明，不能被當成回頭路跳走
+  await page.goto(`${ORIGIN}/subsidy/removed-item-2019/`, { waitUntil: "networkidle" }).catch(() => {});
+  await page.getByRole("heading", { name: "找不到這一頁" }).waitFor({ state: "visible", timeout: 5000 }).catch(() => {});
+  await page.getByRole("link", { name: "看我的提醒" }).click();
+  await page.waitForURL(/\/reminders\/index\.html$/);
+  await settle(600);
+  await tab("工具");
+  await page.waitForURL(/\/tools/);
+  await settle(400);
+  await page.goto(`${ORIGIN}/subsidy/removed-item-2020/`, { waitUntil: "networkidle" }).catch(() => {});
+  await check("同一次開 app 第二次遇到不存在的頁：照常顯示「找不到這一頁」", async () => {
+    await page.getByRole("heading", { name: "找不到這一頁" }).waitFor({ state: "visible", timeout: 5000 });
+  });
   page.off("response", onResponse);
 
   // Capacitor 的最低 WebView 版本檢查誤判時，會在啟動時直接載入錯誤頁（它是這個 WebView 的第一頁）
@@ -738,6 +796,28 @@ async function main() {
   await check("錯誤頁在太舊的 WebView 上顯示的是更新說明，不是「找不到這一頁」", async () =>
     (await oldPage.getByRole("heading", { name: "需要更新系統元件" }).isVisible()) && !(await oldPage.getByRole("heading", { name: "找不到這一頁" }).isVisible()));
   await oldContext.close();
+
+  // 16. 網頁版（沒有原生橋接）：提醒頁空清單加第一筆 ─────────────────────────────────────────────
+  console.log("\n# 網頁版");
+  const webContext = await browser.newContext({ viewport: { width: 390, height: 844 }, locale: "zh-TW", timezoneId: "Asia/Taipei" });
+  const webPage = await webContext.newPage();
+  const webErrors = [];
+  webPage.on("pageerror", (e) => webErrors.push(e.message));
+  await webPage.goto(`${ORIGIN}/reminders/index.html`, { waitUntil: "networkidle" });
+  await webPage.waitForTimeout(600);
+  await webPage.getByRole("button", { name: "加入提醒" }).first().click();
+  await webPage.getByLabel("提醒什麼").fill("驗車");
+  await webPage.getByLabel("截止日期").fill("2099-03-01");
+  await webPage.getByRole("button", { name: "確認加入" }).click();
+  await check("網頁版空清單加第一筆：面板停在「已加入提醒」，有 Google 日曆與 .ics", async () => {
+    await webPage.getByRole("heading", { name: "已加入提醒" }).waitFor({ state: "visible", timeout: 3000 });
+    return (await webPage.getByRole("link", { name: "加入 Google 日曆" }).isVisible()) && (await webPage.getByRole("button", { name: "下載 .ics" }).isVisible());
+  });
+  await webPage.getByRole("button", { name: "完成" }).click();
+  await webPage.waitForTimeout(500);
+  await check("按「完成」之後看到清單裡剛加的那一筆", async () =>
+    ((await webPage.locator('[role="dialog"]').count()) === 0 && (await webPage.getByText("驗車").first().isVisible()) && webErrors.length === 0) || webErrors);
+  await webContext.close();
 
   await browser.close();
   server.close();
