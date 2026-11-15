@@ -818,6 +818,21 @@ async function main() {
   await oldContext.close();
 
   // 16. 網頁版（沒有原生橋接）：提醒頁空清單加第一筆 ─────────────────────────────────────────────
+  // Play 上架的 app 不能導去 Play 以外的管道買數位內容，商店說明也寫「無廣告」：推廣與導購只留在網站
+  console.log("\n# app 內沒有推廣與導購");
+  await page.setViewportSize({ width: 390, height: 844 });
+  for (const path of ["/renovation/paint/", "/finance/insurance/", "/life/electricity/"]) {
+    await page.goto(`${ORIGIN}${path}`, { waitUntil: "networkidle" });
+    await settle(400);
+    await check(`${path}：看不到瑀墨推廣、模板包連結`, async () => {
+      const promo = await page.getByText("瑀墨室內設計裝潢").first().isVisible().catch(() => false);
+      const links = await page
+        .locator('a[href*="/templates/"], a[href*="/free-template"]')
+        .evaluateAll((els) => els.filter((el) => el.offsetParent !== null).map((el) => el.getAttribute("href")));
+      return (!promo && links.length === 0) || { promo, links };
+    });
+  }
+
   console.log("\n# 網頁版");
   const webContext = await browser.newContext({ viewport: { width: 390, height: 844 }, locale: "zh-TW", timezoneId: "Asia/Taipei" });
   const webPage = await webContext.newPage();
@@ -837,6 +852,9 @@ async function main() {
   await webPage.waitForTimeout(500);
   await check("按「完成」之後看到清單裡剛加的那一筆", async () =>
     ((await webPage.locator('[role="dialog"]').count()) === 0 && (await webPage.getByText("驗車").first().isVisible()) && webErrors.length === 0) || webErrors);
+  await webPage.goto(`${ORIGIN}/renovation/paint/index.html`, { waitUntil: "networkidle" });
+  await check("網頁版的油漆計算機仍顯示瑀墨推廣與下一步按鈕", async () =>
+    (await webPage.getByText("瑀墨室內設計裝潢").first().isVisible()) && (await webPage.locator('a[href*="/templates/"]').first().isVisible()));
   await webContext.close();
 
   await browser.close();

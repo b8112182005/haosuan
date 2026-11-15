@@ -161,10 +161,10 @@ export default function CalculatorLayout({
   );
 }
 
-/** 裝潢分類專用品牌推廣區塊 */
+/** 裝潢分類專用品牌推廣區塊。只在網站顯示：app 的商店說明寫「無廣告」，Play 的廣告聲明也照這個填 */
 function YumoPromo() {
   return (
-    <div className="mb-12 rounded-xl border border-amber-200 bg-amber-50 dark:border-amber-900 dark:bg-amber-950/30 p-6">
+    <div className="web-only mb-12 rounded-xl border border-amber-200 bg-amber-50 dark:border-amber-900 dark:bg-amber-950/30 p-6">
       <div className="flex items-start gap-4">
         <div className="shrink-0 text-3xl">🏠</div>
         <div>

@@ -117,7 +117,7 @@ GitHub Actions 用 `100 + run_number` 當 versionCode（artifact 名稱結尾的
 | 項目 | 答案 |
 |---|---|
 | 隱私權政策 | https://haosuan.vercel.app/privacy |
-| 廣告 | 否，不含廣告 |
+| 廣告 | 否，不含廣告。網站上的瑀墨推廣區塊與模板包、LINE 方案的按鈕只在網站顯示（`.web-only`），app 內看不到，`npm run qa:native` 有檢查；app 也就沒有導去 Play 以外的管道購買數位內容 |
 | 應用程式存取權 | 所有功能無需登入即可使用 |
 | 內容分級 | 問卷全部選「否」→ 會得到「所有人」 |
 | 目標對象 | 18 歲以上（內容為成人財務／補助資訊；不針對兒童） |

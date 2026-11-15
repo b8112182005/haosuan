@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     template: `%s | ${APP_NAME}`,
   },
   description:
-    "回答幾個問題，列出你可能符合的政府補助與申請截止日；加入提醒在截止前 30、14、3 天通知你；內建 30 種台灣常用計算機。免費、無廣告。",
+    "回答幾個問題，列出你可能符合的政府補助與申請截止日；加入提醒在截止前 30、14、3 天通知你；內建 30 種台灣常用計算機。免費，不接廣告。",
   metadataBase: new URL(SITE_URL),
   verification: GSC_VERIFICATION ? { google: GSC_VERIFICATION } : undefined,
   openGraph: {
