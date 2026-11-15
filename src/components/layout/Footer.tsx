@@ -63,7 +63,7 @@ export default function Footer() {
             <Link href="/privacy" className="hover:text-foreground">隱私權政策</Link>
             <a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-foreground">聯絡我們</a>
           </p>
-          <p>本站整理政府公開資訊，申請條件與金額以各主管機關公告為準。</p>
+          <p>本站由個人開發者整理政府公開資訊，不是政府機關網站；申請條件與金額以各主管機關公告為準。</p>
         </div>
       </div>
     </footer>

@@ -56,6 +56,7 @@ const jsonLd = {
 export default function SleepPage() {
   return (
     <CalculatorLayout
+      notice="入睡和起床時間是用每個睡眠週期 90 分鐘推算，每個人的週期長短不同，不是醫療建議。長期失眠或白天常想睡，請看醫師。"
       title="睡眠時間計算"
       description="依 90 分鐘睡眠週期理論，計算最佳入睡時間或起床時間，讓您在自然睡眠週期結束時甦醒，起床更有精神"
       faqs={faqs}

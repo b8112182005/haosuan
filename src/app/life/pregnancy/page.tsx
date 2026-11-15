@@ -51,6 +51,7 @@ const jsonLd = {
 export default function PregnancyPage() {
   return (
     <CalculatorLayout
+      notice="週數和預產期是用最後一次月經第一天加 280 天推算，只供參考，不是醫療建議；實際週數以產檢醫師的超音波判斷為準。身體有任何不適請就醫。"
       title="懷孕週數計算機"
       description="輸入最後一次月經日期，計算目前懷孕週數、孕期階段、預產期及重要里程碑"
       faqs={faqs}

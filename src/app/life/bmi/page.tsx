@@ -57,6 +57,7 @@ const jsonLd = {
 export default function BmiPage() {
   return (
     <CalculatorLayout
+      notice="BMI 是用身高和體重算出的篩檢數字，不能用來診斷疾病，也不是醫療建議。體重、飲食或身體狀況的問題，請問醫師或營養師。"
       title="BMI 計算機"
       description="輸入身高與體重，即時計算 BMI 值及健康狀態，依台灣衛福部亞洲標準評估"
       faqs={faqs}

@@ -100,7 +100,7 @@ export default function MorePage() {
       <div className="mt-8 flex flex-col items-center gap-3 text-center">
         <ShareAppButton />
         <p className="text-xs text-muted-foreground">
-          資料整理自政府公開資訊，申請條件與金額以各主管機關最新公告為準。
+          {APP_NAME}由個人開發者製作，不是政府機關的 app。資料整理自政府公開資訊，申請條件與金額以各主管機關最新公告為準。
         </p>
       </div>
     </div>

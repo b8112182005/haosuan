@@ -44,7 +44,7 @@ export default function SubsidyIndexPage() {
         <SubsidyBrowser />
       </Suspense>
       <p className="mt-8 text-xs leading-relaxed text-muted-foreground">
-        ⓘ 金額、資格與截止日依各年度政策調整，部分採「額滿即止」。每個項目頁底部列有來源連結與讀取日期；申請前以主管機關最新公告為準。
+        ⓘ 好耶由個人開發者整理政府公開資訊，不是政府機關的網站或 app，不代辦申請、不收費。金額、資格與截止日依各年度政策調整，部分採「額滿即止」。每個項目頁底部列有來源連結與讀取日期；申請前以主管機關最新公告為準。
       </p>
     </div>
   );

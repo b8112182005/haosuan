@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/privacy" },
 };
 
-const UPDATED = "2026-11-07";
+const UPDATED = "2026-11-15";
 
 export default function PrivacyPage() {
   return (
@@ -45,7 +45,10 @@ export default function PrivacyPage() {
       <h2>三、會連網的情況</h2>
       <ul>
         <li>
-          <strong>更新補助資料</strong>：app 會向 {SITE_URL} 下載最新的補助資料檔（純靜態 JSON）。這個請求不帶任何識別資訊。
+          <strong>更新補助資料</strong>：app 會向 {SITE_URL} 下載最新的補助資料檔（純靜態 JSON）。這個請求不帶帳號、裝置識別碼，也不帶你填的任何資料。
+        </li>
+        <li>
+          <strong>連線紀錄</strong>：下載資料檔與瀏覽網站時，和所有網站一樣，網站主機商 Vercel 會在連線紀錄留下 IP 位址、瀏覽器類型與時間，用來傳送檔案與阻擋攻擊，處理方式依 Vercel 的隱私權政策。我們不會用這些紀錄辨識個人，也不會拿來推算你的位置。
         </li>
         <li>
           <strong>前往申請</strong>：點「前往申請」會開啟政府機關或其他第三方網站，之後的資料蒐集適用該網站的隱私權政策。

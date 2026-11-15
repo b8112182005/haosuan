@@ -51,6 +51,7 @@ const jsonLd = {
 export default function CaloriesPage() {
   return (
     <CalculatorLayout
+      notice="這裡的熱量是用 Harris-Benedict 公式算出的估計值，每個人實際消耗不同，不是醫療或營養建議。有慢性病、懷孕、哺乳，或打算減重、增重時，請先問醫師或營養師。"
       title="熱量計算機"
       description="輸入性別、年齡、身高、體重與活動量，計算基礎代謝率（BMR）與每日所需熱量（TDEE）"
       faqs={faqs}
