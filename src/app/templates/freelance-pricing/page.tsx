@@ -3,12 +3,12 @@ import Link from "next/link";
 import { HAOTI_LINE_URL, withUtm } from "@/lib/brand";
 
 export const metadata: Metadata = {
-  title: "接案報價模板包 | 好算",
+  title: "接案報價模板包 | 好耶",
   description:
     "給自由工作者與小型服務業的接案報價模板包。整理範圍、付款節點、修改次數、驗收與維護責任，避免靠感覺報價。",
   keywords: ["接案報價", "報價模板", "自由工作者", "接案", "估價單"],
   openGraph: {
-    title: "接案報價模板包 | 好算",
+    title: "接案報價模板包 | 好耶",
     description: "少算一項成本，就是免費加班。用模板把報價範圍、付款節點與風險講清楚。",
     url: "/templates/freelance-pricing",
   },
@@ -59,7 +59,7 @@ export default function FreelancePricingTemplatePage() {
   return (
     <main className="mx-auto max-w-4xl px-4 py-12 sm:py-16">
       <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-10 dark:border-slate-800 dark:bg-slate-950">
-        <p className="text-sm font-semibold text-slate-500">好算模板包</p>
+        <p className="text-sm font-semibold text-slate-500">好耶模板包</p>
         <h1 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
           接案報價不要再憑感覺
         </h1>

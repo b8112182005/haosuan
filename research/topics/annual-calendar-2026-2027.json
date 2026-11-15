@@ -1,0 +1,1398 @@
+{
+  "topic": "annual-calendar-2026-2027",
+  "file_path": "/home/user/haosuan/research/topics/annual-calendar-2026-2027.json",
+  "items": [
+    {
+      "id": "taipei-public-kindergarten-enrollment-115",
+      "name": "台北市公立幼兒園 115 學年度新生登記（招生 e 點通線上登記、抽籤、報到）",
+      "short_name": "台北市公幼新生登記",
+      "category": "family",
+      "level": "local",
+      "city": "台北市",
+      "agency": "臺北市政府教育局",
+      "summary": "台北市公立幼兒園每年 5 月下旬開放新生登記，全程在「臺北市公立及非營利幼兒園招生 e 點通」網站辦理，登記只開 3 天。115 學年度（2026 年 8 月入學）的登記時間是 115 年 5 月 25 日上午 9 時到 5 月 27 日中午 12 時，5 月 27 日下午 3 時電腦抽籤，5 月 29 日下午 4 時前線上報到。2026 年的登記已結束；116 學年度日期尚未公告，依往年落在 5 月下旬。",
+      "eligibility": [
+        "3 歲：民國 111 年 9 月 2 日至 112 年 9 月 1 日出生；4 歲：110 年 9 月 2 日至 111 年 9 月 1 日出生；5 歲：109 年 9 月 2 日至 110 年 9 月 1 日出生（115 學年度）。",
+        "幼兒要設籍台北市，並與父母一方、直系血親尊親屬或監護人設籍在同一戶；沒有設籍滿幾個月的限制。",
+        "原住民幼兒、社政機關依法安置的幼兒、任職同一學校教職員工的子女，可以不設籍台北市。",
+        "居留台北市的外籍幼兒可登記，要上傳護照與居留證正本。",
+        "每位幼兒限登記 1 間公立幼兒園；可同時登記非營利幼兒園，但都錄取時只能在 1 園報到。"
+      ],
+      "amount": {
+        "text": "這是入園登記期限，不是現金補助。3 至 5 歲班每班 24 至 30 名，2 歲專班每班 16 名；各園扣掉原園直升與身心障礙安置名額後才是對外名額。",
+        "min": null,
+        "max": null,
+        "unit": null,
+        "formula": null
+      },
+      "conditions": {
+        "min_age": null,
+        "max_age": null,
+        "low_income": null,
+        "is_disabled": null,
+        "is_elderly": null,
+        "is_employed": null,
+        "is_unemployed": null,
+        "is_student": null,
+        "is_married": null,
+        "has_children": true,
+        "child_age_min": 2,
+        "child_age_max": 5,
+        "is_pregnant_or_newborn": null,
+        "has_labor_insurance": null,
+        "has_national_pension": null,
+        "must_own_home": null,
+        "must_rent": null,
+        "no_home_ownership": null,
+        "owns_vehicle": null,
+        "income_limit_type": "none",
+        "income_limit_value": null,
+        "income_limit_note": "一般幼兒沒有所得限制；低收入戶、中低收入戶子女屬於優先入園資格。",
+        "cities": [
+          "台北市"
+        ],
+        "other": "幼兒與父母一方、直系血親尊親屬或監護人同戶設籍台北市。2 歲專班的出生日期區間本次未在官方文件看到，未驗證。"
+      },
+      "documents": [
+        "戶口名簿正本（上傳影像；不能用戶籍謄本代替）",
+        "低收入戶、中低收入戶子女：臺北市政府核發的低收（中低收）入戶證明",
+        "父、母或監護人為中度以上身心障礙者：身心障礙證明",
+        "原住民幼兒、5 歲幼兒的父或母為新住民：戶口名簿要有「現住人口＋詳細記事」",
+        "教職員工子女：父或母任職學校的在職證明（115 年 8 月 1 日在職）",
+        "外籍幼兒：護照與居留證正本"
+      ],
+      "how_to_apply": [
+        "5 月 22 日上午 9 時起，到招生 e 點通或教育局網站看各園對外招生缺額。",
+        "5 月 25 日上午 9 時到 5 月 27 日中午 12 時，在招生 e 點通線上登記並上傳證明文件；補件到 5 月 27 日下午 2 時止。",
+        "5 月 27 日下午 3 時到 3 時 30 分電腦抽籤。",
+        "正取生在 5 月 27 日下午 3 時 30 分到 5 月 29 日下午 4 時線上報到，沒報到視同放棄。",
+        "沒抽中的人看 6 月 1 日下午 7 時公告的招生後缺額，6 月 2 日上午 9 時到 6 月 3 日下午 4 時登記備取。"
+      ],
+      "channels": [
+        {
+          "type": "online",
+          "label": "臺北市公立及非營利幼兒園招生 e 點通（登記、抽籤、報到）",
+          "url": "https://kid-online.tp.edu.tw"
+        },
+        {
+          "type": "online",
+          "label": "臺北市政府教育局（公告資訊→最新消息→幼兒園）",
+          "url": "https://www.doe.gov.taipei"
+        },
+        {
+          "type": "office",
+          "label": "想登記的公立幼兒園（補件與資格問題）",
+          "url": null
+        }
+      ],
+      "deadline": {
+        "type": "window",
+        "start_month": 5,
+        "start_day": 25,
+        "end_month": 5,
+        "end_day": 27,
+        "note": "115 學年度：5/22 上午 9 時公告缺額；5/25 上午 9 時至 5/27 中午 12 時登記；5/27 下午 3 時抽籤；5/27 下午 3 時 30 分至 5/29 下午 4 時報到；6/2 上午 9 時至 6/3 下午 4 時備取登記。2026 年已結束。116 學年度（2027 年）日期未公告，依往年在 5 月下旬，未驗證。"
+      },
+      "faqs": [
+        {
+          "q": "登記只有 3 天，錯過了還有機會嗎？",
+          "a": "有一次機會。115 學年度在 6 月 1 日下午 7 時公告招生後的缺額，6 月 2 日上午 9 時到 6 月 3 日下午 4 時可以在招生 e 點通登記備取。已經有其他公立幼兒園錄取或備取資格的人，要先放棄原資格才能登記。備取階段結束後的缺額怎麼遞補，請直接問各園。",
+          "source_url": "https://www.bles.tp.edu.tw/uploads/1778644611029rYHtpDwq.pdf"
+        },
+        {
+          "q": "可以同時登記好幾間公幼嗎？",
+          "a": "不行。台北市每位幼兒只能登記 1 間公立幼兒園，沒有切結放棄就到第 2 間登記，會被取消全部錄取資格。可以另外登記非營利幼兒園或教保服務中心，如果兩邊都錄取，只能選 1 園報到。登記前可以看招生 e 點通的「各幼兒園登記人數即時揭示系統」，比較各園登記人數再決定。",
+          "source_url": "https://www.bles.tp.edu.tw/uploads/1778644611029rYHtpDwq.pdf"
+        },
+        {
+          "q": "剛搬到台北市，設籍沒多久可以登記嗎？",
+          "a": "可以。台北市公幼登記沒有設籍時間限制，但幼兒要跟父母一方、祖父母等直系血親尊親屬或監護人設籍在同一戶。只靠父母書面委託的監護人不算。登記時要上傳戶口名簿正本的影像，戶籍謄本不收，所以遷戶口後記得換發新的戶口名簿。",
+          "source_url": "https://www.bles.tp.edu.tw/uploads/1778644611029rYHtpDwq.pdf"
+        },
+        {
+          "q": "哪些孩子可以優先入園？",
+          "a": "台北市以法定需要協助的幼兒最優先，例如低收入戶、中低收入戶子女、原住民幼兒、父母或監護人為中度以上身心障礙者的子女。另外還有教職員工子女、家中有 2 個以上兄弟姊妹的幼兒、兄姊就讀該園或該國小 1、2 年級的幼兒。身心障礙幼兒要走特殊教育鑑定安置，不是在一般登記時用身心障礙證明優先。",
+          "source_url": "https://www.bles.tp.edu.tw/uploads/1778644611029rYHtpDwq.pdf"
+        },
+        {
+          "q": "我不住台北市，別的縣市什麼時候登記？",
+          "a": "每個縣市自己訂日期，多數落在 3 月到 6 月。本項只核對了台北市教育局文件。新聞報導新北市 115 學年度是 4 月 30 日上午 10 時到 5 月 7 日下午 4 時網路登記、5 月 19 日抽籤，這組日期本次沒有在新北市教育局頁面核對到，請以教育局公告為準。",
+          "source_url": "https://www.ctee.com.tw/news/20260406700312-431401"
+        }
+      ],
+      "pitfalls": [
+        "登記截止是 5 月 27 日中午 12 時，不是當天午夜；補件截止是同一天下午 2 時，文件缺漏只剩 2 小時可補。",
+        "戶籍謄本不能代替戶口名簿；原住民或新住民身分要有「詳細記事」的版本，舊的戶口名簿常沒有記事欄。",
+        "已在公立或非營利幼兒園就讀的幼兒想換園，要先向原園簽切結書放棄直升，放棄後抽不中也回不去原園的直升名額。",
+        "正取後只做線上報到，5 月 29 日下午 4 時前沒按報到就視同放棄，名額直接給備取。",
+        "教職員工子女資格以 115 年 8 月 1 日在職為準，留職停薪的人不算現職。"
+      ],
+      "related_calculator": "age",
+      "official_url": "https://kid-online.tp.edu.tw",
+      "sources": [
+        {
+          "url": "https://www.bles.tp.edu.tw/uploads/1778644611029rYHtpDwq.pdf",
+          "title": "臺北市115學年度公立幼兒園招生問答集 Q&A（公告日期 115 年 1 月 20 日）",
+          "publisher": "臺北市政府教育局（濱江國小網站轉載）",
+          "accessed": "2026-11-14"
+        },
+        {
+          "url": "https://www.snes.tp.edu.tw/uploads/1776410584003632ktaj1.pdf",
+          "title": "臺北市大安區新生國民小學附設幼兒園115學年度招生公告（作業日程表、招生年齡、證明文件一覽表）",
+          "publisher": "臺北市大安區新生國民小學",
+          "accessed": "2026-11-14"
+        }
+      ],
+      "status_2026": "active",
+      "last_known_update": "2026-01-20",
+      "confidence": "medium",
+      "unverified_fields": [
+        "deadline.2027（116 學年度日期未公告，依往年）",
+        "非營利幼兒園的登記日期（本次只看到公立幼兒園簡章）",
+        "conditions.child_age_min（2 歲專班出生日期區間未看到）",
+        "faqs[4]（新北市日期來自新聞）"
+      ]
+    },
+    {
+      "id": "taipei-elementary-new-student-registration-115",
+      "name": "台北市公立國民小學 115 學年度新生入學報到",
+      "short_name": "台北市國小新生報到",
+      "category": "family",
+      "level": "local",
+      "city": "台北市",
+      "agency": "臺北市政府教育局、各區公所、各國民小學",
+      "summary": "台北市國小新生不用申請，教育局依戶籍分發學校，5 月中旬寄入學通知單，家長在報到期間完成報到。115 學年度：入學通知單 5 月 19 日寄出，報到期間 5 月 30 日到 6 月 8 日。額滿學校的學生 6 月 8 日前沒報到視同棄權，學校會改分發並由候補名冊遞補。2026 年的報到已結束；116 學年度日期未公告，依往年在 5 月底到 6 月初。",
+      "eligibility": [
+        "設籍台北市、當學年度要入小學一年級的學齡兒童，由教育局依戶籍資料分發到學區學校。",
+        "115 學年度以 3 月 20 日的設籍資料為基準日轉入新生分發系統；基準日到 8 月 31 日之間戶籍異動的學童，由戶政事務所每週提供資料給區公所辦理分發。",
+        "報到期間才遷入學區的學齡兒童，由學校核對學區後受理報到；如果是額滿學校則改分發。"
+      ],
+      "amount": {
+        "text": "這是報到期限，不是現金補助。",
+        "min": null,
+        "max": null,
+        "unit": null,
+        "formula": null
+      },
+      "conditions": {
+        "min_age": null,
+        "max_age": null,
+        "low_income": null,
+        "is_disabled": null,
+        "is_elderly": null,
+        "is_employed": null,
+        "is_unemployed": null,
+        "is_student": null,
+        "is_married": null,
+        "has_children": true,
+        "child_age_min": 6,
+        "child_age_max": 6,
+        "is_pregnant_or_newborn": null,
+        "has_labor_insurance": null,
+        "has_national_pension": null,
+        "must_own_home": null,
+        "must_rent": null,
+        "no_home_ownership": null,
+        "owns_vehicle": null,
+        "income_limit_type": "none",
+        "income_limit_value": null,
+        "income_limit_note": null,
+        "cities": [
+          "台北市"
+        ],
+        "other": "入學年齡（滿 6 歲）的出生日期區間本次未在官方文件看到，未驗證；以入學通知單為準。"
+      },
+      "documents": [
+        "入學通知單（教育局委託廠商郵寄）",
+        "戶口名簿（核對學區用；各校要求以入學通知單上的說明為準，未驗證）"
+      ],
+      "how_to_apply": [
+        "5 月 8 日起各校在校門口與網站公告入學名冊，可以先查孩子分發到哪一校。",
+        "5 月 19 日起留意信箱，收入學通知單。",
+        "5 月 30 日到 6 月 8 日依通知單說明完成報到；多數學校用臺北市國小新生報到網站線上報到。",
+        "沒收到通知單，或分發學校不是預期的那一間，帶戶口名簿問戶籍地區公所或學區學校。",
+        "報到後留意學校公告的編班與新生家長座談會日期。"
+      ],
+      "channels": [
+        {
+          "type": "online",
+          "label": "臺北市國小新生報到網站",
+          "url": "https://newstd.tp.edu.tw/Login.action"
+        },
+        {
+          "type": "office",
+          "label": "分發學校教務處（註冊組）",
+          "url": null
+        },
+        {
+          "type": "office",
+          "label": "戶籍地區公所（學區與分發問題）",
+          "url": null
+        }
+      ],
+      "deadline": {
+        "type": "window",
+        "start_month": 5,
+        "start_day": 30,
+        "end_month": 6,
+        "end_day": 8,
+        "note": "115 學年度：5/8 各校公告入學名冊；5/19 寄發入學通知單；5/30（六）至 6/8（一）新生報到；額滿學校 6/30 前依候補名冊遞補。2026 年已結束。116 學年度（2027 年）日期未公告，依往年在 5 月底到 6 月初，未驗證。其他縣市日期各自公告。"
+      },
+      "faqs": [
+        {
+          "q": "沒收到入學通知單怎麼辦？",
+          "a": "115 學年度的通知單是 5 月 19 日由廠商寄出，各校 5 月 8 日就已在校門口和網站公告入學名冊。到了 5 月底還沒收到，先上學區學校網站查名冊，再帶戶口名簿到學校或戶籍地區公所確認。通知單寄到戶籍地址，人沒住在戶籍地的家庭要請家人代收或直接問學校。",
+          "source_url": "https://www.baps.tp.edu.tw/uploads/17772520202216WSECJw6.pdf"
+        },
+        {
+          "q": "超過 6 月 8 日才報到會怎樣？",
+          "a": "要看學校是不是額滿學校。額滿學校在 5 月 30 日報到日後，會用掛號寄補報到通知給沒報到的學生，6 月 8 日前仍沒完成手續就視同棄權，學校直接改分發，空出來的名額照候補名冊順序遞補到 6 月 30 日。非額滿學校逾期怎麼處理，請直接問學校。",
+          "source_url": "https://www.baps.tp.edu.tw/uploads/17772520202216WSECJw6.pdf"
+        },
+        {
+          "q": "為了學區遷戶口，要在什麼時候之前遷好？",
+          "a": "115 學年度教育局用 3 月 20 日的設籍資料當基準日。基準日之後到 8 月 31 日遷入的學童，仍會由戶政每週送資料給區公所分發。額滿學校會調查學童的設籍日並製表上網公告，區公所依設籍日評估改分發學校；想讀額滿學校，要看該校公告的設籍日資料。",
+          "source_url": "https://www.baps.tp.edu.tw/uploads/17772520202216WSECJw6.pdf"
+        },
+        {
+          "q": "報到之後到開學前還有哪些日期？",
+          "a": "各校自己排。以士林區劍潭國小 115 學年度為例：8 月 3 日電腦亂數編班並公布結果，8 月 30 日新生家長座談會，8 月 31 日開學日。這是單一學校的安排，你孩子的學校日期以入學通知事項和學校網站為準。",
+          "source_url": "https://www.jtes.tp.edu.tw/uploads/1779436051599WCIlVEN8.pdf"
+        }
+      ],
+      "pitfalls": [
+        "入學通知單寄到戶籍地址，不是居住地址；人籍不一致的家庭容易漏收。",
+        "額滿學校 6 月 8 日沒報到就視同棄權並改分發，之後要回原校只能排候補。",
+        "報到首日 5 月 30 日是星期六；需要到校辦理的人，先看入學通知單上寫的受理時間與方式。",
+        "私立小學或自學的孩子，仍要向分發的公立學校辦理相關手續，否則會被列為未入學（辦法細節本次未驗證，請問學校）。"
+      ],
+      "related_calculator": "age",
+      "official_url": "https://newstd.tp.edu.tw/Login.action",
+      "sources": [
+        {
+          "url": "https://www.baps.tp.edu.tw/uploads/17772520202216WSECJw6.pdf",
+          "title": "臺北市115學年度公立國民小學新生分發入學工作進度表",
+          "publisher": "臺北市政府教育局（學校網站轉載）",
+          "accessed": "2026-11-14"
+        },
+        {
+          "url": "https://www.jtes.tp.edu.tw/uploads/1779436051599WCIlVEN8.pdf",
+          "title": "臺北市士林區劍潭國民小學 115 學年度新生入學通知事項",
+          "publisher": "臺北市士林區劍潭國民小學",
+          "accessed": "2026-11-14"
+        }
+      ],
+      "status_2026": "active",
+      "last_known_update": "2026-05-01",
+      "confidence": "medium",
+      "unverified_fields": [
+        "deadline.2027（116 學年度日期未公告，依往年）",
+        "conditions.child_age_min／child_age_max（入學年齡出生日期區間）",
+        "documents（各校報到要帶的文件）",
+        "pitfalls[3]（私校、自學的手續）",
+        "其他縣市的報到日期"
+      ]
+    },
+    {
+      "id": "car-periodic-inspection-schedule",
+      "name": "汽車定期檢驗（自用小客車滿 5 年起每年 1 次、滿 10 年起每年 2 次）",
+      "short_name": "汽車定期檢驗",
+      "category": "energy_transport",
+      "level": "central",
+      "city": null,
+      "agency": "交通部公路局各區監理所（站）",
+      "summary": "自用小客車、自用小客貨兩用車出廠未滿 5 年不用驗；滿 5 年未滿 10 年每年至少驗 1 次；滿 10 年每年至少驗 2 次。要在行車執照上的指定檢驗日期前後 1 個月內去驗。逾期罰 900 到 1,800 元，逾期 1 個月以上吊扣牌照，逾期 6 個月以上註銷牌照。大型重型機車與駕艙機車也適用同一套車齡規定。",
+      "eligibility": [
+        "自用小客車、自用小客貨兩用車、大型重型機車、駕艙機車：出廠未滿 5 年免驗；5 年以上未滿 10 年每年至少 1 次；10 年以上每年至少 2 次。",
+        "租賃期 1 年以上的租賃自用小客車、小客貨兩用車：出廠未滿 3 年免驗；3 年以上未滿 6 年每年至少 1 次；6 年以上每年至少 2 次。",
+        "使用液化石油氣或壓縮天然氣的車輛、幼童專用車、其他自用車、其他營業車：出廠未滿 5 年每年至少 1 次；5 年以上每年至少 2 次。",
+        "已領牌照的普通重型及輕型機車不做這種定期檢驗，改做環保排氣定期檢驗（見「機車排氣定期檢驗」）。"
+      ],
+      "amount": {
+        "text": "不是補助。逾期未驗罰鍰 900 元以上 1,800 元以下；檢驗規費金額本次未驗證。",
+        "min": 900,
+        "max": 1800,
+        "unit": "元（逾期罰鍰）",
+        "formula": null
+      },
+      "conditions": {
+        "min_age": null,
+        "max_age": null,
+        "low_income": null,
+        "is_disabled": null,
+        "is_elderly": null,
+        "is_employed": null,
+        "is_unemployed": null,
+        "is_student": null,
+        "is_married": null,
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "is_pregnant_or_newborn": null,
+        "has_labor_insurance": null,
+        "has_national_pension": null,
+        "must_own_home": null,
+        "must_rent": null,
+        "no_home_ownership": null,
+        "owns_vehicle": "出廠滿 5 年的自用小客車、小客貨兩用車、大型重型機車",
+        "income_limit_type": "none",
+        "income_limit_value": null,
+        "income_limit_note": null,
+        "cities": null,
+        "other": "以出廠年月計算車齡，不是以購買或領牌日。"
+      },
+      "documents": [
+        "行車執照",
+        "個人計程車：本人有效的計程車駕駛人執業登記證"
+      ],
+      "how_to_apply": [
+        "看行車執照上的「指定檢驗日期」，往前、往後各推 1 個月就是可以驗車的期間。",
+        "帶行車執照，把車開到監理所（站）或公路監理機關委託的民間代檢廠受檢。",
+        "檢驗不合格，1 個月內修好再申請覆驗。"
+      ],
+      "channels": [
+        {
+          "type": "office",
+          "label": "各區監理所（站）",
+          "url": null
+        },
+        {
+          "type": "office",
+          "label": "公路監理機關委託的民間代檢廠",
+          "url": null
+        },
+        {
+          "type": "online",
+          "label": "監理服務網（查指定檢驗日期、預約）",
+          "url": null
+        }
+      ],
+      "deadline": {
+        "type": "event_based",
+        "start_month": null,
+        "start_day": null,
+        "end_month": null,
+        "end_day": null,
+        "note": "每輛車日期不同：行車執照上的指定檢驗日期前後各 1 個月內（共約 2 個月）。滿 10 年的自用小客車每年有 2 個指定日期。逾 10 年的營業大客車只能在指定日期前 1 個月內驗。規定全年適用，2027 年沒有已公告的變動。"
+      },
+      "faqs": [
+        {
+          "q": "我的車什麼時候要驗？去哪裡看日期？",
+          "a": "先算車齡：用出廠年月算，自用小客車未滿 5 年不用驗，滿 5 年起每年 1 次，滿 10 年起每年 2 次。確切日期印在行車執照的「指定檢驗日期」欄，在這個日期的前 1 個月到後 1 個月之間去驗都算準時。例如指定日期是 6 月 15 日，5 月 15 日到 7 月 15 日都可以驗。",
+          "source_url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=K0040013&flno=44"
+        },
+        {
+          "q": "忘記驗車，逾期會怎樣？",
+          "a": "逾期就會罰車主 900 到 1,800 元。逾期 1 個月以上還會吊扣牌照，要等檢驗合格才發還；逾期 6 個月以上直接註銷牌照，之後要重新領牌才能上路。發現過期就盡快去驗，拖越久後果越重。",
+          "source_url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=K0040012&flno=17"
+        },
+        {
+          "q": "驗車沒過怎麼辦？",
+          "a": "檢驗不合格要在 1 個月內修好並申請覆驗。1 個月內沒修好去覆驗，或覆驗還是不合格，會吊扣牌照，要等合格才發還。驗車前可以先請保養廠做一次檢查，減少覆驗的機率；哪些項目要檢查，可以問代檢廠或監理站。",
+          "source_url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=K0040012&flno=17"
+        },
+        {
+          "q": "一般 125cc 機車也要去監理站驗車嗎？",
+          "a": "不用。已領牌照的普通重型與輕型機車只做臨時檢驗，不做監理站的定期檢驗；它們要做的是環保的排氣定期檢驗，出廠滿 5 年起每年 1 次。大型重型機車（俗稱紅牌、黃牌）則跟自用小客車一樣，滿 5 年起每年要到監理單位驗車。",
+          "source_url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=K0040013&flno=44"
+        }
+      ],
+      "pitfalls": [
+        "車齡用出廠年月算，不是領牌日；進口車或庫存車的出廠年月可能比領牌早很多，會比預期更早開始驗車。",
+        "滿 10 年後一年要驗 2 次，很多人只記得上半年那次，下半年那次逾期被罰。",
+        "檢驗不合格後 1 個月內沒修好申請覆驗，或覆驗仍不合格，會吊扣牌照；不合格不要放著不處理。",
+        "租賃車的免驗年限是 3 年不是 5 年，長租車的使用人要自己留意。"
+      ],
+      "related_calculator": "car-depreciation",
+      "official_url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=K0040013&flno=44",
+      "sources": [
+        {
+          "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=K0040013&flno=44",
+          "title": "道路交通安全規則第 44 條（定期檢驗車齡、次數、指定日期前後一個月）",
+          "publisher": "全國法規資料庫",
+          "accessed": "2026-11-14"
+        },
+        {
+          "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=K0040012&flno=17",
+          "title": "道路交通管理處罰條例第 17 條（逾期檢驗罰鍰、吊扣、註銷牌照）",
+          "publisher": "全國法規資料庫",
+          "accessed": "2026-11-14"
+        }
+      ],
+      "status_2026": "active",
+      "last_known_update": null,
+      "confidence": "high",
+      "unverified_fields": [
+        "amount（檢驗規費金額）",
+        "channels（監理服務網網址本次連線失敗，未填）"
+      ]
+    },
+    {
+      "id": "motorcycle-emission-inspection-annual",
+      "name": "機車排氣定期檢驗（出廠滿 5 年每年 1 次，行照發照月份前後 1 個月）",
+      "short_name": "機車排氣定檢",
+      "category": "energy_transport",
+      "level": "central",
+      "city": null,
+      "agency": "環境部（各縣市環保局執行，委託認可定檢站檢驗）",
+      "summary": "機車出廠滿 5 年後，每年要做 1 次排氣定期檢驗。期限是行車執照原發照月份的前 1 個月到後 1 個月，例如發照月份是 3 月，就是 2 月 1 日到 4 月 30 日。檢驗費 100 元由環境部空氣污染防制費補助，車主不用付錢。逾期未驗罰 500 元。",
+      "eligibility": [
+        "出廠滿 5 年的機車，每年 1 次。",
+        "檢驗期限：行車執照原發照月份前後各 1 個月（共 3 個月）。",
+        "檢驗不合格要在 1 個月內修復並複驗合格。"
+      ],
+      "amount": {
+        "text": "檢驗費 100 元由環境部補助，車主免付。逾期未驗罰 500 元；不合格未在 1 個月內複驗合格罰 1,500 元；逾應檢驗日 6 個月仍未驗，經通知限期改善仍未完成罰 3,000 元。",
+        "min": 0,
+        "max": 0,
+        "unit": "元（車主自付檢驗費）",
+        "formula": null
+      },
+      "conditions": {
+        "min_age": null,
+        "max_age": null,
+        "low_income": null,
+        "is_disabled": null,
+        "is_elderly": null,
+        "is_employed": null,
+        "is_unemployed": null,
+        "is_student": null,
+        "is_married": null,
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "is_pregnant_or_newborn": null,
+        "has_labor_insurance": null,
+        "has_national_pension": null,
+        "must_own_home": null,
+        "must_rent": null,
+        "no_home_ownership": null,
+        "owns_vehicle": "出廠滿 5 年的機車",
+        "income_limit_type": "none",
+        "income_limit_value": null,
+        "income_limit_note": null,
+        "cities": null,
+        "other": "電動機車是否免檢，本次未在官方頁看到，未驗證。"
+      },
+      "documents": [
+        "行車執照（定檢站核對車號與發照月份用；是否必帶本次未驗證）"
+      ],
+      "how_to_apply": [
+        "看行車執照上的原發照月份，前 1 個月的 1 日到後 1 個月的月底是檢驗期間。",
+        "到環境部機車定期檢驗資訊管理系統查住家附近的認可定檢站（多數是機車行）。",
+        "把機車騎到定檢站，現場檢驗，車主不用付檢驗費。",
+        "不合格可以到任何機車行維修，1 個月內到任一認可定檢站複驗。"
+      ],
+      "channels": [
+        {
+          "type": "online",
+          "label": "環境部機車定期檢驗資訊管理系統（查定檢站、查檢驗紀錄）",
+          "url": "https://mobile.moenv.gov.tw/motor/"
+        },
+        {
+          "type": "office",
+          "label": "環保局認可的機車排氣定檢站",
+          "url": null
+        },
+        {
+          "type": "phone",
+          "label": "環境部 (02)2311-7722 轉 6314",
+          "url": null
+        }
+      ],
+      "deadline": {
+        "type": "event_based",
+        "start_month": null,
+        "start_day": null,
+        "end_month": null,
+        "end_day": null,
+        "note": "每輛車日期不同：行車執照原發照月份的前 1 個月 1 日起，到後 1 個月月底止。例：發照月份 3 月，檢驗期限 2 月 1 日至 4 月 30 日。規定全年適用，2027 年沒有已公告的變動。"
+      },
+      "faqs": [
+        {
+          "q": "我的機車哪個月要驗？",
+          "a": "拿出行車執照看「發照日期」的月份，那個月加上前後各 1 個月就是檢驗期間。發照月份是 3 月的機車，2 月 1 日到 4 月 30 日之間驗都可以；發照月份是 12 月的機車，期間是 11 月 1 日到隔年 1 月 31 日。出廠未滿 5 年的機車不用驗。",
+          "source_url": "https://mobile.moenv.gov.tw/Motor/Know.aspx"
+        },
+        {
+          "q": "檢驗要多少錢？",
+          "a": "車主不用付錢。檢驗費用是 100 元，由環境部的空氣污染防制費補助給定檢站。檢驗不合格需要調整或換零件時，維修費才由車主自己出，而且可以自己選機車行，不一定要在驗車那一家修。對收費有疑問可撥公害陳情專線 0800-066666。",
+          "source_url": "https://mobile.moenv.gov.tw/Motor/Know.aspx"
+        },
+        {
+          "q": "過期沒驗會罰多少？",
+          "a": "超過期限沒驗，罰 500 元。驗了不合格卻沒在 1 個月內修好複驗，罰 1,500 元。超過應檢驗日 6 個月都沒驗，環保局會通知限期改善，到期還是沒完成罰 3,000 元。法條上的罰鍰是一個範圍，上面是環境部網站列的金額。",
+          "source_url": "https://mobile.moenv.gov.tw/Motor/Know.aspx"
+        },
+        {
+          "q": "定檢站說不合格，一定要在那一家修嗎？",
+          "a": "不用。環境部說明，檢驗不合格的車主可以自己選任何一家機車行維修保養，修好後到任何一家有認可資格的定檢站複驗。期限是檢驗日起 1 個月內。常見原因是空氣濾清器太髒、火星塞積碳、化油器或噴油嘴需要清洗。",
+          "source_url": "https://mobile.moenv.gov.tw/Motor/Know.aspx"
+        }
+      ],
+      "pitfalls": [
+        "期限看行車執照的「原發照月份」，不是出廠月份，也不是上次檢驗的月份。",
+        "跟汽車驗車是兩套制度：一般機車不用去監理站，只要到環保局認可的定檢站驗排氣。",
+        "驗了不合格卻沒在 1 個月內複驗合格，罰 1,500 元，比完全沒驗的 500 元高；不合格不要放著。",
+        "拖過應檢驗日 6 個月，環保局通知限期改善後仍沒完成，罰 3,000 元。"
+      ],
+      "related_calculator": null,
+      "official_url": "https://mobile.moenv.gov.tw/Motor/Know.aspx",
+      "sources": [
+        {
+          "url": "https://mobile.moenv.gov.tw/Motor/Know.aspx",
+          "title": "機車車主不可不知及問答集（基本規定、罰則、檢測費用）",
+          "publisher": "環境部機車定期檢驗資訊管理系統",
+          "accessed": "2026-11-14"
+        },
+        {
+          "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020001&flno=80",
+          "title": "空氣污染防制法第 80 條（未定期檢驗罰 500 元以上 1 萬 5,000 元以下）",
+          "publisher": "全國法規資料庫",
+          "accessed": "2026-11-14"
+        },
+        {
+          "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020001&flno=44",
+          "title": "空氣污染防制法第 44 條（汽車應實施排放空氣污染物定期檢驗）",
+          "publisher": "全國法規資料庫",
+          "accessed": "2026-11-14"
+        }
+      ],
+      "status_2026": "active",
+      "last_known_update": "2026-10-06",
+      "confidence": "high",
+      "unverified_fields": [
+        "conditions.other（電動機車是否免檢）",
+        "documents（是否必帶行照）"
+      ]
+    },
+    {
+      "id": "driver-license-renewal-age-70-rule-2026",
+      "name": "駕照換發期限（115 年 5 月 31 日起 70 歲換照新制、75 歲每 3 年換照、職業駕照每 3 年審驗）",
+      "short_name": "高齡與職業駕照換照",
+      "category": "energy_transport",
+      "level": "central",
+      "city": null,
+      "agency": "交通部公路局各區監理所（站）",
+      "summary": "一般人的普通駕照從 102 年 7 月 1 日起不用定期換照，自用汽車與機車的行車執照從 102 年 1 月 1 日起也免換。有期限的是三種人：一、115 年 5 月 31 日起，普通駕照只有效到滿 70 歲，要體檢合格並上完道路交通安全講習，才能換到 75 歲；115 年 5 月 31 日當天已滿 70 歲未滿 75 歲的人，要在 2 年內辦完，沒辦視為逾期、不能開車。二、滿 75 歲後每 3 年換照一次。三、職業駕照每 3 年審驗一次，滿 60 歲改成每年。",
+      "eligibility": [
+        "滿 70 歲的普通駕照持有人：在駕照有效期間屆滿前 1 個月到屆滿後 2 年內，體格檢查合格並完成道路交通安全講習後換照，新照有效到 75 歲。",
+        "115 年 5 月 31 日已滿 70 歲未滿 75 歲的人：2 年內辦理換照，未辦理視為逾期，不得駕車。",
+        "滿 75 歲的人：每滿 3 年換照一次，要體格檢查合格，並通過認知功能測驗或提出沒有中度以上失智症的證明；115 年 5 月 31 日起還要先完成道路交通安全講習。首次換照可在屆滿前 1 個月到屆滿後 3 年內辦。",
+        "115 年 12 月 31 日起，滿 75 歲後有違規導致肇事紀錄的人，要先在立案駕訓機構完成駕駛訓練才能換照。",
+        "職業駕照：自發照日起每滿 3 年審驗一次，在審驗日期前後 1 個月內辦，要附體格檢查合格證明；滿 60 歲每年審驗一次。",
+        "沒換照卻被違規記點或吊扣駕照的人，要在監理機關通知後 3 個月內換照。"
+      ],
+      "amount": {
+        "text": "不是補助，是換照期限。換照規費、體檢費用本次未驗證。",
+        "min": null,
+        "max": null,
+        "unit": null,
+        "formula": null
+      },
+      "conditions": {
+        "min_age": 70,
+        "max_age": null,
+        "low_income": null,
+        "is_disabled": null,
+        "is_elderly": true,
+        "is_employed": null,
+        "is_unemployed": null,
+        "is_student": null,
+        "is_married": null,
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "is_pregnant_or_newborn": null,
+        "has_labor_insurance": null,
+        "has_national_pension": null,
+        "must_own_home": null,
+        "must_rent": null,
+        "no_home_ownership": null,
+        "owns_vehicle": null,
+        "income_limit_type": "none",
+        "income_limit_value": null,
+        "income_limit_note": null,
+        "cities": null,
+        "other": "持有普通駕照且滿 70 歲的人，或持有職業駕照的人（不限年齡）。未滿 70 歲的普通駕照持有人不用換照。"
+      },
+      "documents": [
+        "原駕駛執照、身分證",
+        "體格檢查合格證明",
+        "道路交通安全講習完成紀錄（70 歲以上換照）",
+        "滿 75 歲：認知功能測驗通過紀錄，或沒有中度以上失智症的證明文件",
+        "職業駕照審驗：體格檢查合格證明；滿 60 歲用道路交通安全規則第 64 條之 1 的體檢項目"
+      ],
+      "how_to_apply": [
+        "看駕照上的有效日期；70 歲以上的人算一下自己落在哪一類期限。",
+        "先做體格檢查，70 歲以上再完成道路交通安全講習；75 歲以上另做認知功能測驗。",
+        "換發駕照前要先繳清未結案的交通違規罰鍰。",
+        "帶文件到監理所（站）申請換發新照，或在原駕照上加註延長有效期間。",
+        "職業駕駛人在審驗日期前後 1 個月內辦審驗；因生病、出國、服兵役等原因來不及的人，可在原因消失後 6 個月內持證明補辦。"
+      ],
+      "channels": [
+        {
+          "type": "office",
+          "label": "各區監理所（站）",
+          "url": null
+        },
+        {
+          "type": "phone",
+          "label": "戶籍地或居住地監理所（站）電話（各站不同）",
+          "url": null
+        }
+      ],
+      "deadline": {
+        "type": "window",
+        "start_month": 5,
+        "start_day": 31,
+        "end_month": 5,
+        "end_day": 31,
+        "note": "115 年 5 月 31 日已滿 70 歲未滿 75 歲的人：自 115 年 5 月 31 日起 2 年內辦完，大約到 117 年（2028 年）5 月底，確切末日以監理機關通知為準（未驗證）。之後滿 70 歲的人：駕照有效期間屆滿（滿 70 歲）前 1 個月到屆滿後 2 年內。滿 75 歲：每 3 年一次，屆滿前後 1 個月內。職業駕照：每 3 年審驗日期前後 1 個月內，滿 60 歲每年一次。115 年 12 月 31 日起，75 歲以上有違規肇事紀錄的人換照前要先上駕訓課。"
+      },
+      "faqs": [
+        {
+          "q": "我 40 歲，駕照上的有效日期過了，要換嗎？",
+          "a": "普通駕照不用換。102 年 7 月 1 日起，新領或已領的各類普通駕照免定期換發，有效日期過了仍然有效。現在的規定是普通駕照有效到滿 70 歲。職業駕照不一樣，每 3 年要審驗一次。自用汽車和機車的行車執照從 102 年 1 月 1 日起也不用換。",
+          "source_url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=K0040013&flno=52"
+        },
+        {
+          "q": "爸爸今年 72 歲，以前說 75 歲才要換照，現在呢？",
+          "a": "規定改了。115 年 5 月 31 日那天已滿 70 歲、未滿 75 歲的人，要在 2 年內換照，流程是體格檢查合格、上完道路交通安全講習，再到監理所（站）換一張有效到 75 歲的駕照。2 年內沒辦就視為逾期，不能開車。如果這 2 年內會滿 75 歲，要改照 75 歲的規定辦。",
+          "source_url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=K0040013&flno=52-2"
+        },
+        {
+          "q": "75 歲以上換照要做什麼？",
+          "a": "每滿 3 年換一次。要體格檢查合格，並通過汽車駕駛人認知功能測驗，或提出沒有中度以上失智症的證明。115 年 5 月 31 日起多一項：先完成道路交通安全講習。115 年 12 月 31 日起，滿 75 歲後有違規導致肇事紀錄的人，還要先到立案駕訓機構完成駕駛訓練才能換照。",
+          "source_url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=K0040013&flno=52-2"
+        },
+        {
+          "q": "職業駕照審驗過期了怎麼辦？",
+          "a": "職業駕照要在審驗日期前後 1 個月內審驗。如果是生病、出國、服兵役、駕照被吊扣等原因沒辦法準時辦，可以在原因結束後 6 個月內，帶原駕照和證明文件補辦。因逾期審驗被註銷的職業駕照，可以申請換發同等車類的普通駕照。逾期的罰則本次未查證，請問監理所。",
+          "source_url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=K0040013&flno=54"
+        }
+      ],
+      "pitfalls": [
+        "70 到 74 歲的人容易以為還是「75 歲才換」；115 年 5 月 31 日起已改成 70 歲，2 年期限過了就不能開車。",
+        "70 歲以上換照多了「道路交通安全講習」，要先上完課才能辦，不能當天到監理站才處理。",
+        "沒換照期間如果被違規記點或吊扣駕照，寬限期會縮短成監理機關通知後 3 個月內。",
+        "職業駕駛滿 60 歲後改成每年審驗一次，而且體檢項目不同，沿用以前 3 年一次的記憶會逾期。",
+        "行車執照免換只限自用汽車與機車；校車、幼童專用車、救護車與營業車的行照仍要定期換發。"
+      ],
+      "related_calculator": "age",
+      "official_url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=K0040013&flno=52-2",
+      "sources": [
+        {
+          "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=K0040013&flno=52-2",
+          "title": "道路交通安全規則第 52 條之 2（70 歲、75 歲駕駛人換照）",
+          "publisher": "全國法規資料庫",
+          "accessed": "2026-11-14"
+        },
+        {
+          "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=K0040013&flno=52",
+          "title": "道路交通安全規則第 52 條（普通駕照免換發、職業駕駛人 60 歲以上）",
+          "publisher": "全國法規資料庫",
+          "accessed": "2026-11-14"
+        },
+        {
+          "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=K0040013&flno=54",
+          "title": "道路交通安全規則第 54 條（職業駕照每 3 年審驗）",
+          "publisher": "全國法規資料庫",
+          "accessed": "2026-11-14"
+        },
+        {
+          "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=K0040013&flno=14",
+          "title": "道路交通安全規則第 14 條（自用汽車、機車行車執照免換發）",
+          "publisher": "全國法規資料庫",
+          "accessed": "2026-11-14"
+        },
+        {
+          "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=K0040012&flno=9-1",
+          "title": "道路交通管理處罰條例第 9 條之 1（換發駕駛執照前應繳清未結案罰鍰）",
+          "publisher": "全國法規資料庫",
+          "accessed": "2026-11-14"
+        }
+      ],
+      "status_2026": "active",
+      "last_known_update": "2026-05-31",
+      "confidence": "medium",
+      "unverified_fields": [
+        "deadline.end_month／end_day（2 年期限的確切末日）",
+        "amount（換照規費、體檢與講習費用）",
+        "逾期駕車與職業駕照逾期審驗的罰鍰金額",
+        "道路交通安全講習的時數與報名方式"
+      ]
+    },
+    {
+      "id": "national-pension-premium-bimonthly-deadline",
+      "name": "國民年金保險費繳款期限（每 2 個月 1 期，雙月月底前繳）",
+      "short_name": "國保保費雙月繳款",
+      "category": "health",
+      "level": "central",
+      "city": null,
+      "agency": "勞動部勞工保險局（國民年金主管機關為衛生福利部）",
+      "summary": "國民年金保費每 2 個月算 1 期。勞保局在單月（1、3、5、7、9、11 月）月底寄出前 2 個月的繳款單，繳納期限是下個月（雙月）月底。例如 115 年 1 至 2 月的保費，3 月底寄單，4 月底前繳。逾期會按日計息；欠費超過 10 年不能補繳，也不算年資。",
+      "eligibility": [
+        "國民年金被保險人：每期繳款單計收前 2 個月的保費。",
+        "寄單時間：每個單月（1、3、5、7、9、11 月）月底；寄到戶籍地址，申請過變更的人寄到通訊地址。",
+        "繳納期限：寄單的次月月底（2、4、6、8、10、12 月月底）。",
+        "逾期的保費可在 10 年內計息補繳；超過 10 年不得補繳，也不計入保險年資。"
+      ],
+      "amount": {
+        "text": "不是補助，是繳費期限。逾期自繳納期限屆滿翌日起，依每年 1 月 1 日的郵政儲金 1 年期定期存款固定利率按日計算利息。配偶經書面限期通知仍不繳，罰 3,000 元以上 15,000 元以下。",
+        "min": null,
+        "max": null,
+        "unit": null,
+        "formula": "逾期利息 = 欠繳保費 × 當年 1 月 1 日郵政儲金 1 年期定存固定利率 × 逾期日數 ÷ 365（利率數值本次未驗證）"
+      },
+      "conditions": {
+        "min_age": null,
+        "max_age": null,
+        "low_income": null,
+        "is_disabled": null,
+        "is_elderly": null,
+        "is_employed": null,
+        "is_unemployed": null,
+        "is_student": null,
+        "is_married": null,
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "is_pregnant_or_newborn": null,
+        "has_labor_insurance": false,
+        "has_national_pension": true,
+        "must_own_home": null,
+        "must_rent": null,
+        "no_home_ownership": null,
+        "owns_vehicle": null,
+        "income_limit_type": "none",
+        "income_limit_value": null,
+        "income_limit_note": null,
+        "cities": null,
+        "other": "收到國民年金繳款單的人。納保年齡與資格見「國民年金保費補助」項目。"
+      },
+      "documents": [
+        "國民年金保險費繳款單（紙本，或勞保局 e 化服務系統產生的行動繳款單條碼）",
+        "臨櫃補單：身分證正本；代辦要帶申請人與被保險人雙方的身分證正本"
+      ],
+      "how_to_apply": [
+        "單月月底留意信箱。到了寄單次月 10 日還沒收到，就申請補單。",
+        "補單方式一：登入勞保局 e 化服務系統（個人），點「繳款單/繳費證明」→「國民年金保費繳款單」，列印 PDF 或產生行動繳款單條碼。",
+        "補單方式二：勞保局網站「國民年金保險費補單」功能，免登入，申請郵寄補發。",
+        "補單方式三：打 02-23961266 轉 6066、6055 或 6077，申請郵寄或手機簡訊補發。",
+        "拿繳款單或行動繳款單到統一、全家、萊爾富、OK 超商繳，或連到全國繳費網線上繳。"
+      ],
+      "channels": [
+        {
+          "type": "online",
+          "label": "勞保局 e 化服務系統（補單、行動繳款單）",
+          "url": "https://edesk.bli.gov.tw/"
+        },
+        {
+          "type": "phone",
+          "label": "勞保局國民年金組 02-23961266 轉 6066、6055、6077",
+          "url": null
+        },
+        {
+          "type": "other",
+          "label": "統一、全家、萊爾富、OK 超商（持繳款單或行動條碼）",
+          "url": null
+        },
+        {
+          "type": "office",
+          "label": "勞保局各地辦事處",
+          "url": "https://www.bli.gov.tw/0014978.html"
+        }
+      ],
+      "deadline": {
+        "type": "fixed_annual",
+        "start_month": 12,
+        "start_day": 1,
+        "end_month": 12,
+        "end_day": 31,
+        "note": "一年 6 期，欄位填的是最近一期。全年：1～2 月保費→3 月底寄單→4/30 前繳；3～4 月→5 月底寄→6/30；5～6 月→7 月底寄→8/31；7～8 月→9 月底寄→10/31；9～10 月→11 月底寄→12/31；11～12 月→隔年 1 月底寄→隔年 2 月底。115 年 9～10 月保費在 115 年 11 月底寄單，115 年 12 月 31 日前繳。2027 年沿用同一規則。月底遇假日是否順延，本次未驗證。"
+      },
+      "faqs": [
+        {
+          "q": "繳款單什麼時候會寄來？寄到哪裡？",
+          "a": "每個單月月底寄，也就是 1、3、5、7、9、11 月底，一張單收前 2 個月的保費。寄到戶籍地址；如果你向勞保局申請過變更繳款單通訊地址，就寄到新地址。繳納期限是寄單的下個月月底，例如 115 年 3 至 4 月的保費，5 月底寄單，6 月底前繳。",
+          "source_url": "https://www.bli.gov.tw/0017135.html"
+        },
+        {
+          "q": "繳款單不見了，或一直沒收到，怎麼補？",
+          "a": "寄單次月 10 日前還沒收到就可以補。動作少的做法是登入勞保局 e 化服務系統，在「國民年金保費繳款單」產生行動繳款單條碼，拿手機到四大超商繳。不想登入的人可以用勞保局網站的「國民年金保險費補單」申請郵寄，或打 02-23961266 轉 6066、6055、6077 請勞保局郵寄或傳簡訊連結。",
+          "source_url": "https://www.bli.gov.tw/0017135.html"
+        },
+        {
+          "q": "晚繳會怎樣？有罰款嗎？",
+          "a": "被保險人本人沒有罰款，但會從期限隔天起按日計息，利率用每年 1 月 1 日郵政儲金 1 年期定期存款固定利率。更大的影響在給付：最近 10 年內的保費沒繳清或沒辦分期前，勞保局可以暫時拒絕給付；欠費超過 10 年就不能補繳，那段時間不算年資。",
+          "source_url": "https://www.bli.gov.tw/0013603.html"
+        },
+        {
+          "q": "我沒繳，配偶會被罰嗎？",
+          "a": "有可能。被保險人和配偶互相負連帶繳納保費的義務。你沒繳時，勞保局可以用書面限期要求配偶繳；配偶沒有國民年金法第 50 條第 2 項所列的正當理由又逾期不繳，會被罰 3,000 元以上 15,000 元以下。收到這種書面通知要在期限內處理或說明理由。",
+          "source_url": "https://www.bli.gov.tw/0013603.html"
+        },
+        {
+          "q": "快 65 歲了，欠的保費什麼時候補比較好？",
+          "a": "越早越好，而且要在勞保局書面通知的期限內繳清。64 到 65 歲期間的保費或利息如果欠繳，經書面限期通知後逾期才繳清，老年年金的前 3 個月只能用 B 式（月投保金額 × 保險年資 × 1.3%）計算。有超過 10 年未繳而不計年資的情形時，65 歲領老年年金也只能用 B 式。",
+          "source_url": "https://www.bli.gov.tw/0013603.html"
+        }
+      ],
+      "pitfalls": [
+        "繳款單寄到戶籍地址，租屋在外的人常收不到；可向勞保局申請變更繳款單通訊地址。",
+        "逾期保費只能在 10 年內補繳；每一期各自起算，拖到超過 10 年的那幾期不能補，也不算年資。",
+        "寄單月份是單月、繳費期限是雙月月底，很多人記成「雙月寄單」而晚 1 個月才找繳款單。",
+        "最近 10 年內的保費沒繳清或沒辦分期前，勞保局可以暫行拒絕給付；等到要請領給付才補繳，會拖慢領錢的時間。"
+      ],
+      "related_calculator": "retirement",
+      "official_url": "https://www.bli.gov.tw/0013602.html",
+      "sources": [
+        {
+          "url": "https://www.bli.gov.tw/0013602.html",
+          "title": "國民年金－保險費繳納期限（最後更新 2026-08-20）",
+          "publisher": "勞動部勞工保險局",
+          "accessed": "2026-11-14"
+        },
+        {
+          "url": "https://www.bli.gov.tw/0017135.html",
+          "title": "國民年金 FAQ：保險費繳款單什麼時候寄發？繳納期限為何？如何補發？（最後更新 2026-08-20）",
+          "publisher": "勞動部勞工保險局",
+          "accessed": "2026-11-14"
+        },
+        {
+          "url": "https://www.bli.gov.tw/0013603.html",
+          "title": "國民年金－保險費繳納重要性（利息、10 年補繳、配偶罰鍰；最後更新 2026-08-28）",
+          "publisher": "勞動部勞工保險局",
+          "accessed": "2026-11-14"
+        },
+        {
+          "url": "https://www.bli.gov.tw/0013598.html",
+          "title": "國民年金－繳款單寄發",
+          "publisher": "勞動部勞工保險局",
+          "accessed": "2026-11-14"
+        }
+      ],
+      "status_2026": "active",
+      "last_known_update": "2026-08-28",
+      "confidence": "high",
+      "unverified_fields": [
+        "amount.formula（115 年適用的郵政儲金 1 年期定存固定利率數值）",
+        "deadline（月底遇假日是否順延）"
+      ]
+    },
+    {
+      "id": "nhi-labor-insurance-premium-monthly-deadline",
+      "name": "健保費、勞保費每月繳款期限（次月底前繳，寬限 15 日）",
+      "short_name": "健保費勞保費繳款期限",
+      "category": "health",
+      "level": "central",
+      "city": null,
+      "agency": "衛生福利部中央健康保險署、勞動部勞工保險局",
+      "summary": "健保費和勞保費都是按月計算，當月保費在次月底前繳，沒繳可寬限 15 日。寬限期過了還沒繳，從隔天起每天加徵應納費額 0.1% 的滯納金。滯納金上限：勞保 20%；健保的投保單位 15%、保險對象個人 5%。受僱上班族由公司代扣代繳；要自己留意期限的是雇主、在職業工會或公所加保的人。例：115 年 10 月的保費，11 月 30 日前繳，寬限到 12 月 15 日。",
+      "eligibility": [
+        "健保第一類（受僱者、雇主等）：自付保費由投保單位扣繳，次月底前連同單位負擔部分一起繳給健保署。",
+        "健保第二類、第三類、第六類（職業工會、農漁會會員、在公所加保的地區人口）：按月向投保單位繳，投保單位在次月底前彙繳。",
+        "勞保受僱勞工：自付保費由投保單位扣繳，次月底前連同單位負擔部分一併繳給勞保局。",
+        "勞保職業工會、漁會甲類會員：自付保費按月向工會繳，次月底前繳清；工會在再次月底前彙繳勞保局。",
+        "勞保局在次月 25 日前寄出繳款單給投保單位。"
+      ],
+      "amount": {
+        "text": "不是補助，是繳費期限。逾寬限期每日加徵應納費額 0.1% 滯納金；上限為勞保 20%、健保投保單位 15%、健保保險對象 5%。健保滯納金在主管機關公告的一定金額以下免徵（金額本次未驗證）。",
+        "min": null,
+        "max": null,
+        "unit": null,
+        "formula": "滯納金 = 應納保費 × 0.1% × 逾寬限期日數（勞保上限 20%；健保單位上限 15%、個人上限 5%）"
+      },
+      "conditions": {
+        "min_age": null,
+        "max_age": null,
+        "low_income": null,
+        "is_disabled": null,
+        "is_elderly": null,
+        "is_employed": null,
+        "is_unemployed": null,
+        "is_student": null,
+        "is_married": null,
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "is_pregnant_or_newborn": null,
+        "has_labor_insurance": null,
+        "has_national_pension": null,
+        "must_own_home": null,
+        "must_rent": null,
+        "no_home_ownership": null,
+        "owns_vehicle": null,
+        "income_limit_type": "none",
+        "income_limit_value": null,
+        "income_limit_note": null,
+        "cities": null,
+        "other": "需要自己繳的人：雇主（投保單位）、職業工會或農漁會會員、在鄉鎮市區公所加保健保的地區人口。"
+      },
+      "documents": [
+        "當月保險費繳款單（遺失可補單）",
+        "勞保投保單位補單：單位保險證號及檢查碼"
+      ],
+      "how_to_apply": [
+        "每月 25 日前後收繳款單；沒收到就上勞保局 e 化服務系統或健保署網站補單。",
+        "月底前到金融機構、超商或線上繳費；辦轉帳代繳的人確認帳戶餘額。",
+        "月底來不及，最晚在次月 15 日寬限期內繳完，這段期間不加滯納金。",
+        "職業工會會員照工會規定的日期把保費交給工會，不要等到勞保局的期限。"
+      ],
+      "channels": [
+        {
+          "type": "online",
+          "label": "勞保局 e 化服務系統（查詢應繳保費、補單）",
+          "url": "https://edesk.bli.gov.tw/"
+        },
+        {
+          "type": "phone",
+          "label": "勞保局 (02)2396-1266 轉 3111（勞保繳款單補發）",
+          "url": null
+        },
+        {
+          "type": "phone",
+          "label": "健保署免付費專線 0800-030-598（手機 02-4128-678）",
+          "url": null
+        },
+        {
+          "type": "bank",
+          "label": "金融機構轉帳代繳、超商、線上繳費",
+          "url": null
+        }
+      ],
+      "deadline": {
+        "type": "fixed_annual",
+        "start_month": 11,
+        "start_day": 1,
+        "end_month": 11,
+        "end_day": 30,
+        "note": "每月一次，欄位填的是最近一期：115 年 10 月份保費，115 年 11 月 30 日前繳，寬限到 115 年 12 月 15 日。通則：當月保費在次月底前繳，寬限 15 日。勞保局舉例：115 年 9 月 25 日前寄發 8 月保費繳款單，最晚 115 年 10 月 15 日前繳。健保寬限期最後一天遇假日，順延到假日結束的隔天。2027 年沿用同一規則。"
+      },
+      "faqs": [
+        {
+          "q": "我是上班族，薪水每個月被扣健保費和勞保費，還要自己繳嗎？",
+          "a": "不用。受僱者的自付保費由公司從薪水扣下來，公司要在次月底前連同公司負擔的部分一起繳。公司晚繳的滯納金由公司負責。勞保條例另外規定，你應繳的保費已經被公司扣走時，即使公司欠費被勞保局暫行拒絕給付，也不影響你的給付。可以保留薪資單當作已扣繳的證明。",
+          "source_url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=N0050001&flno=17"
+        },
+        {
+          "q": "月底忘了繳，隔天就會被罰嗎？",
+          "a": "不會。健保和勞保都有 15 日寬限期，寬限期內繳完不加滯納金。寬限期過後才開始算，每多一天加應納費額的 0.1%。勞保局的例子：8 月的保費在 115 年 9 月 25 日前寄單，9 月底是期限，最晚 115 年 10 月 15 日前繳完就沒有滯納金。",
+          "source_url": "https://events.bli.gov.tw/Activities/202610_02/"
+        },
+        {
+          "q": "滯納金最多會加到多少？",
+          "a": "看是哪一種保險、誰欠的。勞保：加到應納費額的 20% 為止。健保：投保單位和扣費義務人上限 15%，保險對象個人上限 5%。以 0.1% 一天計算，勞保 200 天、健保個人 50 天就到上限。到上限後不再增加，但健保署可以把欠費移送行政執行：投保單位逾 30 日、個人逾 150 日。",
+          "source_url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=L0060001&flno=35"
+        },
+        {
+          "q": "我在職業工會加保，晚交保費給工會會怎樣？",
+          "a": "職業工會會員的勞保費要按月交給工會，次月底前繳清。超過寬限期 15 日還沒交，工會可以代勞保局加收滯納金；加徵滯納金 15 日後仍沒繳，勞保局會暫行拒絕給付，這段期間發生事故申請給付會被擋下。工會通常會訂比勞保局更早的收費日，以工會通知為準。",
+          "source_url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=N0050001&flno=17"
+        },
+        {
+          "q": "寬限期最後一天剛好放假怎麼算？",
+          "a": "健保署的說明是順延到假日結束的隔天。例如 107 年 2 月 15 日的寬限期落在春節連假，順延到 2 月 21 日。春節前後是忘記繳費的高峰，1 月份保費的期限在 2 月底、寬限到 3 月 15 日，12 月份保費的寬限期在 2 月 15 日前後，建議連假前先繳。",
+          "source_url": "https://mohw.gov.tw/cp-16-39821-1.html"
+        }
+      ],
+      "pitfalls": [
+        "寬限期是 15 日，不是 15 個工作天；第 16 天起就按日加 0.1%。",
+        "辦了轉帳代繳的人，帳戶餘額不足時扣款失敗一樣算逾期；扣款日前一天先確認餘額。",
+        "職業工會會員要看工會的收費日，不是勞保局的期限；工會收不到錢就無法在期限內彙繳。",
+        "健保個人滯納金上限 5% 看起來不高，但欠費逾 150 日可能被移送行政執行，會多出執行費用與扣薪、扣存款的麻煩。",
+        "勞保費一經繳納原則上不退還，繳錯月份或金額要另外向勞保局申請處理。"
+      ],
+      "related_calculator": "insurance",
+      "official_url": "https://events.bli.gov.tw/Activities/202610_02/",
+      "sources": [
+        {
+          "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=L0060001&flno=30",
+          "title": "全民健康保險法第 30 條（保險費按月繳納、次月底前）",
+          "publisher": "全國法規資料庫",
+          "accessed": "2026-11-14"
+        },
+        {
+          "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=L0060001&flno=35",
+          "title": "全民健康保險法第 35 條（寬限 15 日、滯納金每日 0.1%、上限 15%／5%）",
+          "publisher": "全國法規資料庫",
+          "accessed": "2026-11-14"
+        },
+        {
+          "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=N0050001&flno=16",
+          "title": "勞工保險條例第 16 條（保險費按月繳納、次月底前）",
+          "publisher": "全國法規資料庫",
+          "accessed": "2026-11-14"
+        },
+        {
+          "url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=N0050001&flno=17",
+          "title": "勞工保險條例第 17 條（寬限 15 日、滯納金每日 0.1%、上限 20%、暫行拒絕給付）",
+          "publisher": "全國法規資料庫",
+          "accessed": "2026-11-14"
+        },
+        {
+          "url": "https://events.bli.gov.tw/Activities/202610_02/",
+          "title": "投保單位應按時繳納保險費，逾期將加徵滯納金！（115 年 10 月）",
+          "publisher": "勞動部勞工保險局",
+          "accessed": "2026-11-14"
+        },
+        {
+          "url": "https://mohw.gov.tw/cp-16-39821-1.html",
+          "title": "健保費寬限期遇春節連假順延說明（107 年新聞稿）",
+          "publisher": "衛生福利部",
+          "accessed": "2026-11-14"
+        }
+      ],
+      "status_2026": "active",
+      "last_known_update": "2026-10-01",
+      "confidence": "high",
+      "unverified_fields": [
+        "amount（健保滯納金免徵的「一定金額」數值）",
+        "勞保寬限期遇假日是否順延（只查到健保的說明）",
+        "健保繳款單寄發日"
+      ]
+    },
+    {
+      "id": "taipei-chongyang-gift-2026-schedule",
+      "name": "台北市 115 年重陽敬老禮金發放時程（65 歲以上 1,500 元起，115 年 12 月 31 日前可申請補發）",
+      "short_name": "台北市重陽禮金時程",
+      "category": "senior_disability",
+      "level": "local",
+      "city": "台北市",
+      "agency": "臺北市政府社會局、各區公所",
+      "summary": "115 年重陽節是 10 月 18 日。115 年 7 月 18 日（含）前已設籍台北市、115 年 12 月 31 日前滿 65 歲的長者（原住民 55 歲）可領重陽敬老禮金：65 至 84 歲 1,500 元、85 至 98 歲 3,000 元、99 歲以上 1 萬元加禮品。9 月 1 日匯款、9 月 7 日至 18 日敬老卡靠卡、10 月 15 日至 17 日定點領現金都已結束；11 月 13 日前登記匯款的人在 12 月 1 日入帳。還沒領的人，最晚在 115 年 12 月 31 日前申請補發，過期視為放棄。",
+      "eligibility": [
+        "設籍台北市到重陽節當天已滿 3 個月，也就是 115 年 7 月 18 日（含當日）前已設籍。",
+        "115 年 12 月 31 日前滿 65 歲至 84 歲（原住民 55 歲至 74 歲）：每人 1,500 元。",
+        "115 年 12 月 31 日前滿 85 歲至 98 歲（原住民 75 歲至 88 歲）：每人 3,000 元。",
+        "115 年 12 月 31 日前滿 99 歲（原住民 89 歲）以上：每人 1 萬元及禮品 1 份。",
+        "115 年 1 月 14 日因系統異常已提前入帳的長者，該筆款項直接抵銷 115 年度禮金；年齡晉級的差額由社會局補匯。"
+      ],
+      "amount": {
+        "text": "65～84 歲 1,500 元；85～98 歲 3,000 元；99 歲以上 10,000 元加禮品 1 份（原住民各級距年齡減 10 歲）。",
+        "min": 1500,
+        "max": 10000,
+        "unit": "元/年",
+        "formula": null
+      },
+      "conditions": {
+        "min_age": 65,
+        "max_age": null,
+        "low_income": null,
+        "is_disabled": null,
+        "is_elderly": true,
+        "is_employed": null,
+        "is_unemployed": null,
+        "is_student": null,
+        "is_married": null,
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "is_pregnant_or_newborn": null,
+        "has_labor_insurance": null,
+        "has_national_pension": null,
+        "must_own_home": null,
+        "must_rent": null,
+        "no_home_ownership": null,
+        "owns_vehicle": null,
+        "income_limit_type": "none",
+        "income_limit_value": null,
+        "income_limit_note": "沒有所得或財產限制。",
+        "cities": [
+          "台北市"
+        ],
+        "other": "原住民 55 歲起；設籍日以 115 年 7 月 18 日為準。"
+      },
+      "documents": [
+        "匯款：長者本人的金融帳戶（線上填「臺北市政府重陽敬老禮金匯款同意書」，或到區公所社會課填紙本）",
+        "定點領取、補發：身分證明文件與印章（實際要求以區公所公告為準，本次未驗證）"
+      ],
+      "how_to_apply": [
+        "已登記匯款帳戶的人不用再申請，社會局依公告的匯款日入帳。",
+        "到社會局網站的重陽禮金查詢頁輸入個人資料，查是否已匯款。",
+        "還沒領的人，115 年 12 月 31 日前向設籍的區公所申請補發。",
+        "想改成以後每年自動匯款，線上填匯款同意書；帳戶有變動要自己到社會局網站修改。"
+      ],
+      "channels": [
+        {
+          "type": "online",
+          "label": "重陽敬老禮金匯款及捐款線上申請",
+          "url": "https://welfare.gov.taipei/olds/Home"
+        },
+        {
+          "type": "office",
+          "label": "設籍地區公所社會課",
+          "url": null
+        },
+        {
+          "type": "phone",
+          "label": "社會局老人福利科 02-27208889 轉 6967；市民熱線 1999",
+          "url": null
+        }
+      ],
+      "deadline": {
+        "type": "window",
+        "start_month": 9,
+        "start_day": 1,
+        "end_month": 12,
+        "end_day": 31,
+        "note": "115 年時程：8/14 前登記匯款→9/1 入帳；9/7～9/18 敬老卡、愛心卡靠卡領取；10/15～10/17 區公所定點領現金；99 歲以上 10 月至 11 月初里幹事親送；11/13 前登記匯款→12/1 入帳；115/12/31 前可申請補發，過期視為放棄。116 年（2027 年）時程未公告，依往年在 9 月至 10 月發放，未驗證。"
+      },
+      "faqs": [
+        {
+          "q": "今天已經 11 月中，重陽禮金還沒領，來得及嗎？",
+          "a": "來得及，但只到 115 年 12 月 31 日。依臺北市重陽敬老禮金致送自治條例第 6 條，可以在 12 月 31 日前申請補發，過了就視為放棄。定點領現金（10 月 15 日至 17 日）和第二批匯款登記（11 月 13 日前）都已截止，現在請直接聯絡設籍的區公所社會課問補發怎麼辦。",
+          "source_url": "https://dosw.gov.taipei/cp.aspx?n=2AD02270ED65CBDD"
+        },
+        {
+          "q": "1 月收到一筆 1,500 元，說是重陽禮金，是真的嗎？",
+          "a": "是真的。社會局發放系統異常，把原本重陽節前才發的禮金在 115 年 1 月 14 日提前匯到部分長者帳戶。這筆錢直接抵銷 115 年度的禮金，今年不用再辦領取。如果今年剛好滿 85 歲或 99 歲、金額要升級，社會局會主動把差額補匯進去。",
+          "source_url": "https://www-ws.gov.taipei/001/Upload/358/relfile/16495/140643/d5a81e67-29a2-489c-85ce-ac7d3fbe3b21.pdf"
+        },
+        {
+          "q": "今年年底才滿 65 歲，領得到嗎？",
+          "a": "領得到。年齡是看 115 年 12 月 31 日前有沒有滿 65 歲（原住民 55 歲），不是看重陽節當天。另一個條件是設籍：115 年 7 月 18 日（含當日）前已設籍台北市。7 月 19 日以後才遷入的人，今年領不到台北市的禮金。",
+          "source_url": "https://dosw.gov.taipei/cp.aspx?n=2AD02270ED65CBDD"
+        },
+        {
+          "q": "可以匯到子女的帳戶嗎？",
+          "a": "不行，只能匯入長者本人的帳戶。另外不要填 18% 優惠存款帳戶或各類年金給付專戶，這些帳戶收不到禮金。前一年已提供帳戶的長者，隔年會直接入帳；換了銀行或帳號的人，要自己到社會局網站修改。",
+          "source_url": "https://dosw.gov.taipei/cp.aspx?n=2AD02270ED65CBDD"
+        },
+        {
+          "q": "收到簡訊叫我點連結退還多領的禮金，要照做嗎？",
+          "a": "不要點，那是詐騙。社會局說明，市政府不會傳附連結的簡訊要求退款，也不會打電話叫人去 ATM 操作。正式通知是寄紙本公文到戶籍地或通訊地址。接到這類電話或簡訊，打 165 反詐騙專線或 1999 臺北市民熱線確認。",
+          "source_url": "https://www-ws.gov.taipei/001/Upload/358/relfile/16495/140643/d5a81e67-29a2-489c-85ce-ac7d3fbe3b21.pdf"
+        }
+      ],
+      "pitfalls": [
+        "115 年 12 月 31 日沒申請補發就視為放棄，隔年不能回頭補領今年的。",
+        "設籍日算到 115 年 7 月 18 日；為了領禮金在 8、9 月才遷戶口來不及。",
+        "匯款帳戶填成 18% 優存或年金專戶，禮金會匯不進去，要改填一般存款帳戶。",
+        "1 月已提前入帳的長者，9 月、10 月不會再收到一次，家人不要以為漏發而重複跑區公所。",
+        "各縣市金額、年齡、設籍月數都不同；新北市、桃園市的金額本次只在新聞看到，未驗證，請看各市社會局公告。"
+      ],
+      "related_calculator": "age",
+      "official_url": "https://dosw.gov.taipei/cp.aspx?n=2AD02270ED65CBDD",
+      "sources": [
+        {
+          "url": "https://dosw.gov.taipei/cp.aspx?n=2AD02270ED65CBDD",
+          "title": "重陽節禮金（115 年發給對象、金額、領取方式；資料更新 115-10-14）",
+          "publisher": "臺北市政府社會局",
+          "accessed": "2026-11-14"
+        },
+        {
+          "url": "https://www-ws.gov.taipei/001/Upload/358/relfile/16495/140643/d5a81e67-29a2-489c-85ce-ac7d3fbe3b21.pdf",
+          "title": "重陽敬老禮金提前發放常見重要問答",
+          "publisher": "臺北市政府社會局",
+          "accessed": "2026-11-14"
+        }
+      ],
+      "status_2026": "active",
+      "last_known_update": "2026-10-14",
+      "confidence": "high",
+      "unverified_fields": [
+        "deadline.2027（116 年時程未公告，依往年）",
+        "documents（補發要帶的文件）",
+        "其他縣市的金額與發放月份"
+      ]
+    },
+    {
+      "id": "taipei-low-income-festival-allowance-2026",
+      "name": "台北市低收入戶年節慰問金（春節、端午、中秋；節前 5 日內匯入）",
+      "short_name": "台北市低收三節慰問金",
+      "category": "low_income",
+      "level": "local",
+      "city": "台北市",
+      "agency": "臺北市政府社會局社會救助科",
+      "summary": "台北市社會局在春節、端午、中秋前 5 日內，主動把年節慰問金匯到低收入戶指定帳戶，不用申請。春節：戶代表人 2,000 元、其他家庭成員每人 1,000 元，每戶上限 1 萬元。端午與中秋：單列一口的低收入戶每戶 1,500 元，其他低收入戶每戶 2,000 元。115 年發放日：春節 2 月 11 日、端午 6 月 12 日、中秋 9 月 18 日。",
+      "eligibility": [
+        "台北市列冊的低收入戶，由社會局主動核發。",
+        "春節：低收入戶代表人每人 2,000 元；低收入戶家庭成員每人 1,000 元；每戶發放總額以 1 萬元為上限。",
+        "端午節及中秋節：單列一口的低收入戶每戶 1,500 元，其餘低收入戶每戶 2,000 元。",
+        "115 年春節因案件重審後才取得資格的人，在 115 年 4 月 1 日補發。"
+      ],
+      "amount": {
+        "text": "春節：代表人 2,000 元＋其他成員每人 1,000 元，每戶上限 10,000 元。端午、中秋：單列一口每戶 1,500 元，其餘每戶 2,000 元。",
+        "min": 1500,
+        "max": 10000,
+        "unit": "元/戶/節",
+        "formula": "春節每戶 = min(2,000 + 1,000 × 其他成員人數, 10,000)；端午、中秋每戶 = 1,500（單列一口）或 2,000"
+      },
+      "conditions": {
+        "min_age": null,
+        "max_age": null,
+        "low_income": "low",
+        "is_disabled": null,
+        "is_elderly": null,
+        "is_employed": null,
+        "is_unemployed": null,
+        "is_student": null,
+        "is_married": null,
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "is_pregnant_or_newborn": null,
+        "has_labor_insurance": null,
+        "has_national_pension": null,
+        "must_own_home": null,
+        "must_rent": null,
+        "no_home_ownership": null,
+        "owns_vehicle": null,
+        "income_limit_type": "listed_low_income_household",
+        "income_limit_value": null,
+        "income_limit_note": "要先取得台北市低收入戶資格；門檻見「低收入戶生活扶助」項目。中低收入戶不在發放對象內。",
+        "cities": [
+          "台北市"
+        ],
+        "other": null
+      },
+      "documents": [
+        "不用另外申請或附文件；社會局依低收入戶名冊與指定帳戶匯款。",
+        "還不是低收入戶的人，要先向戶籍地區公所申請低收入戶資格。"
+      ],
+      "how_to_apply": [
+        "確認低收入戶資格有效，而且留在社會局的指定帳戶可以正常入帳。",
+        "節日前 5 日內補摺或查網路銀行，確認慰問金入帳。",
+        "沒有入帳，打 1999 轉 1613 問社會局社會救助科，或問戶籍地區公所社會課。"
+      ],
+      "channels": [
+        {
+          "type": "phone",
+          "label": "臺北市政府社會局社會救助科 1999（外縣市 02-27208889）轉 1613",
+          "url": null
+        },
+        {
+          "type": "office",
+          "label": "戶籍地區公所社會課（低收入戶資格申請）",
+          "url": null
+        },
+        {
+          "type": "online",
+          "label": "臺北市政府社會局－年節慰問金頁面",
+          "url": "https://dosw.gov.taipei/cp.aspx?n=E6D700BD37E78592&s=8EC020D410E193E5"
+        }
+      ],
+      "deadline": {
+        "type": "window",
+        "start_month": 2,
+        "start_day": 11,
+        "end_month": 9,
+        "end_day": 18,
+        "note": "一年 3 次，都是節前 5 日內匯入。115 年發放日：春節 2/11（重審後取得資格者 4/1 補發）、端午 6/12、中秋 9/18，三次都已發完。116 年（2027 年）發放日未公告，依往年在春節、端午、中秋前 5 日內，未驗證。"
+      },
+      "faqs": [
+        {
+          "q": "要去哪裡申請三節慰問金？",
+          "a": "不用申請。台北市的年節慰問金由社會局主動發給低收入戶，節日前 5 日內直接匯到你留在社會局的指定帳戶。你要做的是維持低收入戶資格、確認帳戶沒有結清或變更。115 年三次發放日是 2 月 11 日、6 月 12 日、9 月 18 日。",
+          "source_url": "https://dosw.gov.taipei/cp.aspx?n=E6D700BD37E78592&s=8EC020D410E193E5"
+        },
+        {
+          "q": "一家四口的低收入戶，春節可以領多少？",
+          "a": "春節是按人算：戶代表人 2,000 元，其他 3 位家庭成員每人 1,000 元，合計 5,000 元。每戶上限 1 萬元，所以代表人加 8 位成員就到頂，人數再多也是 1 萬元。端午和中秋改成按戶算，這一家每節領 2,000 元。",
+          "source_url": "https://dosw.gov.taipei/cp.aspx?n=E6D700BD37E78592&s=8EC020D410E193E5"
+        },
+        {
+          "q": "我一個人住，端午和中秋領多少？",
+          "a": "單列一口的低收入戶，端午節和中秋節每戶各 1,500 元；兩人以上的低收入戶每戶各 2,000 元。春節不分單列或多人，都是代表人 2,000 元起算，所以一個人的低收入戶春節領 2,000 元。",
+          "source_url": "https://dosw.gov.taipei/cp.aspx?n=E6D700BD37E78592&s=8EC020D410E193E5"
+        },
+        {
+          "q": "中低收入戶有三節慰問金嗎？",
+          "a": "台北市這項慰問金的對象寫的是低收入戶，中低收入戶不在內。其他縣市各有規定，例如台中市的實施計畫寫低收入戶每戶春節 2,500 元、端午與中秋各 1,500 元，節日前一週核撥，而且年節前還沒核列資格的人不發；這份台中市文件沒有標年度，115 年是否相同未驗證。",
+          "source_url": "https://www.dali.taichung.gov.tw/media/204301/59813372582.pdf"
+        }
+      ],
+      "pitfalls": [
+        "慰問金跟著低收入戶資格走；每年年底的總清查沒通過，隔年春節就不會入帳。",
+        "指定帳戶結清或被列警示戶時匯款會失敗，要主動向社會局更新帳戶。",
+        "年節前才剛申請低收入戶、還沒核定的人，當節領不到；115 年春節只有重審後取得資格的人在 4 月 1 日補發。",
+        "春節按人數算、端午中秋按戶算，三次金額不同，不要用春節的金額去核對端午入帳。"
+      ],
+      "related_calculator": null,
+      "official_url": "https://dosw.gov.taipei/cp.aspx?n=E6D700BD37E78592&s=8EC020D410E193E5",
+      "sources": [
+        {
+          "url": "https://dosw.gov.taipei/cp.aspx?n=E6D700BD37E78592&s=8EC020D410E193E5",
+          "title": "低收入戶生活補助（含年節慰問金）－年節慰問金（金額與 115 年度發放日期）",
+          "publisher": "臺北市政府社會局",
+          "accessed": "2026-11-14"
+        },
+        {
+          "url": "https://www.dali.taichung.gov.tw/media/204301/59813372582.pdf",
+          "title": "臺中市政府社會局低收入戶三節慰問金補助實施計畫（未標年度）",
+          "publisher": "臺中市大里區公所（轉載臺中市政府社會局計畫）",
+          "accessed": "2026-11-14"
+        }
+      ],
+      "status_2026": "active",
+      "last_known_update": null,
+      "confidence": "high",
+      "unverified_fields": [
+        "deadline.2027（116 年發放日未公告，依往年）",
+        "faqs[3]（台中市計畫未標年度，115 年金額未驗證）",
+        "pitfalls[0]、pitfalls[1]（總清查與帳戶異常的處理方式為一般實務，未在官方頁看到）"
+      ]
+    }
+  ],
+  "general_faqs": [
+    {
+      "q": "普通駕照和行照上面印的有效日期過了，要去換嗎？",
+      "a": "多數人不用。普通駕照從 102 年 7 月 1 日起免定期換發；自用汽車與機車的行車執照從 102 年 1 月 1 日起免換，過了有效日期仍然有效。例外是：滿 70 歲的駕駛人（115 年 5 月 31 日起的新制）、滿 75 歲每 3 年換照、職業駕照每 3 年審驗，以及校車、幼童專用車、救護車、營業車的行照。",
+      "source_url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=K0040013&flno=14",
+      "tags": [
+        "駕照",
+        "行照",
+        "換照",
+        "高齡駕駛"
+      ]
+    },
+    {
+      "q": "汽車驗車和機車排氣定檢差在哪裡？",
+      "a": "主管機關、地點、期限算法都不同。汽車（含大型重型機車）歸監理單位，看行照的「指定檢驗日期」前後 1 個月，滿 5 年每年 1 次、滿 10 年每年 2 次，逾期罰 900 到 1,800 元。一般機車歸環保單位，看行照「發照月份」前後 1 個月，滿 5 年每年 1 次，在機車行型態的定檢站驗，車主免付檢驗費，逾期罰 500 元。",
+      "source_url": "https://mobile.moenv.gov.tw/Motor/Know.aspx",
+      "tags": [
+        "驗車",
+        "機車",
+        "汽車",
+        "定期檢驗"
+      ]
+    },
+    {
+      "q": "國保、健保、勞保的繳費期限怎麼記？",
+      "a": "健保和勞保是每月一次：當月保費在次月底前繳，寬限 15 日，過了每天加 0.1% 滯納金。國民年金是每 2 個月一次：單月月底寄單，雙月月底前繳，逾期按日計息，沒有 15 日寬限期的規定。上班族的健保、勞保由公司代扣；國民年金一定是自己繳。",
+      "source_url": "https://www.bli.gov.tw/0013602.html",
+      "tags": [
+        "國民年金",
+        "健保",
+        "勞保",
+        "繳費期限",
+        "滯納金"
+      ]
+    },
+    {
+      "q": "機車的燃料使用費跟汽車是同一個月繳嗎？",
+      "a": "本主題沒有另外替機車燃料使用費立項，本次也沒有到公路局頁面核對機車的開徵月份，這一點未驗證。汽車燃料使用費的開徵期間、金額與逾期罰鍰請看「汽車燃料使用費」項目；機車車主請以監理機關寄的繳納通知書或監理服務網查詢結果為準。",
+      "source_url": null,
+      "tags": [
+        "燃料費",
+        "機車",
+        "未驗證"
+      ]
+    },
+    {
+      "q": "幼兒園登記、國小報到、重陽禮金，其他縣市的日期去哪裡查？",
+      "a": "這三件事都是縣市政府各自公告，日期和金額都不一樣。幼兒園與國小看各縣市教育局（處）網站的最新消息；重陽禮金與三節慰問金看各縣市社會局（處）或戶籍地公所。本主題只核對了台北市的官方頁面，其他縣市的數字請不要直接套用。",
+      "source_url": null,
+      "tags": [
+        "幼兒園",
+        "國小",
+        "重陽",
+        "三節慰問金",
+        "各縣市"
+      ]
+    }
+  ],
+  "notes": "研究日 2026-11-14。本主題是年度期限行事曆，共 9 項。一、幼兒園、國小、重陽禮金、三節慰問金都由縣市各自公告，本次只在台北市官方文件核對到 115 年實際日期；新北市公幼登記日期（4/30～5/7）與新北、桃園重陽禮金金額只在新聞看到，未驗證，沒有立項。二、116 年（2027 年）各項日期都還沒公告，deadline.note 一律寫「依往年」並列入 unverified_fields。三、汽車定期檢驗與機車排氣定檢是每輛車各自的日期，deadline 用 event_based，沒有填月日。四、國民年金（一年 6 期）與健保、勞保（每月）在 deadline 欄只能放一段期間，填的是研究日之後最近的一期，完整週期寫在 note；app 若要做重複提醒，需要另外依 note 的規則展開。五、已公告的變動：道路交通安全規則第 52 條之 2，115 年 5 月 31 日起普通駕照有效至 70 歲、70 歲以上換照須完成道路交通安全講習；115 年 12 月 31 日起 75 歲以上有違規肇事紀錄者換照前須完成駕訓。六、機車燃料使用費沒有立項：本次未核對開徵月份，汽車燃料使用費已在別的主題（road-maintenance-fee-july）。七、與既有項目的關係：taipei-senior-card-and-chongyang（disability-and-elderly）已有台北市重陽禮金的資格與金額，本主題的 taipei-chongyang-gift-2026-schedule 著重 115 年各領取方式的日期與 12/31 補發期限；low-income-living-assistance-2026 提到三節慰問金，本主題補上台北市金額與 115 年發放日。合併時如判定重複，可把本主題的日期併入既有項目。八、台北市教育局文件是從學校網站（tp.edu.tw）轉載的 PDF 讀到，不是教育局主站；監理服務網本次連線失敗，沒有填網址。九、國民年金法條文本次沒有直接讀到，國保數字都來自勞保局網頁。"
+}

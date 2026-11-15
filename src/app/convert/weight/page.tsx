@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "公噸、公斤、公克、毫克、磅、盎司、台斤即時互換。台灣1台斤=600公克，支援公制英制及台灣傳統單位。",
   keywords: ["重量換算", "公斤換算", "磅換算", "台斤換算", "重量單位"],
   openGraph: {
-    title: "重量換算 | 好算",
+    title: "重量換算 | 好耶",
     description: "公斤、磅、台斤等重量單位即時互換",
     url: "/convert/weight",
   },

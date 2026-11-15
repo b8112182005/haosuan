@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "免費複利計算機，輸入本金、年化報酬率、投資年限與每月定期投入，即時計算最終資產、總報酬率，支援月/季/年複利。",
   keywords: ["複利計算機", "投資試算", "定期定額", "年化報酬率", "複利效果"],
   openGraph: {
-    title: "複利計算機 | 好算",
+    title: "複利計算機 | 好耶",
     description: "計算複利終值、年度成長明細，感受複利的威力",
     url: "/finance/compound-interest",
   },

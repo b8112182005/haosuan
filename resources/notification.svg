@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  狀態列通知小圖示 24×24dp。Android 只取 alpha 當形狀，顏色由 capacitor.config 的 iconColor（#6C5CE7）染，
+  所以一定要「白色單色、透明底」，不能有漸層或第二種顏色。
+  24dp 下「好」字會糊成一團，所以用圖示右下角那個「提醒完成」勾勾當剪影；四周留約 2dp 空白。
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <path d="M4.5 12.6 L9.6 17.7 L19.5 7.4" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

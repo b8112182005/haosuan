@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "依 90 分鐘睡眠週期理論，輸入起床時間反推最佳入睡時間，或輸入現在時間計算最佳起床時間，避免在深睡期被吵醒。",
   keywords: ["睡眠計算機", "睡眠週期", "最佳入睡時間", "幾點睡", "90分鐘"],
   openGraph: {
-    title: "睡眠時間計算 | 好算",
+    title: "睡眠時間計算 | 好耶",
     description: "依睡眠週期計算最佳入睡或起床時間",
     url: "/life/sleep",
   },
@@ -56,6 +56,7 @@ const jsonLd = {
 export default function SleepPage() {
   return (
     <CalculatorLayout
+      notice="入睡和起床時間是用每個睡眠週期 90 分鐘推算，每個人的週期長短不同，不是醫療建議。長期失眠或白天常想睡，請看醫師。"
       title="睡眠時間計算"
       description="依 90 分鐘睡眠週期理論，計算最佳入睡時間或起床時間，讓您在自然睡眠週期結束時甦醒，起床更有精神"
       faqs={faqs}

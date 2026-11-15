@@ -32,6 +32,8 @@ export interface CalculatorLayoutProps {
   nextStepCta?: NextStepCtaProps;
   /** JSON-LD schema 物件（由頁面傳入，此元件只負責 inject） */
   jsonLd?: Record<string, unknown>;
+  /** 計算結果下方的說明，例如健康類工具的「不是醫療建議」（Play 健康應用程式政策要求 app 內寫清楚） */
+  notice?: ReactNode;
 }
 
 const defaultNextStepCta: NextStepCtaProps = {
@@ -54,6 +56,7 @@ export default function CalculatorLayout({
   showYumoPromo = false,
   nextStepCta,
   jsonLd,
+  notice,
 }: CalculatorLayoutProps) {
   // 有 FAQ 時額外產生 FAQPage structured data，讓頁面有資格拿 Google FAQ rich result
   const faqJsonLd =
@@ -100,6 +103,10 @@ export default function CalculatorLayout({
 
         {/* 計算機主體 */}
         <div className="mb-12 animate-in fade-in duration-300">{children}</div>
+
+        {notice && (
+          <p className="-mt-8 mb-12 rounded-lg bg-muted/50 px-4 py-3 text-xs leading-relaxed text-muted-foreground">{notice}</p>
+        )}
 
         {/* 計算後下一步 */}
         <NextStepCta {...resolvedNextStepCta} />

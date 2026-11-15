@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "免費房貸試算機，支援本息均攤（等額本息）與本金均攤（等額本金），輸入貸款金額、年利率、年限，即時計算每月還款金額與利息總額。",
   keywords: ["房貸試算", "房貸計算機", "等額本息", "等額本金", "月付", "利率"],
   openGraph: {
-    title: "房貸試算 | 好算",
+    title: "房貸試算 | 好耶",
     description: "計算每月還款金額、總利息與還款明細",
     url: "/finance/mortgage",
   },

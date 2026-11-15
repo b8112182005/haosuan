@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     "依房間長寬高估算油漆用量，支援牆面與天花板、多層塗刷，自動計算建議桶數與費用估算，含瑀墨塗料推薦。",
   keywords: ["油漆用量計算", "油漆桶數估算", "塗料用量", "裝潢油漆", "台灣油漆"],
   openGraph: {
-    title: "油漆用量計算機 | 好算",
+    title: "油漆用量計算機 | 好耶",
     description: "依房間尺寸估算油漆桶數與費用",
     url: "/renovation/paint",
   },

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     "依施工面積與磁磚尺寸計算所需片數，支援損耗率與縫隙設定，提供按箱購買建議與施工費用估算。",
   keywords: ["磁磚計算", "磁磚數量", "地磚計算", "磁磚片數", "裝潢估價"],
   openGraph: {
-    title: "磁磚數量計算 | 好算",
+    title: "磁磚數量計算 | 好耶",
     description: "依坪數與磁磚尺寸計算所需片數與耗料",
     url: "/renovation/tile",
   },

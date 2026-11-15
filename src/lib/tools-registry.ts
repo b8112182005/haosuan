@@ -114,7 +114,7 @@ export const tools: Tool[] = [
   {
     slug: "income-tax",
     name: "薪資所得稅試算",
-    description: "依台灣 2024 年稅制試算年度所得稅",
+    description: "依 115 年度（2027 年 5 月申報）試算所得稅",
     category: "finance",
     href: "/finance/income-tax",
     enabled: true,

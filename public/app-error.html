@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>好耶</title>
+<!--
+  app 內兩種情況會載入這一頁（capacitor.config.ts 的 server.errorPath）：
+  1. 要開的頁面在這一版 app 裡不存在（舊提醒帶的路徑、資料換版後下架的補助）。
+  2. 手機的 Android System WebView 版本低於 Capacitor 的最低需求，app 本體載不起來。
+  這一頁不能依賴 app 的 CSS 與 JS：樣式全部寫在這裡，腳本只用舊版 WebView 也看得懂的語法。
+-->
+<style>
+  body { margin: 0; font-family: sans-serif; background: #fff; color: #1f2937; }
+  .box { max-width: 420px; margin: 0 auto; padding: 72px 24px 24px; }
+  h1 { font-size: 22px; margin: 0 0 12px; }
+  p { font-size: 16px; line-height: 1.7; margin: 0 0 16px; color: #4b5563; }
+  a.btn { display: block; margin: 0 0 12px; padding: 14px 16px; border-radius: 12px; text-align: center;
+          font-size: 16px; font-weight: bold; text-decoration: none; background: #6C5CE7; color: #fff; }
+  a.btn.plain { background: #fff; color: #1f2937; border: 1px solid #d1d5db; }
+  .hide { display: none; }
+</style>
+</head>
+<body>
+<div class="box">
+  <div id="missing">
+    <h1>找不到這一頁</h1>
+    <p>這一頁在目前的版本裡已經不存在。可能是補助方案換了年度或已經結束，舊的提醒還連到原本的頁面。</p>
+    <a class="btn" href="/subsidy/index.html">看補助列表</a>
+    <a class="btn plain" href="/reminders/index.html">看我的提醒</a>
+    <a class="btn plain" href="/index.html">回首頁</a>
+  </div>
+  <div id="outdated" class="hide">
+    <h1>需要更新系統元件</h1>
+    <p>這支手機的「Android System WebView」版本太舊，好耶的畫面無法顯示。</p>
+    <p>請到 Play 商店更新「Android System WebView」和「Chrome」，更新完再重新開啟好耶。</p>
+    <a class="btn" href="https://play.google.com/store/apps/details?id=com.google.android.webview">到 Play 商店更新</a>
+  </div>
+</div>
+<script>
+  // CSSLayerBlockRule 是 Chrome 99 才有的介面：app 的樣式全部包在 @layer 裡，沒有它整頁沒有版面
+  (function () {
+    try {
+      if (typeof window.CSSLayerBlockRule === 'undefined') {
+        document.getElementById('missing').className = 'hide';
+        document.getElementById('outdated').className = '';
+      } else {
+        // WebView 夠新，而且這次開 app 還沒有任何一頁載入過（app 的每一頁都會寫 haoye.booted）：
+        // 代表這一頁是啟動時被直接載入的。Capacitor 的最低 WebView 版本檢查在 Android 7 是用套件名稱猜的，
+        // 猜錯時就會這樣。這種情況直接進 app，不要讓人一打開就看到「找不到這一頁」。只試一次，避免來回跳。
+        var booted = true;
+        var tried = true;
+        try {
+          booted = window.sessionStorage.getItem('haoye.booted') === '1';
+          tried = window.sessionStorage.getItem('haoye.errorRedirected') === '1';
+          if (!booted && !tried) window.sessionStorage.setItem('haoye.errorRedirected', '1');
+        } catch (e2) {
+          booted = true;
+        }
+        if (!booted && !tried) { window.location.replace('/'); return; }
+
+        // 瀏覽紀錄現在是［…、出錯前那一頁、404 的網址、這一頁］。
+        // 直接退一步會回到 404 的網址，又被帶回這一頁，所以要一次退兩步。
+        var skipBack = function () {
+          if (window.history.length > 2) window.history.go(-2);
+          else window.location.replace('/');
+        };
+
+        // 從這一頁點連結離開過、之後按返回又回到這裡：使用者已經看過這張說明，直接退回出錯前那一頁。
+        // 旗標記的是點連結當下的紀錄筆數：按返回繞回來時筆數和當時一樣；
+        // 之後才遇到的另一次 404，筆數一定比較多，那就是新的一次，要照常顯示說明。
+        var left = null;
+        try {
+          left = window.sessionStorage.getItem('haoye.errorLeft');
+          if (left !== null) window.sessionStorage.removeItem('haoye.errorLeft');
+        } catch (e3) {}
+        if (left !== null && left === String(window.history.length)) { skipBack(); return; }
+
+        // 連結用 replace 開，這一頁不留在瀏覽紀錄裡
+        var links = document.getElementById('missing').getElementsByTagName('a');
+        for (var i = 0; i < links.length; i++) {
+          links[i].onclick = function () {
+            // 瀏覽紀錄最多算到 50 筆，滿了之後筆數不再增加，分不出新舊：這時不記旗標，寧可之後多看一次說明
+            try { if (window.history.length < 50) window.sessionStorage.setItem('haoye.errorLeft', String(window.history.length)); } catch (e4) {}
+            window.location.replace(this.href);
+            return false;
+          };
+        }
+
+        // Android 返回鍵：這一頁沒有載入 app 的程式，沒人接返回鍵時 Capacitor 會退一步（回到 404 的網址）。
+        // 原生橋接自己帶的 Capacitor.addListener 不需要 app 的程式就能用。
+        if (window.Capacitor && typeof window.Capacitor.addListener === 'function') {
+          window.Capacitor.addListener('App', 'backButton', skipBack);
+        }
+      }
+    } catch (e) {}
+  })();
+</script>
+</body>
+</html>

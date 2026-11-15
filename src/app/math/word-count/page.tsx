@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "即時計算中文字數、英文單詞數、總字元數（含/不含空白）、段落數與行數。適合寫作、論文、文案、社群貼文字數計算。",
   keywords: ["字數計算", "中文字數", "字元計算", "單詞計算", "文章字數"],
   openGraph: {
-    title: "字數計算 | 好算",
+    title: "字數計算 | 好耶",
     description: "即時計算中英文字數、字元數、段落行數",
     url: "/math/word-count",
   },

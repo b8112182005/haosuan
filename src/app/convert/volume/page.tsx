@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "免費線上容量換算工具，支援公升、毫升、美制加侖、美制品脫、台灣量米杯互相換算，即時顯示所有單位結果。",
   keywords: ["容量換算", "公升", "毫升", "加侖", "品脫", "量米杯", "體積"],
   openGraph: {
-    title: "容量換算 | 好算",
+    title: "容量換算 | 好耶",
     description: "公升、毫升、加侖、品脫、量米杯即時互換",
     url: "/convert/volume",
   },

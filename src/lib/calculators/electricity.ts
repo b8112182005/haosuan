@@ -1,16 +1,27 @@
 /**
- * 電費計算機邏輯
- * 依台電 2024 年住宅用電累進費率計算
- * 資料來源：台灣電力公司 https://www.taipower.com.tw
+ * 電費計算機邏輯：住宅用電（表燈非營業用、非時間電價）的累進電價。
+ *
+ * 單價是台電 114 年 10 月 1 日起實施的電價表（經濟部 114 年 9 月 26 日核定）：
+ *   台電「電價知識專區 Q&A」 https://www.taipower.com.tw/2289/2363/2388/2389/10735/normalPost
+ * 115 年 3 月 27 日與 9 月 18 日兩次電價費率審議會都決議不調整（新聞報導，12 月還有一次審議），
+ * 所以這張表到 2026 年 11 月仍然適用。之後調整時要改 TIERS 與 RATE_EFFECTIVE_LABEL。
+ *
+ * 這種計費方式沒有基本電費。舊版把「簡易型時間電價」每戶每月 75 元的基本電費加了進來，每個月多算 75 元。
+ * 台電的規定是：當月電費未滿 100 元，以 100 元計收。
  */
+
+/** 畫面與文案共用的費率版本標示 */
+export const RATE_EFFECTIVE_LABEL = "114 年 10 月 1 日起實施";
 
 export type Season = "summer" | "non-summer";
 
 export interface ElectricityResult {
   units: number;
   season: Season;
-  baseCharge: number;
+  /** 分段累進算出來的電費 */
   energyCharge: number;
+  /** 是否因為未滿 100 元而以 100 元計收 */
+  minimumApplied: boolean;
   totalCharge: number;
   avgPricePerUnit: number;
   breakdown: TierBreakdown[];
@@ -24,30 +35,30 @@ export interface TierBreakdown {
 }
 
 /**
- * 台電住宅用電累進費率（2024 年）
+ * 每月用電度數分段的單價（元/度）。
  * 夏月：6/1～9/30；非夏月：其餘月份
  */
 const TIERS = {
   summer: [
-    { max: 120, rate: 1.63 },
-    { max: 330, rate: 2.38 },
-    { max: 500, rate: 3.52 },
-    { max: 700, rate: 4.80 },
-    { max: 1000, rate: 5.66 },
-    { max: Infinity, rate: 6.41 },
+    { max: 120, rate: 1.78 },
+    { max: 330, rate: 2.55 },
+    { max: 500, rate: 3.80 },
+    { max: 700, rate: 5.14 },
+    { max: 1000, rate: 6.44 },
+    { max: Infinity, rate: 8.86 },
   ],
   "non-summer": [
-    { max: 120, rate: 1.63 },
-    { max: 330, rate: 2.10 },
-    { max: 500, rate: 2.89 },
-    { max: 700, rate: 3.94 },
-    { max: 1000, rate: 4.60 },
-    { max: Infinity, rate: 5.03 },
+    { max: 120, rate: 1.78 },
+    { max: 330, rate: 2.26 },
+    { max: 500, rate: 3.13 },
+    { max: 700, rate: 4.24 },
+    { max: 1000, rate: 5.27 },
+    { max: Infinity, rate: 7.03 },
   ],
 };
 
-/** 基本電費（不分季節） */
-const BASE_CHARGE = 75;
+/** 當月電費未滿這個金額時，以這個金額計收 */
+export const MIN_CHARGE = 100;
 
 /**
  * 計算電費
@@ -68,7 +79,8 @@ export function calculateElectricity(
 
   for (let i = 0; i < tiers.length; i++) {
     const { max, rate } = tiers[i];
-    const tierSize = max === Infinity ? remaining : Math.min(remaining, max - prevMax);
+    // 度數取到小數 2 位：輸入 330.1 度時，逐段相減會得到 0.10000000000002274 這種浮點數誤差
+    const tierSize = Math.round((max === Infinity ? remaining : Math.min(remaining, max - prevMax)) * 100) / 100;
     if (tierSize <= 0) break;
 
     const charge = Math.round(tierSize * rate * 100) / 100;
@@ -86,13 +98,15 @@ export function calculateElectricity(
     if (remaining <= 0) break;
   }
 
-  const totalCharge = Math.round((BASE_CHARGE + energyCharge) * 100) / 100;
+  const roundedEnergy = Math.round(energyCharge * 100) / 100;
+  const minimumApplied = roundedEnergy < MIN_CHARGE;
+  const totalCharge = minimumApplied ? MIN_CHARGE : roundedEnergy;
 
   return {
     units,
     season,
-    baseCharge: BASE_CHARGE,
-    energyCharge: Math.round(energyCharge * 100) / 100,
+    energyCharge: roundedEnergy,
+    minimumApplied,
     totalCharge,
     avgPricePerUnit: units > 0 ? Math.round((totalCharge / units) * 100) / 100 : 0,
     breakdown,

@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     description:
       "領取報價單、成本估算、案場紀錄與請款單模板，協助接案者與小型團隊把報價、紀錄、請款流程整理清楚。",
     url: "/free-template",
-    siteName: "好算 HaoSuan",
+    siteName: "好耶",
   },
 };
 

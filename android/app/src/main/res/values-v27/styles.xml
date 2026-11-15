@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      Android 8.1～14（API 27～34）的系統導覽列。
+      SystemBars 的 style: 'LIGHT' 會把導覽列的按鈕設成深色，但沒有人設導覽列的底色，
+      平台預設是黑底：深色按鈕疊在黑底上，返回／主畫面／最近使用三顆按鈕幾乎看不到。
+      這裡把底色設成白的，和底部分頁列接在一起。
+
+      windowLightNavigationBar 是 API 27 才有的主題屬性；API 26 另外有 values-v26（只設底色）。
+      API 24、25 沒有深色導覽按鈕，白底會配到白色按鈕，所以不設。
+      Android 15 以上是 edge-to-edge，系統會忽略 navigationBarColor，不受影響。
+      其餘三行與 values/styles.xml 的 AppTheme.NoActionBar 相同（同名 style 在這裡是整個取代，不是合併）。
+    -->
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:background">@null</item>
+        <item name="android:navigationBarColor">@android:color/white</item>
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+</resources>

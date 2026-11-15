@@ -46,7 +46,7 @@ export default function InstallPWA() {
         <Download className="h-5 w-5 text-primary" />
       </div>
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-semibold">安裝好算 APP</p>
+        <p className="text-sm font-semibold">安裝好耶 APP</p>
         <p className="text-xs text-muted-foreground">加到主畫面，隨時快速計算</p>
       </div>
       <div className="flex items-center gap-2 flex-shrink-0">

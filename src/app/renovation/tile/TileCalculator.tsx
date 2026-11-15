@@ -171,8 +171,8 @@ export default function TileCalculator() {
               {[
                 { label: "每箱（10片）", value: `${result.boxesNeeded} 箱` },
                 { label: "每平方公尺", value: `${result.tilesPerSqm} 片` },
-                { label: "施工費用（低）", value: `NT$${result.costEstimate.low.toLocaleString()}` },
-                { label: "施工費用（高）", value: `NT$${result.costEstimate.high.toLocaleString()}` },
+                { label: "施工費用（低）", value: `NT$${result.costEstimate.low.toLocaleString("zh-TW")}` },
+                { label: "施工費用（高）", value: `NT$${result.costEstimate.high.toLocaleString("zh-TW")}` },
               ].map((item) => (
                 <div
                   key={item.label}

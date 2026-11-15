@@ -1,0 +1,1126 @@
+{
+  "topic": "income-tax-2026",
+  "file_path": "/tmp/claude-0/-home-user/f5bd5a14-fb96-591c-8e34-5fac26cd15ce/scratchpad/research/topics/income-tax-2026.json",
+  "items": [
+    {
+      "id": "income-tax-filing-2026",
+      "name": "綜合所得稅結算申報（115年5月申報114年度所得）",
+      "short_name": "綜所稅申報",
+      "category": "tax",
+      "level": "central",
+      "city": null,
+      "agency": "財政部各地區國稅局",
+      "summary": "每年5月1日到5月31日申報前一年所得。115年（2026年）申報114年度所得，因5月31日是星期日，截止日順延到6月1日。114年度數字：免稅額每人9.7萬元（70歲以上直系尊親屬14.55萬元）、標準扣除額單身13.1萬元／夫妻26.2萬元、薪資所得與身心障礙特別扣除額各21.8萬元、每人基本生活費21.3萬元。稅率五級：淨所得59萬元以下5%、59萬～133萬12%、133萬～266萬20%、266萬～498萬30%、498萬元以上40%。自繳稅款有8種繳法（含信用卡、ATM、超商3萬元以下）。逾期繳納每3日加徵1%滯納金，最高10%。116年5月申報115年度所得時，免稅額調高到10.1萬元、標準扣除額13.6萬元、薪資特別扣除額22.7萬元。",
+      "eligibility": [
+        "在台灣居住滿183天的居住者，全年綜合所得總額超過「免稅額＋標準扣除額」合計數（114年度單身為22.8萬元）就要申報。",
+        "即使所得低於門檻，只要有扣繳稅款或可扣抵稅額想退稅，也可以申報。",
+        "夫妻原則上合併申報，可選擇薪資或各類所得分開計稅；分居符合法院裁定或保護令條件者可各自申報。",
+        "未成年子女（114年度指97年含以後出生）不得單獨申報，要併入父母申報戶；96年出生者可選擇單獨或合併。"
+      ],
+      "amount": {
+        "text": "114年度：免稅額每人97,000元（70歲以上145,500元）；標準扣除額單身131,000元、夫妻262,000元；薪資所得特別扣除額每人218,000元；身心障礙特別扣除額每人218,000元；每人基本生活費213,000元。稅率5%／12%／20%／30%／40%，級距59萬／133萬／266萬／498萬元。",
+        "min": null,
+        "max": null,
+        "unit": "元／年",
+        "formula": "應納稅額 = （綜合所得總額 − 免稅額 − 標準或列舉扣除額 − 特別扣除額 − 基本生活費差額）× 稅率 − 累進差額。114年度累進差額：12%級距41,300元、20%級距147,700元、30%級距413,700元、40%級距911,700元（依官方級距表計算）。"
+      },
+      "conditions": {
+        "min_age": null,
+        "max_age": null,
+        "income_limit_type": null,
+        "income_limit_value": null,
+        "income_limit_note": "114年度單身者全年所得超過228,000元（免稅額97,000＋標準扣除額131,000）就要申報；有薪資者再加薪資特別扣除額218,000元，約44.6萬元以下通常不用繳稅。",
+        "cities": null,
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "is_married": null,
+        "is_pregnant_or_newborn": null,
+        "is_student": null,
+        "is_employed": null,
+        "is_unemployed": null,
+        "has_labor_insurance": null,
+        "has_national_pension": null,
+        "is_disabled": null,
+        "is_elderly": null,
+        "low_income": null,
+        "no_home_ownership": null,
+        "must_rent": null,
+        "must_own_home": null,
+        "owns_vehicle": null,
+        "other": "每年5月申報前一年1月1日到12月31日的所得；非居住者（未滿183天）採就源扣繳，不適用這套免稅額與級距。"
+      },
+      "documents": [
+        "自然人憑證、已註冊健保卡＋密碼、行動自然人憑證（TW FidO）或金融憑證其中一種（線上查調所得用）",
+        "本人、配偶、受扶養親屬的身分證字號與出生年月日",
+        "退稅用的本人或配偶金融機構／郵局帳號（選直撥退稅）",
+        "列舉扣除額憑證：捐贈收據、保險費繳費證明、醫藥費收據、自用住宅購屋借款利息單據等（國稅局查不到的才需自行附上）",
+        "特別扣除額證明：身心障礙證明影本、幼兒出生年月日、長照證明、租賃契約與付款證明等"
+      ],
+      "how_to_apply": [
+        "4月28日起可先到財政部電子申報繳稅服務網（tax.nat.gov.tw）或用手機「行動版」查調所得與扣除額資料。",
+        "5月1日起用手機或電腦登入申報系統，確認國稅局帶入的所得與扣除額，補填國稅局查不到的項目（例如房租）。",
+        "系統自動比較標準扣除與列舉扣除，選對自己有利的；有配偶者可試算合併計稅、薪資分開、各類所得分開三種方式。",
+        "應繳稅者選繳稅方式（信用卡、活期帳戶轉帳、ATM、超商等）；退稅者填入帳號選「直撥退稅」。",
+        "5月31日（115年順延至6月1日）24時前上傳完成；需要補附的紙本或電子附件，在6月11日前寄送或上傳。",
+        "收到國稅局寄來的「稅額試算通知書」的人，若內容沒問題，可直接線上、電話語音或紙本回復確認，不必再申報。"
+      ],
+      "channels": [
+        { "type": "online", "label": "財政部電子申報繳稅服務網（電腦版／手機版）", "url": "https://tax.nat.gov.tw/" },
+        { "type": "app", "label": "手機報稅（瀏覽器開啟 tax.nat.gov.tw 選「手機版」，用健保卡、行動自然人憑證或行動電話認證登入）", "url": "https://tax.nat.gov.tw/" },
+        { "type": "office", "label": "各地區國稅局及分局、稽徵所臨櫃（5月1日勞動節不提供臨櫃）", "url": "https://www.etax.nat.gov.tw/" },
+        { "type": "mail", "label": "紙本申報書郵寄戶籍地國稅局", "url": null },
+        { "type": "phone", "label": "國稅局免付費服務電話 0800-000-321", "url": null }
+      ],
+      "deadline": {
+        "type": "fixed_annual",
+        "start_month": 5,
+        "start_day": 1,
+        "end_month": 5,
+        "end_day": 31,
+        "note": "每年5月1日至5月31日；末日遇假日順延。115年因5月31日是星期日，截止日為6月1日。網路申報6月1日24時前上傳，附件6月11日前送達。116年5月申報115年度所得時，免稅額調為10.1萬元、標準扣除額13.6萬元（夫妻27.2萬）、薪資與身障特別扣除額22.7萬元，級距改為61萬／138萬／277萬／519萬元。"
+      },
+      "faqs": [
+        {
+          "q": "我年收入多少以下可以不用申報、不用繳稅？",
+          "a": "114年度單身無薪資以外所得者：所得低於免稅額9.7萬＋標準扣除額13.1萬＋薪資特別扣除額21.8萬＝44.6萬元，不用繳稅。再加每人基本生活費21.3萬與免稅額加扣除額比較的差額，實際門檻會更高。就算不用繳稅，若公司有先扣繳稅款，申報才能退回來。",
+          "source_url": "https://announce.ndhu.edu.tw/message_8/1777858456/114%E5%B9%B4%E5%BA%A6%E7%B6%9C%E5%90%88%E6%89%80%E5%BE%97%E7%A8%85%E7%B5%90%E7%AE%97%E7%94%B3%E5%A0%B1%E6%B3%95%E4%BB%A4%E4%BB%8B%E7%B4%B9.pdf"
+        },
+        {
+          "q": "標準扣除額和列舉扣除額怎麼選？",
+          "a": "114年度標準扣除額單身13.1萬元、夫妻26.2萬元，不用附任何單據。列舉扣除額要逐筆附證明：捐贈（上限所得總額20%）、保險費（每人2.4萬元，健保費不限額）、醫藥費、災害損失、自用住宅購屋借款利息（上限30萬元且要先扣儲蓄投資特別扣除額）。列舉合計超過標準扣除額才值得選列舉。房租自113年度起改列特別扣除額，選標準扣除也能報。",
+          "source_url": "https://announce.ndhu.edu.tw/message_8/1777858456/114%E5%B9%B4%E5%BA%A6%E7%B6%9C%E5%90%88%E6%89%80%E5%BE%97%E7%A8%85%E7%B5%90%E7%AE%97%E7%94%B3%E5%A0%B1%E6%B3%95%E4%BB%A4%E4%BB%8B%E7%B4%B9.pdf"
+        },
+        {
+          "q": "「基本生活費」21.3萬元是什麼？每個人都能多扣嗎？",
+          "a": "114年度每人基本生活費21.3萬元乘以申報戶人數，若大於「免稅額＋標準或列舉扣除額＋儲蓄投資、身心障礙、教育學費、幼兒學前、長期照顧、房屋租金特別扣除額」的合計，差額可以再從所得總額扣除。單身薪水族因免稅額9.7萬＋標準扣除13.1萬＝22.8萬已超過21.3萬，通常沒有差額；扶養人口多、扣除額少的家庭才會用到。",
+          "source_url": "https://announce.ndhu.edu.tw/message_8/1777858456/114%E5%B9%B4%E5%BA%A6%E7%B6%9C%E5%90%88%E6%89%80%E5%BE%97%E7%A8%85%E7%B5%90%E7%AE%97%E7%94%B3%E5%A0%B1%E6%B3%95%E4%BB%A4%E4%BB%8B%E7%B4%B9.pdf"
+        },
+        {
+          "q": "可以用哪些方式繳稅？超商可以繳嗎？",
+          "a": "共8種：1.臨櫃到代收稅款金融機構（郵局不代收）；2.便利商店，限稅額3萬元以下；3.繳稅取款委託書，從本人、配偶或同戶受扶養親屬帳戶在截止日扣款；4.有「跨行：提款＋轉帳＋繳稅」功能的ATM；5.晶片金融卡搭讀卡機；6.信用卡，限本人或配偶名下1張，手續費看發卡行；7.活期帳戶即時轉帳（用憑證或健保卡登入）；8.行動支付或電子支付帳戶APP掃繳款書QR Code。",
+          "source_url": "https://www.etax.nat.gov.tw/etwmain/tax-info/understanding/tax-q-and-a/national/individual-income-tax/file-procedure/JrMbJkr"
+        },
+        {
+          "q": "忘記繳稅或遲繳了，會被罰多少？",
+          "a": "繳納期限過後，每超過3日按應納稅額加徵1%滯納金，最多加到10%（30日）。超過滯納期30日仍沒繳，國稅局會移送強制執行，另外從滯納期滿次日起按日加計利息，利率依郵局1年期定儲固定利率。逾期後無法再用線上、ATM或超商繳，要拿新繳款書到代收金融機構繳。",
+          "source_url": "https://www.etax.nat.gov.tw/etwmain/tax-info/understanding/tax-saving-manual/national/individual-income-tax/19JjoeY"
+        },
+        {
+          "q": "整個5月都忘了申報怎麼辦？會罰多少？",
+          "a": "可以逾期補報。只要在被檢舉或國稅局開始調查前，自己主動補報並補繳稅款加計利息，就免罰。若是被國稅局先查到沒申報，除補稅外最高可罰補徵稅額3倍；有申報但短漏報所得，最高罰漏稅額2倍。逾期申報的退稅案件列入第3批，116年1月20日才退。",
+          "source_url": "https://www.etax.nat.gov.tw/etwmain/tax-info/understanding/tax-saving-manual/national/individual-income-tax/19JjoeY"
+        },
+        {
+          "q": "退稅什麼時候入帳？怎麼查？",
+          "a": "114年度退稅分3批：6月1日前網路申報或線上／語音確認稅額試算者，115年7月31日直撥入帳；人工或二維條碼申報者10月30日；逾期申報者116年1月20日。沒填帳號的人會收到退稅憑單，第1批兌領期間7月31日到9月30日。可到電子申報繳稅服務網「退稅查詢」或打國稅局電話確認進度。",
+          "source_url": "https://www.etax.nat.gov.tw/etwmain/announcement/tax-assessment/native/every-year/Vj6m87j"
+        },
+        {
+          "q": "哪些親屬可以列報扶養？兄弟姊妹都報爸媽會怎樣？",
+          "a": "可列報：配偶、未成年子女、成年但在學／身心障礙／無謀生能力的子女、60歲以上或無謀生能力的父母祖父母、合於條件的兄弟姊妹與同居一家的其他親屬。兄弟姊妹重複申報同一位父母，國稅局依序認定：父母書面指定、兄弟姊妹協議、監護人、最後依實際扶養事實（同住天數、付醫藥費、健保依附等）判斷，其他人會被剔除補稅。",
+          "source_url": "https://announce.ndhu.edu.tw/message_8/1777858456/114%E5%B9%B4%E5%BA%A6%E7%B6%9C%E5%90%88%E6%89%80%E5%BE%97%E7%A8%85%E7%B5%90%E7%AE%97%E7%94%B3%E5%A0%B1%E6%B3%95%E4%BB%A4%E4%BB%8B%E7%B4%B9.pdf"
+        }
+      ],
+      "pitfalls": [
+        "國稅局帶入的所得資料不代表全部：海外所得、網拍、網紅分潤、私人租金收入等查不到的所得仍要自己填，被查到短漏報最高罰漏稅額2倍。",
+        "保險費列舉每人限2.4萬元，且要保人與被保險人要同一申報戶；只有健保費（含補充保費）可以全額扣、不受同戶限制。",
+        "點光明燈、安太歲、買塔位這類有對價的支出不是捐贈，不能列舉扣除。",
+        "成年子女（95年含以前出生）若沒在學、沒身心障礙，即使沒工作也不能列報扶養。",
+        "用重大傷病卡不能報身心障礙特別扣除額，要有身心障礙證明或精神衛生法規定的專科醫師診斷證明。",
+        "5月1日勞動節國稅局不提供臨櫃服務；繳稅取款委託書扣款日是截止日當天，帳戶要先存足款項。",
+        "國稅局不會用電子郵件、簡訊或LINE傳退稅或繳稅連結，也不會叫你去ATM操作退稅，收到就是詐騙。"
+      ],
+      "related_calculator": "income-tax",
+      "official_url": "https://www.etax.nat.gov.tw/etwmain/tax-info/understanding/tax-saving-manual/national/individual-income-tax",
+      "sources": [
+        { "url": "https://announce.ndhu.edu.tw/message_8/1777858456/114%E5%B9%B4%E5%BA%A6%E7%B6%9C%E5%90%88%E6%89%80%E5%BE%97%E7%A8%85%E7%B5%90%E7%AE%97%E7%94%B3%E5%A0%B1%E6%B3%95%E4%BB%A4%E4%BB%8B%E7%B4%B9.pdf", "title": "綜合所得稅結算申報實務（114年度新修正規定、免稅額扣除額表、課稅級距、申報期間、退稅批次）", "publisher": "財政部北區國稅局花蓮分局（115.4.21 簡報，東華大學轉載）", "accessed": "2026-11-07" },
+        { "url": "https://www.etax.nat.gov.tw/etwmain/tax-info/understanding/tax-saving-secret/ZJ1Zn0P", "title": "善用特別扣除額省稅又利己", "publisher": "財政部稅務入口網", "accessed": "2026-11-07" },
+        { "url": "https://www.etax.nat.gov.tw/etwmain/tax-info/understanding/tax-q-and-a/national/individual-income-tax/file-procedure/JrMbJkr", "title": "1309 綜合所得稅結算申報繳納稅款之方式有哪幾種？", "publisher": "財政部稅務入口網", "accessed": "2026-11-07" },
+        { "url": "https://www.etax.nat.gov.tw/etwmain/tax-info/understanding/tax-saving-manual/national/individual-income-tax/19JjoeY", "title": "拾、逾期繳納稅款之處理及違反義務之處罰", "publisher": "財政部稅務入口網", "accessed": "2026-11-07" },
+        { "url": "https://www.etax.nat.gov.tw/etwmain/announcement/tax-assessment/native/every-year/Vj6m87j", "title": "114年度第1批綜合所得稅結算申報（本國人）退稅公告", "publisher": "財政部稅務入口網", "accessed": "2026-11-07" },
+        { "url": "https://www.dot.gov.tw/multiplehtml/06afbfc0e60e4ccb88f3f7f956aaacc7", "title": "重要公告：公告115年度綜合所得稅免稅額、標準扣除額、薪資所得特別扣除額、身心障礙特別扣除額、課稅級距（114-11-27）", "publisher": "財政部賦稅署", "accessed": "2026-11-07" },
+        { "url": "https://www.cna.com.tw/news/afe/202602030292.aspx", "title": "綜所稅免稅額明年調至10.1萬 租屋單身者免稅門檻64.4萬", "publisher": "中央社", "accessed": "2026-11-07" }
+      ],
+      "status_2026": "active",
+      "last_known_update": "2026-04-21",
+      "confidence": "high",
+      "unverified_fields": [
+        "115年度（116年5月申報）級距上限61萬／138萬／277萬／519萬元與70歲以上免稅額15.15萬元：取自媒體轉述財政部114年11月27日公告，未直接核對行政院公報原文"
+      ]
+    },
+    {
+      "id": "income-tax-preschool-deduction",
+      "name": "幼兒學前特別扣除額（6歲以下子女）",
+      "short_name": "幼兒學前扣除額",
+      "category": "tax",
+      "level": "central",
+      "city": null,
+      "agency": "財政部各地區國稅局",
+      "summary": "申報綜所稅時，扶養6歲以下子女可扣幼兒學前特別扣除額：第1名子女每年15萬元，第2名及以上每人每年22.5萬元。114年度（115年5月申報）適用108年1月1日以後出生的子女。113年度起已取消排富，不論稅率多高都能扣。不需要附托育或幼兒園收據，只要子女在申報戶內即可。",
+      "eligibility": [
+        "納稅義務人申報扶養6歲以下子女（114年度為108年含以後出生）。",
+        "子女須列在同一申報戶內；父母分開申報時只能由列報扶養的一方扣除。",
+        "113年度起無排富限制，適用稅率20%以上、股利分開計稅或基本所得額超過750萬元者都可扣。"
+      ],
+      "amount": {
+        "text": "第1名子女每年150,000元；第2名及以上子女每人每年225,000元",
+        "min": 150000,
+        "max": 225000,
+        "unit": "元／人／年",
+        "formula": "扣除額 = 150,000（第1名）＋ 225,000 × （第2名以上人數）"
+      },
+      "conditions": {
+        "min_age": null,
+        "max_age": null,
+        "income_limit_type": null,
+        "income_limit_value": null,
+        "income_limit_note": "無排富",
+        "cities": null,
+        "has_children": true,
+        "child_age_min": 0,
+        "child_age_max": 6,
+        "is_married": null,
+        "is_pregnant_or_newborn": null,
+        "is_student": null,
+        "is_employed": null,
+        "is_unemployed": null,
+        "has_labor_insurance": null,
+        "has_national_pension": null,
+        "is_disabled": null,
+        "is_elderly": null,
+        "low_income": null,
+        "no_home_ownership": null,
+        "must_rent": null,
+        "must_own_home": null,
+        "owns_vehicle": null,
+        "other": "以課稅年度12月31日年齡認定；114年度指108年1月1日以後出生的子女。"
+      },
+      "documents": [
+        "不需另附托育或學費收據，申報系統依子女出生年月日自動帶入",
+        "子女身分證字號與出生年月日（國稅局依戶政資料核對）"
+      ],
+      "how_to_apply": [
+        "報稅時把子女列在受扶養親屬，系統依出生年月日自動計算幼兒學前特別扣除額。",
+        "第幾名子女由系統依出生順序判斷，不需自己填金額。",
+        "父母離婚或分居各自申報時，先協議由誰列報，避免重複被剔除。"
+      ],
+      "channels": [
+        { "type": "online", "label": "財政部電子申報繳稅服務網（隨綜所稅申報一併扣除）", "url": "https://tax.nat.gov.tw/" }
+      ],
+      "deadline": {
+        "type": "fixed_annual",
+        "start_month": 5,
+        "start_day": 1,
+        "end_month": 5,
+        "end_day": 31,
+        "note": "隨綜所稅結算申報辦理；115年截止日順延到6月1日。金額自113年度起未變動，115年度（116年申報）財政部未公告調整。"
+      },
+      "faqs": [
+        {
+          "q": "小孩今年剛滿6歲、或是年底才出生，可以扣嗎？",
+          "a": "以課稅年度12月31日的年齡為準。114年度（115年5月申報）只要是108年1月1日以後出生，不論是114年12月才出生，或114年內滿6歲，整年都能扣全額15萬或22.5萬元，不按月份比例計算。109年以前出生的子女不能扣。",
+          "source_url": "https://www.etax.nat.gov.tw/etwmain/tax-info/understanding/tax-saving-secret/ZJ1Zn0P"
+        },
+        {
+          "q": "「第2名及以上22.5萬」怎麼算？老大超過6歲還算第1名嗎？",
+          "a": "名次依6歲以下子女的出生順序計算，不含已超過6歲的子女。例如家中有8歲、4歲、1歲三個小孩，只有4歲和1歲可扣，4歲算第1名扣15萬元、1歲算第2名扣22.5萬元，合計37.5萬元。雙胞胎則依出生先後分別為第1名與第2名。",
+          "source_url": "https://www.etax.nat.gov.tw/etwmain/tax-info/understanding/tax-saving-secret/ZJ1Zn0P"
+        },
+        {
+          "q": "我的稅率是20%以上，還能扣幼兒學前特別扣除額嗎？",
+          "a": "可以。113年度起修法已取消排富，不論適用累進稅率20%、30%、40%，或股利按28%分開計稅、基本所得額超過750萬元，都能全額扣除。這點與長期照顧和房屋租金特別扣除額不同，那兩項仍有排富。",
+          "source_url": "https://announce.ndhu.edu.tw/message_8/1777858456/114%E5%B9%B4%E5%BA%A6%E7%B6%9C%E5%90%88%E6%89%80%E5%BE%97%E7%A8%85%E7%B5%90%E7%AE%97%E7%94%B3%E5%A0%B1%E6%B3%95%E4%BB%A4%E4%BB%8B%E7%B4%B9.pdf"
+        },
+        {
+          "q": "小孩沒上幼兒園、在家自己帶，也能扣嗎？需要收據嗎？",
+          "a": "可以，這項扣除額不看有沒有送托或上學，也不需任何收據，只要子女列在申報戶受扶養親屬即可。另外，政府發的育兒津貼或托育補助不是所得，不用申報，也不會從扣除額裡減掉。",
+          "source_url": "https://www.etax.nat.gov.tw/etwmain/tax-info/understanding/tax-saving-secret/ZJ1Zn0P"
+        }
+      ],
+      "pitfalls": [
+        "離婚或分居的父母若同時列報同一個小孩，國稅局會依協議、監護登記、同住天數、實際扶養事實順序認定，另一方會被剔除補稅。",
+        "子女由祖父母列報扶養時，幼兒學前特別扣除額跟著扶養人走，父母不能再扣。",
+        "系統依出生年月日自動判斷，若子女資料沒列入受扶養親屬（例如新生兒忘了加），就不會帶出扣除額。"
+      ],
+      "related_calculator": "income-tax",
+      "official_url": "https://www.etax.nat.gov.tw/etwmain/tax-info/understanding/tax-saving-secret/ZJ1Zn0P",
+      "sources": [
+        { "url": "https://www.etax.nat.gov.tw/etwmain/tax-info/understanding/tax-saving-secret/ZJ1Zn0P", "title": "善用特別扣除額省稅又利己", "publisher": "財政部稅務入口網", "accessed": "2026-11-07" },
+        { "url": "https://announce.ndhu.edu.tw/message_8/1777858456/114%E5%B9%B4%E5%BA%A6%E7%B6%9C%E5%90%88%E6%89%80%E5%BE%97%E7%A8%85%E7%B5%90%E7%AE%97%E7%94%B3%E5%A0%B1%E6%B3%95%E4%BB%A4%E4%BB%8B%E7%B4%B9.pdf", "title": "綜合所得稅結算申報實務（幼兒學前特別扣除額修法說明）", "publisher": "財政部北區國稅局花蓮分局", "accessed": "2026-11-07" }
+      ],
+      "status_2026": "active",
+      "last_known_update": "2026-04-20",
+      "confidence": "high",
+      "unverified_fields": []
+    },
+    {
+      "id": "income-tax-longterm-care-deduction",
+      "name": "長期照顧特別扣除額",
+      "short_name": "長照扣除額",
+      "category": "tax",
+      "level": "central",
+      "city": null,
+      "agency": "財政部各地區國稅局",
+      "summary": "納稅義務人、配偶或受扶養親屬是符合衛福部公告「須長期照顧之身心失能者」，114年度起每人每年可扣18萬元（113年度為12萬元，調高6萬元）。有排富：適用稅率20%以上、股利按28%分開計稅、或基本所得額超過750萬元者不能扣。要附聘僱外籍看護許可函、長照需要等級證明或住宿式機構收據等證明。",
+      "eligibility": [
+        "本人、配偶或受扶養親屬符合衛福部公告的須長期照顧身心失能者。",
+        "排富：申報戶適用稅率20%以上、股利及盈餘按28%分開計稅、或基本所得額超過750萬元者不適用。",
+        "與身心障礙特別扣除額可同時扣除，兩者不衝突。"
+      ],
+      "amount": {
+        "text": "每人每年180,000元（114年度起；113年度為120,000元）",
+        "min": 180000,
+        "max": 180000,
+        "unit": "元／人／年",
+        "formula": null
+      },
+      "conditions": {
+        "min_age": null,
+        "max_age": null,
+        "income_limit_type": "tax_rate",
+        "income_limit_value": 20,
+        "income_limit_note": "適用稅率20%以上、股利28%分開計稅或基本所得額超過750萬元者不能扣",
+        "cities": null,
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "is_married": null,
+        "is_pregnant_or_newborn": null,
+        "is_student": null,
+        "is_employed": null,
+        "is_unemployed": null,
+        "has_labor_insurance": null,
+        "has_national_pension": null,
+        "is_disabled": true,
+        "is_elderly": null,
+        "low_income": null,
+        "no_home_ownership": null,
+        "must_rent": null,
+        "must_own_home": null,
+        "owns_vehicle": null,
+        "other": "被照顧者須為衛福部公告之須長期照顧身心失能者（聘僱外籍家庭看護工、長照需要等級第2級以上、或入住住宿式機構全年達90日等情形之一）。"
+      },
+      "documents": [
+        "聘僱外籍家庭看護工者：課稅年度有效的聘僱許可函影本",
+        "使用長照服務者：長照需要等級第2級至第8級的照顧管理評估結果或服務使用證明",
+        "入住住宿式服務機構者：課稅年度全年入住累計達90日的繳費收據或機構出具證明",
+        "符合身心障礙或特定病症者：相關鑑定或診斷證明（依衛福部公告項目）"
+      ],
+      "how_to_apply": [
+        "報稅時在特別扣除額「長期照顧」欄位勾選並填入被照顧者。",
+        "國稅局查不到長照資料，須自行備妥上述證明；網路申報者在6月11日前上傳或寄送附件。",
+        "系統會自動依稅率判斷是否排富，若排富則扣除額自動歸零。"
+      ],
+      "channels": [
+        { "type": "online", "label": "財政部電子申報繳稅服務網（隨綜所稅申報一併扣除）", "url": "https://tax.nat.gov.tw/" }
+      ],
+      "deadline": {
+        "type": "fixed_annual",
+        "start_month": 5,
+        "start_day": 1,
+        "end_month": 5,
+        "end_day": 31,
+        "note": "隨綜所稅結算申報辦理；115年截止日順延到6月1日。18萬元自114年度起適用，115年度未公告再調整。"
+      },
+      "faqs": [
+        {
+          "q": "家裡有請外籍看護照顧長輩，怎麼證明？",
+          "a": "附勞動部核發、課稅年度內有效的「聘僱外籍家庭看護工許可函」影本即可。只要許可函在114年內任一天有效，就能扣全年18萬元，不按月份比例。若長輩同時領有身心障礙證明，還可以再扣身心障礙特別扣除額21.8萬元，兩項並行。",
+          "source_url": "https://www.etax.nat.gov.tw/etwmain/tax-info/understanding/tax-saving-secret/ZJ1Zn0P"
+        },
+        {
+          "q": "長輩住安養院或護理之家，可以扣嗎？",
+          "a": "可以，但要是衛福部定義的住宿式服務機構（一般護理之家、老人福利機構、身心障礙住宿機構、榮民之家等），且課稅年度內入住累計滿90天。附機構開的繳費收據或入住證明，上面要看得出入住期間。一般醫院住院天數不算。",
+          "source_url": "https://www.etax.nat.gov.tw/etwmain/tax-info/understanding/tax-saving-secret/ZJ1Zn0P"
+        },
+        {
+          "q": "我稅率是20%，會被排富嗎？怎麼判斷？",
+          "a": "會。只要申報戶「適用稅率」達20%以上（114年度淨所得超過133萬元），或股利選28%分開計稅，或基本所得額超過750萬元，長照特別扣除額就不能扣。這裡的稅率是把長照扣除額扣掉之後算出來的稅率，系統會自動判斷。夫妻薪資分開計稅時，任一方稅率達20%也排富。",
+          "source_url": "https://www.etax.nat.gov.tw/etwmain/tax-info/understanding/tax-saving-secret/ZJ1Zn0P"
+        },
+        {
+          "q": "113年度只有12萬，今年報稅是18萬嗎？",
+          "a": "是。114年1月1日起長期照顧特別扣除額從每人12萬元提高到18萬元，115年5月申報114年度所得時第一次適用，財政部估計約35萬戶受惠。排富條件沒有放寬。116年5月申報115年度時，目前沒有再調高的公告。",
+          "source_url": "https://announce.ndhu.edu.tw/message_8/1777858456/114%E5%B9%B4%E5%BA%A6%E7%B6%9C%E5%90%88%E6%89%80%E5%BE%97%E7%A8%85%E7%B5%90%E7%AE%97%E7%94%B3%E5%A0%B1%E6%B3%95%E4%BB%A4%E4%BB%8B%E7%B4%B9.pdf"
+        }
+      ],
+      "pitfalls": [
+        "長照需要等級第1級不符合，須第2級至第8級的評估結果才算。",
+        "被照顧者沒有列在申報戶受扶養親屬內就不能扣；例如父母由哥哥列報扶養，弟弟付看護費也不能扣。",
+        "排富看的是扣除後的最終稅率，收入剛好在133萬元邊緣的家庭，多報一筆所得可能連帶讓18萬元扣除額整個消失。",
+        "國稅局沒有長照資料可帶入，忘記勾選就不會扣，事後要用更正申報補救。"
+      ],
+      "related_calculator": "income-tax",
+      "official_url": "https://www.etax.nat.gov.tw/etwmain/tax-info/understanding/tax-saving-secret/ZJ1Zn0P",
+      "sources": [
+        { "url": "https://www.etax.nat.gov.tw/etwmain/tax-info/understanding/tax-saving-secret/ZJ1Zn0P", "title": "善用特別扣除額省稅又利己", "publisher": "財政部稅務入口網", "accessed": "2026-11-07" },
+        { "url": "https://announce.ndhu.edu.tw/message_8/1777858456/114%E5%B9%B4%E5%BA%A6%E7%B6%9C%E5%90%88%E6%89%80%E5%BE%97%E7%A8%85%E7%B5%90%E7%AE%97%E7%94%B3%E5%A0%B1%E6%B3%95%E4%BB%A4%E4%BB%8B%E7%B4%B9.pdf", "title": "綜合所得稅結算申報實務（114年度免稅額扣除額表）", "publisher": "財政部北區國稅局花蓮分局", "accessed": "2026-11-07" }
+      ],
+      "status_2026": "active",
+      "last_known_update": "2026-04-20",
+      "confidence": "medium",
+      "unverified_fields": [
+        "適用對象三類（外籍看護、長照等級2–8級、住宿機構滿90日）的細節取自衛福部歷年公告，本次未直接讀取衛福部114年度公告原文"
+      ]
+    },
+    {
+      "id": "income-tax-rent-deduction",
+      "name": "房屋租金支出特別扣除額（每戶最高18萬元）",
+      "short_name": "房租扣除額",
+      "category": "tax",
+      "level": "central",
+      "city": null,
+      "agency": "財政部各地區國稅局",
+      "summary": "本人、配偶及受扶養直系親屬在台灣沒有自有房屋、租屋自住（非營業用），付的租金扣掉政府租金補貼後，每一申報戶每年最多扣18萬元。113年度起從列舉扣除改為特別扣除，選標準扣除額也能報。排富：適用稅率20%以上、股利按28%分開計稅、或基本所得額超過750萬元者不能扣。要附租約、付款證明（轉帳明細或房東簽收收據）以及戶籍證明或自住切結書。不需要房東同意，國稅局也查不到房租資料，要自己填。",
+      "eligibility": [
+        "納稅義務人、配偶及受扶養直系親屬在中華民國境內都沒有自有房屋（5種例外情形可視為無房屋）。",
+        "承租房屋在台灣境內，供自住，不供營業或執行業務使用。",
+        "排富：當年度適用稅率20%以上、股利及盈餘按28%分開計稅、或基本所得額超過750萬元者不適用。",
+        "有領政府租金補貼者，租金要先扣掉補貼金額再計算。"
+      ],
+      "amount": {
+        "text": "每一申報戶每年最高180,000元（實付租金減除政府租金補貼後的金額，與18萬取低者）",
+        "min": null,
+        "max": 180000,
+        "unit": "元／戶／年",
+        "formula": "可扣金額 = min(全年實付租金 − 政府租金補貼, 180,000)"
+      },
+      "conditions": {
+        "min_age": null,
+        "max_age": null,
+        "income_limit_type": "tax_rate",
+        "income_limit_value": 20,
+        "income_limit_note": "適用稅率20%以上、股利28%分開計稅或基本所得額超過750萬元者不能扣",
+        "cities": null,
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "is_married": null,
+        "is_pregnant_or_newborn": null,
+        "is_student": null,
+        "is_employed": null,
+        "is_unemployed": null,
+        "has_labor_insurance": null,
+        "has_national_pension": null,
+        "is_disabled": null,
+        "is_elderly": null,
+        "low_income": null,
+        "no_home_ownership": true,
+        "must_rent": true,
+        "must_own_home": false,
+        "owns_vehicle": null,
+        "other": "受扶養直系親屬（例如父母）名下有房屋也會讓整戶不能扣，除非符合5種例外。"
+      },
+      "documents": [
+        "承租房屋的租賃契約書影本",
+        "支付租金的付款證明影本：ATM轉帳交易明細、匯款證明或出租人簽收的收據，三種擇一",
+        "本人、配偶或受扶養直系親屬在課稅年度於該地址辦竣戶籍登記的證明，或載明該屋供自住且非供營業、執行業務使用的切結書（二擇一）",
+        "有自有房屋但主張視為非自有的5種例外，另附對應證明（政府拆遷公告、危險標誌影本、繼承持分登記、在職或在學證明與異地租屋切結書、法院裁定或保護令等）"
+      ],
+      "how_to_apply": [
+        "整理全年租金付款紀錄，若有領租金補貼，先把補貼金額從租金總額扣掉。",
+        "報稅時在特別扣除額「房屋租金支出」欄位填入金額（國稅局無此資料，系統不會自動帶入）。",
+        "網路申報者將租約、付款證明、戶籍證明或切結書掃描上傳，或在6月11日前寄到戶籍地國稅局。",
+        "系統會自動依稅率判斷排富；若被排富，金額會歸零，不影響其他扣除。"
+      ],
+      "channels": [
+        { "type": "online", "label": "財政部電子申報繳稅服務網（隨綜所稅申報一併扣除，附件線上上傳）", "url": "https://tax.nat.gov.tw/" },
+        { "type": "mail", "label": "證明文件寄送戶籍地國稅局（6月11日前）", "url": null }
+      ],
+      "deadline": {
+        "type": "fixed_annual",
+        "start_month": 5,
+        "start_day": 1,
+        "end_month": 5,
+        "end_day": 31,
+        "note": "隨綜所稅結算申報辦理；115年截止日順延到6月1日，附件6月11日前送達。18萬元上限自113年度起適用，115年度未公告調整。"
+      },
+      "faqs": [
+        {
+          "q": "房東不同意我報稅、不給收據，可以申報嗎？",
+          "a": "可以。房屋租金支出特別扣除額不需房東同意，付款證明用你自己的ATM轉帳明細或匯款紀錄就行，不一定要房東簽收的收據。自住證明也可以自己寫切結書，不必在租屋處設戶籍。國稅局會依你附的租約核對，房東的租金收入會被勾稽，但這是房東的義務，不影響你的扣除權利。",
+          "source_url": "https://www.mof.gov.tw/singlehtml/384fb3077bb349ea973e7fc6f13b6974?cntId=68f012b9ab154e7a8c672cd6dca08ffd"
+        },
+        {
+          "q": "我一直付現金給房東，沒有轉帳紀錄怎麼辦？",
+          "a": "付款證明可以是房東簽收的收據；若房東不肯簽，可改請房東在租約上簽收或開立整年收據。從現在起改用轉帳付租，每筆備註「X月房租」，明年報稅就有完整證明。沒有任何付款證明時，國稅局可能只認租約而剔除扣除額，風險在你這邊。",
+          "source_url": "https://www.mof.gov.tw/singlehtml/384fb3077bb349ea973e7fc6f13b6974?cntId=68f012b9ab154e7a8c672cd6dca08ffd"
+        },
+        {
+          "q": "我爸媽名下有房子，我在外縣市租屋工作，還能扣嗎？",
+          "a": "要看父母有沒有列在你的申報戶。沒列報扶養父母，他們的房子不影響你。有列報扶養且父母名下有房，整戶原則上不能扣，除非符合例外：因就業、就學、就醫需異地租屋，且全戶合計只有這1間房、該房供自住非營業使用，此時附在職證明與異地租屋切結書仍可扣。若父母房子出租給別人或供營業，就不符合例外。",
+          "source_url": "https://www.mof.gov.tw/singlehtml/384fb3077bb349ea973e7fc6f13b6974?cntId=68f012b9ab154e7a8c672cd6dca08ffd"
+        },
+        {
+          "q": "有領300億租金補貼，還可以扣18萬嗎？",
+          "a": "可以，但要先把補貼扣掉。例如全年租金24萬元、領租金補貼4.8萬元，可扣金額是24萬減4.8萬＝19.2萬，再與上限18萬取低，所以扣18萬元。租金補貼本身不是所得，不用申報。另外租金補貼和房租扣除額可以同時申請，互不排斥。",
+          "source_url": "https://www.mof.gov.tw/singlehtml/384fb3077bb349ea973e7fc6f13b6974?cntId=68f012b9ab154e7a8c672cd6dca08ffd"
+        },
+        {
+          "q": "選標準扣除額就不能報房租了嗎？",
+          "a": "113年度起房租已從列舉扣除改為特別扣除額，和標準或列舉扣除額是分開的兩層。選標準扣除額13.1萬元（單身）之外，還可以再扣房租最高18萬元；選列舉扣除也一樣能再扣。112年度以前房租屬列舉扣除且上限12萬，才會與標準扣除額互斥。",
+          "source_url": "https://announce.ndhu.edu.tw/message_8/1777858456/114%E5%B9%B4%E5%BA%A6%E7%B6%9C%E5%90%88%E6%89%80%E5%BE%97%E7%A8%85%E7%B5%90%E7%AE%97%E7%94%B3%E5%A0%B1%E6%B3%95%E4%BB%A4%E4%BB%8B%E7%B4%B9.pdf"
+        }
+      ],
+      "pitfalls": [
+        "國稅局不會帶入房租資料，申報時不自己填就等於放棄，事後只能用更正申報補。",
+        "受扶養直系親屬（父母、祖父母、成年子女）名下有房屋，整個申報戶都會失去資格，報稅前要先確認每位被扶養人的房屋狀況。",
+        "排富看最終稅率，淨所得超過133萬元（114年度）就會整筆歸零；夫妻薪資分開計稅時，任一方稅率達20%也排富。",
+        "承租的房子若部分做工作室、網拍倉庫或登記公司，屬營業或執行業務使用，不能扣。",
+        "租約寫「承租人不得申報租金支出」這類條款，依內政部住宅租賃契約規範屬不得記載事項，但實務上仍常引發房東漲租糾紛，報稅前可先和房東溝通。"
+      ],
+      "related_calculator": "income-tax",
+      "official_url": "https://www.mof.gov.tw/singlehtml/384fb3077bb349ea973e7fc6f13b6974?cntId=68f012b9ab154e7a8c672cd6dca08ffd",
+      "sources": [
+        { "url": "https://www.mof.gov.tw/singlehtml/384fb3077bb349ea973e7fc6f13b6974?cntId=68f012b9ab154e7a8c672cd6dca08ffd", "title": "租屋族申報114年度房屋租金支出特別扣除額時，應注意適用要件及排富規定", "publisher": "財政部（臺北國稅局新聞稿，115-05-25）", "accessed": "2026-11-07" },
+        { "url": "https://announce.ndhu.edu.tw/message_8/1777858456/114%E5%B9%B4%E5%BA%A6%E7%B6%9C%E5%90%88%E6%89%80%E5%BE%97%E7%A8%85%E7%B5%90%E7%AE%97%E7%94%B3%E5%A0%B1%E6%B3%95%E4%BB%A4%E4%BB%8B%E7%B4%B9.pdf", "title": "綜合所得稅結算申報實務（房屋租金支出特別扣除額、5種視為非自有房屋例外與應檢附文件）", "publisher": "財政部北區國稅局花蓮分局", "accessed": "2026-11-07" },
+        { "url": "https://www.ntbt.gov.tw/singlehtml/9de2c2c966cb4fb48aca9dddf1fcae9c?cntId=4b2e55fe0b5142fbbb9a66ca63a78216", "title": "房屋租金支出變特別，租屋減稅更直接（不需設籍、不需房東同意）", "publisher": "財政部臺北國稅局", "accessed": "2026-11-07" },
+        { "url": "https://www.etax.nat.gov.tw/etwmain/tax-info/understanding/tax-saving-secret/ZJ1Zn0P", "title": "善用特別扣除額省稅又利己", "publisher": "財政部稅務入口網", "accessed": "2026-11-07" }
+      ],
+      "status_2026": "active",
+      "last_known_update": "2026-05-25",
+      "confidence": "high",
+      "unverified_fields": [
+        "「租約禁止承租人申報租金支出之條款無效」取自內政部住宅租賃定型化契約不得記載事項的一般認知，本次未直接讀取該公告原文"
+      ]
+    },
+    {
+      "id": "income-tax-refund-schedule-2026",
+      "name": "綜合所得稅退稅時程（114年度，115年退稅）",
+      "short_name": "綜所稅退稅",
+      "category": "tax",
+      "level": "central",
+      "city": null,
+      "agency": "財政部各地區國稅局",
+      "summary": "114年度綜所稅退稅分3批：第1批115年7月31日（6月1日前網路或手機申報、線上或電話語音確認稅額試算、5月11日前紙本回復戶籍地國稅局者）；第2批115年10月30日（人工或二維條碼申報、紙本試算回復較晚或寄非戶籍地國稅局者）；第3批116年1月20日（逾期申報、原繳稅或不繳不退後經核定退稅者）。有填帳號者直撥入帳，沒填者寄退稅憑單，第1批憑單兌領期間7月31日至9月30日。第1批共約365萬件、612億元，平均每戶約1.67萬元。",
+      "eligibility": [
+        "申報結果為退稅（扣繳稅額或可扣抵稅額大於應納稅額）的本國人申報戶。",
+        "第1批：6月1日前用網路（含手機）申報、線上或電話語音回復稅額試算、或5月11日前紙本回復至戶籍地國稅局。",
+        "第2批：6月1日前人工或二維條碼申報、5月11日前紙本回復至非戶籍地國稅局、5月12日後紙本回復。",
+        "第3批：逾期申報、或原申報為繳稅或不繳不退但國稅局核定為退稅。"
+      ],
+      "amount": {
+        "text": "依個人申報核定金額退還；第1批平均每戶約16,745元（365萬餘件、612億餘元）",
+        "min": null,
+        "max": null,
+        "unit": "元",
+        "formula": "退稅額 = 扣繳稅額 ＋ 可扣抵稅額 − 應納稅額（結果為正數時）"
+      },
+      "conditions": {
+        "min_age": null,
+        "max_age": null,
+        "income_limit_type": null,
+        "income_limit_value": null,
+        "income_limit_note": null,
+        "cities": null,
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "is_married": null,
+        "is_pregnant_or_newborn": null,
+        "is_student": null,
+        "is_employed": null,
+        "is_unemployed": null,
+        "has_labor_insurance": null,
+        "has_national_pension": null,
+        "is_disabled": null,
+        "is_elderly": null,
+        "low_income": null,
+        "no_home_ownership": null,
+        "must_rent": null,
+        "must_own_home": null,
+        "owns_vehicle": null,
+        "other": "想排第1批要在截止日前完成網路申報並填寫本人或配偶的金融機構／郵局帳號。外僑第1批直撥日為115年8月3日。"
+      },
+      "documents": [
+        "申報時填寫本人或配偶（同一申報戶）的金融機構或郵局存款帳號",
+        "收到退稅憑單者：憑單正本與身分證，到票面指定銀行兌領（未達5千元可領現金，其餘需票據交換）"
+      ],
+      "how_to_apply": [
+        "申報時選「直撥退稅」，填入本人或配偶帳號，退稅日當天自動入帳。",
+        "沒填帳號者，退稅日當天國稅局掛號寄出退稅憑單，收到後在兌領期間內到銀行兌領。",
+        "退稅日後可到電子申報繳稅服務網「退稅查詢」或向戶籍地國稅局查進度。",
+        "憑單遺失或逾期未兌領，向國稅局申請補發或改匯入帳戶。"
+      ],
+      "channels": [
+        { "type": "bank", "label": "直撥退稅：匯入申報時填寫的本人或配偶帳戶", "url": null },
+        { "type": "mail", "label": "退稅憑單：國稅局掛號寄送，持憑單至指定銀行兌領", "url": null },
+        { "type": "online", "label": "退稅進度查詢（電子申報繳稅服務網）", "url": "https://tax.nat.gov.tw/" }
+      ],
+      "deadline": {
+        "type": "fixed_annual",
+        "start_month": 7,
+        "start_day": 31,
+        "end_month": 1,
+        "end_day": 20,
+        "note": "每年固定三批：7月31日、10月31日前後（115年為10月30日）、隔年1月20日。第1批退稅憑單兌領期間7月31日至9月30日。要進第1批，必須在5月截止日前完成網路申報。"
+      },
+      "faqs": [
+        {
+          "q": "我5月用手機報稅，為什麼7月31日沒收到退稅？",
+          "a": "先查三件事：1.是否真的是退稅案件（有些人誤以為不繳不退也會退）；2.申報時填的帳號是否正確、是否本人或配偶帳戶，帳號錯誤會改寄憑單；3.是否被國稅局抽查，有疑義的案件會延後到第2或第3批。可到電子申報繳稅服務網「退稅查詢」或打0800-000-321查進度。",
+          "source_url": "https://www.etax.nat.gov.tw/etwmain/announcement/tax-assessment/native/every-year/Vj6m87j"
+        },
+        {
+          "q": "用紙本申報或二維條碼申報，退稅會比較慢嗎？",
+          "a": "會。人工填寫或二維條碼申報的退稅案件列第2批，115年10月30日才退，比網路申報的7月31日晚3個月。稅額試算紙本回復若寄到非戶籍地國稅局，或在5月12日以後才回復，也會落到第2批。想早點拿到錢，用網路或手機申報並填帳號。",
+          "source_url": "https://announce.ndhu.edu.tw/message_8/1777858456/114%E5%B9%B4%E5%BA%A6%E7%B6%9C%E5%90%88%E6%89%80%E5%BE%97%E7%A8%85%E7%B5%90%E7%AE%97%E7%94%B3%E5%A0%B1%E6%B3%95%E4%BB%A4%E4%BB%8B%E7%B4%B9.pdf"
+        },
+        {
+          "q": "收到退稅憑單要怎麼領？過期了怎麼辦？",
+          "a": "第1批退稅憑單兌領期間是115年7月31日到9月30日。金額未達5,000元可持憑單與身分證到票面指定銀行領現金，5,000元以上要存入自己的帳戶做票據交換。過了兌領期限，憑單不能直接領，要向戶籍地國稅局申請改以轉帳退稅或補發憑單。",
+          "source_url": "https://www.etax.nat.gov.tw/etwmain/announcement/tax-assessment/native/every-year/Vj6m87j"
+        },
+        {
+          "q": "逾期申報的退稅什麼時候會退？",
+          "a": "逾期申報案件一律列第3批，116年1月20日才退，比準時申報的第1批晚將近半年。原本申報是繳稅或不繳不退，後來國稅局核定改為退稅的案件，也在第3批退。逾期申報只要是退稅案件就沒有罰鍰，但沒有退稅利息。",
+          "source_url": "https://announce.ndhu.edu.tw/message_8/1777858456/114%E5%B9%B4%E5%BA%A6%E7%B6%9C%E5%90%88%E6%89%80%E5%BE%97%E7%A8%85%E7%B5%90%E7%AE%97%E7%94%B3%E5%A0%B1%E6%B3%95%E4%BB%A4%E4%BB%8B%E7%B4%B9.pdf"
+        }
+      ],
+      "pitfalls": [
+        "退稅帳號必須是本人或同一申報戶配偶的帳戶，填子女或父母帳號會匯款失敗改寄憑單。",
+        "國稅局不會用電子郵件、簡訊或電話要你到ATM「操作退稅」或點連結輸入卡號，這些都是詐騙。",
+        "退稅憑單用掛號寄送，無人收件會寄存郵局，放到逾期就要重新申請。",
+        "第1批入帳後若收到國稅局補正通知，代表案件被抽查，之後核定結果可能要補繳差額。"
+      ],
+      "related_calculator": "income-tax",
+      "official_url": "https://www.etax.nat.gov.tw/etwmain/announcement/tax-assessment/native/every-year/Vj6m87j",
+      "sources": [
+        { "url": "https://www.etax.nat.gov.tw/etwmain/announcement/tax-assessment/native/every-year/Vj6m87j", "title": "114年度第1批綜合所得稅結算申報（本國人）退稅公告（115.7.30）", "publisher": "財政部稅務入口網", "accessed": "2026-11-07" },
+        { "url": "https://announce.ndhu.edu.tw/message_8/1777858456/114%E5%B9%B4%E5%BA%A6%E7%B6%9C%E5%90%88%E6%89%80%E5%BE%97%E7%A8%85%E7%B5%90%E7%AE%97%E7%94%B3%E5%A0%B1%E6%B3%95%E4%BB%A4%E4%BB%8B%E7%B4%B9.pdf", "title": "綜合所得稅結算申報實務（退稅案件及時間三批說明）", "publisher": "財政部北區國稅局花蓮分局", "accessed": "2026-11-07" },
+        { "url": "https://www.mof.gov.tw/singlehtml/384fb3077bb349ea973e7fc6f13b6974?cntId=9fb131feb11e41e884e1ff274dfb9a76", "title": "114年度綜合所得稅第1批退稅將於7月31日入帳", "publisher": "財政部", "accessed": "2026-11-07" },
+        { "url": "https://udn.com/news/story/7243/9663388", "title": "綜所稅首批退稅入帳 總金額達610億元", "publisher": "聯合新聞網（引述國稅局統計）", "accessed": "2026-11-07" }
+      ],
+      "status_2026": "active",
+      "last_known_update": "2026-07-30",
+      "confidence": "high",
+      "unverified_fields": [
+        "第1批退稅件數與金額（約365萬件、612億元、平均16,745元）為媒體引述財政資訊中心數字，財政部新聞稿頁面讀取失敗未直接核對"
+      ]
+    },
+    {
+      "id": "vehicle-license-tax-april",
+      "name": "使用牌照稅（每年4月開徵）",
+      "short_name": "牌照稅",
+      "category": "tax",
+      "level": "central",
+      "city": null,
+      "agency": "各直轄市、縣市地方稅稽徵機關（稅務局／稅捐稽徵處）",
+      "summary": "自用汽機車（150cc以上機車）每年4月1日至4月30日繳一次全年牌照稅；營業用車分4月、10月兩期。115年繳納期限4月30日，5月1日至3日繳算逾期但不加滯納金。逾期每3日加徵1%滯納金，最高10%；超過30日移送強制執行。欠稅車輛以後被查到在公共道路行駛或停放，依使用牌照稅法第28條補稅並處應納稅額1倍以下罰鍰。可用金融機構、超商（3萬元以下）、ATM、信用卡、電子支付、掃QR Code繳納，郵局不代收。電動車免徵至119年12月31日。",
+      "eligibility": [
+        "車籍登記在台灣的汽車、150cc以上機車所有人（繳款書寄車籍地址）。",
+        "自用車每年4月一次繳全年；營業用車分上期（4月）與下期（10月）。",
+        "免稅：身心障礙者本人或同戶家屬1輛（排氣量2400cc以下全額免，超過部分課差額）、電動車至119年12月31日、150cc以下機車等。"
+      ],
+      "amount": {
+        "text": "依排氣量或馬力分級課徵，例如自用小客車1,201～1,800cc每年7,120元、1,801～2,400cc 11,230元（依使用牌照稅法稅額表）",
+        "min": null,
+        "max": null,
+        "unit": "元／年",
+        "formula": "依使用牌照稅法第6條稅額表，自用小客車按汽缸總排氣量級距定額課徵；電動車依馬力分級"
+      },
+      "conditions": {
+        "min_age": null,
+        "max_age": null,
+        "income_limit_type": null,
+        "income_limit_value": null,
+        "income_limit_note": null,
+        "cities": null,
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "is_married": null,
+        "is_pregnant_or_newborn": null,
+        "is_student": null,
+        "is_employed": null,
+        "is_unemployed": null,
+        "has_labor_insurance": null,
+        "has_national_pension": null,
+        "is_disabled": null,
+        "is_elderly": null,
+        "low_income": null,
+        "no_home_ownership": null,
+        "must_rent": null,
+        "must_own_home": null,
+        "owns_vehicle": "汽車或150cc以上機車",
+        "other": "以每年開徵日車籍登記所有人為納稅義務人；年中過戶或報廢按日比例計算。"
+      },
+      "documents": [
+        "繳款書（紙本或電子繳款書）；未收到可持車牌號碼＋身分證字號線上查繳或申請補發",
+        "身心障礙免稅申請：身心障礙證明、行照、身分證、戶口名簿（同戶家屬車輛）"
+      ],
+      "how_to_apply": [
+        "4月初收到繳款書後，在4月30日前擇一管道繳納。",
+        "沒收到繳款書：到地方稅網路申報作業網站用車牌號碼＋身分證字號查詢繳納，或向車籍地稅捐機關、監理站申請補發。",
+        "已約定帳戶轉帳者，在截止日前存足款項，扣款失敗視同未繳。",
+        "繳完保留收據或線上繳稅紀錄，以備路檢查驗。"
+      ],
+      "channels": [
+        { "type": "bank", "label": "代收稅款金融機構臨櫃（郵局不代收）", "url": null },
+        { "type": "other", "label": "四大便利商店（7-ELEVEN、全家、萊爾富、OK），限稅額3萬元以下", "url": null },
+        { "type": "online", "label": "地方稅網路申報作業（憑證、健保卡或車牌＋身分證字號查繳）", "url": "https://net.tax.nat.gov.tw/" },
+        { "type": "online", "label": "網路繳稅服務網 paytax.nat.gov.tw（信用卡、晶片金融卡、活期帳戶）", "url": "https://paytax.nat.gov.tw/" },
+        { "type": "app", "label": "行動支付／電子支付APP掃描繳款書QR Code（TWQR）", "url": null },
+        { "type": "other", "label": "ATM（具「跨行：提款＋轉帳＋繳稅」功能）", "url": null },
+        { "type": "phone", "label": "電話語音信用卡繳稅 412-1111 服務代碼 166#（手機加02）", "url": null }
+      ],
+      "deadline": {
+        "type": "fixed_annual",
+        "start_month": 4,
+        "start_day": 1,
+        "end_month": 4,
+        "end_day": 30,
+        "note": "自用車每年4月1日至4月30日。115年期限4月30日（星期四）未因5月1日勞動節順延，但5月1日至3日繳納屬逾期不加滯納金，5月4日起每3日加1%。營業用車下期10月1日至10月31日（115年順延至11月2日）。"
+      },
+      "faqs": [
+        {
+          "q": "4月30日忘了繳，5月初才繳會被罰嗎？",
+          "a": "滯納金是「每逾3日」加1%，所以超過期限3天內繳還不會加。115年4月30日到期，5月1日至3日繳算逾期但不加徵滯納金；5月4日起每3日加1%，最高加到10%（逾期30日）。超過30日仍未繳就移送行政執行分署強制執行，可能被扣薪或扣存款。",
+          "source_url": "https://www.etax.nat.gov.tw/etwmain/announcement/news/RObg7M2"
+        },
+        {
+          "q": "沒收到繳款書怎麼辦？可以不繳嗎？",
+          "a": "不行，沒收到繳款書不是免繳理由。到「地方稅網路申報作業」網站輸入車牌號碼加身分證字號就能查詢繳納，或用自然人憑證、健保卡登入；也可向車籍所在地稅捐機關或監理站申請補發。搬家後記得向監理站變更行照地址，繳款書才會寄到新家。",
+          "source_url": "https://www.etax.nat.gov.tw/etwmain/announcement/news/mbOVVB6"
+        },
+        {
+          "q": "車子很少開、放在車庫沒上路，也要繳牌照稅嗎？",
+          "a": "只要有牌照就要繳。若長期不用，可到監理站辦「停駛」繳回車牌，停駛期間免徵牌照稅與公路養管費；重新使用時再辦復駛。沒辦停駛卻欠稅，以後被查到在公共道路使用，依使用牌照稅法第28條除補稅外還會處應納稅額1倍以下罰鍰。",
+          "source_url": "https://www.etax.nat.gov.tw/etwmain/announcement/news/wp62kaA"
+        },
+        {
+          "q": "可以用超商或信用卡繳嗎？有手續費嗎？",
+          "a": "稅額3萬元以下可拿繳款書到7-ELEVEN、全家、萊爾富、OK繳，免手續費。信用卡可用電話語音或網路繳稅服務網授權，是否收手續費看發卡銀行，有些銀行推免手續費或分期專案。晶片金融卡、活期帳戶轉帳、電子支付掃QR Code都免手續費。郵局不代收牌照稅。",
+          "source_url": "https://www.etax.nat.gov.tw/etwmain/announcement/news/RObg7M2"
+        },
+        {
+          "q": "家裡有身心障礙者，牌照稅可以免嗎？",
+          "a": "身心障礙者本人或同一戶籍家屬名下1輛車可申請免稅，排氣量2,400cc以下全額免徵，超過部分課差額。要向車籍地稅捐機關提出申請，附身心障礙證明、行照、身分證與戶口名簿；開徵前申請核准當年就免。身心障礙者沒有駕照時，由同戶家屬的車申請也可以，但每位身心障礙者限1輛。",
+          "source_url": "https://www.etax.nat.gov.tw/etwmain/announcement/news/RObg7M2"
+        }
+      ],
+      "pitfalls": [
+        "繳款書寄車籍地址，搬家沒改行照地址就收不到；未收到繳款書仍要繳，逾期一樣加滯納金。",
+        "年中賣車或過戶，牌照稅按日比例分攤，買賣雙方要在契約寫清楚誰負擔。",
+        "約定帳戶轉帳扣款失敗（餘額不足）視同未繳，不會另外通知，要自己查繳稅紀錄。",
+        "逾期繳納後只能用新開立的繳款書到金融機構繳，無法再用超商或線上管道。",
+        "欠稅車輛被路檢查到，除補稅還會罰應納稅額1倍以下，且停駛報廢須先清稅。"
+      ],
+      "related_calculator": null,
+      "official_url": "https://www.etax.nat.gov.tw/etwmain/tax-info/understanding/tax-saving-manual/local/vehicle-license-tax",
+      "sources": [
+        { "url": "https://www.etax.nat.gov.tw/etwmain/announcement/news/RObg7M2", "title": "115年使用牌照稅開徵了！（繳納期限、5/1–5/3寬限、8種繳納管道）", "publisher": "基隆市稅務局／財政部稅務入口網", "accessed": "2026-11-07" },
+        { "url": "https://www.etax.nat.gov.tw/etwmain/announcement/news/mbOVVB6", "title": "營業車牌照稅繳納適逢假日順延至11月2日 多元繳稅管道超便捷（滯納金每逾3日1%最高10%）", "publisher": "花蓮縣地方稅務局／財政部稅務入口網", "accessed": "2026-11-07" },
+        { "url": "https://www.etax.nat.gov.tw/etwmain/announcement/news/wp62kaA", "title": "營業車車主請留意！115年下期使用牌照稅10月開徵（查獲使用公共道路處1倍以下罰鍰）", "publisher": "嘉義市政府財政稅務局／財政部稅務入口網", "accessed": "2026-11-07" },
+        { "url": "https://www.mof.gov.tw/singlehtml/384fb3077bb349ea973e7fc6f13b6974?cntId=a9cf8082e3f7457c978cc5603d298119", "title": "115年使用牌照稅繳納期限至4月30日", "publisher": "財政部賦稅署", "accessed": "2026-11-07" }
+      ],
+      "status_2026": "active",
+      "last_known_update": "2026-04-01",
+      "confidence": "medium",
+      "unverified_fields": [
+        "自用小客車各排氣量級距稅額（如1,201–1,800cc 7,120元、1,801–2,400cc 11,230元）與身心障礙免稅2,400cc上限：取自使用牌照稅法稅額表一般認知，本次未直接讀取法條原文",
+        "電動車免徵至119年12月31日：取自搜尋摘要，未讀取各縣市公告原文",
+        "電話語音繳稅號碼 412-1111 服務代碼 166#：未在本次讀取頁面確認"
+      ]
+    },
+    {
+      "id": "house-tax-may",
+      "name": "房屋稅（每年5月開徵）",
+      "short_name": "房屋稅",
+      "category": "tax",
+      "level": "central",
+      "city": null,
+      "agency": "各直轄市、縣市地方稅稽徵機關（稅務局／稅捐稽徵處）",
+      "summary": "房屋稅每年5月1日至5月31日繳納，課稅期間是前一年7月1日至當年6月30日。115年期因5月31日是星期日，截止日順延到6月1日；6月2日至4日繳屬逾期但不加滯納金，6月5日起每3日加1%，最高10%。房屋稅2.0（114年期起）：全國單一自住且房屋現值在各縣市公告金額以下者稅率1%，一般自住（本人、配偶、未成年子女全國3戶內）1.2%，非自住住家2.6%～4.8%按戶數累進。想適用自住稅率要在3月22日前辦妥戶籍登記並申請。超商可繳3萬元以下稅單，郵局不代收。",
+      "eligibility": [
+        "每年課稅期間（前一年7月1日至當年6月30日）房屋所有權人或使用權人。",
+        "1%全國單一自住：本人、配偶、未成年子女全國合計只有1戶，無出租或營業，本人、配偶或直系親屬實際居住並辦竣戶籍登記，且房屋現值在各縣市公告金額以下。",
+        "1.2%自住：本人、配偶、未成年子女全國合計3戶以內，無出租或營業，實際居住並辦竣戶籍登記。",
+        "非自住住家用2.6%～4.8%，按全國持有戶數差別稅率；出租申報所得達租金標準者1.5%～2.4%。"
+      ],
+      "amount": {
+        "text": "房屋稅 = 房屋評定現值 × 稅率。自住1.2%，全國單一自住1%（現值門檻各縣市不同，如新竹市115年期為185萬6,600元），非自住住家2.6%～4.8%",
+        "min": null,
+        "max": null,
+        "unit": "元／年",
+        "formula": "應納稅額 = 房屋評定現值 × 適用稅率（1% / 1.2% / 1.5%–2.4% / 2.6%–4.8% / 營業用3%–5%）"
+      },
+      "conditions": {
+        "min_age": null,
+        "max_age": null,
+        "income_limit_type": null,
+        "income_limit_value": null,
+        "income_limit_note": null,
+        "cities": null,
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "is_married": null,
+        "is_pregnant_or_newborn": null,
+        "is_student": null,
+        "is_employed": null,
+        "is_unemployed": null,
+        "has_labor_insurance": null,
+        "has_national_pension": null,
+        "is_disabled": null,
+        "is_elderly": null,
+        "low_income": null,
+        "no_home_ownership": null,
+        "must_rent": null,
+        "must_own_home": true,
+        "owns_vehicle": null,
+        "other": "以每年2月末日（納稅義務基準日）的房屋持有與戶籍狀況認定稅率；自住稅率申請期限為3月22日（115年因假日為3月23日）。"
+      },
+      "documents": [
+        "繳款書（紙本或電子）；未收到可用憑證或健保卡登入地方稅網路申報作業查繳",
+        "申請自住稅率：房屋稅自住申請書、戶籍資料（本人、配偶或直系親屬設籍該屋）、所有權人身分證"
+      ],
+      "how_to_apply": [
+        "5月初收到繳款書，在5月31日（115年為6月1日）前擇一管道繳納。",
+        "確認稅單上的稅率是否正確（自住1.2%或1%），若未設籍被按非自住課稅，先補辦戶籍並申請，核准後自下期適用。",
+        "新成屋或增改建完成30日內要向稅捐機關申報房屋現值與使用情形。",
+        "已約定帳戶轉帳者在截止日前存足款項。"
+      ],
+      "channels": [
+        { "type": "bank", "label": "代收稅款金融機構、農漁會信用部臨櫃（郵局不代收）", "url": null },
+        { "type": "other", "label": "四大便利商店，限單筆3萬元以下（115年至6月4日24時止）", "url": null },
+        { "type": "online", "label": "地方稅網路申報作業線上查繳（憑證、健保卡、TW FidO）", "url": "https://net.tax.nat.gov.tw/" },
+        { "type": "app", "label": "電子支付／行動支付APP掃繳款書QR Code，信用卡、晶片金融卡、活期帳戶轉帳", "url": "https://paytax.nat.gov.tw/" },
+        { "type": "other", "label": "ATM（具「跨行：提款＋轉帳＋繳稅」功能）", "url": null }
+      ],
+      "deadline": {
+        "type": "fixed_annual",
+        "start_month": 5,
+        "start_day": 1,
+        "end_month": 5,
+        "end_day": 31,
+        "note": "每年5月1日至5月31日，末日遇假日順延。115年期截止6月1日，6月2日至4日繳不加滯納金，6月5日起每3日加1%最高10%，逾30日移送強制執行。自住稅率申請與設籍期限為每年3月22日（115年為3月23日）。"
+      },
+      "faqs": [
+        {
+          "q": "我只有一間房自己住，為什麼稅單不是1%？",
+          "a": "1%有四個條件要同時成立：本人、配偶、未成年子女全國合計只有這1戶；無出租或營業；本人、配偶或直系親屬實際居住且在該屋辦竣戶籍登記；房屋現值在縣市公告金額以下（如新竹市115年期185萬6,600元）。最常見的落差是沒設戶籍，或房屋現值超過門檻只能用1.2%。沒設籍會被按非自住2.6%起課。",
+          "source_url": "https://www.etax.nat.gov.tw/etwmain/announcement/news/MVkepkV"
+        },
+        {
+          "q": "6月1日忘了繳，什麼時候開始加滯納金？",
+          "a": "滯納金是「每逾3日」加1%。115年期截止6月1日，6月2日至4日繳不加徵；6月5日至7日加1%，之後每3日多1%，最多加到10%（逾期30日，即7月1日之後）。超過30日仍未繳，稅捐機關移送行政執行分署強制執行。逾期後超商與線上管道停收，要拿新單到金融機構繳。",
+          "source_url": "https://www.etax.nat.gov.tw/etwmain/announcement/news/jK0VrWQ"
+        },
+        {
+          "q": "房子剛買或剛過戶，房屋稅誰繳？",
+          "a": "房屋稅以每年2月末日的所有權人為納稅義務人，課稅期間是前一年7月1日到當年6月30日。例如115年3月買的房子，115年5月的稅單仍寄給前屋主，由買賣契約約定如何分攤（通常以交屋日按日比例計算）。買房後記得在3月22日前辦妥戶籍並申請自住稅率，否則下期會按非自住課。",
+          "source_url": "https://www.etax.nat.gov.tw/etwmain/announcement/news/MVkepkV"
+        },
+        {
+          "q": "新成屋第一張房屋稅單為什麼金額特別高？",
+          "a": "114年3月1日至6月30日間新建、增建或改建完成的房屋，該段期間的房屋稅併入115年期課徵，所以第一張稅單可能涵蓋最長16個月。這不是算錯，隔年起恢復12個月。新成屋要在完工30日內申報房屋現值與使用情形，並辦戶籍申請自住稅率。",
+          "source_url": "https://udn.com/news/story/7243/9457989"
+        },
+        {
+          "q": "繳款書寄存郵局沒去領，算沒送達嗎？",
+          "a": "不算。繳款書掛號無人簽收寄存郵局時，寄存當日就視為合法送達，不論有沒有去領，期限照算、逾期照加滯納金。郵局會在門口或信箱留招領通知，要在保管期內領取。若常不在家，可向稅捐機關申請改寄電子繳款書或變更送達地址。",
+          "source_url": "https://www.etax.nat.gov.tw/etwmain/announcement/news/lgzO353"
+        }
+      ],
+      "pitfalls": [
+        "自住稅率申請與設籍期限是3月22日，過了只能等下一期；沒設籍的自住屋會按非自住2.6%～4.8%課，差距一倍以上。",
+        "全國單一自住1%的房屋現值門檻各縣市不同，同一條件在台北市和新竹市結果可能不一樣，要看所在縣市公告。",
+        "把房子部分出租或登記公司行號，整戶或該部分會改按出租或營業用稅率。",
+        "約定轉帳扣款失敗視同未繳，不會另外通知。",
+        "繳款書寄存郵局即視為送達，沒領到也不能當作沒收到。"
+      ],
+      "related_calculator": null,
+      "official_url": "https://www.mof.gov.tw/multiplehtml/f48f5ee3f0e74cf3ac1be77f5b1aefbd",
+      "sources": [
+        { "url": "https://www.etax.nat.gov.tw/etwmain/announcement/news/MVkepkV", "title": "竹市115年期房屋稅全國單一自住房屋現值基準185萬6,600元 逾6.5萬戶享1%優惠稅率", "publisher": "新竹市稅務局／財政部稅務入口網", "accessed": "2026-11-07" },
+        { "url": "https://www.etax.nat.gov.tw/etwmain/announcement/news/jK0VrWQ", "title": "您的房屋稅繳了嗎?提醒您，逾期繳納會被加徵滯納金喔!（115年期6月1日截止、6月5日起加徵）", "publisher": "嘉義縣財政稅務局／財政部稅務入口網", "accessed": "2026-11-07" },
+        { "url": "https://www.etax.nat.gov.tw/etwmain/announcement/news/lgzO353", "title": "繳款書寄存郵局為合法送達，請儘速領取繳納", "publisher": "宜蘭縣政府財政稅務局／財政部稅務入口網", "accessed": "2026-11-07" },
+        { "url": "https://udn.com/news/story/7243/9457989", "title": "全國單一自住逾318萬件 房屋稅5月1日開徵", "publisher": "聯合新聞網（引述財政部）", "accessed": "2026-11-07" }
+      ],
+      "status_2026": "active",
+      "last_known_update": "2026-06-03",
+      "confidence": "medium",
+      "unverified_fields": [
+        "非自住住家用稅率2.6%～4.8%、出租1.5%～2.4%、營業用3%～5%的級距：取自房屋稅條例一般說明，本次未直接讀取法條原文",
+        "全國115年期開徵件數974.57萬件、稅額1,037.12億元：媒體引述，未核對財政部新聞稿原文",
+        "納稅義務基準日2月末日：取自房屋稅條例一般認知，未在本次讀取頁面確認"
+      ]
+    },
+    {
+      "id": "land-value-tax-november",
+      "name": "地價稅（每年11月開徵）",
+      "short_name": "地價稅",
+      "category": "tax",
+      "level": "central",
+      "city": null,
+      "agency": "各直轄市、縣市地方稅稽徵機關（稅務局／稅捐稽徵處）",
+      "summary": "地價稅每年11月1日至11月30日繳納，課稅期間為當年1月1日至12月31日，以8月31日地政登記的土地所有權人為納稅義務人。115年截止日11月30日是星期一，不順延。逾期每3日加徵1%滯納金，最高10%，超過30日移送強制執行。自用住宅用地稅率2‰，一般用地10‰～55‰累進，差距至少4倍；要適用2‰必須在開徵40日前（9月22日）提出申請，逾期申請隔年才生效。應納稅額100元以下免徵。超商可繳3萬元以下稅單，郵局不代收。",
+      "eligibility": [
+        "每年8月31日在地政機關登記為土地所有權人、典權人或管理人者。",
+        "自用住宅用地2‰：土地所有權人、配偶或直系親屬在該地辦竣戶籍登記，無出租或營業，都市土地300平方公尺（約90.75坪）、非都市土地700平方公尺以內，本人、配偶、未成年子女全國以1處為限。",
+        "一般用地按累進起點地價分級10‰、15‰、25‰、35‰、45‰、55‰。"
+      ],
+      "amount": {
+        "text": "地價稅 = 課稅地價 × 稅率。自用住宅用地2‰，一般用地10‰～55‰累進；應納稅額100元以下免徵",
+        "min": null,
+        "max": null,
+        "unit": "元／年",
+        "formula": "應納稅額 = 申報地價 × 面積 × 稅率（自用2‰／一般10‰起累進）"
+      },
+      "conditions": {
+        "min_age": null,
+        "max_age": null,
+        "income_limit_type": null,
+        "income_limit_value": null,
+        "income_limit_note": null,
+        "cities": null,
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "is_married": null,
+        "is_pregnant_or_newborn": null,
+        "is_student": null,
+        "is_employed": null,
+        "is_unemployed": null,
+        "has_labor_insurance": null,
+        "has_national_pension": null,
+        "is_disabled": null,
+        "is_elderly": null,
+        "low_income": null,
+        "no_home_ownership": null,
+        "must_rent": null,
+        "must_own_home": true,
+        "owns_vehicle": null,
+        "other": "以8月31日為納稅義務基準日；自用住宅優惠稅率申請期限為開徵40日前（9月22日）。"
+      },
+      "documents": [
+        "繳款書（紙本或電子）；未收到可線上查繳或申請補發",
+        "申請自用住宅用地稅率：申請書、土地所有權人身分證、戶口名簿或戶籍謄本（設籍證明）、建物所有權狀或使用執照（證明地上建物為住宅）"
+      ],
+      "how_to_apply": [
+        "10月下旬收到繳款書（115年自10月19日至22日起陸續寄發），在11月30日前擇一管道繳納。",
+        "核對稅單上的稅率欄：自用住宅應為2‰，若顯示一般用地10‰以上，確認是否未申請或戶籍已遷出。",
+        "要改適用自用住宅稅率，在9月22日前向土地所在地稅捐機關申請，可透過地方稅網路申報作業線上辦理；核准後往後年度免再申請，直到用途或戶籍變動。",
+        "已約定帳戶轉帳者在11月30日前存足款項，12月1日扣款。"
+      ],
+      "channels": [
+        { "type": "bank", "label": "代收稅款金融機構臨櫃（郵局不代收）", "url": null },
+        { "type": "other", "label": "四大便利商店，限3萬元以下（部分縣市開放至12月3日24時）", "url": null },
+        { "type": "online", "label": "地方稅網路申報作業線上查繳、申請自用住宅稅率", "url": "https://net.tax.nat.gov.tw/" },
+        { "type": "app", "label": "電子支付／行動支付APP掃繳款書QR Code，信用卡、晶片金融卡、活期帳戶轉帳", "url": "https://paytax.nat.gov.tw/" },
+        { "type": "other", "label": "ATM（具「跨行：提款＋轉帳＋繳稅」功能）", "url": null },
+        { "type": "phone", "label": "各縣市稅務局免付費專線 0800-000-321 查詢或補單", "url": null }
+      ],
+      "deadline": {
+        "type": "fixed_annual",
+        "start_month": 11,
+        "start_day": 1,
+        "end_month": 11,
+        "end_day": 30,
+        "note": "每年11月1日至11月30日，末日遇假日順延（114年曾順延至12月1日；115年11月30日為星期一不順延）。逾期每3日加1%滯納金最高10%，逾30日移送強制執行。自用住宅2‰申請期限為每年9月22日。"
+      },
+      "faqs": [
+        {
+          "q": "自己住的房子地價稅為什麼是一般稅率？怎麼改？",
+          "a": "自用住宅用地2‰不是自動套用，要向土地所在地稅捐機關申請一次，之後才會延用。條件：本人、配偶或直系親屬在該地址設戶籍、無出租或營業、都市土地300平方公尺以內，全國限1處。申請期限是開徵40日前（9月22日），過了就等隔年。買房後、戶籍遷入後都要重新申請，前屋主的核准不會跟著房子走。",
+          "source_url": "https://www.etax.nat.gov.tw/etwmain/announcement/news/OMoYQ2E"
+        },
+        {
+          "q": "11月30日忘了繳，什麼時候開始加滯納金？會怎樣？",
+          "a": "每逾3日加徵滯納金1%，所以12月1日至3日繳不加；12月4日起每3日加1%，最高加到10%（逾期30日）。超過30日仍未繳，移送行政執行分署強制執行，可能扣押存款或薪資。逾期後超商停收（部分縣市3萬元以下開放到12月3日），要拿新繳款書到金融機構繳。",
+          "source_url": "https://www.etax.nat.gov.tw/etwmain/announcement/news/EVP5Zml"
+        },
+        {
+          "q": "今年9月才買的土地，地價稅誰繳？",
+          "a": "地價稅以每年8月31日地政機關登記的所有權人為納稅義務人，課稅期間是整年1月1日到12月31日。9月以後才過戶的土地，當年11月稅單仍寄給前所有權人，由買賣契約約定如何分攤。新所有權人要在隔年9月22日前申請自用住宅稅率，否則隔年按一般用地課。",
+          "source_url": "https://www.etax.nat.gov.tw/etwmain/announcement/news/Ye29mN6"
+        },
+        {
+          "q": "沒收到地價稅單是不是代表不用繳？",
+          "a": "有兩種可能：應納稅額100元以下免徵，不會寄單；或繳款書寄丟、寄到舊地址。先到地方稅網路申報作業用憑證或健保卡查詢，或打所在縣市稅務局免付費電話查，確認有稅額就申請補發。沒收到稅單不是免繳理由，逾期一樣加滯納金。",
+          "source_url": "https://www.etax.nat.gov.tw/etwmain/announcement/news/Ye29mN6"
+        }
+      ],
+      "pitfalls": [
+        "自用住宅2‰要在9月22日前申請，逾期申請隔年才適用，當年只能繳一般稅率，差距至少4倍。",
+        "戶籍遷出（例如小孩搬走、父母過世後除籍）會讓自用住宅資格消失，稅捐機關查到會改課一般用地稅率，要主動確認戶籍狀況。",
+        "本人、配偶、未成年子女全國只能1處自用住宅用地，第2間房即使自住也只能按一般用地課。",
+        "繳款書11月初寄出，掛號寄存郵局即視為送達，沒領也算期限起算。",
+        "約定轉帳在12月1日扣款，11月30日帳戶餘額不足就視同未繳。"
+      ],
+      "related_calculator": null,
+      "official_url": "https://www.etax.nat.gov.tw/etwmain/tax-info/understanding/tax-saving-manual/local/land-value-tax",
+      "sources": [
+        { "url": "https://www.etax.nat.gov.tw/etwmain/announcement/news/Ye29mN6", "title": "提醒您! 115年地價稅於11月開徵 請多加利用e化繳稅管道繳納（11月30日截止、100元以下免徵、超商至12月3日）", "publisher": "嘉義市政府財政稅務局／財政部稅務入口網", "accessed": "2026-11-07" },
+        { "url": "https://www.etax.nat.gov.tw/etwmain/announcement/news/EVP5Zml", "title": "115年地價稅將於11月開徵囉!（繳納期間、滯納金每逾3日1%最高10%、繳納管道）", "publisher": "屏東縣政府財稅局／財政部稅務入口網", "accessed": "2026-11-07" },
+        { "url": "https://www.etax.nat.gov.tw/etwmain/announcement/news/OMoYQ2E", "title": "地價稅自用住宅優惠稅率及減免申請期限至9月22日（2‰與一般用地10‰–55‰）", "publisher": "臺北市稅捐稽徵處／財政部稅務入口網", "accessed": "2026-11-07" },
+        { "url": "https://www.etax.nat.gov.tw/etwmain/announcement/news/la0A3lA", "title": "地價稅節稅紅利倒數計時，錯過9月22日稅負差4倍!", "publisher": "新竹縣政府稅務局／財政部稅務入口網", "accessed": "2026-11-07" }
+      ],
+      "status_2026": "active",
+      "last_known_update": "2026-11-03",
+      "confidence": "high",
+      "unverified_fields": [
+        "自用住宅用地面積上限（都市300平方公尺、非都市700平方公尺）與8月31日納稅義務基準日：取自搜尋摘要引述台中市、嘉義市稅務局說明，未直接讀取該頁原文"
+      ]
+    },
+    {
+      "id": "road-maintenance-fee-july",
+      "name": "公路使用養護安全管理費（原汽車燃料使用費，每年7月開徵）",
+      "short_name": "汽燃費（公路養管費）",
+      "category": "tax",
+      "level": "central",
+      "city": null,
+      "agency": "交通部公路局及各區監理所（站）",
+      "summary": "汽車燃料使用費自115年起更名為「公路使用養護安全管理費」（簡稱公路養管費），徵收對象、費率、期間都不變。自用汽車與機車每年7月1日至7月31日繳一次全年費用，營業車分季（3、6、9、12月）繳。自用汽油車年費額 = 每公升2.5元 × 每月耗油量 × 12，例如1,201～1,800cc汽油小客車4,800元。逾期未繳，欠繳累計達900元以上依公路法第75條處300元至3,000元罰鍰（汽車依欠繳金額與逾期月數分級，機車300元或600元），並停止辦理車輛異動或換發牌照，罰鍰不繳移送強制執行。可用監理服務網、監理服務APP、金融機構、郵局、超商、監理所繳納。電動車目前免徵。",
+      "eligibility": [
+        "車籍登記在台灣、有牌照的自用汽車與機車所有人（電動車現階段免徵）。",
+        "自用車每年7月一次繳全年（1月1日至12月31日）；營業車每季開徵。",
+        "辦理停駛或報廢登記的車輛停徵；年中新領牌或過戶按月比例計算。"
+      ],
+      "amount": {
+        "text": "依排氣量與燃料別定額，自用汽油小客車1,201～1,800cc每年4,800元、1,801～2,400cc 6,180元；機車依排氣量另訂（如150cc以下每年約600元、151～250cc 900元）。更名後費額不變",
+        "min": null,
+        "max": null,
+        "unit": "元／年",
+        "formula": "汽油車年費額 = 2.5元／公升 × 每月耗油量（公升，依排氣量級距認定）× 12個月"
+      },
+      "conditions": {
+        "min_age": null,
+        "max_age": null,
+        "income_limit_type": null,
+        "income_limit_value": null,
+        "income_limit_note": null,
+        "cities": null,
+        "has_children": null,
+        "child_age_min": null,
+        "child_age_max": null,
+        "is_married": null,
+        "is_pregnant_or_newborn": null,
+        "is_student": null,
+        "is_employed": null,
+        "is_unemployed": null,
+        "has_labor_insurance": null,
+        "has_national_pension": null,
+        "is_disabled": null,
+        "is_elderly": null,
+        "low_income": null,
+        "no_home_ownership": null,
+        "must_rent": null,
+        "must_own_home": null,
+        "owns_vehicle": "汽車或機車（電動車免徵）",
+        "other": "依公路法第27條徵收，為規費而非稅捐，逾期罰則依公路法第75條而非稅捐稽徵法，沒有「每3日1%滯納金」的算法。"
+      },
+      "documents": [
+        "繳納通知書（紙本或電子）；未收到可用車牌號碼與身分證字號到監理服務網查繳或申請補發",
+        "辦理停駛／報廢：車牌、行照、車主身分證明文件"
+      ],
+      "how_to_apply": [
+        "6月底、7月初收到繳納通知書，7月31日前擇一管道繳納。",
+        "沒收到通知：登入監理服務網或監理服務APP，輸入車牌與身分證字號查詢繳費，或向監理所申請補發。",
+        "逾期未繳者，監理所約10月寄出補繳通知並訂補繳期限，期限內繳納可避免罰鍰與強制執行。",
+        "車輛長期不用，到監理所辦停駛繳回車牌，停駛期間免徵。"
+      ],
+      "channels": [
+        { "type": "online", "label": "監理服務網（信用卡、活期帳戶、LINE Pay等）", "url": "https://www.mvdis.gov.tw/" },
+        { "type": "app", "label": "監理服務APP查詢及繳費", "url": "https://www.mvdis.gov.tw/" },
+        { "type": "bank", "label": "金融機構、郵局臨櫃（公路養管費郵局可代收，與稅捐不同）", "url": null },
+        { "type": "other", "label": "四大便利商店（持通知書條碼）", "url": null },
+        { "type": "office", "label": "各區監理所（站）臨櫃", "url": "https://www.thb.gov.tw/" }
+      ],
+      "deadline": {
+        "type": "fixed_annual",
+        "start_month": 7,
+        "start_day": 1,
+        "end_month": 7,
+        "end_day": 31,
+        "note": "自用汽機車每年7月1日至7月31日；營業車每季3、6、9、12月初開徵。115年期限7月31日（星期五）。逾期未繳約10月寄補繳通知，115年部分監理所補繳期限為10月31日；仍未繳者處300元至3,000元罰鍰並移送強制執行。114年底公路法修正更名，115年7月首次以新名稱開徵。"
+      },
+      "faqs": [
+        {
+          "q": "今年收到的通知書寫「公路使用養護安全管理費」，是新的費用嗎？要多繳一筆？",
+          "a": "不是新費用，就是以前的汽燃費改名。總統114年12月19日公布修正公路法第27條，115年起繳費通知採新名稱，簡稱公路養管費。交通部與公路局說明徵收對象、費率、開徵期間、繳費方式全部不變，繳一次就好。收到簡訊要確認發送號碼是監理機關短碼「111」、網址是 mvdis.gov.tw，其他連結可能是詐騙。",
+          "source_url": "https://www.ettoday.net/news/20260521/3169618.htm"
+        },
+        {
+          "q": "7月31日忘了繳會罰多少？",
+          "a": "罰則依公路法第75條：欠繳金額累計達900元以上，處300元至3,000元罰鍰。汽車依欠繳金額與逾期月數分級，欠繳900元以上未滿6,000元：逾期未滿1個月罰300元，之後每月遞增，逾期4個月以上1,800元；欠繳6,000元以上：未滿1個月500元，4個月以上3,000元。機車欠繳900元以上未滿1,800元罰300元，1,800元以上罰600元。罰鍰不繳移送強制執行，期間不能辦過戶、換牌等異動。",
+          "source_url": "https://mvdis.gov.tw/webMvdisLaw/LawArticle.aspx?KWD1=&LawID=F0010003"
+        },
+        {
+          "q": "機車也要繳嗎？金額多少？",
+          "a": "有牌照的燃油機車都要繳，每年7月與汽車同期開徵，依排氣量定額（150cc以下與151～250cc金額不同，詳見監理服務網費額表）。電動機車目前免徵。逾期罰鍰機車較低：欠繳累計900元以上未滿1,800元罰300元，1,800元以上罰600元。因為機車年費額低，可能要欠兩年以上才達900元門檻開罰，但欠費期間不能辦過戶、報廢或換牌。",
+          "source_url": "https://www.thb.gov.tw/cp.aspx?n=39"
+        },
+        {
+          "q": "車子很久沒騎、放著生灰，可以不繳嗎？",
+          "a": "只要牌照還在就要繳，不管有沒有上路。長期不用請帶車牌、行照、身分證到監理所辦「停駛」，停駛期間免徵公路養管費與牌照稅；車子不堪使用則辦「報廢」。沒辦停駛就一直欠費，累積到900元以上開罰，且車子不能過戶或報廢，要先清償。",
+          "source_url": "https://www.thb.gov.tw/News_Toggle.aspx?n=513&sms=13070&s=1687&page=1&PageSize=10"
+        },
+        {
+          "q": "可以分期繳嗎？經濟困難怎麼辦？",
+          "a": "公路養管費本身沒有分期規定。只有已經移送行政執行分署強制執行後，義務人因經濟狀況或天災、事變受重大財產損失無法一次繳納，才能向行政執行分署申請分期。尚未移送前只能一次繳清。若金額負擔大，可考慮先辦停駛減少之後的費用累積。",
+          "source_url": "https://www.thb.gov.tw/News_Toggle.aspx?n=513&sms=13070&s=1687&page=1&PageSize=10"
+        }
+      ],
+      "pitfalls": [
+        "名稱改了但繳費義務沒變，看到「公路使用養護安全管理費」別以為是詐騙而不繳，但也要確認簡訊來自「111」、網址是 mvdis.gov.tw。",
+        "沒收到通知書不是免繳理由，搬家要到監理所變更行照地址。",
+        "欠費期間不能辦過戶、報廢、換牌、換行照等任何車籍異動，賣車前要先繳清。",
+        "罰鍰依逾期月數遞增，拖越久罰越多，收到10月補繳通知就趕快繳。",
+        "公路養管費是規費不是稅，不能列舉扣除綜所稅，也不適用稅捐的滯納金計算方式。"
+      ],
+      "related_calculator": "fuel-cost",
+      "official_url": "https://www.thb.gov.tw/cp.aspx?n=39",
+      "sources": [
+        { "url": "https://www.thb.gov.tw/News_Content_Table.aspx?n=7839&sms=13275&s=300244", "title": "115年自用汽、機車公路養管費 7月開徵囉!", "publisher": "交通部公路局", "accessed": "2026-11-07" },
+        { "url": "https://www.thb.gov.tw/cp.aspx?n=39", "title": "公路養管費逾期罰鍰", "publisher": "交通部公路局", "accessed": "2026-11-07" },
+        { "url": "https://mvdis.gov.tw/webMvdisLaw/LawArticle.aspx?KWD1=&LawID=F0010003", "title": "公路法第七十五條規定逾期不繳納公路使用養護安全管理費罰鍰基準", "publisher": "電子公路監理網法規檢索系統", "accessed": "2026-11-07" },
+        { "url": "https://www.thb.gov.tw/News_Toggle.aspx?n=513&sms=13070&s=1687&page=1&PageSize=10", "title": "公路使用養護安全管理費逾期未繳納如何處罰？（常見問答）", "publisher": "交通部公路局", "accessed": "2026-11-07" },
+        { "url": "https://www.ettoday.net/news/20260521/3169618.htm", "title": "汽燃費改稱「公路使用養管費」 交通部：收費標準不變", "publisher": "ETtoday（引述交通部、公路局）", "accessed": "2026-11-07" }
+      ],
+      "status_2026": "active",
+      "last_known_update": "2026-07-01",
+      "confidence": "medium",
+      "unverified_fields": [
+        "各排氣量費額（1,201–1,800cc 4,800元、1,801–2,400cc 6,180元、機車600元／900元）：公路局網站受防護機制阻擋無法直接讀取，數字取自媒體整理的歷年費額表，公路局僅確認更名後費率不變",
+        "罰鍰基準分級（汽車300–1,800元、500–3,000元；機車300元、600元）：監理法規頁面回傳503，取自搜尋結果摘要，未直接讀取法規原文",
+        "115年補繳期限10月31日：取自高雄市區監理所新聞摘要，各監理所可能不同"
+      ]
+    }
+  ],
+  "general_faqs": [
+    {
+      "q": "一年當中有哪些固定要繳的稅和費？什麼時候？",
+      "a": "個人常見四筆加一筆：4月牌照稅（4/1–4/30，自用車）、5月綜合所得稅申報與房屋稅（5/1–5/31，遇假日順延，115年都到6/1）、7月公路養管費即原汽燃費（7/1–7/31）、11月地價稅（11/1–11/30）。營業用車牌照稅另有10月下期。地方稅逾期都是每3日加1%滯納金最高10%，養管費則是300～3,000元罰鍰。",
+      "source_url": "https://www.etax.nat.gov.tw/",
+      "tags": ["時程", "提醒", "繳稅"]
+    },
+    {
+      "q": "各種稅單都可以去超商繳嗎？郵局可以嗎？",
+      "a": "牌照稅、房屋稅、地價稅、綜所稅自繳稅款：單筆3萬元以下可到7-ELEVEN、全家、萊爾富、OK繳，超過3萬要到代收稅款金融機構，郵局一律不代收稅款。公路養管費（汽燃費）是規費不是稅，金融機構、郵局、超商、監理所都可以繳。所有項目都能用信用卡、活期帳戶、電子支付掃QR Code線上繳，只有信用卡可能依銀行收手續費。",
+      "source_url": "https://www.etax.nat.gov.tw/etwmain/tax-info/understanding/tax-q-and-a/national/individual-income-tax/file-procedure/JrMbJkr",
+      "tags": ["繳稅方式", "超商", "郵局"]
+    },
+    {
+      "q": "逾期繳稅的滯納金到底怎麼算？",
+      "a": "綜所稅、牌照稅、房屋稅、地價稅都依稅捐稽徵法：截止日後每超過3日加徵應納稅額1%，最多加到10%，也就是逾期30日。超過30日仍未繳，移送行政執行分署強制執行，可能扣押存款、薪資或車輛。綜所稅另從滯納期滿次日起按郵局1年期定儲利率按日加計利息。逾期後超商、ATM、線上管道停收，要拿補發繳款書到金融機構繳。",
+      "source_url": "https://www.etax.nat.gov.tw/etwmain/tax-info/understanding/tax-saving-manual/national/individual-income-tax/19JjoeY",
+      "tags": ["滯納金", "逾期", "強制執行"]
+    },
+    {
+      "q": "沒收到稅單是不是就不用繳？",
+      "a": "不是。稅單寄車籍地或戶籍地，搬家沒改地址、掛號寄存郵局沒領（寄存日即視為合法送達），期限照算、逾期照加滯納金。可用自然人憑證、健保卡登入「地方稅網路申報作業」查繳牌照稅、房屋稅、地價稅；公路養管費到監理服務網查；或打各縣市稅務局免付費電話0800-000-321申請補發。地價稅100元以下免徵才不會寄單。",
+      "source_url": "https://www.etax.nat.gov.tw/etwmain/announcement/news/lgzO353",
+      "tags": ["稅單", "補發", "送達"]
+    },
+    {
+      "q": "明年（116年5月）報稅的數字會變嗎？",
+      "a": "會。財政部114年11月27日公告115年度（116年5月申報）綜所稅：免稅額每人9.7萬調為10.1萬元，70歲以上15.15萬元；標準扣除額單身13.6萬、夫妻27.2萬元；薪資所得與身心障礙特別扣除額22.7萬元；級距改為61萬／138萬／277萬／519萬元。幼兒學前、長照、房租、基本生活費是否調整，以財政部115年底公告為準。",
+      "source_url": "https://www.dot.gov.tw/multiplehtml/06afbfc0e60e4ccb88f3f7f956aaacc7",
+      "tags": ["2027", "免稅額", "級距"]
+    }
+  ],
+  "notes": "資料基準日 2026-11-07。綜所稅主體數字（114年度免稅額、標準扣除額、特別扣除額、基本生活費、五級級距、申報期間 115/5/1–6/1、三批退稅日期）全部取自財政部北區國稅局花蓮分局 115.4.21 簡報 PDF 與財政部稅務入口網頁面，屬官方一手資料，confidence high。115年度（116年5月申報）新數字來自財政部賦稅署公告列表標題與中央社、TVBS 轉述，未取得公報原文，列為 unverified。四個地方稅／規費提醒 item 的期間與滯納金規則來自稅務入口網各縣市稅務局新聞稿；公路局（thb.gov.tw）與監理法規網站受 Incapsula 防護及 503 阻擋，無法直接讀取費額表與罰鍰基準原文，相關數字取自搜尋摘要與媒體整理，confidence medium 並列入 unverified_fields。重要變動：汽燃費自 114.12.19 公路法第27條修正後更名為「公路使用養護安全管理費」，115年7月首次以新名稱開徵，費率不變。115年房屋稅與綜所稅截止日因 5/31 為星期日順延至 6/1；牌照稅 4/30 未順延但 5/1–5/3 繳不加滯納金；地價稅 11/30 為星期一不順延。2027 年（116年）申報 115 年度所得適用調高後的免稅額與級距，已寫在 deadline.note 與 general_faqs。"
+}

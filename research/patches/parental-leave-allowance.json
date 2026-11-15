@@ -1,0 +1,60 @@
+{
+  "id": "parental-leave-allowance",
+  "verdict": "confirmed",
+  "verified_at": "2026-11-14",
+  "checked": [
+    {
+      "field": "amount.text",
+      "value_in_data": "育嬰留停當月起前6個月平均月投保薪資 × 60%（津貼）＋ 20%（政府薪資補助）＝ 80%，每月發給，每一子女每人最長6個月；父母合計最多12個月；115年起未滿1個月者按日比例計算（30日為一個月）",
+      "official_value": "按被保險人育嬰留職停薪之當月起前6個月平均月投保薪資60%計算…按月發給津貼，每一子女合計最長發給6個月。（110年7月1日起政府加發20%育嬰留職停薪薪資補助，與育嬰留職停薪津貼合併發給）；同一名子女父母可分別請領6個月津貼，合計最多可請領12個月；未滿1個月者，以30日為1個月，按比例計算發給（頁面最後更新 2026-10-27）",
+      "match": true,
+      "source_url": "https://www.bli.gov.tw/0020785.html"
+    },
+    {
+      "field": "amount.formula",
+      "value_in_data": "平均月投保薪資 × 0.8 × 月數（最長6）；不足月按 日數/30 比例",
+      "official_value": "例：平均月投保薪資36,300元，每期可領29,040元（即80%）；4月5日至4月20日計16日，29,040元×16/30個月＝15,488元",
+      "match": true,
+      "source_url": "https://www.bli.gov.tw/0020785.html"
+    },
+    {
+      "field": "amount.min / amount.max",
+      "value_in_data": "null / null",
+      "official_value": "官方頁面只列比例（60%＋20%），沒有固定金額上下限",
+      "match": true,
+      "source_url": "https://www.bli.gov.tw/0020785.html"
+    },
+    {
+      "field": "deadline.note",
+      "value_in_data": "子女滿3歲前須辦妥留停；津貼請求權依就業保險法第24條自得請領之日起2年內，逾期消滅。留停開始後儘快申請，勞保局按月於期初發給。",
+      "official_value": "就業保險法第24條：領取保險給付之請求權，自得請領之日起，因二年間不行使而消滅。勞保局FAQ：自育嬰留職停薪之日起至期滿之日止，按月於期初發給。",
+      "match": true,
+      "source_url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=N0050021&flno=24"
+    },
+    {
+      "field": "deadline.type",
+      "value_in_data": "event_based（無固定月日）",
+      "official_value": "官方頁面沒有固定申請月日，依留停事實發生後申請",
+      "match": true,
+      "source_url": "https://www.bli.gov.tw/0020785.html"
+    },
+    {
+      "field": "status_2026",
+      "value_in_data": "active",
+      "official_value": "勞保局FAQ於 2026-10-27 更新，仍列現行給付標準並以115年2月至4月留停為計算範例；勞保局活動頁說明115年1月起可以日為單位申請；搜尋未見115年下半年或116年停辦、調整比例的公告",
+      "match": true,
+      "source_url": "https://events.bli.gov.tw/Activities/202601_02/"
+    },
+    {
+      "field": "official_url",
+      "value_in_data": "https://www.bli.gov.tw/0020785.html",
+      "official_value": "HTTP 200，頁面標題為「育嬰留職停薪津貼的請領資格、給付標準及給付期間各如何？」",
+      "match": true,
+      "source_url": "https://www.bli.gov.tw/0020785.html"
+    }
+  ],
+  "corrections": [],
+  "official_url_ok": true,
+  "file_path": "/home/user/haosuan/research/patches/parental-leave-allowance.json",
+  "summary": "看了勞保局就保FAQ（0020785，2026-10-27 更新）、勞保局彈性育嬰留停活動頁、就業保險法第24條。60%津貼＋20%補助合計8成、每人最長6個月、父母合計12個月、不足月按日數/30計算、請求權2年，都與資料相符；115年仍辦理，搜尋一次未見116年調整公告。"
+}

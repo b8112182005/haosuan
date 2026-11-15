@@ -11,12 +11,12 @@ export default function WordCountCalculator() {
   const result = countWords(text);
 
   const stats = [
-    { label: "中文字數", value: result.chineseChars.toLocaleString(), highlight: true, rawValue: result.chineseChars },
-    { label: "英文單詞數", value: result.englishWords.toLocaleString(), highlight: true, rawValue: result.englishWords },
-    { label: "總字元數（含空白）", value: result.totalCharsWithSpace.toLocaleString(), highlight: false },
-    { label: "總字元數（不含空白）", value: result.totalCharsWithoutSpace.toLocaleString(), highlight: false },
-    { label: "段落數", value: result.paragraphs.toLocaleString(), highlight: false },
-    { label: "行數", value: result.lines.toLocaleString(), highlight: false },
+    { label: "中文字數", value: result.chineseChars.toLocaleString("zh-TW"), highlight: true, rawValue: result.chineseChars },
+    { label: "英文單詞數", value: result.englishWords.toLocaleString("zh-TW"), highlight: true, rawValue: result.englishWords },
+    { label: "總字元數（含空白）", value: result.totalCharsWithSpace.toLocaleString("zh-TW"), highlight: false },
+    { label: "總字元數（不含空白）", value: result.totalCharsWithoutSpace.toLocaleString("zh-TW"), highlight: false },
+    { label: "段落數", value: result.paragraphs.toLocaleString("zh-TW"), highlight: false },
+    { label: "行數", value: result.lines.toLocaleString("zh-TW"), highlight: false },
   ];
 
   return (

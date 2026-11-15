@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "依台灣勞基法第 24 條，計算平日、休息日、國定假日加班費。輸入月薪與加班時數，即時顯示應領加班費與計費明細。",
   keywords: ["加班費計算機", "勞基法加班", "加班費", "平日加班", "假日加班"],
   openGraph: {
-    title: "加班費計算機 | 好算",
+    title: "加班費計算機 | 好耶",
     description: "依勞基法計算平日、假日加班費",
     url: "/finance/overtime",
   },

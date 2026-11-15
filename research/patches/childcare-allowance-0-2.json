@@ -1,0 +1,39 @@
+{
+  "id": "childcare-allowance-0-2",
+  "verdict": "confirmed",
+  "verified_at": "2026-11-11",
+  "checked": [
+    {
+      "field": "amount.text / amount.min / amount.max",
+      "value_in_data": "每月第1名子女5,000元、第2名6,000元、第3名（含）以上7,000元（min 5000、max 7000，元/月）",
+      "official_value": "補助金額：第1名子女5,000元/月、第2名子女6,000元/月、第3名(含)以上子女7,000元/月。（育兒津貼，112年1月1日起適用；頁面更新時間 115-07-13）",
+      "match": true,
+      "source_url": "https://www.mohw.gov.tw/cp-5130-58003-1.html"
+    },
+    {
+      "field": "deadline.type / deadline.note",
+      "value_in_data": "rolling；全年隨到隨辦，出生後60天內完成戶籍登記並申請可從出生月份起算，超過60天從申請當月起發",
+      "official_value": "兒童出生後 60 日內完成出生或初設戶籍登記並申請者，得追溯自出生月份發給（衛生福利部109年5月7日衛授家字第1090600430號函引述作業要點）；官方專區未列任何申請截止日",
+      "match": true,
+      "source_url": "https://laws.gov.taipei/Law/Interpretation/Content/FE349458"
+    },
+    {
+      "field": "status_2026",
+      "value_in_data": "active",
+      "official_value": "衛福部專區於115-07-13更新，仍列育兒津貼資格與金額，並附1957諮詢專線；搜尋未見115年下半年或116年停辦、調整金額的公告",
+      "match": true,
+      "source_url": "https://www.mohw.gov.tw/cp-5130-58003-1.html"
+    },
+    {
+      "field": "official_url",
+      "value_in_data": "https://www.mohw.gov.tw/cp-5130-58003-1.html",
+      "official_value": "HTTP 200，頁面標題《未滿2歲幼兒照顧政策：育兒津貼、托育補助，不排富，全照顧》專區",
+      "match": true,
+      "source_url": "https://www.mohw.gov.tw/cp-5130-58003-1.html"
+    }
+  ],
+  "corrections": [],
+  "official_url_ok": true,
+  "file_path": "/home/user/haosuan/research/patches/childcare-allowance-0-2.json",
+  "summary": "看了衛福部未滿2歲幼兒照顧政策專區（115-07-13更新，HTTP 200）與衛福部109年衛授家字第1090600430號函：金額5,000／6,000／7,000元/月、全年受理、115年仍辦理都對得上，沒有修正。60日內申請可追溯到出生月份有衛福部函文佐證，但社家署網站連線被重設，現行作業要點（搜尋結果顯示113年5月31日修正）原文這次沒打開；搜尋未見116年調整金額的公告。"
+}

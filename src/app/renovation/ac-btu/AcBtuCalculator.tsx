@@ -150,7 +150,7 @@ export default function AcBtuCalculator() {
                 <span className="text-2xl font-normal ml-1">噸</span>
               </div>
               <div className="text-sm text-muted-foreground">
-                {result.requiredBtu.toLocaleString()} BTU・{result.areaPing} 坪・{result.areaM2} m²
+                {result.requiredBtu.toLocaleString("zh-TW")} BTU・{result.areaPing} 坪・{result.areaM2} m²
               </div>
               <div className="flex items-center justify-center gap-3 pt-1">
                 <CopyButton value={result.requiredTons.toString()} label="複製噸數" />
@@ -183,13 +183,13 @@ export default function AcBtuCalculator() {
                         {model.label}
                       </span>
                       <span className="text-xs text-muted-foreground font-mono">
-                        {model.btu.toLocaleString()} BTU
+                        {model.btu.toLocaleString("zh-TW")} BTU
                       </span>
                     </div>
                   ))}
                 {result.recommendedModels.filter((m) => m.suitable).length === 0 && (
                   <p className="text-sm text-muted-foreground">
-                    需要 {result.requiredBtu.toLocaleString()} BTU，請查詢商用規格
+                    需要 {result.requiredBtu.toLocaleString("zh-TW")} BTU，請查詢商用規格
                   </p>
                 )}
               </div>

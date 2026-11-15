@@ -184,11 +184,11 @@ export default function PaintCalculator() {
               <div className="text-sm font-medium">費用估算（參考）</div>
               <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">DIY（僅材料費）</span>
-                <span className="font-mono">NT${result.costEstimate.low.toLocaleString()}</span>
+                <span className="font-mono">NT${result.costEstimate.low.toLocaleString("zh-TW")}</span>
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">含師傅施工費</span>
-                <span className="font-mono">NT${result.costEstimate.high.toLocaleString()}</span>
+                <span className="font-mono">NT${result.costEstimate.high.toLocaleString("zh-TW")}</span>
               </div>
             </div>
           </>

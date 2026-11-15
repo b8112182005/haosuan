@@ -1,0 +1,53 @@
+{
+  "id": "toddler-care-subsidy-0-2",
+  "verdict": "confirmed",
+  "verified_at": "2026-11-14",
+  "checked": [
+    {
+      "field": "amount.min",
+      "value_in_data": "7000（公共化一般家庭每月 7,000 元）",
+      "official_value": "自113年1月起提高托育費用補助額度，公共化托育補助每月7,000元起、準公共托育補助每月1萬3,000元起",
+      "match": true,
+      "source_url": "https://www.mohw.gov.tw/cp-5130-58003-1.html"
+    },
+    {
+      "field": "amount.text",
+      "value_in_data": "公共化：一般7,000、中低收9,000、低收及弱勢9,000；準公共：一般13,000、中低收15,000、低收及弱勢17,000；第2名加1,000、第3名以上加2,000",
+      "official_value": "公共托育：一般7,000元、中低收9,000元、低收及弱勢9,000元（每月上限9,000元）；準公共：一般13,000元、中低收15,000元、低收及弱勢17,000元；第2名加1,000元、第3名以上加2,000元",
+      "match": true,
+      "source_url": "https://welfare.ntpc.gov.tw/viewService/show/1008042"
+    },
+    {
+      "field": "amount.max",
+      "value_in_data": "19000",
+      "official_value": "準公共、低收入戶及弱勢家庭、第3名以上子女：17,000＋2,000＝19,000元/月（依新北市頁面所列基本額與加發額計算）",
+      "match": true,
+      "source_url": "https://welfare.ntpc.gov.tw/viewService/show/1008042"
+    },
+    {
+      "field": "deadline.note",
+      "value_in_data": "托育事實發生（開始送托）後15日內提出申請",
+      "official_value": "申請人應於托育事實發生後15日內提出申請",
+      "match": true,
+      "source_url": "https://welfare.ntpc.gov.tw/viewService/show/1008042"
+    },
+    {
+      "field": "status_2026",
+      "value_in_data": "active",
+      "official_value": "衛福部配合行政院核定「我國少子女化對策計畫2.0（115年至118年）」……持續發放育兒津貼及托育補助（頁面更新時間：115-07-13）",
+      "match": true,
+      "source_url": "https://www.mohw.gov.tw/cp-5130-58003-1.html"
+    },
+    {
+      "field": "official_url",
+      "value_in_data": "https://www.mohw.gov.tw/cp-5130-58003-1.html",
+      "official_value": "HTTP 200，頁面標題《未滿2歲幼兒照顧政策：育兒津貼、托育補助，不排富，全照顧》專區",
+      "match": true,
+      "source_url": "https://www.mohw.gov.tw/cp-5130-58003-1.html"
+    }
+  ],
+  "corrections": [],
+  "official_url_ok": true,
+  "file_path": "/home/user/haosuan/research/patches/toddler-care-subsidy-0-2.json",
+  "summary": "看了衛福部專區（115-07-13 更新，HTTP 200）與新北市社會局補助頁：公共化 7,000 元起、準公共 13,000 元起、胎次與身分加發、送托後 15 日內申請，都與資料一致，115 年仍在辦理。搜尋 1 次沒找到 115 年下半年或 116 年調整金額的公告。formula 寫公共化低收及弱勢加 4,000 元，但公共化每月上限是 9,000 元（amount.text 已寫對），這點只有新北市頁面為據，衛福部作業要點原文這次沒打開，unverified_fields 那一項維持不變。"
+}

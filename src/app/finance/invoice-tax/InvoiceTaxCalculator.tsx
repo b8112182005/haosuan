@@ -114,10 +114,10 @@ export default function InvoiceTaxCalculator() {
                   className="flex items-center justify-between px-4 py-2 text-sm"
                 >
                   <span className="text-muted-foreground">
-                    未稅 NT${n.toLocaleString()}
+                    未稅 NT${n.toLocaleString("zh-TW")}
                   </span>
                   <span className="font-mono">
-                    → NT${r.taxInclusive.toLocaleString()}
+                    → NT${r.taxInclusive.toLocaleString("zh-TW")}
                   </span>
                 </div>
               );

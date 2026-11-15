@@ -1,0 +1,51 @@
+name: Weekly deadline posts
+
+# 每週一台灣時間早上 8 點，從補助資料產出本週貼文草稿，開成一個 issue，上週那個自動關掉。
+# 只用 GITHUB_TOKEN，不花錢；不會自動發文，貼不貼、貼哪裡由人決定。
+# schedule 只在預設分支（main）生效。
+on:
+  schedule:
+    - cron: '0 0 * * 1'
+  workflow_dispatch:
+    inputs:
+      date:
+        description: '用哪一天算（YYYY-MM-DD，台灣日期）；留空是今天'
+        required: false
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Build digest
+        env:
+          DATE_INPUT: ${{ inputs.date }}
+        run: |
+          if [ -n "$DATE_INPUT" ] && ! [[ "$DATE_INPUT" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
+            echo "日期格式要是 YYYY-MM-DD：$DATE_INPUT" >&2
+            exit 1
+          fi
+          node --no-warnings scripts/marketing/deadline-digest.mjs $DATE_INPUT > digest.md
+          cat digest.md
+
+      - name: Open issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DATE_INPUT: ${{ inputs.date }}
+        run: |
+          day="${DATE_INPUT:-$(TZ=Asia/Taipei date +%F)}"
+          gh label create marketing --color 0E8A16 --description "每週貼文草稿" 2>/dev/null || true
+          for n in $(gh issue list --label marketing --state open --json number --jq '.[].number'); do
+            gh issue close "$n"
+          done
+          gh issue create --title "本週補助期限貼文草稿 $day" --label marketing --body-file digest.md

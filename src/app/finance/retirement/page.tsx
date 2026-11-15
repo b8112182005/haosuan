@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "免費退休金試算工具，輸入年齡、存款、每月儲蓄與預期報酬率，計算退休時總資產與退休後每月可動用金額。",
   keywords: ["退休金", "退休試算", "複利", "存退休金", "財務規劃", "台灣"],
   openGraph: {
-    title: "退休金試算 | 好算",
+    title: "退休金試算 | 好耶",
     description: "計算退休時總資產與每月可動用金額",
     url: "/finance/retirement",
   },

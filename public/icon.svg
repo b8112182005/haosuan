@@ -1,4 +1,27 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
-  <rect width="192" height="192" rx="40" fill="#6C5CE7"/>
-  <text x="96" y="130" font-family="system-ui,sans-serif" font-size="100" font-weight="900" text-anchor="middle" fill="white">算</text>
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  好耶 app 圖示（完整版，含背景）1024×1024
+  - 背景：圓角方形（rx 224 ≈ 22%），135° 漸層 #6C5CE7 → #8B7CF6
+  - 前景：白色粗體「好」。字型走系統 fontconfig：Noto Sans TC → Noto Sans CJK TC → WenQuanYi Zen Hei → 微軟正黑 → PingFang
+  - 右下角白底綠勾徽章＝「提醒完成」。mask 把「好」字在徽章外圈挖掉一圈，徽章才不會和筆畫黏在一起
+  「好」刻意偏左上（496,500）而不是正中央，是為了把右下角讓給徽章，不然徽章會壓到「子」的勾。
+
+  同一組 logo 幾何也出現在 icon-foreground.svg（縮 2/3）與 splash.svg（縮放置中），改這裡要同步那兩個檔。
+  id="icon-bg" 是 scripts/android/gen-assets.mjs 產 Play 商店滿版 512 圖示時要把 rx 改成 0 的錨點，不要改 id。
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1024" y2="1024">
+      <stop offset="0" stop-color="#6C5CE7"/>
+      <stop offset="1" stop-color="#8B7CF6"/>
+    </linearGradient>
+    <mask id="badge-cut" maskUnits="userSpaceOnUse" x="0" y="0" width="1024" height="1024">
+      <rect width="1024" height="1024" fill="#FFFFFF"/>
+      <circle cx="748" cy="748" r="122" fill="#000000"/>
+    </mask>
+  </defs>
+  <rect id="icon-bg" width="1024" height="1024" rx="224" ry="224" fill="url(#bg)"/>
+  <text x="499" y="696" text-anchor="middle" font-family="'Noto Sans TC','Noto Sans CJK TC','WenQuanYi Zen Hei','Microsoft JhengHei','PingFang TC',sans-serif" font-size="580" font-weight="700" fill="#FFFFFF" mask="url(#badge-cut)">好</text>
+  <circle cx="748" cy="748" r="104" fill="#FFFFFF"/>
+  <path d="M700 750 L736 786 L800 714" fill="none" stroke="#10B981" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

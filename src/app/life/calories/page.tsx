@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "免費線上熱量計算機，依 Harris-Benedict 公式計算基礎代謝率（BMR）與每日所需熱量（TDEE），提供減重與增肌熱量建議。",
   keywords: ["熱量", "BMR", "TDEE", "基礎代謝", "卡路里", "減重", "增肌"],
   openGraph: {
-    title: "熱量計算機 | 好算",
+    title: "熱量計算機 | 好耶",
     description: "輸入性別、年齡、身高、體重與活動量，即時計算 BMR 與 TDEE",
     url: "/life/calories",
   },
@@ -51,6 +51,7 @@ const jsonLd = {
 export default function CaloriesPage() {
   return (
     <CalculatorLayout
+      notice="這裡的熱量是用 Harris-Benedict 公式算出的估計值，每個人實際消耗不同，不是醫療或營養建議。有慢性病、懷孕、哺乳，或打算減重、增重時，請先問醫師或營養師。"
       title="熱量計算機"
       description="輸入性別、年齡、身高、體重與活動量，計算基礎代謝率（BMR）與每日所需熱量（TDEE）"
       faqs={faqs}

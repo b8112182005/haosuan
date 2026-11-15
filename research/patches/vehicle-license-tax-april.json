@@ -1,0 +1,46 @@
+{
+  "id": "vehicle-license-tax-april",
+  "verdict": "confirmed",
+  "verified_at": "2026-11-14",
+  "checked": [
+    {
+      "field": "amount.text",
+      "value_in_data": "自用小客車1,201～1,800cc每年7,120元、1,801～2,400cc 11,230元（依使用牌照稅法稅額表）",
+      "official_value": "小客車使用牌照稅稅額表（自用）：1201-1800cc 7,120、1801-2400cc 11,230（另 500以下 1,620、501-600 2,160、601-1200 4,320、7801以上 151,200）",
+      "match": true,
+      "source_url": "https://www.etax.nat.gov.tw/etwmain/tax-info/understanding/tax-saving-manual/local/vehicle-license-tax/2Jv5NBY"
+    },
+    {
+      "field": "deadline.start_month/start_day/end_month/end_day",
+      "value_in_data": "4月1日至4月30日",
+      "official_value": "今（115）年使用牌照稅已於今年4月1日開徵，繳納期限至同年月30日（星期四）",
+      "match": true,
+      "source_url": "https://www.mof.gov.tw/singlehtml/384fb3077bb349ea973e7fc6f13b6974?cntId=a9cf8082e3f7457c978cc5603d298119"
+    },
+    {
+      "field": "deadline.note",
+      "value_in_data": "5月1日至3日繳納屬逾期不加滯納金；營業用車下期10月1日至10月31日（115年順延至11月2日）",
+      "official_value": "繳納期間115年4月1日至4月30日；5月1日至5月3日繳納屬逾期繳納案件但不加徵滯納金。下期營業用車115年10月1日開徵，適逢假日順延至11月2日",
+      "match": true,
+      "source_url": "https://www.etax.nat.gov.tw/etwmain/announcement/news/RObg7M2"
+    },
+    {
+      "field": "status_2026",
+      "value_in_data": "active",
+      "official_value": "115年全（上）期4月1日開徵、下期營業用車10月1日開徵（花蓮縣地方稅務局 115-10-29 公告順延至11月2日）",
+      "match": true,
+      "source_url": "https://www.etax.nat.gov.tw/etwmain/announcement/news/mbOVVB6"
+    },
+    {
+      "field": "official_url",
+      "value_in_data": "https://www.etax.nat.gov.tw/etwmain/tax-info/understanding/tax-saving-manual/local/vehicle-license-tax",
+      "official_value": "HTTP 200",
+      "match": true,
+      "source_url": "https://www.etax.nat.gov.tw/etwmain/tax-info/understanding/tax-saving-manual/local/vehicle-license-tax"
+    }
+  ],
+  "corrections": [],
+  "official_url_ok": true,
+  "file_path": "/home/user/haosuan/research/patches/vehicle-license-tax-april.json",
+  "summary": "讀了財政部賦稅署「115年使用牌照稅繳納期限至4月30日」新聞稿、稅務入口網的115年開徵公告與營業車下期順延公告，以及稅務入口網節稅手冊的小客車稅額表。金額（1201-1800cc 7,120元、1801-2400cc 11,230元）、繳納期間（4月1日至4月30日）、115年仍辦理、官方網址（HTTP 200）四項都對得上，沒有修正。本次未查到116年稅額或期間變動的公告；電動車免徵至119年底與身心障礙2400cc上限不在本次核對範圍。"
+}

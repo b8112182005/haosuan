@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "免費線上懷孕週數計算機，輸入最後月經日期，即時計算目前懷孕週數、預產期及重要孕期里程碑。",
   keywords: ["懷孕", "週數", "預產期", "孕期", "里程碑", "產檢", "懷孕計算"],
   openGraph: {
-    title: "懷孕週數計算機 | 好算",
+    title: "懷孕週數計算機 | 好耶",
     description: "輸入最後月經日期，計算懷孕週數、預產期與孕期里程碑",
     url: "/life/pregnancy",
   },
@@ -51,6 +51,7 @@ const jsonLd = {
 export default function PregnancyPage() {
   return (
     <CalculatorLayout
+      notice="週數和預產期是用最後一次月經第一天加 280 天推算，只供參考，不是醫療建議；實際週數以產檢醫師的超音波判斷為準。身體有任何不適請就醫。"
       title="懷孕週數計算機"
       description="輸入最後一次月經日期，計算目前懷孕週數、孕期階段、預產期及重要里程碑"
       faqs={faqs}

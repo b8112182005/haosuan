@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Adaptive icon 前景層 1024×1024（＝108dp 畫布），透明底。
+  Android 只會顯示中央 72dp，且各家 launcher 遮罩不同，保證不被裁到的安全區是直徑 66dp 的圓
+  （這張圖上就是以 (512,512) 為圓心、半徑 313px）。所以這裡把 icon.svg 的前景縮到 2/3 置中：
+  「好」字最遠角落離中心約 290px、徽章外緣約 303px，都在安全區內。
+  背景色由 res/values/ic_launcher_background.xml（#6C5CE7）提供，不要畫在這裡。
+  logo 幾何與 icon.svg 完全相同，改那邊記得同步。
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <mask id="badge-cut" maskUnits="userSpaceOnUse" x="0" y="0" width="1024" height="1024">
+      <rect width="1024" height="1024" fill="#FFFFFF"/>
+      <circle cx="748" cy="748" r="122" fill="#000000"/>
+    </mask>
+  </defs>
+  <g transform="translate(170.667 170.667) scale(0.666667)">
+    <text x="499" y="696" text-anchor="middle" font-family="'Noto Sans TC','Noto Sans CJK TC','WenQuanYi Zen Hei','Microsoft JhengHei','PingFang TC',sans-serif" font-size="580" font-weight="700" fill="#FFFFFF" mask="url(#badge-cut)">好</text>
+    <circle cx="748" cy="748" r="104" fill="#FFFFFF"/>
+    <path d="M700 750 L736 786 L800 714" fill="none" stroke="#10B981" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
