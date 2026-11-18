@@ -47,9 +47,21 @@ interface Stored {
   unlikelyOpen: string[];
   y: number;
   at: number;
+  /** 記下位置時所在的那一筆瀏覽紀錄；瀏覽器沒有 Navigation API 時是 null */
+  entry: string | null;
 }
 
-const DEFAULT_STORED: Stored = { category: "all", infoOpen: false, excludedOpen: false, unlikelyOpen: [], y: 0, at: 0 };
+const DEFAULT_STORED: Stored = { category: "all", infoOpen: false, excludedOpen: false, unlikelyOpen: [], y: 0, at: 0, entry: null };
+
+/**
+ * 目前這一筆瀏覽紀錄的鍵。按返回回到同一筆紀錄時鍵不變，從別的連結走進來是新的一筆。
+ * 用它分辨「按返回回來」和「從補助列表再點進來」：後者應該從頁面最上面開始，不該被捲到上次看的地方。
+ * Chrome 與 Android WebView 有 Navigation API；沒有的瀏覽器回 null，退回只看時間。
+ */
+function entryKey(): string | null {
+  const nav = (window as unknown as { navigation?: { currentEntry?: { key?: string } | null } }).navigation;
+  return nav?.currentEntry?.key ?? null;
+}
 
 function readStored(): Stored {
   try {
@@ -63,6 +75,7 @@ function readStored(): Stored {
       unlikelyOpen: Array.isArray(raw.unlikelyOpen) ? raw.unlikelyOpen.filter((k): k is string => typeof k === "string") : [],
       y: typeof raw.y === "number" && Number.isFinite(raw.y) ? raw.y : 0,
       at: typeof raw.at === "number" && Number.isFinite(raw.at) ? raw.at : 0,
+      entry: typeof raw.entry === "string" ? raw.entry : null,
     };
   } catch {
     // 隱私模式讀不到 sessionStorage：當成沒有存過
@@ -221,8 +234,12 @@ export default function CheckResults({ profile, evaluations, onEdit, onReset }: 
   useLayoutEffect(() => {
     if (!view || restored.current) return;
     restored.current = true;
-    const { y, at } = readStored();
-    if (y > 0 && Date.now() - at < RESTORE_WINDOW_MS) requestAnimationFrame(() => window.scrollTo(0, y));
+    const { y, at, entry } = readStored();
+    if (y <= 0) return;
+    const here = entryKey();
+    // 存的位置屬於另一筆瀏覽紀錄：這次是從別的連結走進來的，留在最上面。位置先留著，之後按返回回到那一筆時還用得到
+    if (entry !== null && here !== null && entry !== here) return;
+    if (Date.now() - at < RESTORE_WINDOW_MS) requestAnimationFrame(() => window.scrollTo(0, y));
     writeStored({ y: 0 });
   }, [view]);
 
@@ -253,7 +270,7 @@ export default function CheckResults({ profile, evaluations, onEdit, onReset }: 
   chip(profile.lowIncome === "low" ? "低收" : profile.lowIncome === "mid_low" ? "中低收" : null, "status");
   chip(profile.ownsVehicle === "scooter" ? "有機車" : profile.ownsVehicle === "car" ? "有汽車" : profile.ownsVehicle === "both" ? "有汽機車" : null, "vehicle");
 
-  const rememberPosition = () => writeStored({ y: window.scrollY, at: Date.now() });
+  const rememberPosition = () => writeStored({ y: window.scrollY, at: Date.now(), entry: entryKey() });
   const jumpTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
   const jumpToObligations = () => jumpTo("results-obligations");
   const jumpToInfo = () => {

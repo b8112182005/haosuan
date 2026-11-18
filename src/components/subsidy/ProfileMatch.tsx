@@ -47,7 +47,7 @@ export default function ProfileMatch({ subsidy }: { subsidy: SubsidySummary }) {
           : `還有 ${unknown.length} 條要你自己確認。`;
   // 所得門檻的全文就在這張卡片正上方那一段：這裡再貼一次，租金補貼這類項目會多出 15 行一樣的字
   const incomeNote = subsidy.conditions.income_limit_note?.trim();
-  const shorten = (text: string) => (incomeNote && text.includes(incomeNote) ? text.replace(incomeNote, "金額看上面那一段") : text);
+  const shorten = (text: string) => (incomeNote && text.includes(incomeNote) ? text.replace(incomeNote, "看上面「所得／財產門檻」那一段") : text);
   const lines = [
     ...matched.map((text) => ({ kind: "ok" as const, text })),
     ...unknown.map((text) => ({ kind: "unknown" as const, text: shorten(text) })),

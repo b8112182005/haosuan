@@ -553,6 +553,25 @@ async function main() {
     return Math.abs(yAfter - yBefore) <= 80 || { yBefore, yAfter };
   });
 
+  // 不是按返回，而是從補助列表的連結再走進來：這是新的一筆瀏覽紀錄，要從頁面最上面開始
+  await page.evaluate(() => window.scrollTo(0, 500));
+  await settle(300);
+  const secondRow = page.locator('[data-section="benefits"] [data-row]').nth(1);
+  const secondId = await secondRow.getAttribute("data-row");
+  await secondRow.click();
+  await page.waitForURL((u) => new URL(u).pathname.startsWith(`/subsidy/${secondId}`));
+  await settle(400);
+  await tab("補助");
+  await page.waitForURL(/\/subsidy\/?$/);
+  await settle(400);
+  await page.locator('a[href*="/subsidy/check"]').first().click();
+  await page.waitForURL(/\/subsidy\/check/);
+  await settle(900);
+  await check("從補助列表的連結走回試算（不是按返回）：停在頁面最上面，不被捲到上次的位置", async () => {
+    const y = await page.evaluate(() => window.scrollY);
+    return ((await page.locator('[data-section="benefits"]').isVisible()) && y < 50) || { y };
+  });
+
   // 點條件標籤改縣市
   await page.evaluate(() => window.scrollTo(0, 0));
   await settle(200);
