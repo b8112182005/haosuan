@@ -463,3 +463,52 @@ describe("要先買東西才領得到的補助（needs_purchase）", () => {
     }
   });
 });
+
+
+describe("試算沒問的硬條件不列為條件相符", () => {
+  const worker: Profile = { ...base, city: "新北市", age: 27, monthlyIncome: 38000, isRenting: true, ownsHome: false, isStudent: false, isUnemployed: false, isDisabled: false, lowIncome: "none", ownsVehicle: "scooter" };
+
+  it("27 歲有勞保：勞保紓困貸款是可能符合，原因寫年資滿 15 年", () => {
+    const r = evaluate(byId("labor-insurance-relief-loan"), worker);
+    expect(r.verdict).toBe("maybe");
+    expect(r.unknown.join(" ")).toContain("勞保年資滿 15 年");
+  });
+
+  it("沒工作過的待業者：失業給付不是條件相符，原因寫非自願離職與就保年資", () => {
+    const r = evaluate(byId("unemployment-benefit"), { ...worker, isUnemployed: true, hasLaborInsurance: false, monthlyIncome: 0 });
+    expect(r.verdict).toBe("maybe");
+    expect(r.unknown.join(" ")).toContain("非自願離職");
+  });
+
+  it("只有機車的人：汽車定期檢驗與牌照稅不是條件相符，原因寫例外；有汽車的人牌照稅相符", () => {
+    for (const id of ["car-periodic-inspection-schedule", "vehicle-license-tax-april"]) {
+      const r = evaluate(byId(id), worker);
+      expect(r.verdict, id).toBe("maybe");
+      expect(r.excepted, id).toBeGreaterThan(0);
+    }
+    expect(evaluate(byId("vehicle-license-tax-april"), { ...worker, ownsVehicle: "car" }).verdict).toBe("eligible");
+    expect(evaluate(byId("vehicle-license-tax-april"), { ...worker, ownsVehicle: "both" }).verdict).toBe("eligible");
+    expect(evaluate(byId("vehicle-license-tax-april"), { ...worker, ownsVehicle: "none" }).verdict).toBe("not_eligible");
+  });
+
+  it("大學生：高中職免學費是可能符合，不是條件相符", () => {
+    const r = evaluate(byId("senior-high-tuition-free"), { ...worker, age: 19, isStudent: true, monthlyIncome: 0, hasLaborInsurance: false });
+    expect(r.verdict).toBe("maybe");
+    expect(r.unknown.join(" ")).toContain("高中職");
+  });
+
+  it("中低收入戶的身障者：身障生活補助條件相符，不用再核對全家所得；健保費補助也列為相符", () => {
+    const person: Profile = { ...worker, age: 40, isDisabled: true, lowIncome: "mid_low" };
+    const allowance = evaluate(byId("disability-living-allowance"), person);
+    expect(allowance.verdict).toBe("eligible");
+    expect(allowance.matched.join(" ")).toContain("免再審收入與財產");
+    const premium = evaluate(byId("nhi-premium-subsidy-low-income-disability"), person);
+    expect(premium.matched).toEqual(["中低收入戶", "領有身心障礙證明"]);
+  });
+
+  it("成長津貼還沒開辦：有小孩的人是可能符合", () => {
+    const r = evaluate(byId("child-growth-allowance"), { ...worker, hasChildren: true, childrenAges: [3] });
+    expect(r.verdict).toBe("maybe");
+    expect(r.unknown.join(" ")).toContain("還沒開辦");
+  });
+});

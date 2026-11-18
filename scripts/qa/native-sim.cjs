@@ -507,10 +507,15 @@ async function main() {
     for (const status of ["match", "check", "situational"]) got[status] = { head: await headCount(status), rows: await benefitRows(status) };
     return Object.values(got).every((g) => g.head === g.rows) || got;
   });
-  await check("牌照稅不在「可以領、可以用的」，在「要繳、要辦的期限」", async () => {
-    const inBenefits = await page.locator('[data-section="benefits"] [data-row="vehicle-license-tax-april"]').count();
-    const inObligations = await page.locator('[data-section="obligations"] [data-row="vehicle-license-tax-april"]').count();
+  await check("綜所稅申報不在「可以領、可以用的」，在「要繳、要辦的期限」", async () => {
+    const inBenefits = await page.locator('[data-section="benefits"] [data-row="income-tax-filing-2026"]').count();
+    const inObligations = await page.locator('[data-section="obligations"] [data-row="income-tax-filing-2026"]').count();
     return (inBenefits === 0 && inObligations === 1) || { inBenefits, inObligations };
+  });
+  await check("只有機車的人：牌照稅收在「另有 N 項，少數情形才跟你有關」那一行，名稱寫在上面", async () => {
+    const listed = await page.locator('[data-section="obligations"] [data-row="vehicle-license-tax-april"]').count();
+    const line = await page.locator('[data-section="obligations"] button[aria-expanded]').innerText();
+    return (listed === 0 && line.includes("牌照稅")) || { listed, line };
   });
   await check("中央租金補貼在居住那一段、狀態是要再確認", async () => {
     const row = page.locator('[data-category-section="housing"] [data-row="rent-subsidy-central-300b"]');

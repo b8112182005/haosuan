@@ -115,9 +115,12 @@ export default function CheckWizard() {
   };
 
   const startEdit = (target?: ProfileStep, options?: { fill?: boolean }) => {
+    // 什麼都沒填的人從結果頁按「開始填」是第一次填，不是修改：照第一次填的走法（縣市選完自動到下一題、
+    // 主要按鈕是「下一題」），不要給他「修改條件」和三顆按鈕
+    const nothingAnswered = unansweredSteps(profile).length === STEPS.length;
     setStepIndex(target ? Math.max(0, STEPS.indexOf(target)) : 0);
-    setEditing(true);
-    setFilling(options?.fill === true);
+    setEditing(!nothingAnswered);
+    setFilling(!nothingAnswered && options?.fill === true);
     setMode("wizard");
     window.scrollTo({ top: 0 });
   };
@@ -135,6 +138,8 @@ export default function CheckWizard() {
   const nextIndex = filling ? pending : stepIndex < STEPS.length - 1 ? stepIndex + 1 : undefined;
   // 數字題按 Enter：第一次填是下一題；補答時去下一個沒答的，沒有了就存檔看結果；一般修改是存檔看結果
   const enterGoesNext = !editing || (filling && nextIndex !== undefined);
+  // 補答時還有題目沒答：主要動作是「下一題」，「看結果」退成次要
+  const fillNext = filling && nextIndex !== undefined;
   const next = () => {
     if (!editing) goTo(stepIndex + 1);
     else if (filling && nextIndex !== undefined) goTo(nextIndex);
@@ -167,9 +172,14 @@ export default function CheckWizard() {
       <div className="mb-5">
         <div className="mb-1 flex items-center justify-between text-xs text-muted-foreground">
           <span>第 {stepIndex + 1} / {STEPS.length} 題</span>
-          <button type="button" onClick={finish} className="underline underline-offset-4 hover:text-foreground">
-            直接看結果
-          </button>
+          {/* 修改模式底下已有「看結果」：再放一個「直接看結果」會有兩顆去同一處的按鈕，改成標示目前在改條件 */}
+          {editing ? (
+            <span>修改條件</span>
+          ) : (
+            <button type="button" onClick={finish} className="underline underline-offset-4 hover:text-foreground">
+              直接看結果
+            </button>
+          )}
         </div>
         <div className="h-1.5 overflow-hidden rounded-full bg-muted">
           <div className="h-full rounded-full bg-emerald-500 transition-all" style={{ width: `${((stepIndex + 1) / STEPS.length) * 100}%` }} />
@@ -315,13 +325,16 @@ export default function CheckWizard() {
 
       {/* 導覽：固定在底部分頁列上方。縣市那一題有 22 個選項，按鈕放在最底下的話選完還要往下捲才找得到 */}
       <div className="sticky bottom-[calc(var(--tabs-h)+var(--safe-bottom)+0.75rem)] z-10 mt-8 flex items-center justify-between gap-2 rounded-full bg-background/95 p-1.5 ring-1 ring-border backdrop-blur">
+        {/* 修改模式一排有三顆按鈕：320 寬放不下三組字，「看結果」會折成三行被切掉。這時「上一題」只留箭頭 */}
         <button
           type="button"
           onClick={() => goTo(stepIndex - 1)}
           disabled={stepIndex === 0}
-          className="inline-flex h-11 items-center gap-1 rounded-full border border-border px-4 text-sm disabled:opacity-40"
+          aria-label="上一題"
+          className={`inline-flex h-11 shrink-0 items-center justify-center gap-1 whitespace-nowrap rounded-full border border-border text-sm disabled:opacity-40 ${editing ? "w-11" : "px-4"}`}
         >
-          <ArrowLeft className="h-4 w-4" /> 上一題
+          <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+          {!editing && "上一題"}
         </button>
         {editing ? (
           <>
@@ -329,17 +342,25 @@ export default function CheckWizard() {
               <button
                 type="button"
                 onClick={() => goTo(nextIndex)}
-                className="inline-flex h-11 items-center gap-1 rounded-full border border-border px-4 text-sm"
+                className={
+                  fillNext
+                    ? "inline-flex h-11 flex-1 items-center justify-center gap-1 whitespace-nowrap rounded-full bg-primary px-4 text-sm font-medium text-primary-foreground"
+                    : "inline-flex h-11 shrink-0 items-center gap-1 whitespace-nowrap rounded-full border border-border px-4 text-sm"
+                }
               >
-                下一題 <ArrowRight className="h-4 w-4" />
+                下一題 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </button>
             )}
             <button
               type="button"
               onClick={finish}
-              className="inline-flex h-11 flex-1 items-center justify-center gap-1 rounded-full bg-emerald-600 px-5 text-sm font-medium text-white hover:bg-emerald-700"
+              className={
+                fillNext
+                  ? "inline-flex h-11 shrink-0 items-center justify-center gap-1 whitespace-nowrap rounded-full border border-border px-4 text-sm"
+                  : "inline-flex h-11 flex-1 items-center justify-center gap-1 whitespace-nowrap rounded-full bg-emerald-600 px-4 text-sm font-medium text-white hover:bg-emerald-700"
+              }
             >
-              看結果 <CheckCircle2 className="h-4 w-4" />
+              看結果 <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
             </button>
           </>
         ) : stepIndex < STEPS.length - 1 ? (
@@ -443,13 +464,14 @@ function NumberField({
 function Toggle({ label, value, onChange }: { label: string; value: boolean | null; onChange: (v: boolean) => void }) {
   return (
     <div className="flex items-center justify-between gap-3 rounded-xl border border-border px-3 py-2">
-      <span className="text-sm">{label}</span>
-      <div className="flex gap-1">
+      <span className="min-w-0 flex-1 text-sm">{label}</span>
+      {/* whitespace-nowrap：320 寬時「沒有」會折成兩行 */}
+      <div className="flex shrink-0 gap-1">
         <button
           type="button"
           aria-pressed={value === false}
           onClick={() => onChange(false)}
-          className={`h-8 rounded-full px-3 text-xs ${value === false ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"}`}
+          className={`h-10 min-w-12 whitespace-nowrap rounded-full px-3 text-xs ${value === false ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"}`}
         >
           沒有
         </button>
@@ -457,7 +479,7 @@ function Toggle({ label, value, onChange }: { label: string; value: boolean | nu
           type="button"
           aria-pressed={value === true}
           onClick={() => onChange(true)}
-          className={`h-8 rounded-full px-3 text-xs ${value === true ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"}`}
+          className={`h-10 min-w-12 whitespace-nowrap rounded-full px-3 text-xs ${value === true ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"}`}
         >
           有
         </button>
@@ -474,27 +496,18 @@ function ChildrenAges({ ages, onChange }: { ages: number[]; onChange: (ages: num
   const label = (a: number) => (a === 0 ? "未滿 1 歲" : a >= 25 ? "25 歲以上" : `${a} 歲`);
   return (
     <div>
-      <div className="flex flex-wrap gap-2">
-        {options.map((a) => (
-          <button
-            key={a}
-            type="button"
-            onClick={() => onChange([...ages, a].sort((x, y) => x - y))}
-            className="h-9 rounded-full border border-border bg-card px-3 text-xs hover:border-primary/50"
-          >
-            {label(a)}
-          </button>
-        ))}
-      </div>
-      {ages.length > 0 && (
-        <div className="mt-2 flex flex-wrap items-center gap-1.5 text-xs">
-          <span className="text-muted-foreground">已加入：</span>
+      {/* 已加入的放在按鈕上面：放下面會被底部固定的按鈕列蓋住，看不出有沒有加成功 */}
+      {ages.length === 0 ? (
+        <p className="mb-2 text-xs text-muted-foreground">每個小孩點一次年齡；同年齡有兩個就點兩次。</p>
+      ) : (
+        <div className="mb-3 flex flex-wrap items-center gap-1.5 text-xs">
+          <span className="text-muted-foreground">已加入（點一下移除）：</span>
           {ages.map((a, i) => (
             <button
               key={`${a}-${i}`}
               type="button"
               onClick={() => onChange(ages.filter((_, j) => j !== i))}
-              className="rounded-full bg-primary/10 px-2.5 py-1 text-primary"
+              className="h-9 rounded-full bg-primary/10 px-3 text-primary"
               aria-label={`移除 ${label(a)}`}
             >
               {label(a)} ×
@@ -502,6 +515,25 @@ function ChildrenAges({ ages, onChange }: { ages: number[]; onChange: (ages: num
           ))}
         </div>
       )}
+      <div className="flex flex-wrap gap-2">
+        {options.map((a) => {
+          const n = ages.filter((x) => x === a).length;
+          return (
+            <button
+              key={a}
+              type="button"
+              onClick={() => onChange([...ages, a].sort((x, y) => x - y))}
+              aria-pressed={n > 0 ? true : undefined}
+              className={`h-9 rounded-full border px-3 text-xs ${
+                n > 0 ? "border-primary bg-primary/10 text-primary" : "border-border bg-card hover:border-primary/50"
+              }`}
+            >
+              {label(a)}
+              {n > 1 && ` ×${n}`}
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }

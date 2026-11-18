@@ -38,6 +38,7 @@ npx cap sync android && cd android && ./gradlew assembleDebug
 - `android:allowBackup` 維持 `false`；隱私權政策寫的是資料不離開裝置、解除安裝即刪除。
 - 特定身分有較低年齡門檻（原住民 55 歲）時用 `conditions.lower_age_for`，不要把 `min_age` 寫死成一般門檻就算了。
 - 硬條件在條文裡有例外（退保後 1 年內仍可領、小面積共有房屋不算有房）時用 `conditions.exceptions`；條件只適用方案其中一類對象時整個拿掉。寫法見 `research/README.md`。
+- 每個申請人都要符合、但試算沒問的硬條件（勞保年資滿 15 年、舊車出廠滿 10 年、非自願離職）用 `conditions.also_requires`，不要只寫在 `other`：只寫在 `other` 的話，有勞保的 27 歲使用者會看到紓困貸款「條件相符」。要先買車、買家電才領得到的補助標 `needs_purchase`。
 - 期限：跨年度的一次性期間要填 `deadline.end_year`；各縣市、各校自訂或每年不固定的用 `type: "varies"`，不要填概估的月日（寫法見 `research/README.md`）。
 - 期限填送件的最後一天；購買、發票、報廢的最後一天寫在 `deadline.extra_lines`。經費用完就停的項目設 `deadline.budget_limited`，確認還在受理才更新 `last_checked`。
 - 從申請日或文件備齊當月起算的補助用 `late_consequence.apply_now`：不要給它「截止前 30、14、3 天」的預設提醒（`reminderPreset`），那會把人帶到最後才送。`late_consequence` 與 `year_end_notice` 要有法條或 gov.tw 來源，`data:build` 會擋。

@@ -68,7 +68,9 @@ export type ConditionExceptionKey =
   | "is_unemployed"
   | "is_employed"
   | "income"
-  | "vehicle";
+  | "vehicle"
+  /** 有車，但車種不對（只有機車、項目限汽車）。和 vehicle（完全沒有車）分開：150cc 以上機車要繳牌照稅這種例外救不了沒有車的人 */
+  | "vehicle_kind";
 
 export interface SubsidyConditions {
   min_age?: number | null;
@@ -96,6 +98,30 @@ export interface SubsidyConditions {
   owns_vehicle?: string | null;
   /** 試算精靈沒有問的身分（原住民、新住民、農民、純電動車車主…）。有填時引擎一律歸「可能符合」並請使用者自行確認 */
   special_identity?: string | null;
+  /**
+   * 每個申請人都要符合、但試算沒有問的硬條件（勞保年資滿 15 年、舊車出廠滿 10 年、非自願離職）。
+   * 有填時不會列為條件相符，改列「要再確認」並把這一句寫出來。
+   * 和 special_identity 的差別：那是少數人才有的身分，結果頁收成一行；這是多數人都可能符合、只是 app 判斷不了的條件，
+   * 所以照常列出來。和 other 的差別：other 是補充說明，不影響判斷。
+   * 只在「對上試算問的條件的人，有不少其實不符合」時用，寫一個短句（40 字以內）。
+   */
+  also_requires?: string | null;
+  /**
+   * 列冊低收、中低收入戶不用再審收入與財產（身障生活補助、中低收入老人生活津貼的條文都這樣寫）。
+   * 使用者填了低收或中低收時，所得門檻那一條直接算對上，不再叫他自己核對全家所得。
+   */
+  low_income_skips_income_test?: boolean | null;
+  /**
+   * 符合其中一種身分就適用（健保費補助：低收、中低收、身心障礙任一）。對上任何一種就列為條件相符；
+   * 都沒對上時不判不符合：這類項目通常還有試算沒問的對象。
+   */
+  any_of?: Array<"low_income" | "is_disabled"> | null;
+  /**
+   * 家長查詢時，子女幾歲以上才提示「子女在學的話適用」。預設 6 歲。
+   * 高中職免學費、就學貸款填 15；大專的補助填 17：7 歲小孩的家長不需要看到就學貸款列在「要再確認」。
+   * 這是篩提示用的年齡，不是資格門檻。
+   */
+  student_child_min_age?: number | null;
   /**
    * 特定身分適用較低的年齡門檻（例如敬老卡一般 65 歲、原住民 55 歲）。
    * 精靈沒有問這些身分，年齡落在兩個門檻之間的人歸「可能符合」，不直接判成不符合。

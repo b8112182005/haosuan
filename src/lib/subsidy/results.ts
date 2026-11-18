@@ -19,7 +19,9 @@ import { CATEGORY_ORDER, type SubsidyCategory } from "./types";
  * - match：填的條件對得上，而且至少對上一條
  * - check：沒有一條確定不符，但有條件沒填，或要用全家所得、財產、報稅級距自己核對
  * - situational：資料裡沒有年齡、縣市、身分這類能比對的門檻，遇到那個情況才用得上（職災給付、長照、買節能家電）。
- *   引擎判成 eligible，但它不是「對上你的條件」，所以不算進相符的數字
+ *   引擎判成 eligible，但它不是「對上你的條件」，所以不算進相符的數字。
+ *   要先買車、買家電才領得到的補助（needs_purchase）也歸這裡：住在新北、滿 18 歲的人對得上電動機車補助的條件，
+ *   但不買車就領不到，算成「條件相符」會把相符的數字灌水
  * - unlikely：卡在試算沒有問的身分（原住民、新住民、農民、純電動車車主），
  *   或是你不符合、只有條文的例外才適用。多數人用不到，每個分類收成一行
  * - no：至少一條確定不符
@@ -109,7 +111,7 @@ export function toRow(evaluation: Evaluation, today: LocalDate): ResultRow {
     verdict === "not_eligible"
       ? "no"
       : verdict === "eligible"
-        ? matched.length > 0
+        ? matched.length > 0 && subsidy.needs_purchase !== true
           ? "match"
           : "situational"
         : special || excepted > 0
@@ -239,6 +241,16 @@ export function buildResultsView(evaluations: Evaluation[], today: LocalDate): R
   };
 }
 
+/**
+ * 清單一列只有兩行的空間。所得門檻的原文常是各縣市金額的對照表，截成兩行會停在某個縣市的數字中間，
+ * 等於什麼都沒說；清單上只講要確認的是哪一種東西，金額與全文在項目頁。
+ */
+function shortUnknown(text: string): string {
+  if (text.startsWith("所得或財產門檻：")) return "全家所得或財產有沒有超過門檻，金額在項目頁";
+  if (text.startsWith("綜所稅稅率門檻：")) return "報稅適用的稅率有沒有超過門檻，規定在項目頁";
+  return text;
+}
+
 export interface ReasonLine {
   tone: "ok" | "ask" | "no" | "plain";
   text: string;
@@ -250,9 +262,10 @@ export function reasonLine(row: ResultRow): ReasonLine {
   if (row.status === "no") return { tone: "no", text: failed[0] ?? "條件不符" };
   if (row.status === "match") return { tone: "ok", text: `相符：${matched.join("、")}` };
   if (row.status === "situational") {
+    if (subsidy.needs_purchase === true && matched.length > 0) return { tone: "plain", text: `買了才領得到。你符合：${matched.join("、")}` };
     const who = subsidy.eligibility?.[0]?.trim();
     return { tone: "plain", text: who ? `對象：${who}` : "沒有年齡、縣市、身分門檻" };
   }
   const rest = unknown.length - 1;
-  return { tone: "ask", text: `要確認：${unknown[0] ?? "申請條件"}${rest > 0 ? `（另有 ${rest} 條）` : ""}` };
+  return { tone: "ask", text: `要確認：${shortUnknown(unknown[0] ?? "申請條件")}${rest > 0 ? `（另有 ${rest} 條）` : ""}` };
 }

@@ -74,6 +74,18 @@ describe("toRow：一項補助在結果頁算哪一種", () => {
     expect(rowOf(makeSummary({ conditions: { other: "購買一級能效家電" } }), adult).status).toBe("situational");
   });
 
+  it("要先買東西才領得到的補助：對上條件也只算遇到才用得上，原因寫買了才領得到", () => {
+    const row = rowOf(makeSummary({ conditions: { min_age: 18 }, needs_purchase: true }), adult);
+    expect(row.status).toBe("situational");
+    expect(reasonLine(row)).toEqual({ tone: "plain", text: "買了才領得到。你符合：18 歲以上" });
+  });
+
+  it("試算沒問的硬條件（also_requires）：要確認，照常列出來，不收成一行", () => {
+    const row = rowOf(makeSummary({ conditions: { min_age: 18, also_requires: "勞保年資合計滿 15 年" } }), adult);
+    expect(row.status).toBe("check");
+    expect(reasonLine(row).text).toBe("要確認：勞保年資合計滿 15 年（試算沒有問，請自己確認）");
+  });
+
   it("有條件沒填：要確認", () => {
     expect(rowOf(makeSummary({ conditions: { must_rent: true } }), adult).status).toBe("check");
   });
@@ -143,14 +155,37 @@ describe("buildResultsView：用內建資料跑一組條件", () => {
     expect(benefitIds).not.toContain("rental-standard-lease-tenant-protections");
     expect(benefitIds).not.toContain("vehicle-license-tax-april");
     expect(ids(view.info.rows)).toContain("rental-standard-lease-tenant-protections");
-    expect(ids(view.obligations.rows)).toContain("vehicle-license-tax-april");
+    expect(ids(view.obligations.rows)).toContain("income-tax-filing-2026");
+    // 這個人只有機車：150cc 以下免徵牌照稅，所以牌照稅收在「少數情形才跟你有關」，不直接列出來
+    expect(ids(view.obligations.unlikely)).toContain("vehicle-license-tax-april");
     for (const g of view.benefits) expect(g.rows.every((r) => r.evaluation.subsidy.kind === "benefit")).toBe(true);
   });
 
   it("租金補貼要看全家所得：列在居住分類的要確認，不會被擠到另一張清單", () => {
     const row = group("housing")?.rows.find((r) => r.evaluation.subsidy.id === "rent-subsidy-central-300b");
     expect(row?.status).toBe("check");
-    expect(reasonLine(row as ResultRow).text).toContain("要確認：");
+    // 清單上只講要確認什麼；各縣市的金額對照表在項目頁，截成兩行會停在某個數字中間
+    expect(reasonLine(row as ResultRow).text).toBe("要確認：全家所得或財產有沒有超過門檻，金額在項目頁");
+    // 逐條比對（項目頁）仍然拿得到全文
+    expect(row?.evaluation.unknown[0]).toContain("每人每月平均所得");
+  });
+
+  it("試算沒問的硬條件：紓困貸款要勞保年資 15 年，有勞保的 32 歲不算條件相符", () => {
+    const row = group("labor")?.rows.find((r) => r.evaluation.subsidy.id === "labor-insurance-relief-loan");
+    expect(row?.status).toBe("check");
+    expect(reasonLine(row as ResultRow).text).toBe("要確認：勞保年資滿 15 年（試算沒有問，請自己確認）");
+  });
+
+  it("還沒開辦的成長津貼列在要確認，不算條件相符", () => {
+    const row = group("family")?.rows.find((r) => r.evaluation.subsidy.id === "child-growth-allowance");
+    expect(row?.status).toBe("check");
+    expect(reasonLine(row as ResultRow).text).toContain("還沒開辦");
+  });
+
+  it("要先買車才領得到的新北市電動機車補助：遇到才用得上，不算條件相符", () => {
+    const row = group("energy_transport")?.rows.find((r) => r.evaluation.subsidy.id === "new-taipei-electric-scooter-subsidy-2026");
+    expect(row?.status).toBe("situational");
+    expect(reasonLine(row as ResultRow).text).toContain("買了才領得到");
   });
 
   it("原住民住宅補助、在職者的失業給付收在分類最後那一行", () => {
@@ -268,6 +303,13 @@ describe("reasonLine：每一列底下那一行", () => {
   it("相符：列出對上的條件", () => {
     const line = reasonLine(rowOf(makeSummary({ city: "新北市", conditions: { min_age: 18 } }), adult));
     expect(line).toEqual({ tone: "ok", text: "相符：設籍或居住新北市、18 歲以上" });
+  });
+
+  it("所得門檻與稅率門檻在清單上用短句，其他原因照原文", () => {
+    const household = makeSummary({ conditions: { income_limit_type: "household_monthly", income_limit_note: "台北市 62,232 元、新北市 53,250 元、桃園市 51,558 元" } });
+    expect(reasonLine(rowOf(household, adult)).text).toBe("要確認：全家所得或財產有沒有超過門檻，金額在項目頁");
+    const taxRate = makeSummary({ conditions: { income_limit_type: "tax_rate", income_limit_value: 20, income_limit_note: "適用稅率 20% 以上不能扣" } });
+    expect(reasonLine(rowOf(taxRate, adult)).text).toBe("要確認：報稅適用的稅率有沒有超過門檻，規定在項目頁");
   });
 
   it("要確認：第一條，其餘只講還有幾條", () => {

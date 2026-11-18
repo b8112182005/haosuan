@@ -1,7 +1,7 @@
 {
   "version": "2026-11-19",
-  "generated_at": "2026-11-18T23:16:23.390Z",
-  "hash": "72901fd559305cd4",
+  "generated_at": "2026-11-18T23:33:14.597Z",
+  "hash": "b5fa56cc4e9f0d48",
   "items": [
     {
       "id": "rent-subsidy-central-300b",
@@ -555,7 +555,8 @@
         "must_rent": null,
         "owns_vehicle": null,
         "cities": null,
-        "other": "屋齡30年以上的4～6層公寓或6層以下透天；須先做結構安全性能評估；公寓須管委會決議或全體所有權人同意；使用國產建材"
+        "other": "屋齡30年以上的4～6層公寓或6層以下透天；須先做結構安全性能評估；公寓須管委會決議或全體所有權人同意；使用國產建材",
+        "also_requires": "屋齡 30 年以上的 4～6 層公寓或 6 層以下透天"
       },
       "documents": [
         "申請補助計畫書（含摘要表、補助項目、條件檢核表）",
@@ -7264,8 +7265,11 @@
         "no_home_ownership": null,
         "must_rent": null,
         "must_own_home": null,
-        "owns_vehicle": "汽車或150cc以上機車",
-        "other": "以每年開徵日車籍登記所有人為納稅義務人；年中過戶或報廢按日比例計算。"
+        "owns_vehicle": "汽車",
+        "other": "以每年開徵日車籍登記所有人為納稅義務人；年中過戶或報廢按日比例計算。",
+        "exceptions": {
+          "vehicle_kind": "只有機車的人：150cc 以上的機車才課牌照稅，150cc 以下免徵"
+        }
       },
       "documents": [
         "繳款書（紙本或電子繳款書）；未收到可持車牌號碼＋身分證字號線上查繳或申請補發",
@@ -7793,7 +7797,8 @@
         "must_rent": null,
         "must_own_home": null,
         "owns_vehicle": null,
-        "other": "被照顧者須為衛福部公告之須長期照顧身心失能者（聘僱外籍家庭看護工、長照需要等級第2級以上、或入住住宿式機構全年達90日等情形之一）。"
+        "other": "被照顧者須為衛福部公告之須長期照顧身心失能者（聘僱外籍家庭看護工、長照需要等級第2級以上、或入住住宿式機構全年達90日等情形之一）。",
+        "special_identity": "本人、配偶或受扶養親屬是須長期照顧的失能者"
       },
       "documents": [
         "聘僱外籍家庭看護工者：課稅年度有效的聘僱許可函影本",
@@ -9074,7 +9079,8 @@
         "owns_vehicle": null,
         "cities": null,
         "low_income": null,
-        "other": "勞保年資滿15年；未領過老年給付；未欠保費；未借過或已還清前次紓困貸款"
+        "other": "勞保年資滿15年；未領過老年給付；未欠保費；未借過或已還清前次紓困貸款",
+        "also_requires": "勞保年資滿 15 年"
       },
       "documents": [
         "網路申請：免附紙本文件，以土地銀行入口網站線上驗證身分、簽約及對保",
@@ -9595,7 +9601,8 @@
         "other": "非自願離職；離職前3年就保年資滿1年；滿45歲或身心障礙者給付期間延長為9個月",
         "exceptions": {
           "is_unemployed": "領取期間有打工，月收入沒超過基本工資仍可以領，再認定時要主動申報"
-        }
+        },
+        "also_requires": "非自願離職，離職前 3 年內就保年資合計滿 1 年"
       },
       "documents": [
         "失業（再）認定、失業給付申請書及給付收據（就業服務站提供）",
@@ -10118,7 +10125,8 @@
         "owns_vehicle": null,
         "cities": null,
         "low_income": null,
-        "other": "非自願離職；由公立就服機構安排的全日制職訓"
+        "other": "非自願離職；由公立就服機構安排的全日制職訓",
+        "also_requires": "非自願離職，並由公立就服機構安排參加全日制職訓"
       },
       "documents": [
         "職業訓練生活津貼申請書及給付收據（訓練單位協助填寫）",
@@ -10444,7 +10452,9 @@
         "no_home_ownership": null,
         "owns_vehicle": null,
         "cities": null,
-        "other": "前學期成績平均60分以上；修業年限內；不得與其他政府學雜費減免同時請領"
+        "other": "前學期成績平均60分以上；修業年限內；不得與其他政府學雜費減免同時請領",
+        "also_requires": "就讀大專校院（空中大學、在職專班不算）",
+        "student_child_min_age": 17
       },
       "documents": [
         "學校申請表（多數學校從學務系統填寫列印後簽名）",
@@ -10767,7 +10777,9 @@
         "no_home_ownership": null,
         "owns_vehicle": null,
         "cities": null,
-        "other": "私立大專學士班／副學士班在學生；研究生不適用"
+        "other": "私立大專學士班／副學士班在學生；研究生不適用",
+        "also_requires": "就讀私立大專校院的學士班或副學士班",
+        "student_child_min_age": 17
       },
       "documents": [
         "不需任何文件，學校依學籍資料自動認定"
@@ -10913,7 +10925,8 @@
         "must_rent": null,
         "owns_vehicle": null,
         "cities": null,
-        "other": "限高級中等以上學校在學生；延修、重修、補修不減免。"
+        "other": "限高級中等以上學校在學生；延修、重修、補修不減免。",
+        "student_child_min_age": 15
       },
       "documents": [
         "學校提供的學雜費減免申請表",
@@ -11070,7 +11083,8 @@
         "no_home_ownership": null,
         "owns_vehicle": null,
         "cities": null,
-        "other": "事業設立登記未滿8年且符合中小企業認定標準；負責人18～45歲"
+        "other": "事業設立登記未滿8年且符合中小企業認定標準；負責人18～45歲",
+        "special_identity": "登記未滿 8 年的中小企業負責人或出資人"
       },
       "documents": [
         "創業貸款計畫書（小額申請可用申請表代替，門檻金額未經官方頁面確認）",
@@ -11402,7 +11416,8 @@
         "owns_vehicle": null,
         "cities": null,
         "other": "限具原住民身分的大專學生（不含研究所、五專前三年、在職專班、延修生）。每校有名額，依前一學期班級排名百分比擇優；大一上學期用高三上下學期平均成績審查。",
-        "special_identity": "原住民大專學生"
+        "special_identity": "原住民大專學生",
+        "student_child_min_age": 17
       },
       "documents": [
         "線上申請後列印的申請表（本人親自簽名）",
@@ -11570,7 +11585,8 @@
         "no_home_ownership": null,
         "owns_vehicle": null,
         "cities": null,
-        "other": "具正式學籍；延修生、在職專班部分措施不適用"
+        "other": "具正式學籍；延修生、在職專班部分措施不適用",
+        "student_child_min_age": 15
       },
       "documents": [
         "註冊繳費單（學雜費單、住宿費單，先不要繳費）",
@@ -11768,7 +11784,9 @@
         "no_home_ownership": null,
         "owns_vehicle": null,
         "cities": null,
-        "other": "中華民國國籍；非重讀；非私校獨立招生入學"
+        "other": "中華民國國籍；非重讀；非私校獨立招生入學",
+        "also_requires": "就讀高中職（含進修部），大專不適用",
+        "student_child_min_age": 15
       },
       "documents": [
         "不需文件，學校依學籍資料認定",
@@ -11922,7 +11940,8 @@
         "no_home_ownership": null,
         "owns_vehicle": null,
         "cities": null,
-        "other": "以團隊／法人名義申請；計畫主持人45歲以下且在地蹲點5年以上；團隊青年成員20～45歲"
+        "other": "以團隊／法人名義申請；計畫主持人45歲以下且在地蹲點5年以上；團隊青年成員20～45歲",
+        "special_identity": "以公司、行號或社團法人名義申請，計畫主持人在當地經營 5 年以上"
       },
       "documents": [
         "申請計畫書（指定格式，本文以10頁為原則，計畫名稱限10字且與線上報名一致）",
@@ -12743,7 +12762,8 @@
         "income_limit_value": null,
         "income_limit_note": null,
         "cities": null,
-        "other": "必須是就業保險被保險人、非自願離職並經公立就業服務機構辦理失業認定、正在領失業給付或職訓生活津貼。"
+        "other": "必須是就業保險被保險人、非自願離職並經公立就業服務機構辦理失業認定、正在領失業給付或職訓生活津貼。",
+        "also_requires": "正在領失業給付或職訓生活津貼"
       },
       "documents": [
         "不需另外為健保補助準備文件；先完成失業給付申請（離職證明、身分證、存摺影本、眷屬資料）。",
@@ -14010,7 +14030,11 @@
         "income_limit_value": null,
         "income_limit_note": "依社會救助法低收入戶/中低收入戶資格，或身心障礙證明等級；資格由戶籍地公所或縣市政府認定後，名單每月送健保署。",
         "cities": null,
-        "other": "符合其中一種身分即可；同一筆保費不會重複補助。"
+        "other": "符合其中一種身分即可；同一筆保費不會重複補助。",
+        "any_of": [
+          "low_income",
+          "is_disabled"
+        ]
       },
       "documents": [
         "不需向健保署提出申請，由補助機關（縣市政府社會局處、公所）每月提供名單給健保署。",
@@ -14559,7 +14583,8 @@
         "no_home_ownership": null,
         "owns_vehicle": null,
         "cities": null,
-        "other": "存款＋投資：1人250萬元以下，每增1人加25萬元；不動產依縣市公告限額；183日居住規定"
+        "other": "存款＋投資：1人250萬元以下，每增1人加25萬元；不動產依縣市公告限額；183日居住規定",
+        "low_income_skips_income_test": true
       },
       "documents": [
         "申請書（區公所提供）",
@@ -14940,7 +14965,8 @@
         "no_home_ownership": null,
         "owns_vehicle": null,
         "cities": null,
-        "other": "存款＋有價證券：1人200萬元以下，每增1人加25萬元；土地房屋合計770萬元以下（臺灣省不動產限額2倍，115年）。未被政府補助安置機構。"
+        "other": "存款＋有價證券：1人200萬元以下，每增1人加25萬元；土地房屋合計770萬元以下（臺灣省不動產限額2倍，115年）。未被政府補助安置機構。",
+        "low_income_skips_income_test": true
       },
       "documents": [
         "申請表（區公所提供）",
@@ -17999,12 +18025,16 @@
         "must_own_home": null,
         "must_rent": null,
         "no_home_ownership": null,
-        "owns_vehicle": "出廠滿 5 年的自用小客車、小客貨兩用車、大型重型機車",
+        "owns_vehicle": "自用小客車、小客貨兩用車",
         "income_limit_type": "none",
         "income_limit_value": null,
         "income_limit_note": null,
         "cities": null,
-        "other": "以出廠年月計算車齡，不是以購買或領牌日。"
+        "other": "以出廠年月計算車齡，不是以購買或領牌日。",
+        "also_requires": "車子出廠滿 5 年（未滿 5 年免驗）",
+        "exceptions": {
+          "vehicle_kind": "大型重型機車、駕艙機車也要定期檢驗；一般機車不用，改做排氣定檢"
+        }
       },
       "documents": [
         "行車執照",
@@ -18475,7 +18505,8 @@
         "income_limit_value": null,
         "income_limit_note": null,
         "cities": null,
-        "other": "電動機車是否免檢，本次未在官方頁看到，未驗證。"
+        "other": "電動機車是否免檢，本次未在官方頁看到，未驗證。",
+        "also_requires": "機車出廠滿 5 年（未滿 5 年不用驗）"
       },
       "documents": [
         "行車執照（定檢站核對車號與發照月份用；是否必帶本次未驗證）"
@@ -18631,7 +18662,8 @@
         "no_home_ownership": null,
         "owns_vehicle": "持有出廠滿 10 年以上的燃油機車或汽油小客（貨）車、柴油大客貨車，並完成報廢回收",
         "cities": null,
-        "other": "報廢舊車並換購電動車或低污染新車；報廢與購車間隔符合 12 個月／6 個月規定；2026-12-31 前完成、2027-01-10 前申請"
+        "other": "報廢舊車並換購電動車或低污染新車；報廢與購車間隔符合 12 個月／6 個月規定；2026-12-31 前完成、2027-01-10 前申請",
+        "also_requires": "舊車出廠滿 10 年，並報廢後換購電動車或低污染新車"
       },
       "documents": [
         "申請人（新車實際購買人）身分證影本；公司行號附公司登記或商業登記證明",

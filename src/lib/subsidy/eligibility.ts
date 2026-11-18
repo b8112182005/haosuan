@@ -43,6 +43,11 @@ const fmt = (n: number) => n.toLocaleString("zh-TW");
 type Fail = (field: ConditionExceptionKey, text: string) => void;
 
 function checkIncome(c: SubsidyConditions, p: Profile, out: Evaluation, fail: Fail) {
+  // 條文寫明列冊低收、中低收入戶免審收入與財產：這種人不該被叫去核對全家所得
+  if (c.low_income_skips_income_test === true && (p.lowIncome === "low" || p.lowIncome === "mid_low")) {
+    out.matched.push(`列冊${p.lowIncome === "low" ? "低收入戶" : "中低收入戶"}，免再審收入與財產`);
+    return;
+  }
   const type = (c.income_limit_type ?? "").toLowerCase();
   if (c.income_limit_value == null) {
     // 資料寫了門檻類型（每人每月平均所得、家庭總收入…）卻沒有可比對的數字：門檻確實存在，app 判斷不了，
@@ -169,8 +174,8 @@ function checkVehicle(c: SubsidyConditions, p: Profile, out: Evaluation, fail: F
   }
   const hasScooter = p.ownsVehicle === "scooter" || p.ownsVehicle === "both";
   const hasCar = p.ownsVehicle === "car" || p.ownsVehicle === "both";
-  if (wantsScooter && !wantsCar && !hasScooter) fail("vehicle", "限機車車主，你只有汽車");
-  else if (wantsCar && !wantsScooter && !hasCar) fail("vehicle", "限汽車車主，你只有機車");
+  if (wantsScooter && !wantsCar && !hasScooter) fail("vehicle_kind", "限機車車主，你只有汽車");
+  else if (wantsCar && !wantsScooter && !hasCar) fail("vehicle_kind", "限汽車車主，你只有機車");
   else out.matched.push(label);
 }
 
@@ -224,7 +229,7 @@ function checkStudent(c: SubsidyConditions, p: Profile, out: Evaluation, fail: F
     out.matched.push("在學學生");
     return;
   }
-  const schoolAgeKids = p.childrenAges.filter((a) => a >= 6 && a <= 24);
+  const schoolAgeKids = p.childrenAges.filter((a) => a >= (c.student_child_min_age ?? 6) && a <= 24);
   if (schoolAgeKids.length > 0) {
     out.unknown.push(`限在學學生：你的子女（${schoolAgeKids.join("、")} 歲）在學的話適用`);
     return;
@@ -284,7 +289,11 @@ export function evaluate<S extends SubsidySummary>(subsidy: S, profile: Profile,
   // 方案結束、期限已過與地方項目的縣市是沒有例外的硬條件，直接記在 failed
   if (subsidy.status_2026 === "ended") {
     out.failed.push("方案已結束");
-  } else if (today) {
+  } else if (subsidy.status_2026 === "pending") {
+    // 還沒開辦的項目（成長津貼）不能列為條件相符：使用者會以為現在就能去申請
+    out.unknown.push("還沒開辦，申請方式與日期公告後才能申請");
+  }
+  if (subsidy.status_2026 !== "ended" && today) {
     const deadline = resolveSubsidyDeadline(subsidy, today);
     if (deadline.kind === "ended") out.failed.push(`申請期限已過（${deadline.label}）`);
   }
@@ -328,9 +337,21 @@ export function evaluate<S extends SubsidySummary>(subsidy: S, profile: Profile,
   const needUnemployed = c.is_unemployed === true || c.is_employed === false;
   checkBool("is_unemployed", needUnemployed, profile.isUnemployed, { ok: "目前沒有工作", fail: "限目前沒有工作（待業或失業）的人", unknown: "限待業或失業中，你沒填" }, out, fail);
   if (c.is_employed === true) {
-    if (profile.isUnemployed === null) out.unknown.push("限在職者，你沒填");
-    else if (profile.isUnemployed) fail("is_employed", "限在職者，你目前失業中");
-    else out.matched.push("在職");
+    // 「沒有待業或失業」不等於受僱：沒收入也沒勞保的學生、全職照顧家人的人都會答「沒有」。
+    // 有收入或有勞保才算在職，否則列要確認，不然全職媽媽會看到產檢假「條件相符」
+    const working = (profile.monthlyIncome ?? 0) > 0 || profile.hasLaborInsurance === true;
+    if (profile.isUnemployed === true) fail("is_employed", "限在職者，你目前失業中");
+    else if (working) out.matched.push("在職");
+    else if (profile.isUnemployed === null && profile.monthlyIncome === null && profile.hasLaborInsurance === null) out.unknown.push("限在職者，你沒填");
+    else out.unknown.push("限受僱的在職者；你沒有收入也沒有勞保，請自己確認");
+  }
+
+  // 符合其中一種身分就適用：對上的列出來；都沒對上時不動（這類項目還有試算沒問的對象）
+  if (c.any_of && c.any_of.length > 0) {
+    if (c.any_of.includes("low_income") && (profile.lowIncome === "low" || profile.lowIncome === "mid_low")) {
+      out.matched.push(profile.lowIncome === "low" ? "低收入戶" : "中低收入戶");
+    }
+    if (c.any_of.includes("is_disabled") && profile.isDisabled === true) out.matched.push("領有身心障礙證明");
   }
 
   // 收入與車輛
@@ -340,6 +361,12 @@ export function evaluate<S extends SubsidySummary>(subsidy: S, profile: Profile,
   // 精靈沒有問的身分：無法確認，但也不能當成「條件相符」（否則老農津貼會出現在每個長者的相符清單）
   if (c.special_identity && c.special_identity.trim()) {
     out.unknown.push(`限${c.special_identity.trim()}：這一題 app 沒有問，請自行確認`);
+  }
+
+  // 每個申請人都要符合、但試算沒問的硬條件（年資、車齡、非自願離職）：不寫出來的話，27 歲的人會看到
+  // 要勞保年資 15 年的紓困貸款「條件相符」
+  if (c.also_requires && c.also_requires.trim()) {
+    out.unknown.push(`${c.also_requires.trim()}（試算沒有問，請自己確認）`);
   }
 
   // 無法機器判斷的補充條件：只提示，不影響 verdict

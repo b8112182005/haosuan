@@ -79,7 +79,7 @@ function officialSourcesOk(sources, minGov) {
   return hosts.filter((h) => h.endsWith(".gov.tw") || h.endsWith(".gov.taipei")).length >= minGov;
 }
 const okDay = (v) => Number.isInteger(v) && v >= 1 && v <= 31;
-const EXCEPTION_KEYS = ["age", "must_rent", "no_home_ownership", "must_own_home", "children", "is_pregnant_or_newborn", "is_married", "has_labor_insurance", "has_national_pension", "is_disabled", "low_income", "is_student", "is_unemployed", "is_employed", "income", "vehicle"];
+const EXCEPTION_KEYS = ["age", "must_rent", "no_home_ownership", "must_own_home", "children", "is_pregnant_or_newborn", "is_married", "has_labor_insurance", "has_national_pension", "is_disabled", "low_income", "is_student", "is_unemployed", "is_employed", "income", "vehicle", "vehicle_kind"];
 const DEADLINE_TYPES = ["fixed_annual", "rolling", "window", "budget_until_exhausted", "event_based", "varies", "ended", "unknown"];
 const CHANNEL_TYPES = ["online", "office", "mail", "phone", "app", "bank", "other"];
 const REQUIRED = [
@@ -174,6 +174,13 @@ function validateItem(item, origin) {
     );
     check(officialSourcesOk(yn.sources, 1), `${where}: year_end_notice 至少要一筆 gov.tw 來源`);
   }
+  const also = item.conditions?.also_requires;
+  check(also == null || (typeof also === "string" && also.trim() !== "" && also.length <= 40), `${where}: conditions.also_requires 要是 40 字以內的短句（會直接顯示在試算結果的一行裡）`);
+  for (const key of item.conditions?.any_of ?? []) {
+    check(["low_income", "is_disabled"].includes(key), `${where}: conditions.any_of 只能放 low_income、is_disabled，收到「${key}」`);
+  }
+  const childMin = item.conditions?.student_child_min_age;
+  check(childMin == null || (Number.isInteger(childMin) && childMin >= 6 && childMin <= 24), `${where}: conditions.student_child_min_age 要是 6～24 的整數`);
   // conditions.exceptions 的鍵打錯字會靜靜失效，在這裡擋
   for (const key of Object.keys(item.conditions?.exceptions ?? {})) {
     check(EXCEPTION_KEYS.includes(key), `${where}: conditions.exceptions 的鍵「${key}」不在清單`);
