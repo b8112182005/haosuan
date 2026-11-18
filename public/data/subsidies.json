@@ -1,7 +1,7 @@
 {
-  "version": "2026-11-18",
-  "generated_at": "2026-11-18T15:53:33.480Z",
-  "hash": "f8f67c0be434e5d8",
+  "version": "2026-11-19",
+  "generated_at": "2026-11-18T17:06:40.459Z",
+  "hash": "f7368057922c46eb",
   "items": [
     {
       "id": "rent-subsidy-central-300b",
@@ -338,7 +338,8 @@
           }
         ]
       },
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "public-welfare-landlord-tax-benefits",
@@ -504,7 +505,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "old-house-renewal-repair-subsidy",
@@ -690,7 +692,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "rental-standard-lease-tenant-protections",
@@ -881,7 +884,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "info"
     },
     {
       "id": "social-housing-sublet-management",
@@ -1072,7 +1076,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "central-social-housing-rental",
@@ -1267,7 +1272,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "youth-safe-home-loan-3",
@@ -1468,7 +1474,8 @@
       "verified_at": "2026-11-11",
       "verification_summary": "讀了財政部國庫署青安專區（htmlList/71）、青安3.0貸款原則（singlehtml/108，115-07-28更新）與問答集（singlehtml/109）三頁，三頁都回 HTTP 200。額度1,000／1,200／1,500萬元、最高8成、利率1.72%＋0.555%與補貼退場級距、申辦期間115年8月1日至118年7月31日（撥款最遲118年10月31日）都和資料一致，115年下半年仍在受理，不需修正。",
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "indigenous-housing-subsidies",
@@ -1645,7 +1652,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "rental-dispute-complaint-channels",
@@ -1835,7 +1843,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "info"
     },
     {
       "id": "home-purchase-loan-interest-subsidy",
@@ -2041,7 +2050,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "home-repair-loan-interest-subsidy",
@@ -2222,7 +2232,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "rent-subsidy-taipei-topup",
@@ -2403,7 +2414,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "rent-subsidy-tainan-topup",
@@ -2552,7 +2564,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "rent-subsidy-taoyuan-topup",
@@ -2710,7 +2723,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "rent-subsidy-kaohsiung-childcare",
@@ -2886,7 +2900,8 @@
       "verified_at": "2026-11-18",
       "verification_summary": "高雄這項是 event_based，app 本來就顯示「依事件計算期限」，不會推算日期，所以只在 note 補「116 年度是否續辦、日期未公告」。查不到 116 年資料。",
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "rent-subsidy-new-taipei-youth",
@@ -3067,7 +3082,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "rent-subsidy-taichung-childcare",
@@ -3236,7 +3252,8 @@
       "verified_at": "2026-11-18",
       "verification_summary": "搜尋 116 年度臺中育兒租金補貼公告，只查到 115 年度（1/1 至 12/31）；加 start_year/end_year 2026 並改 window，2027-01-02 起顯示已截止；note 加「116 年度是否續辦、日期未公告」。",
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "child-growth-allowance",
@@ -3353,7 +3370,8 @@
       "verified_at": "2026-11-18",
       "verification_summary": "看了行政院院會議案頁、衛福部2026-05-20與2026-08-17新聞稿、總統府2026-08-17新聞稿：金額、年齡分段、可與育兒津貼疊加、條例未公布都有原文；申請方式與開始日期沒有原文。",
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "preschool-fee-cap-2-6",
@@ -3512,7 +3530,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "uninsured-mother-birth-subsidy-100k",
@@ -3666,7 +3685,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "toddler-care-subsidy-0-2",
@@ -3843,7 +3863,8 @@
       "verified_at": "2026-11-18",
       "verification_summary": "下載並讀了衛福部 112-04-06 修正版托育準公共化作業要點（新北社會局轉載）第十四、十六點，deadline.note 與 faqs[0] 改成「資料備齊送達之日起算」「以半個月為單位」；pitfall 換保母 15 日找不到原文，改成要點只寫「應重新申報」，並把「換機構是否 15 日內」列入 unverified_fields。社家署原站連線被重設，沒查有無 112-04 之後的版本。",
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "disabled-preschooler-education-subsidy",
@@ -3991,7 +4012,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "childcare-allowance-0-2",
@@ -4234,7 +4256,8 @@
             "accessed": "2026-11-18"
           }
         ]
-      }
+      },
+      "kind": "benefit"
     },
     {
       "id": "disadvantaged-children-youth-living-assistance",
@@ -4427,7 +4450,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "special-circumstances-family-assistance",
@@ -4631,7 +4655,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "national-pension-maternity-benefit",
@@ -4798,7 +4823,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "labor-insurance-maternity-benefit",
@@ -4987,7 +5013,8 @@
       "verified_at": "2026-11-14",
       "verification_summary": "看了勞保局給付資訊站（child.bli.gov.tw）、勞保FAQ 給付標準頁與請領時效頁、115年加給補助活動頁，官方網址回 200。60日給付、每胎補足至10萬元、115年1月1日以後生產適用、請求權5年都與資料一致，沒有要修正的欄位；WebSearch 也沒找到116年調整或停辦的公告。",
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "taipei-public-kindergarten-enrollment-115",
@@ -5150,7 +5177,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "obligation"
     },
     {
       "id": "taipei-elementary-new-student-registration-115",
@@ -5302,7 +5330,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "obligation"
     },
     {
       "id": "maternity-taxi-subsidy",
@@ -5472,7 +5501,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "birth-incentive-taoyuan",
@@ -5619,7 +5649,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "birth-incentive-kaohsiung",
@@ -5775,7 +5806,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "birth-incentive-new-taipei",
@@ -5928,7 +5960,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "birth-incentive-hsinchu-city",
@@ -6080,7 +6113,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "birth-incentive-hsinchu-county",
@@ -6230,7 +6264,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "birth-incentive-taichung",
@@ -6370,7 +6405,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "birth-incentive-taipei",
@@ -6537,7 +6573,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "birth-incentive-tainan",
@@ -6689,7 +6726,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "road-maintenance-fee-july",
@@ -6870,7 +6908,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "obligation"
     },
     {
       "id": "income-tax-preschool-deduction",
@@ -7001,7 +7040,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "land-value-tax-november",
@@ -7177,7 +7217,8 @@
       "verified_at": "2026-11-11",
       "verification_summary": "讀了財政部稅務入口網的地價稅節稅手冊（貳、地價稅的課徵）與嘉義市、屏東縣 115 年 11 月開徵公告。稅率 2‰ 與 10‰～55‰ 六級、100 元以下免徵、115 年 11 月 1 日至 11 月 30 日繳納、滯納金每 3 日 1% 最高 10%、超商限 3 萬元，都與資料一致，不需修正。自用住宅 9 月 22 日申請期限這次沒有重讀原文。",
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "obligation"
     },
     {
       "id": "vehicle-license-tax-april",
@@ -7362,7 +7403,8 @@
       "verified_at": "2026-11-14",
       "verification_summary": "讀了財政部賦稅署「115年使用牌照稅繳納期限至4月30日」新聞稿、稅務入口網的115年開徵公告與營業車下期順延公告，以及稅務入口網節稅手冊的小客車稅額表。金額（1201-1800cc 7,120元、1801-2400cc 11,230元）、繳納期間（4月1日至4月30日）、115年仍辦理、官方網址（HTTP 200）四項都對得上，沒有修正。本次未查到116年稅額或期間變動的公告；電動車免徵至119年底與身心障礙2400cc上限不在本次核對範圍。",
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "obligation"
     },
     {
       "id": "income-tax-rent-deduction",
@@ -7526,7 +7568,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "house-tax-may",
@@ -7702,7 +7745,8 @@
       "verified_at": "2026-11-14",
       "verification_summary": "讀了財政部稅務入口網上新竹市稅務局、嘉義縣財政稅務局、臺北市稅捐處三則公告，並確認財政部房屋稅2.0專區網址回應200。稅率（全國單一自住1%、自住1.2%）、新竹市門檻185萬6,600元、5月1日至5月31日繳納（115年期順延6月1日）、6月5日起加徵滯納金都與資料一致，無需修正。非自住2.6%～4.8%等級距與116年期是否有變動，本次未讀到官方頁面，維持原本的 unverified_fields。",
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "obligation"
     },
     {
       "id": "income-tax-longterm-care-deduction",
@@ -7838,7 +7882,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "ev-license-tax-exemption",
@@ -7985,7 +8030,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "ev-commodity-tax-exemption",
@@ -8137,7 +8183,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "income-tax-refund-schedule-2026",
@@ -8295,7 +8342,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "info"
     },
     {
       "id": "income-tax-filing-2026",
@@ -8509,7 +8557,8 @@
       "verified_at": "2026-11-11",
       "verification_summary": "讀了北區國稅局花蓮分局115.4.21申報實務簡報（PDF）與賦稅署重要公告頁，114年度免稅額、扣除額、基本生活費、四個級距與申報期間115/5/1~6/1、附件6/11前都和資料一致，official_url 回 200。116年5月適用的115年度級距（61萬／138萬／277萬／519萬）只在媒體轉述中看到，賦稅署頁面僅連到行政院公報、沒有數字，仍屬未核對公報原文，維持在 unverified_fields。",
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "obligation"
     },
     {
       "id": "youth-employment-support-2026",
@@ -8678,7 +8727,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "prenatal-and-paternity-leave",
@@ -8822,7 +8872,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "minimum-wage-2026",
@@ -8970,7 +9021,8 @@
       "verified_at": "2026-11-18",
       "verification_summary": "依已確認的公報事實，補 2027 年 30,900 元／205 元與生效日到 name、amount、summary、eligibility、how_to_apply、pitfalls、faqs，115 年數字保留到 12/31；新增公報來源。其他欄位沒重查。",
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "info"
     },
     {
       "id": "labor-insurance-relief-loan",
@@ -9140,7 +9192,8 @@
       "verified_at": "2026-11-18",
       "verification_summary": "2027-01-02 顯示「今天截止」的原因：舊資料是無年份的 fixed_annual 12/15～1/2，app 把已過的這一期推算到 2026-12-15～2027-01-02。勞保局頁面確認這一期是 2025-12-15 至 2026-01-02，改 window 並填 start_year 2025、end_year 2026，之後顯示已截止；搜尋未見 116 年度公告。",
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "labor-pension-voluntary-contribution",
@@ -9314,7 +9367,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "labor-insurance-old-age-pension-age",
@@ -9485,7 +9539,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "unemployment-benefit",
@@ -9677,7 +9732,8 @@
       "verified_at": "2026-11-14",
       "verification_summary": "看了勞保局「給付標準及期限」(0005071)、「失業給付如何領？領多久？」(0017377) 與全國法規資料庫的就業保險法第11、16、25條，60%、眷屬加給10%至多20%、6或9個月、離職退保後2年內辦求職登記、第15日起算都與資料相同，official_url 回 200。每月最高27,480元官方頁面沒有直接寫，是用投保薪資上限45,800元推算，維持在 unverified_fields。縮短等待期為7日與調高就保投保薪資上限的修法截至2026-11-14查不到通過或施行的依據，之後要再追。",
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "parental-leave-allowance",
@@ -9857,7 +9913,8 @@
       "verified_at": "2026-11-14",
       "verification_summary": "看了勞保局就保FAQ（0020785，2026-10-27 更新）、勞保局彈性育嬰留停活動頁、就業保險法第24條。60%津貼＋20%補助合計8成、每人最長6個月、父母合計12個月、不足月按日數/30計算、請求權2年，都與資料相符；115年仍辦理，搜尋一次未見116年調整公告。",
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "early-reemployment-bonus",
@@ -10009,7 +10066,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "vocational-training-living-allowance",
@@ -10165,7 +10223,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "occupational-accident-and-wage-arrears",
@@ -10331,7 +10390,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "disadvantaged-college-student-grant-2026",
@@ -10498,7 +10558,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "culture-coin-youth-2026",
@@ -10655,7 +10716,8 @@
       "verified_at": "2026-11-18",
       "verification_summary": "讀文化幣官網問答頁，115 年領取使用期間 1/1 至 12/31 確認；116 年無公告。加 start_year/end_year 2026，改 window，2027-01-02 起顯示「已截止」而不是剩 363 天；常態化說法查不到原文，移到未驗證。",
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "private-college-tuition-reduction-35k",
@@ -10800,7 +10862,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "low-income-tuition-waiver",
@@ -10955,7 +11018,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "youth-startup-loan",
@@ -11127,7 +11191,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "youth-stable-employment-bonus",
@@ -11283,7 +11348,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "indigenous-college-scholarship",
@@ -11452,7 +11518,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "student-loan-2026",
@@ -11650,7 +11717,8 @@
       "verified_at": "2026-11-14",
       "verification_summary": "讀了國教署115學年度申請須知（學校轉載 PDF）、臺東大學115-1公告、中華大學轉教育部函、中央社臺銀新聞稿，金額項目、利率0.775%、受理期間8/1～9/30、對保與查調截止日都對得上，官方網址回 200。115學年度下學期（116年1～2月）臺銀受理起始日尚未查到公告，維持在 unverified_fields。",
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "senior-high-tuition-free",
@@ -11801,7 +11869,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "regional-revitalization-youth-station-2026",
@@ -11948,7 +12017,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "new-immigrant-scholarship",
@@ -12114,7 +12184,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "flu-vaccine-public-115",
@@ -12275,7 +12346,8 @@
       "verified_at": "2026-11-18",
       "verification_summary": "讀 115 年度計畫全文與疾管署新聞稿，結束條件是「至疫苗用罄止」，沒有固定結束日；deadline 維持 budget_until_exhausted，2027-01-02 顯示「額滿即止」，不含推算日期；note 補原文。",
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "hpv-vaccine-public-junior-high",
@@ -12431,7 +12503,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "cancer-screening-public",
@@ -12619,7 +12692,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "nhi-premium-subsidy-unemployed",
@@ -12771,7 +12845,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "prenatal-checkup-14-visits",
@@ -12914,7 +12989,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "adult-preventive-health-checkup",
@@ -13067,7 +13143,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "elderly-nhi-premium-subsidy",
@@ -13263,7 +13340,8 @@
       "verified_at": "2026-11-18",
       "verification_summary": "看了中央社、公視新聞網的11月6日報導、行政院新聞稿（衛福部網站轉載）、全國法規資料庫補助辦法頁。改寫summary、eligibility第4項、pitfalls第5句、faqs第2與第5題、sources、unverified_fields。查不到：行政院、衛福部、健保署對不副署法律效果的書面說明，以及修正條文是否公布。",
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "nhi-arrears-installment-relief-loan",
@@ -13443,7 +13521,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "nhi-express-app",
@@ -13627,7 +13706,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "info"
     },
     {
       "id": "nhi-labor-insurance-premium-monthly-deadline",
@@ -13878,7 +13958,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "obligation"
     },
     {
       "id": "nhi-premium-subsidy-low-income-disability",
@@ -14052,7 +14133,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "national-pension-premium-subsidy",
@@ -14221,7 +14303,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "national-pension-premium-bimonthly-deadline",
@@ -14422,7 +14505,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "obligation"
     },
     {
       "id": "mid-low-income-elderly-allowance",
@@ -14619,7 +14703,8 @@
           }
         ]
       },
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "elderly-farmer-allowance",
@@ -14803,7 +14888,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "disability-living-allowance",
@@ -14998,7 +15084,8 @@
           }
         ]
       },
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "disability-transport-benefits",
@@ -15164,7 +15251,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "disability-assistive-device-subsidy",
@@ -15328,7 +15416,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "long-term-care-2",
@@ -15516,7 +15605,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "family-caregiver-support-and-respite",
@@ -15703,7 +15793,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "national-pension-basic-guaranteed",
@@ -15880,7 +15971,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "elderly-denture-subsidy",
@@ -16055,7 +16147,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "kaohsiung-senior-card-and-chongyang",
@@ -16224,7 +16317,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "new-taipei-senior-card-and-chongyang",
@@ -16383,7 +16477,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "taipei-senior-card-and-chongyang",
@@ -16561,7 +16656,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "vulnerable-extra-living-allowance-2026",
@@ -16723,7 +16819,8 @@
       "verified_at": "2026-11-18",
       "verification_summary": "確認發放到 116 年 1 月（end_year 2027、1 月沒錯）；原文只寫月份，1/31 是月底推算，已列未驗證。116 年是否續發查不到，note 補一句；app 在 2027-01-02 顯示剩 29 天，是這個月底日期的倒數。",
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "six-welfare-allowances-increase-2026",
@@ -16887,7 +16984,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "info"
     },
     {
       "id": "low-income-living-assistance-2026",
@@ -17120,7 +17218,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "low-income-household-thresholds-2026",
@@ -17354,7 +17453,8 @@
       "verified_at": "2026-11-14",
       "verification_summary": "讀了衛福部「115年度低收入戶、中低收入戶資格審核標準」與「115年度低收入戶類別條件一覽表」兩份 PDF，以及高雄市大寮區公所申請流程表。8 個地區的低收、中低收所得上限、動產與不動產限額共 48 個數字逐一對上，申請期間為隨到隨辦，官方網址回 200。搜尋 1 次沒找到 116 年度門檻公告，這部分未能確認，資料不需修正。",
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "info"
     },
     {
       "id": "emergency-relief-and-hardship-aid",
@@ -17520,7 +17620,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "taipei-low-income-festival-allowance-2026",
@@ -17669,7 +17770,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "home-appliance-replacement-subsidy",
@@ -17850,7 +17952,8 @@
       "verified_at": "2026-11-18",
       "verification_summary": "讀了能源署官網首頁、受理期間公告頁、中央社 2026-10-10 報導。申請最後一天 2027-01-31、發票最後一天 2026-12-31 原文確認；經費用罄公告沒有找到，所以 status_2026 維持 active。刪掉查不到的「不再展延」說法；116 年續辦沒有公告。",
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "car-periodic-inspection-schedule",
@@ -17996,7 +18099,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "obligation"
     },
     {
       "id": "electric-scooter-purchase-subsidy-moea",
@@ -18148,7 +18252,8 @@
       "verified_at": "2026-11-18",
       "verification_summary": "讀了電動機車產業網補助資訊頁、工研院的兩份文件、產發署 2025-06-17 新聞稿；要點全文（law.moea.gov.tw）回 403。只確認網站寫「請於115/12/10前提出申請」，沒有確認 12/10 是購車、發票還是送件日，所以不改 end 日期、不填 extra_lines、budget_limited、last_checked。confidence 降為 medium，補上 unverified_fields。",
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "driver-license-renewal-age-70-rule-2026",
@@ -18318,7 +18423,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "obligation"
     },
     {
       "id": "motorcycle-emission-inspection-annual",
@@ -18469,7 +18575,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "obligation"
     },
     {
       "id": "old-vehicle-replacement-moenv",
@@ -18672,7 +18779,8 @@
           }
         ]
       },
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "energy-appliance-commodity-tax-refund",
@@ -18861,7 +18969,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "tpass-commuter-pass-2026",
@@ -19027,7 +19136,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "taichung-low-carbon-vehicle-subsidy-2026",
@@ -19197,7 +19307,8 @@
       "verified_at": "2026-11-18",
       "verification_summary": "臺中市條文 PDF 兩次抓取失敗（503、連線重設），改看臺中市環保局低碳排車輛補助網的公告頁，讀到第五、七、十條。條文與舊資料的日期一致，deadline 改 end 2027-01-10。",
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "taipei-electric-scooter-subsidy-2026",
@@ -19378,7 +19489,8 @@
       "verified_at": "2026-11-18",
       "verification_summary": "看了臺北市環保局補助專區、2026-04-02 新聞稿頁與 113～115 年 Q&A。Q&A 寫申請最晚是隔年 1 月 10 日，所以 end 改 2027-01-10，購車期間寫進 extra_lines。三頁都沒有額滿或提前結束公告。",
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "tainan-electric-two-wheeler-subsidy-2026",
@@ -19548,7 +19660,8 @@
       "verified_at": "2026-11-18",
       "verification_summary": "下載臺南市公告 PDF 轉文字，讀到受理至 2027-01-10、購車 2026-12-31 前、領牌 2027-01-10 前。搜尋「額滿」「提前截止」沒找到臺南市公告。deadline 改 end 2027-01-10。",
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "taoyuan-electric-scooter-subsidy-2026",
@@ -19713,7 +19826,8 @@
       "verified_at": "2026-11-18",
       "verification_summary": "看了桃園市環保局 115 年電動機車補助計畫頁。受理到 2027-01-10、購車發票到 2026-12-31 兩個日期都有原文，deadline 改 end 2027-01-10。額滿公告與剩餘名額頁面沒有，系統要登入才看得到。",
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "kaohsiung-electric-scooter-subsidy-2026",
@@ -19872,7 +19986,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "new-taipei-electric-scooter-subsidy-2026",
@@ -20042,7 +20157,8 @@
       "verified_at": "2026-11-18",
       "verification_summary": "看了新北市環保局電動機車申請資訊頁（motor.ntpc.gov.tw）。第一階段登錄到 2026-12-31、第二階段補件到隔年 1 月 10 日，deadline 維持登錄截止日，補件日寫進 extra_lines。舊 note 的「官網 2026 年已提示早鳥名額將額滿」今天的頁面讀不到，已拿掉。",
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "benefit"
     },
     {
       "id": "citizen-digital-certificate",
@@ -20180,7 +20296,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "info"
     },
     {
       "id": "mobile-citizen-certificate-tw-fido",
@@ -20315,7 +20432,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "info"
     },
     {
       "id": "nhi-card-online-registration",
@@ -20447,7 +20565,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "info"
     },
     {
       "id": "mydata-and-egov-portal",
@@ -20590,7 +20709,8 @@
       "verified_at": null,
       "verification_summary": null,
       "late_consequence": null,
-      "year_end_notice": null
+      "year_end_notice": null,
+      "kind": "info"
     }
   ],
   "general_faqs": [

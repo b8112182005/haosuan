@@ -10,6 +10,7 @@ function makeSubsidy(partial: Partial<Subsidy>): Subsidy {
     name: "測試補助",
     short_name: "測試",
     category: "other",
+    kind: "benefit",
     level: "central",
     city: null,
     agency: "測試機關",

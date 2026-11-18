@@ -430,3 +430,22 @@ describe("旗艦項目不能被誤判成不符合", () => {
     expect(evaluate(byId("birth-incentive-taipei"), { ...renter, isPregnantOrNewborn: true }).verdict).not.toBe("not_eligible");
   });
 });
+
+describe("三分類（research/kinds.json）", () => {
+  it("每個項目都有分類", () => {
+    for (const s of items) expect(["benefit", "obligation", "info"], s.id).toContain(s.kind);
+  });
+
+  it("繳費期限和須知不算補助：牌照稅、綜所稅申報、租約必載事項、基本工資", () => {
+    expect(byId("vehicle-license-tax-april").kind).toBe("obligation");
+    expect(byId("income-tax-filing-2026").kind).toBe("obligation");
+    expect(byId("rental-standard-lease-tenant-protections").kind).toBe("info");
+    expect(byId("minimum-wage-2026").kind).toBe("info");
+  });
+
+  it("免費服務、扣除額、免學費是可以用的：長照、房租扣除額、高中職免學費", () => {
+    expect(byId("long-term-care-2").kind).toBe("benefit");
+    expect(byId("income-tax-rent-deduction").kind).toBe("benefit");
+    expect(byId("senior-high-tuition-free").kind).toBe("benefit");
+  });
+});

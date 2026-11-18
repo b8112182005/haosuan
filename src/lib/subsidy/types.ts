@@ -15,6 +15,15 @@ export type SubsidyCategory =
   | "low_income"
   | "other";
 
+/**
+ * 這一項對使用者是哪一種東西（research/kinds.json）：
+ * - benefit：可以領、可以用的（現金、減免、免費服務、扣除額、貸款）
+ * - obligation：要繳、要辦的期限（牌照稅、報稅、定期檢驗），沒有錢可以領
+ * - info：權益須知與申辦工具（租約必載事項、基本工資、自然人憑證）
+ * 試算結果頁靠它分開列：三種混在同一張清單時，「條件相符」的前幾名會是須知頁。
+ */
+export type SubsidyKind = "benefit" | "obligation" | "info";
+
 export type SubsidyLevel = "central" | "local";
 
 export type SubsidyStatus = "active" | "ended" | "pending" | "unknown";
@@ -188,6 +197,7 @@ export interface Subsidy {
   name: string;
   short_name: string;
   category: SubsidyCategory;
+  kind: SubsidyKind;
   level: SubsidyLevel;
   city: string | null;
   agency: string;
@@ -228,6 +238,7 @@ export type SubsidySummary = Pick<
   | "name"
   | "short_name"
   | "category"
+  | "kind"
   | "level"
   | "city"
   | "agency"
@@ -240,6 +251,7 @@ export type SubsidySummary = Pick<
   | "confidence"
   | "topic"
   | "year_end_notice"
+  | "late_consequence"
 >;
 
 export interface GeneralFaq {

@@ -50,13 +50,14 @@ let root;
 let counter = 0;
 
 /** 每個案例用獨立的資料夾：腳本以自己的位置決定 ROOT，所以複製一份進去就不會碰到真的 src/data */
-async function build({ item, dead = null }) {
+async function build({ item, dead = null, kinds = { [item.id]: "benefit" } }) {
   const dir = join(root, `case-${counter++}`);
   mkdirSync(join(dir, "scripts", "subsidy"), { recursive: true });
   mkdirSync(join(dir, "research", "topics"), { recursive: true });
   copyFileSync(SCRIPT, join(dir, "scripts", "subsidy", "build-data.mjs"));
   writeFileSync(join(dir, "research", "topics", "t.json"), JSON.stringify({ topic: "t", items: [item], general_faqs: [] }));
   if (dead) writeFileSync(join(dir, "research", "dead-urls.json"), JSON.stringify(dead));
+  if (kinds) writeFileSync(join(dir, "research", "kinds.json"), JSON.stringify(kinds));
   try {
     const { stdout, stderr } = await run(process.execPath, [join(dir, "scripts", "subsidy", "build-data.mjs")], { cwd: dir });
     const data = JSON.parse(readFileSync(join(dir, "src", "data", "subsidies.json"), "utf8"));
@@ -169,5 +170,24 @@ describe("officialSourcesOk 先用網址去重", () => {
     const law = { url: "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=A", title: "法條" };
     const one = await build({ item: baseItem({ late_consequence: { text: "x", short: "x", apply_now: false, sources: [law] } }) });
     expect(one.ok).toBe(true);
+  });
+});
+
+describe("research/kinds.json", () => {
+  it("每個項目的分類寫進完整資料與精簡索引", async () => {
+    const r = await build({ item: baseItem(), kinds: { "t-item": "obligation" } });
+    expect(r.stderr).toBe("");
+    expect(r.data.items[0].kind).toBe("obligation");
+  });
+
+  it("沒標分類、標了不認得的值、標了不存在的項目都不通過", async () => {
+    const missing = await build({ item: baseItem(), kinds: null });
+    expect(missing.ok).toBe(false);
+    expect(missing.stderr).toContain("research/kinds.json 沒有這一項的分類");
+    const wrong = await build({ item: baseItem(), kinds: { "t-item": "subsidy" } });
+    expect(wrong.ok).toBe(false);
+    const stray = await build({ item: baseItem(), kinds: { "t-item": "benefit", "gone-item": "info" } });
+    expect(stray.ok).toBe(false);
+    expect(stray.stderr).toContain("kinds.json 的 gone-item 不存在於任何主題檔");
   });
 });

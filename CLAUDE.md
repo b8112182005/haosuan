@@ -41,6 +41,7 @@ npx cap sync android && cd android && ./gradlew assembleDebug
 - 期限：跨年度的一次性期間要填 `deadline.end_year`；各縣市、各校自訂或每年不固定的用 `type: "varies"`，不要填概估的月日（寫法見 `research/README.md`）。
 - 期限填送件的最後一天；購買、發票、報廢的最後一天寫在 `deadline.extra_lines`。經費用完就停的項目設 `deadline.budget_limited`，確認還在受理才更新 `last_checked`。
 - 從申請日或文件備齊當月起算的補助用 `late_consequence.apply_now`：不要給它「截止前 30、14、3 天」的預設提醒（`reminderPreset`），那會把人帶到最後才送。`late_consequence` 與 `year_end_notice` 要有法條或 gov.tw 來源，`data:build` 會擋。
+- 新增補助項目時在 `research/kinds.json` 標 `benefit`／`obligation`／`info`（寫法見 `research/README.md`）。試算結果頁的分組在 `src/lib/subsidy/results.ts`，畫面上的數字一律從 `counts` 拿，不要在元件裡另外算。
 - `capacitor.config.ts` 的 `appId` 上架後不能改。
 - 金鑰（`android/*.jks`、`android/keystore.properties`）不進 git；CI 用 Secrets。
 - 文案繁體中文、白話；禁用抽象形容詞與副詞（非常、極致、完美、輕鬆、優雅等），用具體名詞、動詞、數字、場景。註解寫「為什麼」。

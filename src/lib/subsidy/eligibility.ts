@@ -27,6 +27,11 @@ export interface Evaluation<S extends SubsidySummary = SubsidySummary> {
   unknown: string[];
   /** 無法比對、要使用者自行確認的補充條件（不影響 verdict） */
   notes: string[];
+  /**
+   * unknown 裡有幾條是「你不符合這個條件，但條文另有例外」才留下來的。
+   * 這種項目多數人用不到（在職的人看到失業給付），結果頁把它收在分類最後，不和要核對所得的項目排在一起。
+   */
+  excepted: number;
 }
 
 const fmt = (n: number) => n.toLocaleString("zh-TW");
@@ -265,13 +270,15 @@ function checkMustNot(
  * 內建資料要等發新版 app 才會換掉，過期的項目不能一直掛在「條件相符」。
  */
 export function evaluate<S extends SubsidySummary>(subsidy: S, profile: Profile, today?: LocalDate): Evaluation<S> {
-  const out: Evaluation<S> = { subsidy, verdict: "maybe", matched: [], failed: [], unknown: [], notes: [] };
+  const out: Evaluation<S> = { subsidy, verdict: "maybe", matched: [], failed: [], unknown: [], notes: [], excepted: 0 };
   const c = subsidy.conditions ?? {};
   const exceptions = c.exceptions ?? {};
   const fail: Fail = (field, text) => {
     const note = exceptions[field]?.trim();
-    if (note) out.unknown.push(`${text}。例外：${note}`);
-    else out.failed.push(text);
+    if (note) {
+      out.unknown.push(`${text}。例外：${note}`);
+      out.excepted++;
+    } else out.failed.push(text);
   };
 
   // 方案結束、期限已過與地方項目的縣市是沒有例外的硬條件，直接記在 failed
