@@ -23,6 +23,7 @@ import { getAllSubsidies, getSubsidyById, getSubsidyIds, getRelatedSubsidies } f
 import { CATEGORY_LABELS } from "@/lib/subsidy/types";
 import type { SubsidyChannel } from "@/lib/subsidy/types";
 import { describeWindow } from "@/lib/subsidy/deadline";
+import { applyLinkLabel } from "@/lib/subsidy/reminderPreset";
 import { amountHeadline, amountNeedsDetail } from "@/lib/subsidy/format";
 import { tools } from "@/lib/tools-registry";
 import { serializeJsonLd } from "@/lib/json-ld";
@@ -208,7 +209,7 @@ export default async function SubsidyDetailPage({ params }: { params: Promise<{ 
           rel="noopener noreferrer"
           className="inline-flex h-11 items-center gap-2 rounded-full bg-primary px-5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
         >
-          {s.late_consequence?.apply_now ? "現在去申請" : "前往官方申請頁"} <ExternalLink className="h-4 w-4" />
+          {applyLinkLabel({ applyNow: s.late_consequence?.apply_now, status: s.status_2026, deadlineType: s.deadline.type })} <ExternalLink className="h-4 w-4" />
         </a>
         <ShareAppButton title={s.name} text={`${s.name}：${amountHeadline(s.amount)}。${describeWindow(s.deadline)}。`} url={`${SITE_URL}/subsidy/${s.id}`} label="分享這項補助" />
       </div>

@@ -819,10 +819,11 @@ async function main() {
     await check(`${applyNowItem.id}：期限卡寫「現在就能送件」`, async () =>
       (await page.getByText("現在就能送件").first().isVisible()) || "沒有「現在就能送件」");
     await page.getByRole("button", { name: "加入提醒" }).first().click();
-    await check(`${applyNowItem.id}：加入提醒面板的日期欄是空的`, async () => {
+    await check(`${applyNowItem.id}：加入提醒面板的日期欄是空的，標籤是「哪一天去辦」不是「截止日期」`, async () => {
       await page.locator('[role="dialog"]').waitFor({ state: "visible", timeout: 3000 });
-      const value = await page.getByLabel("截止日期").inputValue();
-      return value === "" || value;
+      const value = await page.getByLabel("哪一天去辦").inputValue();
+      const oldLabel = await page.getByLabel("截止日期").count();
+      return (value === "" && oldLabel === 0) || { value, oldLabel };
     });
     await back(true);
     await settle(400);
@@ -831,12 +832,39 @@ async function main() {
     // 補助項目的提醒面板沒有備註欄，備註在確認加入時一起存；所以挑一天、存下來，再看存下的備註
     await page.evaluate(() => localStorage.setItem("__perm", "granted"));
     await page.getByRole("button", { name: "加入提醒" }).first().click();
-    await page.getByLabel("截止日期").fill("2099-03-01");
+    await page.getByRole("button", { name: "確認加入" }).click();
+    await check(`${applyNowItem.id}：沒選日期按確認，錯誤訊息是「請選擇哪一天去辦」`, async () =>
+      (await page.getByRole("alert").filter({ hasText: "請選擇" }).first().innerText()) === "請選擇哪一天去辦");
+    await page.getByLabel("哪一天去辦").fill("2099-03-01");
     await page.getByRole("button", { name: "確認加入" }).click();
     await settle(1200);
     await check(`${applyNowItem.id}：存下的提醒備註是 late_consequence.short`, async () => {
       const saved = (await storedReminders()).find((r) => r.source && r.source.id === applyNowItem.id);
       return (!!saved && saved.note === lateShort) || (saved ? { note: saved.note, expected: lateShort } : "沒有存下提醒");
+    });
+    // 自己挑的辦理日不是主管機關的截止日：通知不能寫「截止」，不然使用者以為那天一過就不能申請
+    await check(`${applyNowItem.id}：存下的提醒標記為使用者自己訂的辦理日（planned）`, async () => {
+      const saved = (await storedReminders()).find((r) => r.source && r.source.id === applyNowItem.id);
+      return (!!saved && saved.planned === true) || (saved ? { planned: saved.planned } : "沒有存下提醒");
+    });
+    await check(`${applyNowItem.id}：排程的通知標題含「要辦」、內文以「預定」開頭，沒有「截止」「期限」`, async () => {
+      const mine = (await pendingNow()).filter((n) => n.extra && n.extra.url && n.extra.url.includes(applyNowItem.id));
+      if (mine.length === 0) return "沒有排出這筆提醒的通知";
+      const bad = mine.filter((n) => !n.title.includes("要辦") || !n.body.startsWith("預定") || /截止|期限/.test(n.title + n.body));
+      return bad.length === 0 || bad.map((n) => ({ title: n.title, body: n.body }));
+    });
+    // 日期存在提醒裡、屬性沒有日期：再打開面板日期欄不能被清空，不然直接按「更新提醒」會被擋
+    await page.getByRole("button", { name: "已加入提醒" }).first().click();
+    await check(`${applyNowItem.id}：已加入後重新打開面板，日期欄還是剛才選的日期`, async () => {
+      await page.locator('[role="dialog"]').waitFor({ state: "visible", timeout: 3000 });
+      const value = await page.getByLabel("哪一天去辦").inputValue();
+      return value === "2099-03-01" || value;
+    });
+    await page.getByRole("button", { name: "更新提醒" }).click();
+    await settle(800);
+    await check(`${applyNowItem.id}：不改日期直接按「更新提醒」可以存下，planned 還在`, async () => {
+      const saved = (await storedReminders()).find((r) => r.source && r.source.id === applyNowItem.id);
+      return (!!saved && saved.targetDate === "2099-03-01" && saved.planned === true) || saved || "沒有存下提醒";
     });
   }
 

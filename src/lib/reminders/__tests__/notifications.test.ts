@@ -35,6 +35,7 @@ import {
   initNotificationTapHandler,
   notificationFireAt,
   notificationId,
+  notificationBody,
   notificationTitle,
   planNotifications,
   requestPermission,
@@ -395,6 +396,37 @@ describe('展開排程', () => {
     expect(notificationTitle('繳稅', 14)).toBe('繳稅 14 天後截止');
   });
 
+  it('planned 的通知不寫「截止」：標題用「要辦」，內文用「預定」', () => {
+    expect(notificationTitle('租金補貼', 0, true)).toBe('今天要辦：租金補貼');
+    expect(notificationTitle('租金補貼', 1, true)).toBe('明天要辦：租金補貼');
+    expect(notificationTitle('租金補貼', 7, true)).toBe('7 天後要辦：租金補貼');
+    expect(notificationBody({ targetDate: '2026-12-05', note: '從送件當月起算', planned: true })).toBe('預定 2026/12/05・從送件當月起算');
+    expect(notificationBody({ targetDate: '2026-12-05', planned: true })).toBe('預定 2026/12/05');
+  });
+
+  it('不是 planned 的內文維持「期限」', () => {
+    expect(notificationBody({ targetDate: '2026-12-05', note: '帶身分證' })).toBe('期限 2026/12/05・帶身分證');
+    expect(notificationBody({ targetDate: '2026-12-05', planned: false })).toBe('期限 2026/12/05');
+  });
+
+  it('planNotifications：planned 的提醒排出的通知標題與內文都不含「截止」「期限」', () => {
+    const planned = planNotifications(
+      [makeReminder({ planned: true, targetDate: '2026-12-05', daysBefore: [1, 0], note: undefined })],
+      new Date(2026, 0, 1),
+    );
+    expect(planned.map((n) => n.title).sort()).toEqual(['今天要辦：租金補貼', '明天要辦：租金補貼']);
+    expect(planned.every((n) => n.body === '預定 2026/12/05')).toBe(true);
+    const normal = planNotifications([makeReminder({ targetDate: '2026-12-05', daysBefore: [0] })], new Date(2026, 0, 1));
+    expect(normal[0].title).toBe('今天截止：租金補貼');
+    expect(normal[0].body).toContain('期限 2026/12/05');
+  });
+
+  it('planned 不影響通知 id', () => {
+    const a = planNotifications([makeReminder({ targetDate: '2026-12-05', daysBefore: [1, 0] })], new Date(2026, 0, 1));
+    const b = planNotifications([makeReminder({ planned: true, targetDate: '2026-12-05', daysBefore: [1, 0] })], new Date(2026, 0, 1));
+    expect(b.map((n) => n.id)).toEqual(a.map((n) => n.id));
+  });
+
   it('notificationFireAt 跨月回推', () => {
     const at = notificationFireAt('2026-03-02', 3)!;
     expect(at.getMonth()).toBe(1);
@@ -450,6 +482,13 @@ describe('行事曆替代出口', () => {
     // RFC 5545 用 CRLF
     expect(ics.endsWith('END:VCALENDAR\r\n')).toBe(true);
     expect(ics.split('\r\n').every((line) => Buffer.byteLength(line, 'utf8') <= 75)).toBe(true);
+  });
+
+  it('planned 的 .ics：事件裡的提醒文字用「要辦」，不寫「截止」', () => {
+    const ics = buildIcs(makeReminder({ planned: true, daysBefore: [1, 0] }), new Date(Date.UTC(2026, 0, 1)));
+    expect(ics).toContain('DESCRIPTION:今天要辦：租金補貼');
+    expect(ics).toContain('DESCRIPTION:明天要辦：租金補貼');
+    expect(ics).not.toContain('截止');
   });
 
   it('repeatYearly 會帶 RRULE', () => {

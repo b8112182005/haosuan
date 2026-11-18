@@ -48,3 +48,16 @@ export function normalizePath(pathname: string): string {
   const p = pathname.replace(/\/index\.html$/, "").replace(/\/+$/, "");
   return p === "" ? "/" : p;
 }
+
+/**
+ * Search Console 驗證碼：只放網頁版，app 的 HTML 在裝置裡，不會被 Google 抓。
+ * 兩個來源都要依 app 建置判斷：只擋其中一個的話，另一個會讓 app 照樣輸出驗證標籤。
+ */
+export function searchConsoleVerification(
+  appBuild: boolean,
+  serverCode: string | undefined,
+  publicCode: string | undefined,
+): string | undefined {
+  if (appBuild) return undefined;
+  return serverCode || publicCode || undefined;
+}

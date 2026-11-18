@@ -11,12 +11,15 @@ import PlatformScript from "@/components/app/PlatformScript";
 import NativeBridge from "@/components/app/NativeBridge";
 import Script from "next/script";
 import { SITE_URL, APP_NAME } from "@/lib/site";
-import { isAppBuild } from "@/lib/platform";
+import { isAppBuild, searchConsoleVerification } from "@/lib/platform";
 
 const GA_ID = isAppBuild ? undefined : process.env.NEXT_PUBLIC_GA_ID;
-// Search Console 驗證碼只放網頁版：app 的 HTML 在裝置裡，不會被 Google 抓
-const GOOGLE_SITE_VERIFICATION = isAppBuild ? undefined : process.env.GOOGLE_SITE_VERIFICATION;
-const GSC_VERIFICATION = GOOGLE_SITE_VERIFICATION || process.env.NEXT_PUBLIC_GSC_VERIFICATION;
+// Search Console 驗證碼只放網頁版（判斷在 searchConsoleVerification，兩個環境變數都會擋）
+const GSC_VERIFICATION = searchConsoleVerification(
+  isAppBuild,
+  process.env.GOOGLE_SITE_VERIFICATION,
+  process.env.NEXT_PUBLIC_GSC_VERIFICATION,
+);
 
 const notoSansTC = Noto_Sans_TC({
   variable: "--font-sans",

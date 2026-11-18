@@ -1,13 +1,20 @@
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest";
 import { execFile } from "node:child_process";
 import { createServer } from "node:http";
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { promisify } from "node:util";
 import {
+  CERT_HINT,
+  commitSnapshots,
+  connectionFailureReason,
   decodeEntities,
+  fetchPageText,
+  looksBlocked,
+  SHRINK_REASON,
+  watchItems,
   diffSentences,
   htmlToText,
   isImportant,
@@ -223,5 +230,146 @@ describe("整合：本機伺服器與假的 Ollama", () => {
     const { stdout } = await watch(["--all"]);
     expect(stdout).toContain("共 4 項");
     expect(stdout).toContain("ignored");
+  });
+});
+
+const longPage = (n, tag = "") => Array.from({ length: n }, (_, i) => `第 ${i + 1} 點說明${tag}`).join("。") + "。";
+
+describe("擋頁判斷", () => {
+  it("新抓到的句子不到舊快照的 30%，或舊句子 90% 以上消失，才算擋頁", () => {
+    const old = longPage(10);
+    expect(looksBlocked(old, longPage(2))).toBe(true); // 剩 20%
+    expect(looksBlocked(old, longPage(3))).toBe(false); // 剛好 30%
+    expect(looksBlocked(old, "系統維護中。請稍後再試。" + longPage(1, "新") + "。")).toBe(true); // 舊句子全不見
+    expect(looksBlocked(old, longPage(10).replace("第 1 點說明", "改過的第一點"))).toBe(false); // 只換一句
+    expect(looksBlocked(old, longPage(10, "改"))).toBe(true); // 句子數沒變但 10 句全換
+    // 換掉 9 句、剩 1 句：消失 90%
+    expect(looksBlocked(old, "第 1 點說明。" + Array.from({ length: 9 }, (_, i) => `新句子${i}`).join("。"))).toBe(true);
+    // 換掉 8 句：消失 80%
+    expect(looksBlocked(old, "第 1 點說明。第 2 點說明。" + Array.from({ length: 8 }, (_, i) => `新句子${i}`).join("。"))).toBe(false);
+  });
+});
+
+describe("快照在報告之後才寫", () => {
+  let dir;
+  beforeAll(() => {
+    dir = mkdtempSync(join(tmpdir(), "watch-snap-"));
+  });
+  afterAll(() => rmSync(dir, { recursive: true, force: true }));
+
+  const item = { id: "a", name: "甲", official_url: "https://example.test/a" };
+  const fetchWith = (text) => async () => ({ ok: true, text });
+
+  it("watchItems 只比對不寫；commitSnapshots 才寫", async () => {
+    const snap = join(dir, "s1");
+    const file = join(snap, "a.txt");
+    const first = await watchItems([item], { snapshotsDir: snap, fetchFn: fetchWith(longPage(6)) });
+    expect(first[0].status).toBe("new");
+    expect(existsSync(file)).toBe(false);
+    // 沒寫的話，下次還是「新增快照」，不會變成「沒變」
+    expect((await watchItems([item], { snapshotsDir: snap, fetchFn: fetchWith(longPage(6)) }))[0].status).toBe("new");
+    commitSnapshots(first);
+    expect(existsSync(file)).toBe(true);
+
+    const changed = await watchItems([item], { snapshotsDir: snap, fetchFn: fetchWith(longPage(6).replace("第 2 點", "第二點")) });
+    expect(changed[0].status).toBe("changed");
+    expect(readFileSync(file, "utf8")).toContain("第 2 點說明"); // 還是舊的
+    // 模擬中途中斷：沒有 commit，重跑仍然是 changed
+    const again = await watchItems([item], { snapshotsDir: snap, fetchFn: fetchWith(longPage(6).replace("第 2 點", "第二點")) });
+    expect(again[0].status).toBe("changed");
+    commitSnapshots(again);
+    expect((await watchItems([item], { snapshotsDir: snap, fetchFn: fetchWith(longPage(6).replace("第 2 點", "第二點")) }))[0].status).toBe("unchanged");
+  });
+
+  it("內容大幅縮水列為抓不到，不帶快照、不覆蓋", async () => {
+    const snap = join(dir, "s2");
+    mkdirSync(snap, { recursive: true });
+    writeFileSync(join(snap, "a.txt"), longPage(10).split("。").filter(Boolean).join("\n") + "\n");
+    const [r] = await watchItems([item], { snapshotsDir: snap, fetchFn: fetchWith("系統維護中，請稍後再試，造成不便敬請見諒") });
+    expect(r.status).toBe("failed");
+    expect(r.reason).toBe(SHRINK_REASON);
+    expect(r.reason).toBe("內容大幅縮水，可能是擋頁或維護中");
+    expect(r.snapshot).toBeUndefined();
+    commitSnapshots([r]);
+    expect(readFileSync(join(snap, "a.txt"), "utf8")).toContain("第 10 點說明");
+  });
+});
+
+describe("憑證錯誤", () => {
+  const withCause = (code, message = "fetch failed") => Object.assign(new Error(message), { cause: Object.assign(new Error(code), { code }) });
+  const realFetch = globalThis.fetch;
+  afterEach(() => {
+    globalThis.fetch = realFetch;
+  });
+
+  it("錯誤碼含 UNABLE_TO_VERIFY、CERT_、SELF_SIGNED 時，原因後面加一句說明", () => {
+    for (const code of ["UNABLE_TO_VERIFY_LEAF_SIGNATURE", "CERT_HAS_EXPIRED", "DEPTH_ZERO_SELF_SIGNED_CERT", "SELF_SIGNED_CERT_IN_CHAIN", "ERR_TLS_CERT_ALTNAME_INVALID"]) {
+      const reason = connectionFailureReason(withCause(code));
+      expect(reason, code).toContain(`連線失敗：${code}`);
+      expect(reason, code).toContain("Node 的憑證庫比瀏覽器少，先在瀏覽器確認網頁正常");
+    }
+    expect(CERT_HINT).toBe("Node 的憑證庫比瀏覽器少，先在瀏覽器確認網頁正常");
+  });
+
+  it("其他連線錯誤不加", () => {
+    for (const code of ["ECONNREFUSED", "ENOTFOUND", "ECONNRESET"]) {
+      expect(connectionFailureReason(withCause(code))).toBe(`連線失敗：${code}`);
+    }
+  });
+
+  it("fetchPageText 把憑證錯誤的說明帶進 reason", async () => {
+    globalThis.fetch = async () => {
+      throw withCause("UNABLE_TO_VERIFY_LEAF_SIGNATURE");
+    };
+    const r = await fetchPageText("https://example.test/");
+    expect(r.ok).toBe(false);
+    expect(r.reason).toContain("UNABLE_TO_VERIFY_LEAF_SIGNATURE");
+    expect(r.reason).toContain("先在瀏覽器確認網頁正常");
+  });
+});
+
+describe("整合：報告寫不出來時不動快照", () => {
+  let web;
+  let base;
+  let dir;
+  let page = longPage(6);
+
+  beforeAll(async () => {
+    dir = mkdtempSync(join(tmpdir(), "watch-order-"));
+    web = createServer((req, res) => {
+      res.setHeader("content-type", "text/html; charset=utf-8");
+      res.end(`<html><body><p>${page}</p></body></html>`);
+    });
+    await new Promise((resolve) => web.listen(0, "127.0.0.1", resolve));
+    base = `http://127.0.0.1:${web.address().port}`;
+    writeFileSync(join(dir, "data.json"), JSON.stringify({ items: [{ id: "p", name: "115年度 p", short_name: "p", city: null, official_url: `${base}/`, status_2026: "active", deadline: {} }] }));
+  });
+  afterAll(async () => {
+    await new Promise((resolve) => web.close(resolve));
+    rmSync(dir, { recursive: true, force: true });
+  });
+
+  const watch = (args) => run(process.execPath, [SCRIPT, "--data", join(dir, "data.json"), "--snapshots", join(dir, "snap"), ...args]);
+
+  it("--out 指到資料夾（寫不進去）：腳本失敗，重跑仍然看得到變動", async () => {
+    await watch([]); // 建快照
+    page = longPage(6).replace("第 3 點", "第三點");
+    const outIsDir = join(dir, "out-dir");
+    mkdirSync(outIsDir);
+    await expect(watch(["--out", outIsDir])).rejects.toMatchObject({ code: 1 });
+    const { stdout } = await watch([]);
+    expect(stdout).toContain("有變動 1、抓不到 0、新增快照 0、沒變 0");
+    expect(stdout).toContain("第三點說明");
+    // 報告輸出成功之後才存，所以再跑一次就沒變
+    expect((await watch([])).stdout).toContain("有變動 0、抓不到 0、新增快照 0、沒變 1");
+  });
+
+  it("頁面變成維護中：列為抓不到，頁面恢復後沒有被當成整頁新增", async () => {
+    page = "系統維護中，請稍後再試，造成不便敬請見諒";
+    const blocked = await watch([]);
+    expect(blocked.stdout).toContain("有變動 0、抓不到 1");
+    expect(blocked.stdout).toContain("內容大幅縮水，可能是擋頁或維護中");
+    page = longPage(6).replace("第 3 點", "第三點");
+    expect((await watch([])).stdout).toContain("有變動 0、抓不到 0、新增快照 0、沒變 1");
   });
 });

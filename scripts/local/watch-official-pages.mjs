@@ -4,6 +4,7 @@
 // 為什麼放在維護者的電腦跑：政府網站常擋雲端機房的 IP，從家裡的網路抓得到的比較多；
 // 判讀也交給本機的 Ollama，不用付雲端模型的錢。
 // 這支腳本只產報告：不寫 research/、src/data/，不發任何訊息。
+// 快照在報告輸出完成之後才寫：中途中斷（Ctrl+C、Ollama 卡住、報告檔寫不進去）時，下次重跑還會看到同一批變動。
 // 報告和本機模型的判讀都只是線索，要改資料一律回到網頁核對原文。
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
@@ -138,6 +139,20 @@ export function decodeBody(buffer, contentType = "") {
   }
 }
 
+const CERT_ERROR = /UNABLE_TO_VERIFY|CERT_|SELF_SIGNED/;
+export const CERT_HINT = "Node 的憑證庫比瀏覽器少，先在瀏覽器確認網頁正常";
+
+/**
+ * 連線失敗的原因文字。憑證錯誤另外加一句：不少 .gov.tw 的憑證鏈缺中繼憑證，瀏覽器會自己補，
+ * Node 不會，所以「憑證錯誤」不代表網頁壞了。
+ */
+export function connectionFailureReason(err) {
+  const detail = err?.cause?.code || err?.cause?.message || err?.message || String(err);
+  const codes = [err?.code, err?.cause?.code, err?.cause?.message, err?.message].filter((v) => typeof v === "string").join(" ");
+  const base = `連線失敗：${detail}`;
+  return CERT_ERROR.test(codes) ? `${base}（${CERT_HINT}）` : base;
+}
+
 /** 抓一個網址。回傳 {ok:true, text} 或 {ok:false, reason}，不丟例外 */
 export async function fetchPageText(url, { timeoutMs = FETCH_TIMEOUT_MS } = {}) {
   let res;
@@ -149,7 +164,7 @@ export async function fetchPageText(url, { timeoutMs = FETCH_TIMEOUT_MS } = {}) 
     });
   } catch (err) {
     if (err?.name === "TimeoutError" || err?.name === "AbortError") return { ok: false, reason: `逾時（${Math.round(timeoutMs / 1000)} 秒沒回應）` };
-    return { ok: false, reason: `連線失敗：${err?.cause?.code || err?.cause?.message || err?.message || err}` };
+    return { ok: false, reason: connectionFailureReason(err) };
   }
   if (!res.ok) return { ok: false, reason: `HTTP ${res.status}` };
   const type = res.headers.get("content-type") || "";
@@ -191,12 +206,29 @@ function normalize(text) {
   return splitSentences(text).join("\n") + "\n";
 }
 
+export const SHRINK_RATIO = 0.3;
+export const GONE_RATIO = 0.9;
+export const SHRINK_REASON = "內容大幅縮水，可能是擋頁或維護中";
+
+/**
+ * 新抓到的內容是不是「整頁換了」：擋頁、維護中、改版出錯的頁面，句子數會掉到舊的三成以下，
+ * 或舊的句子幾乎全不見。拿這種內容覆蓋快照，下次頁面恢復時會把整頁都當成新增。
+ */
+export function looksBlocked(previousText, newText) {
+  const before = new Set(splitSentences(previousText));
+  const after = new Set(splitSentences(newText));
+  if (before.size === 0) return false;
+  const gone = [...before].filter((s) => !after.has(s)).length;
+  return after.size < before.size * SHRINK_RATIO || gone >= before.size * GONE_RATIO;
+}
+
 /**
  * 看每個項目的網頁。回傳每項的結果：
- * { item, status: "changed" | "unchanged" | "new" | "failed", reason?, added?, removed? }
+ * { item, status: "changed" | "unchanged" | "new" | "failed", reason?, added?, removed?, snapshot? }
+ * 這裡不寫快照：new 與 changed 的結果帶著 snapshot: { file, text }，
+ * 報告輸出完成後呼叫 commitSnapshots 才寫。
  */
 export async function watchItems(items, { snapshotsDir, fetchFn = fetchPageText, concurrency = CONCURRENCY } = {}) {
-  mkdirSync(snapshotsDir, { recursive: true });
   // 不同項目可能指向同一個網址（同一個主管機關頁面），一次執行只抓一次
   const pageCache = new Map();
   const getPage = (url) => {
@@ -209,16 +241,25 @@ export async function watchItems(items, { snapshotsDir, fetchFn = fetchPageText,
     if (!page.ok) return { item, status: "failed", reason: page.reason };
     const text = normalize(page.text);
     const file = snapshotPath(snapshotsDir, item.id);
-    if (!existsSync(file)) {
-      writeFileSync(file, text);
-      return { item, status: "new" };
-    }
+    if (!existsSync(file)) return { item, status: "new", snapshot: { file, text } };
     const previous = readFileSync(file, "utf8");
     if (normalize(previous) === text) return { item, status: "unchanged" };
+    if (looksBlocked(previous, text)) return { item, status: "failed", reason: SHRINK_REASON };
     const { added, removed } = diffSentences(previous, text);
-    writeFileSync(file, text);
-    return { item, status: "changed", added, removed };
+    return { item, status: "changed", added, removed, snapshot: { file, text } };
   });
+}
+
+/** 把 watchItems 結果裡的新快照寫進磁碟。要在報告輸出完成之後呼叫 */
+export function commitSnapshots(results) {
+  let written = 0;
+  for (const r of results) {
+    if (!r.snapshot) continue;
+    mkdirSync(dirname(r.snapshot.file), { recursive: true });
+    writeFileSync(r.snapshot.file, r.snapshot.text);
+    written++;
+  }
+  return written;
 }
 
 // ---- 本機模型判讀 ----
@@ -353,8 +394,11 @@ async function main() {
     const count = (s) => results.filter((r) => r.status === s).length;
     console.log(`報告寫到 ${outPath}（有變動 ${count("changed")}、抓不到 ${count("failed")}、新增快照 ${count("new")}）`);
   } else {
-    process.stdout.write(report + "\n");
+    // 等 stdout 寫完再存快照：管線被關掉時寫入會失敗，那時不能先把快照蓋掉
+    await new Promise((done, fail) => process.stdout.write(report + "\n", (err) => (err ? fail(err) : done())));
   }
+  // 報告已經在使用者手上，這時才把新內容記成「上次看到的」
+  commitSnapshots(results);
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {

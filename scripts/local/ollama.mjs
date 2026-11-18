@@ -5,11 +5,40 @@
 // 看到 "fetch failed" 不知道是 Ollama 沒開、埠號不對還是沒下載模型。
 export const DEFAULT_HOST = "http://127.0.0.1:11434";
 
-/** 環境變數 OLLAMA_HOST 可能沒寫 http://（Ollama 官方文件的寫法是 127.0.0.1:11434），補上再用 */
+export const DEFAULT_PORT = "11434";
+
+/**
+ * 環境變數 OLLAMA_HOST 的寫法很多：Ollama 官方文件寫 127.0.0.1:11434（沒有 http://），
+ * 要讓別台電腦連進來時會設成 0.0.0.0，也有人只寫 :11434 或 localhost。
+ * 補上 http://、沒寫埠號時補 11434；0.0.0.0、::、空的主機是「監聽所有網卡」的寫法，
+ * 不能當成連線目標（Windows 連 0.0.0.0 會失敗），換成 127.0.0.1。
+ */
 export function resolveHost(host) {
   const raw = String(host || process.env.OLLAMA_HOST || DEFAULT_HOST).trim();
-  const withScheme = /^https?:\/\//i.test(raw) ? raw : `http://${raw}`;
-  return withScheme.replace(/\/+$/, "");
+  const scheme = /^https?:\/\//i.exec(raw)?.[0].toLowerCase() ?? "http://";
+  const rest = raw.slice(/^https?:\/\//i.test(raw) ? raw.indexOf("//") + 2 : 0);
+  const slash = rest.indexOf("/");
+  const authority = slash >= 0 ? rest.slice(0, slash) : rest;
+  const path = slash >= 0 ? rest.slice(slash).replace(/\/+$/, "") : "";
+
+  let hostname;
+  let port = "";
+  const bracketed = /^(\[[^\]]*\])(?::(\d*))?$/.exec(authority);
+  if (bracketed) {
+    hostname = bracketed[1];
+    port = bracketed[2] ?? "";
+  } else if ((authority.match(/:/g) ?? []).length > 1) {
+    // 沒加中括號的 IPv6（例如 "::"），整串都是主機，沒有埠號可言
+    hostname = `[${authority}]`;
+  } else {
+    const at = authority.indexOf(":");
+    hostname = at >= 0 ? authority.slice(0, at) : authority;
+    port = at >= 0 ? authority.slice(at + 1) : "";
+  }
+  if (hostname === "" || hostname === "0.0.0.0" || hostname === "[::]" || hostname === "[::0]" || hostname === "[0:0:0:0:0:0:0:0]") hostname = "127.0.0.1";
+  // https:// 通常是放在反向代理後面，預設埠是 443，不補 11434
+  if (port === "" && scheme === "http://") port = DEFAULT_PORT;
+  return `${scheme}${hostname}${port ? `:${port}` : ""}${path}`;
 }
 
 function unreachable(host, cause) {
@@ -56,7 +85,15 @@ export async function listModels({ host, timeoutMs = 10000 } = {}) {
   return data.models.map((m) => m.name || m.model).filter(Boolean);
 }
 
-/** OLLAMA_MODEL > 參數 > listModels 的第一個。沒有任何模型時說明怎麼下載 */
+/** 嵌入模型（nomic-embed-text 等）只能把文字轉成向量，叫它生成文字會回 400 */
+export function isEmbeddingModel(name) {
+  return /embed/i.test(String(name));
+}
+
+/**
+ * OLLAMA_MODEL > 參數 > listModels 裡第一個能生成文字的模型。
+ * 沒指定時略過名稱含 embed 的：ollama list 的順序不由我們決定，嵌入模型排第一就會整個腳本壞掉。
+ */
 export async function pickModel({ host, model } = {}) {
   const chosen = model || process.env.OLLAMA_MODEL;
   if (chosen) return chosen;
@@ -65,7 +102,11 @@ export async function pickModel({ host, model } = {}) {
   if (models.length === 0) {
     throw new Error(`Ollama（${base}）裡沒有任何模型。先下載一個，例如：ollama pull qwen2.5:7b ；下載完用 ollama list 確認，再設 OLLAMA_MODEL。`);
   }
-  return models[0];
+  const usable = models.find((m) => !isEmbeddingModel(m));
+  if (!usable) {
+    throw new Error(`Ollama（${base}）裡只有嵌入模型（${models.join("、")}），嵌入模型不能生成文字。先下載一個對話模型，例如：ollama pull qwen2.5:7b ；再設 OLLAMA_MODEL，例如 OLLAMA_MODEL=qwen2.5:7b。`);
+  }
+  return usable;
 }
 
 /**

@@ -19,6 +19,11 @@ export interface Reminder {
   source: ReminderSource;
   /** 每年固定期限（報稅等）：過期後自動推到下一年 */
   repeatYearly: boolean;
+  /**
+   * true＝targetDate 是使用者自己訂的辦理日，不是主管機關的截止日。
+   * 通知與畫面不能寫「截止」，否則使用者會以為那天一過就不能申請。舊資料沒有這個欄位，視同 false。
+   */
+  planned?: boolean;
   /** ISO 字串 */
   createdAt: string;
   done: boolean;
@@ -36,6 +41,8 @@ export interface NewReminderInput {
   /** 沒給就是 custom */
   source?: ReminderSource;
   repeatYearly?: boolean;
+  /** 見 Reminder.planned */
+  planned?: boolean;
 }
 
 export type ReminderPatch = Partial<Omit<Reminder, 'id' | 'createdAt'>>;

@@ -123,15 +123,23 @@ export function notificationId(reminderId: string, targetDate: string, daysBefor
 
 // ── 通知內容 ────────────────────────────────────────────────────────────
 
-export function notificationTitle(title: string, daysBefore: number): string {
+/**
+ * planned＝使用者自己挑的辦理日。寫「截止」會讓人以為那天一過就不能申請，所以改寫「要辦」。
+ */
+export function notificationTitle(title: string, daysBefore: number, planned = false): string {
+  if (planned) {
+    if (daysBefore === 0) return `今天要辦：${title}`;
+    if (daysBefore === 1) return `明天要辦：${title}`;
+    return `${daysBefore} 天後要辦：${title}`;
+  }
   if (daysBefore === 0) return `今天截止：${title}`;
   if (daysBefore === 1) return `明天截止：${title}`;
   return `${title} ${daysBefore} 天後截止`;
 }
 
-export function notificationBody(reminder: Pick<Reminder, 'note' | 'targetDate'>): string {
-  // 期限放最前面：收合的通知只顯示一行，日期要落在那一行裡
-  const deadline = `期限 ${formatDate(reminder.targetDate)}`;
+export function notificationBody(reminder: Pick<Reminder, 'note' | 'targetDate' | 'planned'>): string {
+  // 日期放最前面：收合的通知只顯示一行，日期要落在那一行裡
+  const deadline = `${reminder.planned ? '預定' : '期限'} ${formatDate(reminder.targetDate)}`;
   return reminder.note ? `${deadline}・${reminder.note}` : deadline;
 }
 
@@ -186,8 +194,8 @@ function pushCycle(out: LocalNotificationSchema[], reminder: Reminder, targetDat
     if (!fireAt || fireAt.getTime() <= now.getTime()) return;
     out.push({
       id: notificationId(reminder.id, targetDate, days),
-      title: notificationTitle(reminder.title, days),
-      body: notificationBody({ note: reminder.note, targetDate }),
+      title: notificationTitle(reminder.title, days, reminder.planned),
+      body: notificationBody({ note: reminder.note, targetDate, planned: reminder.planned }),
       schedule: { at: fireAt, allowWhileIdle: true },
       // 不用精確鬧鐘：Play 政策對 SCHEDULE_EXACT_ALARM 有審查，提醒差幾分鐘沒差
       isExactNotification: false,
@@ -603,7 +611,7 @@ export function buildIcs(reminder: Reminder, now: Date = new Date(), origin?: st
     lines.push(
       'BEGIN:VALARM',
       'ACTION:DISPLAY',
-      `DESCRIPTION:${icsEscape(notificationTitle(reminder.title, days))}`,
+      `DESCRIPTION:${icsEscape(notificationTitle(reminder.title, days, reminder.planned))}`,
       `TRIGGER:-P${days}D`,
       'END:VALARM',
     );

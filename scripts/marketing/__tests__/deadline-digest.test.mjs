@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildDigest, buildYearEnd, renderDigest, moneyText, taipeiToday } from "../deadline-digest.mjs";
+import { buildDigest, buildYearEnd, isBudgetStale, renderDigest, moneyText, taipeiToday } from "../deadline-digest.mjs";
 
 const TODAY = { y: 2026, m: 11, d: 16 };
 
@@ -84,17 +84,60 @@ describe("每週期限摘要", () => {
 });
 
 describe("經費有限的標註", () => {
-  it("budget_limited 為 true 的項目，那一行後面加「經費用完會提前結束」，其他不加", () => {
+  const win = (end_day, extra = {}) => ({ start_year: 2026, start_month: 1, start_day: 1, end_year: 2026, end_month: 11, end_day, ...extra });
+
+  it("budget_limited 為 true 且 last_checked 在 14 天內的項目，那一行後面加「經費用完會提前結束」，其他不加", () => {
     const items = [
-      item("limited", { start_year: 2026, start_month: 1, start_day: 1, end_year: 2026, end_month: 11, end_day: 20, budget_limited: true }),
-      item("flagged-false", { start_year: 2026, start_month: 1, start_day: 1, end_year: 2026, end_month: 11, end_day: 21, budget_limited: false }),
-      item("plain", { start_year: 2026, start_month: 1, start_day: 1, end_year: 2026, end_month: 11, end_day: 22 }),
+      item("limited", win(20, { budget_limited: true, last_checked: "2026-11-10" })),
+      item("flagged-false", win(21, { budget_limited: false })),
+      item("plain", win(22)),
     ];
     const text = renderDigest(buildDigest(items, TODAY, "2026-11-15"), "https://example.test");
     expect(text).toContain("limited：11/20 截止，剩 4 天；5,000 元（經費用完會提前結束）　https://example.test/subsidy/limited");
     expect(text.match(/經費用完會提前結束/g)).toHaveLength(3); // 清單、Threads 貼文、LINE 訊息各一次
     expect(text).toContain("flagged-false：11/21 截止，剩 5 天；5,000 元　");
     expect(text).toContain("plain：11/22 截止，剩 6 天；5,000 元　");
+  });
+
+  it("last_checked 剛好 14 天前仍算新；15 天前、沒填、格式錯的算舊", () => {
+    const limited = (last_checked) => item("x", win(20, { budget_limited: true, last_checked }));
+    expect(isBudgetStale(limited("2026-11-02"), TODAY)).toBe(false);
+    expect(isBudgetStale(limited("2026-11-16"), TODAY)).toBe(false);
+    expect(isBudgetStale(limited("2026-11-01"), TODAY)).toBe(true);
+    expect(isBudgetStale(limited(null), TODAY)).toBe(true);
+    expect(isBudgetStale(limited(undefined), TODAY)).toBe(true);
+    expect(isBudgetStale(limited("上週"), TODAY)).toBe(true);
+    expect(isBudgetStale(item("y", win(20, { budget_limited: false })), TODAY)).toBe(false);
+    expect(isBudgetStale(item("z", win(20)), TODAY)).toBe(false);
+  });
+
+  it("budget_limited 且 last_checked 太久或沒填：不進貼文，列在先查證再貼並註明要先查", () => {
+    const items = [
+      item("never", win(20, { budget_limited: true })),
+      item("stale", win(21, { budget_limited: true, last_checked: "2026-10-01" })),
+      item("fresh", win(22, { budget_limited: true, last_checked: "2026-11-15" })),
+    ];
+    const digest = buildDigest(items, TODAY, "2026-11-15");
+    expect(digest.urgent.concat(digest.closing).map((r) => r.item.id)).toEqual(["fresh"]);
+    expect(digest.needsCheck.map((r) => r.item.id)).toEqual(["never", "stale"]);
+
+    const text = renderDigest(digest, "https://example.test");
+    const [beforeCheck, afterCheck] = text.split("## 先查證再貼");
+    for (const id of ["never", "stale"]) {
+      expect(beforeCheck).not.toContain(`/subsidy/${id}`);
+      expect(afterCheck).toContain(
+        `${id}：${id === "never" ? "11/20 截止，剩 4 天" : "11/21 截止，剩 5 天"}；5,000 元（經費可能已用完，先看主管機關網站，確認後更新 last_checked）　https://example.test/subsidy/${id}`,
+      );
+    }
+    expect(afterCheck).not.toContain("經費用完會提前結束");
+    expect(beforeCheck).toContain("fresh：11/22 截止，剩 6 天；5,000 元（經費用完會提前結束）");
+  });
+
+  it("經費有限的項目在「開始受理」那組也一樣：沒確認過不進貼文", () => {
+    const items = [item("opening-stale", { start_year: 2026, start_month: 11, start_day: 26, end_year: 2026, end_month: 12, end_day: 31, budget_limited: true })];
+    const digest = buildDigest(items, TODAY, "2026-11-15");
+    expect(digest.opening).toHaveLength(0);
+    expect(digest.needsCheck).toHaveLength(1);
   });
 });
 
@@ -147,6 +190,14 @@ describe("年底提醒", () => {
         "這是我整理的免費工具，不是政府網站；申請前以主管機關公告為準。",
       ].join("\n"),
     );
+  });
+
+  it("可信度 low 的項目不收（區間內也不貼）", () => {
+    const items = [withNotice("low", notice("11-01", "12-31"), { confidence: "low" }), withNotice("medium", notice("11-01", "12-31"), { confidence: "medium" })];
+    expect(buildYearEnd(items, TODAY).map((r) => r.item.id)).toEqual(["medium"]);
+    const text = renderDigest(buildDigest(items, TODAY, "2026-11-15"), "https://example.test");
+    expect(text).toContain("## 年底提醒（1）");
+    expect(text).not.toContain("/subsidy/low");
   });
 
   it("今天不在區間內就寫「無」，不影響貼文草稿", () => {

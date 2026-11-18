@@ -18,9 +18,9 @@ export interface ReminderCardProps {
   showCalendarLinks?: boolean;
 }
 
-export function countdownLabel(days: number): string {
+export function countdownLabel(days: number, planned = false): string {
   if (days < 0) return `已過期 ${-days} 天`;
-  if (days === 0) return '今天截止';
+  if (days === 0) return planned ? '今天要辦' : '今天截止';
   return `剩 ${days} 天`;
 }
 
@@ -92,11 +92,12 @@ export default function ReminderCard({ reminder, onToggleDone, onRemove, showCal
               reminder.done ? 'text-muted-foreground' : countdownClass(days),
             )}
           >
-            {reminder.done ? '已完成' : countdownLabel(days)}
+            {reminder.done ? '已完成' : countdownLabel(days, reminder.planned)}
           </span>
         </div>
 
         <p className="mt-1 text-sm text-muted-foreground">
+          {reminder.planned && '預定 '}
           {formatDate(reminder.targetDate)}
           {reminder.note && <span>・{reminder.note}</span>}
         </p>

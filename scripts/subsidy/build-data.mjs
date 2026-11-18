@@ -45,11 +45,28 @@ const TAIWAN_CITIES = ["台北市", "新北市", "桃園市", "台中市", "台�
 const okMonth = (v) => Number.isInteger(v) && v >= 1 && v <= 12;
 const isDate = (v) => typeof v === "string" && /^\d{4}-\d{2}-\d{2}$/.test(v);
 const isMonthDay = (v) => typeof v === "string" && /^(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/.test(v);
+// 格式對不代表日期存在：2026-11-31、04-31 都符合 regex，前端手動 split 後 new Date 會滾到下個月，倒數天數差一個月
+const DAYS_IN_MONTH = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; // 2 月算 29：year_end_notice 沒有年份，閏年的 02-29 要能寫
+const isRealMonthDay = (v) => {
+  if (!isMonthDay(v)) return false;
+  const [m, d] = v.split("-").map(Number);
+  return d <= DAYS_IN_MONTH[m - 1];
+};
+const isRealDate = (v) => {
+  if (!isDate(v)) return false;
+  const [y, m, d] = v.split("-").map(Number);
+  const t = new Date(Date.UTC(y, m - 1, d));
+  return t.getUTCFullYear() === y && t.getUTCMonth() === m - 1 && t.getUTCDate() === d;
+};
+// 同一個網址貼兩次只算一筆；結尾的 / 與 #片段不算不同頁
+const sourceKey = (url) => String(url ?? "").trim().replace(/#.*$/, "").replace(/\/+$/, "");
 // 「錯過會怎樣」與年底卡會放在期限卡第一屏、跟著提醒進到通知：一定要有法條原文（全國法規資料庫），
 // 或至少 minGov 筆主管機關（gov.tw）來源。新聞與第三方整理不算
 function officialSourcesOk(sources, minGov) {
   if (!Array.isArray(sources) || sources.length === 0) return false;
-  const hosts = sources.map((s) => {
+  // 先去重再數：同一個 gov.tw 網址貼兩次，不能湊成「兩筆來源」
+  const unique = [...new Map(sources.map((s) => [sourceKey(s?.url), s])).values()];
+  const hosts = unique.map((s) => {
     try {
       return new URL(s?.url).hostname;
     } catch {
@@ -129,7 +146,9 @@ function validateItem(item, origin) {
     );
   }
   check(dl.budget_limited == null || typeof dl.budget_limited === "boolean", `${where}: deadline.budget_limited 要是 true／false`);
-  check(dl.last_checked == null || isDate(dl.last_checked), `${where}: deadline.last_checked 要是 YYYY-MM-DD`);
+  check(dl.last_checked == null || isRealDate(dl.last_checked), `${where}: deadline.last_checked「${dl.last_checked}」要是存在的日期（YYYY-MM-DD）`);
+  // 未來的日期代表還沒確認就先寫了「已確認」，貼文的 14 天新鮮度判斷會被騙過去
+  check(!isRealDate(dl.last_checked) || dl.last_checked <= today, `${where}: deadline.last_checked ${dl.last_checked} 晚於建置當天（台灣 ${today}）`);
   const lc = item.late_consequence;
   if (lc != null) {
     check(typeof lc.text === "string" && lc.text.trim() !== "", `${where}: late_consequence.text 是空的`);
@@ -142,7 +161,7 @@ function validateItem(item, origin) {
   }
   const yn = item.year_end_notice;
   if (yn != null) {
-    check(isMonthDay(yn.from) && isMonthDay(yn.to), `${where}: year_end_notice.from／to 要是 MM-DD`);
+    check(isRealMonthDay(yn.from) && isRealMonthDay(yn.to), `${where}: year_end_notice.from／to 要是存在的月日（MM-DD，04-31、02-30 不存在）`);
     check(typeof yn.title === "string" && yn.title.trim() !== "", `${where}: year_end_notice.title 是空的`);
     check(
       Array.isArray(yn.lines) && yn.lines.length > 0 && yn.lines.every((l) => typeof l === "string" && l.trim() !== ""),
@@ -302,8 +321,13 @@ const dead = new Set(fs.existsSync(deadFile) ? readJson(deadFile) : []);
 function dropDeadUrls(item) {
   if (dead.size === 0) return item;
   const sources = item.sources.filter((s) => !dead.has(s.url));
+  // late_consequence、year_end_notice 的來源詳情頁也會列出。這兩個不留「全失效就保留原樣」的退路：
+  // 沒有來源的「錯過會怎樣」不能放，讓後面的來源數量檢查把它擋下
+  const live = (list) => (list ?? []).filter((s) => !dead.has(s.url));
   return {
     ...item,
+    late_consequence: item.late_consequence ? { ...item.late_consequence, sources: live(item.late_consequence.sources) } : item.late_consequence,
+    year_end_notice: item.year_end_notice ? { ...item.year_end_notice, sources: live(item.year_end_notice.sources) } : item.year_end_notice,
     sources: sources.length > 0 ? sources : item.sources,
     channels: item.channels.map((c) => (c.url && dead.has(c.url) ? { ...c, url: null } : c)),
     faqs: item.faqs.map((f) => (f.source_url && dead.has(f.source_url) ? { ...f, source_url: null } : f)),

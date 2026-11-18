@@ -4,7 +4,8 @@
  *
  *   node scripts/subsidy/check-urls.mjs [--only official] [--out report.json]
  *
- * 會打：每個項目的 official_url、channels[].url、sources[].url、faqs[].source_url，以及一般問答的 source_url。
+ * 會打：每個項目的 official_url、channels[].url、sources[].url、faqs[].source_url、late_consequence.sources[].url、
+ * year_end_notice.sources[].url（詳情頁的來源清單會列），以及一般問答的 source_url。
  * 用 curl（會吃 HTTPS_PROXY 與系統憑證），同時 8 條連線。
  *
  * 分類：
@@ -44,6 +45,8 @@ for (const item of data.items) {
   for (const c of item.channels) add(c.url, item.id, "channel");
   for (const s of item.sources) add(s.url, item.id, "source");
   for (const f of item.faqs) add(f.source_url, item.id, "faq");
+  for (const x of item.late_consequence?.sources ?? []) add(x.url, item.id, "late_consequence");
+  for (const x of item.year_end_notice?.sources ?? []) add(x.url, item.id, "year_end_notice");
 }
 if (only !== "official") for (const f of data.general_faqs) add(f.source_url, "(general faq)", "faq");
 

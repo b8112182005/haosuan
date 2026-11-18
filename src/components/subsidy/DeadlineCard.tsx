@@ -12,7 +12,7 @@ import {
   urgency,
 } from "@/lib/subsidy/deadline";
 import { DATA_VERSION } from "@/lib/subsidy/index-data";
-import { reminderPreset } from "@/lib/subsidy/reminderPreset";
+import { reminderPreset, showApplyNow } from "@/lib/subsidy/reminderPreset";
 import { useToday } from "@/lib/subsidy/useToday";
 import AddReminderButton from "@/components/reminders/AddReminderButton";
 
@@ -39,8 +39,8 @@ export default function DeadlineCard({ subsidy }: { subsidy: DeadlineCardSubsidy
   const state = today ? resolveSubsidyDeadline(subsidy, today) : null;
 
   const preset = state ? reminderPreset({ deadline: subsidy.deadline, lateConsequence: subsidy.late_consequence, state }) : null;
-  // 結束的項目沒有可送件的東西，不管資料怎麼標都不顯示「現在就能送件」
-  const applyNow = !!preset?.applyNow && state?.kind !== "ended";
+  // 結束、或期間還沒開始的項目現在送不了件，不管資料怎麼標都不顯示「現在就能送件」
+  const applyNow = showApplyNow(!!preset?.applyNow, state);
   const extraLines = subsidy.deadline.extra_lines ?? [];
   const lastChecked = formatDateString(subsidy.deadline.last_checked);
 
@@ -150,6 +150,7 @@ export default function DeadlineCard({ subsidy }: { subsidy: DeadlineCardSubsidy
             note={preset.note}
             defaultDaysBefore={preset.daysBefore}
             repeatYearly={preset.repeatYearly}
+            planned={preset.planned}
           />
           {applyNow ? (
             <span className="text-xs text-muted-foreground">越早送越早開始領。挑一天去辦，當天提醒你</span>
