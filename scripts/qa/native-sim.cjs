@@ -19,6 +19,8 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 const { chromium } = require("playwright");
+// 期限卡的新欄位檢查要知道資料裡哪個項目有這些欄位；資料還沒有時整段略過
+const SUBSIDY_DATA = require("../../src/data/subsidies.json");
 
 const ROOT = path.resolve(__dirname, "../..");
 const OUT = path.join(ROOT, "out");
@@ -793,6 +795,81 @@ async function main() {
     return (p === "/" && (await firstLoad.locator("nav.bottom-tabs").isVisible())) || p;
   });
   await firstLoad.close();
+
+  // 14b. 期限卡的新欄位（晚送後果、經費用完、年底提醒卡）────────────────────────────────────────
+  // 資料裡找不到帶這些欄位的項目就略過，不算失敗：欄位是選填，沒有欄位時畫面要和以前一樣
+  console.log("\n# 期限卡的新欄位");
+  const subsidyItems = SUBSIDY_DATA.items || [];
+  const skipNewField = (label) => console.log("略過", label, "→ 略過（資料還沒有這個欄位）");
+
+  const applyNowItem = subsidyItems.find((i) => i.late_consequence && i.late_consequence.apply_now === true);
+  if (!applyNowItem) skipNewField("晚送會怎樣、現在去申請、提醒預設值（late_consequence.apply_now）");
+  else {
+    const lateShort = applyNowItem.late_consequence.short;
+    await page.goto(`${ORIGIN}/subsidy/${applyNowItem.id}/`, { waitUntil: "networkidle" });
+    await settle(800);
+    const lateDetailPath = pathNow();
+    await check(`${applyNowItem.id}：詳情頁看得到「晚送會怎樣」`, async () =>
+      (await page.getByText("晚送會怎樣：").first().isVisible()) || "沒有「晚送會怎樣：」");
+    await check(`${applyNowItem.id}：主按鈕是「現在去申請」，連結仍是官方申請頁`, async () => {
+      const link = page.getByRole("link", { name: "現在去申請" }).first();
+      const href = await link.getAttribute("href");
+      return ((await link.isVisible()) && href === applyNowItem.official_url) || { href };
+    });
+    await check(`${applyNowItem.id}：期限卡寫「現在就能送件」`, async () =>
+      (await page.getByText("現在就能送件").first().isVisible()) || "沒有「現在就能送件」");
+    await page.getByRole("button", { name: "加入提醒" }).first().click();
+    await check(`${applyNowItem.id}：加入提醒面板的日期欄是空的`, async () => {
+      await page.locator('[role="dialog"]').waitFor({ state: "visible", timeout: 3000 });
+      const value = await page.getByLabel("截止日期").inputValue();
+      return value === "" || value;
+    });
+    await back(true);
+    await settle(400);
+    await check(`${applyNowItem.id}：面板開著按返回鍵只關面板，不換頁`, async () =>
+      (!(await page.locator('[role="dialog"]').isVisible()) && pathNow() === lateDetailPath) || pathNow());
+    // 補助項目的提醒面板沒有備註欄，備註在確認加入時一起存；所以挑一天、存下來，再看存下的備註
+    await page.evaluate(() => localStorage.setItem("__perm", "granted"));
+    await page.getByRole("button", { name: "加入提醒" }).first().click();
+    await page.getByLabel("截止日期").fill("2099-03-01");
+    await page.getByRole("button", { name: "確認加入" }).click();
+    await settle(1200);
+    await check(`${applyNowItem.id}：存下的提醒備註是 late_consequence.short`, async () => {
+      const saved = (await storedReminders()).find((r) => r.source && r.source.id === applyNowItem.id);
+      return (!!saved && saved.note === lateShort) || (saved ? { note: saved.note, expected: lateShort } : "沒有存下提醒");
+    });
+  }
+
+  const budgetItem = subsidyItems.find((i) => i.deadline && i.deadline.budget_limited === true);
+  if (!budgetItem) skipNewField("經費用完會提前結束（deadline.budget_limited）");
+  else {
+    await page.goto(`${ORIGIN}/subsidy/${budgetItem.id}/`, { waitUntil: "networkidle" });
+    await settle(800);
+    await check(`${budgetItem.id}：詳情頁看得到「經費用完會提前結束」`, async () =>
+      (await page.getByText("經費用完會提前結束").first().isVisible()) || "沒有「經費用完會提前結束」");
+  }
+
+  // 用台北時間的今天，和 app 裡 useToday 用的裝置日期一致
+  const taipeiToday = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Taipei" }).format(new Date()).split("-").map(Number);
+  const todayKey = taipeiToday[1] * 100 + taipeiToday[2];
+  const monthDay = (v) => {
+    const m = /^(\d\d)-(\d\d)$/.exec(v);
+    return m ? Number(m[1]) * 100 + Number(m[2]) : NaN;
+  };
+  const noticeItem = subsidyItems.find((i) => {
+    const n = i.year_end_notice;
+    if (!n || i.status_2026 === "ended") return false;
+    const from = monthDay(n.from);
+    const to = monthDay(n.to);
+    return from <= to ? todayKey >= from && todayKey <= to : todayKey >= from || todayKey <= to;
+  });
+  if (!noticeItem) skipNewField("年底提醒卡（year_end_notice 且今天在區間內）");
+  else {
+    await page.goto(`${ORIGIN}/subsidy/`, { waitUntil: "networkidle" });
+    await settle(800);
+    await check(`${noticeItem.id}：/subsidy 看得到年底提醒卡標題`, async () =>
+      (await page.getByText(noticeItem.year_end_notice.title, { exact: true }).first().isVisible()) || `沒有「${noticeItem.year_end_notice.title}」`);
+  }
 
   await check("全程沒有未捕捉的 JS 錯誤", async () => pageErrors.length === 0 || pageErrors.slice(0, 5));
 

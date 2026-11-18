@@ -1,4 +1,5 @@
-import index from "@/data/subsidies-index.json";
+// 相對路徑：vitest 沒設 @ 別名，sitemap 測試要能 import 這個檔
+import index from "../../data/subsidies-index.json";
 import type { SubsidyCategory, SubsidySummary } from "./types";
 import { CATEGORY_ORDER } from "./types";
 

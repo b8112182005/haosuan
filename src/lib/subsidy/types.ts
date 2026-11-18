@@ -126,6 +126,42 @@ export interface SubsidyDeadline {
    */
   extra_windows?: Array<{ start_month: number; start_day: number; end_month: number; end_day: number }> | null;
   note: string;
+  /**
+   * 主期限下面的補充行，最多 3 行。例如購車補助的「購買期限：發票日期要在 2026/12/31 以前」、
+   * 租金補貼的「已經在領：租約到期後 3 個月內上傳新租約」。只放全國一致、有來源的文字。
+   */
+  extra_lines?: Array<{ label: string; text: string }> | null;
+  /** 經費用完就提前結束：期限卡多一行最後核對日，讓人知道日期之前也可能停 */
+  budget_limited?: boolean | null;
+  /** 最後一次對照官網確認還在受理的日期（YYYY-MM-DD） */
+  last_checked?: string | null;
+}
+
+/**
+ * 錯過或晚送會怎樣。只收有法條或作業要點原文的規則（build-data 會檢查來源），
+ * 因為這一句會放在期限卡第一屏，也會跟著提醒進到通知裡。
+ */
+export interface LateConsequence {
+  /** 期限卡第一屏的一兩句：規則與條號 */
+  text: string;
+  /** 放進提醒備註的短句，通知內文會接在期限日期後面，24 字以內 */
+  short: string;
+  /**
+   * 從申請日或文件備齊當月起算：越早送領越多。這類項目的主按鈕改成「現在去申請」，
+   * 提醒預設一週內，不預設「截止前 30、14、3 天」，那會把人帶到最後才送
+   */
+  apply_now: boolean;
+  sources: SubsidySource[];
+}
+
+/** 每年固定期間（例如 11/1～12/31）在補助首頁、時程表與該項目頁顯示的卡片 */
+export interface YearEndNotice {
+  /** MM-DD，用裝置的今天判斷，每年都會出現 */
+  from: string;
+  to: string;
+  title: string;
+  lines: string[];
+  sources: SubsidySource[];
 }
 
 export interface SubsidyFaq {
@@ -172,6 +208,8 @@ export interface Subsidy {
   verification_summary?: string | null;
   /** 研究主題 id，方便追溯來源檔 */
   topic?: string;
+  late_consequence?: LateConsequence | null;
+  year_end_notice?: YearEndNotice | null;
 }
 
 /**
@@ -195,6 +233,7 @@ export type SubsidySummary = Pick<
   | "status_2026"
   | "confidence"
   | "topic"
+  | "year_end_notice"
 >;
 
 export interface GeneralFaq {

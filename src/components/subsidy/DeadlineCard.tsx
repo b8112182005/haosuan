@@ -1,7 +1,7 @@
 "use client";
 
 import { CalendarClock, Infinity as InfinityIcon, Ban, Hourglass } from "lucide-react";
-import type { Subsidy } from "@/lib/subsidy/types";
+import type { LateConsequence, Subsidy } from "@/lib/subsidy/types";
 import {
   FAR_DAYS,
   describeWindow,
@@ -9,15 +9,26 @@ import {
   isProjected,
   parseDateString,
   resolveSubsidyDeadline,
-  toDateString,
   urgency,
 } from "@/lib/subsidy/deadline";
 import { DATA_VERSION } from "@/lib/subsidy/index-data";
+import { reminderPreset } from "@/lib/subsidy/reminderPreset";
 import { useToday } from "@/lib/subsidy/useToday";
 import AddReminderButton from "@/components/reminders/AddReminderButton";
 
-/** 只收用得到的欄位：整筆 Subsidy 當 props 會連問答、來源一起序列化進頁面 */
-export type DeadlineCardSubsidy = Pick<Subsidy, "id" | "name" | "short_name" | "deadline">;
+/**
+ * 只收用得到的欄位：整筆 Subsidy 當 props 會連問答、來源一起序列化進頁面。
+ * late_consequence 的 sources 留在 server 端的來源清單，不傳進 client。
+ */
+export type DeadlineCardSubsidy = Pick<Subsidy, "id" | "name" | "short_name" | "deadline"> & {
+  late_consequence?: Pick<LateConsequence, "text" | "short" | "apply_now"> | null;
+};
+
+/** "2026-11-15" → "2026/11/15"；格式不對就不顯示，不要把壞字串印在畫面上 */
+function formatDateString(value: string | null | undefined): string | null {
+  const date = value ? parseDateString(value) : null;
+  return date ? formatLocalDate(date) : null;
+}
 
 /**
  * 詳情頁的截止日卡片 + 一鍵加入提醒。
@@ -27,8 +38,15 @@ export default function DeadlineCard({ subsidy }: { subsidy: DeadlineCardSubsidy
   const today = useToday();
   const state = today ? resolveSubsidyDeadline(subsidy, today) : null;
 
+  const preset = state ? reminderPreset({ deadline: subsidy.deadline, lateConsequence: subsidy.late_consequence, state }) : null;
+  // 結束的項目沒有可送件的東西，不管資料怎麼標都不顯示「現在就能送件」
+  const applyNow = !!preset?.applyNow && state?.kind !== "ended";
+  const extraLines = subsidy.deadline.extra_lines ?? [];
+  const lastChecked = formatDateString(subsidy.deadline.last_checked);
+
+  // 越早送越早開始領的項目沒有「越近越急」的問題，截止前變紅會把人推向最後一天才送
   const tone =
-    state && state.kind === "upcoming"
+    !applyNow && state && state.kind === "upcoming"
       ? urgency(state) === "urgent"
         ? "border-red-300 bg-red-50 dark:border-red-900 dark:bg-red-950/30"
         : urgency(state) === "soon"
@@ -36,10 +54,8 @@ export default function DeadlineCard({ subsidy }: { subsidy: DeadlineCardSubsidy
           : "border-border bg-card"
       : "border-border bg-card";
 
-  const reminderDate = state && state.kind === "upcoming" ? toDateString(state.date) : undefined;
   const dataDate = parseDateString(DATA_VERSION);
   const projected = !!state && !!dataDate && isProjected(subsidy.deadline, state, dataDate);
-  const yearly = subsidy.deadline.type === "fixed_annual";
 
   return (
     <section className={`rounded-2xl border p-4 ${tone}`}>
@@ -59,6 +75,18 @@ export default function DeadlineCard({ subsidy }: { subsidy: DeadlineCardSubsidy
           <p className="text-xs font-medium text-muted-foreground">申請期限</p>
           {!state ? (
             <div className="mt-1 h-6 w-32 animate-pulse rounded bg-muted" aria-busy="true" />
+          ) : applyNow && state.kind === "upcoming" ? (
+            <>
+              <p className="mt-0.5 text-lg font-bold leading-tight">現在就能送件</p>
+              <p className="mt-0.5 text-xs text-muted-foreground">最晚 {formatLocalDate(state.date)}</p>
+              {projected && (
+                <p className="mt-0.5 text-xs text-muted-foreground">
+                  這一期的日期是照上一期推算的，實際日期以主管機關公告為準。
+                </p>
+              )}
+            </>
+          ) : applyNow ? (
+            <p className="mt-0.5 text-lg font-bold leading-tight">現在就能送件</p>
           ) : state.kind === "upcoming" ? (
             <>
               <p className="mt-0.5 text-lg font-bold leading-tight">
@@ -82,6 +110,19 @@ export default function DeadlineCard({ subsidy }: { subsidy: DeadlineCardSubsidy
           ) : (
             <p className="mt-0.5 text-lg font-bold leading-tight">{state.label}</p>
           )}
+          {subsidy.late_consequence && (
+            <p className="mt-1.5 text-xs leading-relaxed text-foreground/80">晚送會怎樣：{subsidy.late_consequence.text}</p>
+          )}
+          {extraLines.map((line, i) => (
+            <p key={i} className="mt-1.5 text-xs leading-relaxed text-foreground/80">
+              {line.label}：{line.text}
+            </p>
+          ))}
+          {subsidy.deadline.budget_limited && (
+            <p className="mt-1.5 text-xs leading-relaxed text-foreground/80">
+              經費用完會提前結束。{lastChecked && `最後核對 ${lastChecked}。`}
+            </p>
+          )}
           {/* 期限說明常有一整段（年度公告、戶數上限、明年展望），長的收起來，讓「加入提醒」留在第一屏 */}
           {subsidy.deadline.note &&
             (subsidy.deadline.note.length <= 60 ? (
@@ -97,20 +138,25 @@ export default function DeadlineCard({ subsidy }: { subsidy: DeadlineCardSubsidy
         </div>
       </div>
 
-      {state && state.kind !== "ended" && (
+      {state && preset && state.kind !== "ended" && (
         <div className="mt-3 flex flex-wrap items-center gap-2">
           <AddReminderButton
             // 標題只放項目名稱：通知會自己接上「3 天後截止」，再加「截止」會變成「牌照稅截止 3 天後截止」。
             // 期限說明不帶進提醒：那是一整段某一年度的說明，會把通知第一行的期限日期擠掉，隔年也不適用
             title={subsidy.short_name || subsidy.name}
-            targetDate={reminderDate}
+            targetDate={preset.targetDate}
             url={`/subsidy/${subsidy.id}`}
             source={{ type: "subsidy", id: subsidy.id }}
-            defaultDaysBefore={state.kind === "upcoming" ? [30, 14, 3] : [7]}
-            repeatYearly={yearly}
+            note={preset.note}
+            defaultDaysBefore={preset.daysBefore}
+            repeatYearly={preset.repeatYearly}
           />
-          {state.kind !== "upcoming" && (
-            <span className="text-xs text-muted-foreground">沒有固定截止日，可以自己挑一天提醒</span>
+          {applyNow ? (
+            <span className="text-xs text-muted-foreground">越早送越早開始領。挑一天去辦，當天提醒你</span>
+          ) : (
+            state.kind !== "upcoming" && (
+              <span className="text-xs text-muted-foreground">沒有固定截止日，可以自己挑一天提醒</span>
+            )
           )}
         </div>
       )}

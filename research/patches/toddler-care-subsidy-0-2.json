@@ -1,7 +1,7 @@
 {
   "id": "toddler-care-subsidy-0-2",
-  "verdict": "confirmed",
-  "verified_at": "2026-11-14",
+  "verdict": "corrected",
+  "verified_at": "2026-11-18",
   "checked": [
     {
       "field": "amount.min",
@@ -25,13 +25,6 @@
       "source_url": "https://welfare.ntpc.gov.tw/viewService/show/1008042"
     },
     {
-      "field": "deadline.note",
-      "value_in_data": "托育事實發生（開始送托）後15日內提出申請",
-      "official_value": "申請人應於托育事實發生後15日內提出申請",
-      "match": true,
-      "source_url": "https://welfare.ntpc.gov.tw/viewService/show/1008042"
-    },
-    {
       "field": "status_2026",
       "value_in_data": "active",
       "official_value": "衛福部配合行政院核定「我國少子女化對策計畫2.0（115年至118年）」……持續發放育兒津貼及托育補助（頁面更新時間：115-07-13）",
@@ -44,10 +37,41 @@
       "official_value": "HTTP 200，頁面標題《未滿2歲幼兒照顧政策：育兒津貼、托育補助，不排富，全照顧》專區",
       "match": true,
       "source_url": "https://www.mohw.gov.tw/cp-5130-58003-1.html"
+    },
+    {
+      "field": "deadline.note / faqs[0]",
+      "value_in_data": "",
+      "official_value": "十四、委託人自托育事實發生日起十五日內，應依附表一申報表所列項目備齊文件，向直轄市、縣(市)政府提出協助支付服務費用之申報，其核定日期自托育事實發生之日起算；逾期申報者，以資料備齊送達之日起算。",
+      "match": false,
+      "source_url": "https://www.sw.ntpc.gov.tw/userfiles/1102400/files/1120406%E6%BA%96%E5%85%AC%E6%9C%8D%E5%8B%99%E4%BD%9C%E6%A5%AD%E8%A6%81%E9%BB%9E.pdf",
+      "note": "本次下載（HTTP 200）：衛福部 112-04-06 衛授家字第1120960181號令修正發布版，新北市社會局網站轉載。原文用「申報」「資料備齊送達之日起算」，不是「申請當月起算」"
+    },
+    {
+      "field": "deadline.note / faqs[0]",
+      "value_in_data": "",
+      "official_value": "十六、…前項費用之核定以月為單位，送托日數超過半個月未滿一個月者，以一個月計；半個月以下者，以半個月計。",
+      "match": false,
+      "source_url": "https://www.sw.ntpc.gov.tw/userfiles/1102400/files/1120406%E6%BA%96%E5%85%AC%E6%9C%8D%E5%8B%99%E4%BD%9C%E6%A5%AD%E8%A6%81%E9%BB%9E.pdf",
+      "note": "第十六點"
+    },
+    {
+      "field": "faqs[0] / how_to_apply[1]",
+      "value_in_data": "[{\"q\": \"送托後多久內要申請？超過會怎樣？\", \"a\": \"新北市社會局的服務說明寫明「於托育事實發生15日內」申請。超過15日仍可申請，但補助從申請當月起算，開始送托到申請之間的月份不補。簽約當天就請保母或托嬰中心幫忙送件，是最保險的做法。\", \"source_url\": \"https://welfare.ntpc.gov.tw/viewService/show/1008042\"}, {\"…（共 1050 字）",
+      "official_value": "第一項申報，直轄市、縣(市)政府得委由居家托育服務中心、托嬰中心、托育家園受理。",
+      "match": false,
+      "source_url": "https://www.sw.ntpc.gov.tw/userfiles/1102400/files/1120406%E6%BA%96%E5%85%AC%E6%9C%8D%E5%8B%99%E4%BD%9C%E6%A5%AD%E8%A6%81%E9%BB%9E.pdf",
+      "note": "第十四點第二項後段；15 日起算點是托育事實發生日，不是簽約日，how_to_apply 因此改寫"
+    },
+    {
+      "field": "pitfalls[2]",
+      "value_in_data": "[\"每週送托時數未達30小時（例如只送半天班）不符合資格，簽約時要把時數寫在契約上。\", \"父母自己指定「一對一收托」會被排除，除非孩子有發展遲緩、身心障礙或罕見疾病證明。\", \"換保母或轉托嬰中心要在15日內重新申請，很多家長以為補助會自動跟著孩子走，結果斷了一兩個月。\", \"托育補助和育兒津貼只能擇一，公所與社會局資料會勾稽，重複領取會被追回。\", \"網路上仍流傳「準公共8,500元、公托5,…（共 250 字）",
+      "official_value": "委託人資格異動或變更合作對象，應重新申報服務費用。",
+      "match": false,
+      "source_url": "https://www.sw.ntpc.gov.tw/userfiles/1102400/files/1120406%E6%BA%96%E5%85%AC%E6%9C%8D%E5%8B%99%E4%BD%9C%E6%A5%AD%E8%A6%81%E9%BB%9E.pdf",
+      "note": "第十四點末項。只寫「重新申報」，沒有「15日內」，所以刪掉原 pitfall 的 15 日說法並把期限列為未驗證；新北市頁面 1008042 依上一輪紀錄也沒提換保母"
     }
   ],
   "corrections": [],
   "official_url_ok": true,
-  "file_path": "/home/user/haosuan/research/patches/toddler-care-subsidy-0-2.json",
-  "summary": "看了衛福部專區（115-07-13 更新，HTTP 200）與新北市社會局補助頁：公共化 7,000 元起、準公共 13,000 元起、胎次與身分加發、送托後 15 日內申請，都與資料一致，115 年仍在辦理。搜尋 1 次沒找到 115 年下半年或 116 年調整金額的公告。formula 寫公共化低收及弱勢加 4,000 元，但公共化每月上限是 9,000 元（amount.text 已寫對），這點只有新北市頁面為據，衛福部作業要點原文這次沒打開，unverified_fields 那一項維持不變。"
+  "summary": "下載並讀了衛福部 112-04-06 修正版托育準公共化作業要點（新北社會局轉載）第十四、十六點，deadline.note 與 faqs[0] 改成「資料備齊送達之日起算」「以半個月為單位」；pitfall 換保母 15 日找不到原文，改成要點只寫「應重新申報」，並把「換機構是否 15 日內」列入 unverified_fields。社家署原站連線被重設，沒查有無 112-04 之後的版本。"
 }

@@ -1,43 +1,8 @@
 {
   "id": "rent-subsidy-central-300b",
-  "verdict": "confirmed",
-  "verified_at": "2026-11-11",
+  "verdict": "corrected",
+  "verified_at": "2026-11-18",
   "checked": [
-    {
-      "field": "amount.min / amount.max",
-      "value_in_data": "min 2000、max 8000（元/月，未加碼之基本上限）",
-      "official_value": "申請書金額表：臺北市 8,000 元／5,000 元／3,000 元；最低一級 3,600 元／3,200 元／2,000 元",
-      "match": true,
-      "source_url": "https://www.planning.ntpc.gov.tw/userfiles/1090400/files/115%E5%B9%B4%E5%BA%A6%E7%A7%9F%E9%87%91%E8%A3%9C%E8%B2%BC%E7%94%B3%E8%AB%8B%E6%9B%B8.pdf"
-    },
-    {
-      "field": "amount.text（縣市分級金額）",
-      "value_in_data": "新北 19 區、桃園、新竹縣市 5,000／4,000／2,400；台南、高雄市區 4,000／3,600／2,200；其餘 3,600／3,200／2,000",
-      "official_value": "新竹縣、新竹市、桃園市 5,000 元／4,000 元／2,400 元；4,000 元／3,600 元／2,200 元；3,600 元／3,200 元／2,000 元",
-      "match": true,
-      "source_url": "https://www.planning.ntpc.gov.tw/userfiles/1090400/files/115%E5%B9%B4%E5%BA%A6%E7%A7%9F%E9%87%91%E8%A3%9C%E8%B2%BC%E7%94%B3%E8%AB%8B%E6%9B%B8.pdf"
-    },
-    {
-      "field": "amount.text（基本加碼倍數）",
-      "value_in_data": "單身青年 1.2 倍、新婚 1.3 倍、育兒 1 人 1.4／2 人 1.6／3 人 1.8 倍（每多 1 人 +0.2）、經濟弱勢 1.4 倍、社會弱勢 1.2 倍",
-      "official_value": "1.2 倍／1.3 倍／1 人：1.4 倍、2 人：1.6 倍、3 人：1.8 倍，加碼倍數增加 0.2 倍依此類推／1.4 倍／1.2 倍（申請書未印新婚 1.5 倍、新生兒 2 倍，該部分仍列於 unverified_fields）",
-      "match": true,
-      "source_url": "https://www.planning.ntpc.gov.tw/userfiles/1090400/files/115%E5%B9%B4%E5%BA%A6%E7%A7%9F%E9%87%91%E8%A3%9C%E8%B2%BC%E7%94%B3%E8%AB%8B%E6%9B%B8.pdf"
-    },
-    {
-      "field": "deadline（start 1/1、end 12/31）",
-      "value_in_data": "fixed_annual，1 月 1 日至 12 月 31 日；115 年 1 月 1 日上午 9 時至 12 月 31 日下午 5 時",
-      "official_value": "受理申請期間：自115年1月1日（星期四）上午9時起至115年12月31日（星期四）下午5時止",
-      "match": true,
-      "source_url": "https://gazette.nat.gov.tw/EG_FileManager/eguploadpub/eg031176/ch02/type3/gov10/num2/Eg.htm"
-    },
-    {
-      "field": "deadline.note（計畫戶數）",
-      "value_in_data": "計畫戶數 75 萬戶",
-      "official_value": "五、計畫戶數：75萬戶。",
-      "match": true,
-      "source_url": "https://gazette.nat.gov.tw/EG_FileManager/eguploadpub/eg031176/ch02/type3/gov10/num2/Eg.htm"
-    },
     {
       "field": "status_2026",
       "value_in_data": "active",
@@ -51,10 +16,153 @@
       "official_value": "HTTP 200（內容為防火牆 Request Rejected 頁，屬政府網站擋自動化請求，人工可開）",
       "match": true,
       "source_url": "https://has.nlma.gov.tw/house300e/"
+    },
+    {
+      "field": "name / deadline.note",
+      "value_in_data": "",
+      "official_value": "主旨：公告116年300億元中央擴大租金補貼專案計畫租金補貼受理申請。／三、受理申請期間：自116年1月1日（星期五）上午9時起至116年12月31日（星期五）下午5時止。",
+      "match": false,
+      "source_url": "https://rent-allowance.udd.gov.taipei/documents/grade/%E5%85%A7%E6%94%BF%E9%83%A8%E5%9C%8B%E5%9C%9F%E7%BD%B2%E5%85%AC%E5%91%8A.pdf",
+      "note": "掃描檔第 1、6 頁，發文 115-10-13 國署住字第1151195952號；第三點"
+    },
+    {
+      "field": "deadline.note（115 年度受理時間）",
+      "value_in_data": "",
+      "official_value": "自115年1月1日（星期四）上午9時起至115年12月31日（星期四）下午5時止",
+      "match": false,
+      "source_url": "https://gazette.nat.gov.tw/EG_FileManager/eguploadpub/eg031176/ch02/type3/gov10/num2/Eg.htm",
+      "note": "行政院公報 115 年度公告；115 年 12 月 31 日下午 5 時至 116 年 1 月 1 日上午 9 時之間沒有受理期間，是兩份公告相接的結果"
+    },
+    {
+      "field": "deadline.note（計畫戶數）、summary",
+      "value_in_data": "",
+      "official_value": "五、計畫戶數：74萬戶。",
+      "match": false,
+      "source_url": "https://rent-allowance.udd.gov.taipei/documents/grade/%E5%85%A7%E6%94%BF%E9%83%A8%E5%9C%8B%E5%9C%9F%E7%BD%B2%E5%85%AC%E5%91%8A.pdf",
+      "note": "掃描檔第 7 頁，第五點"
+    },
+    {
+      "field": "deadline.note（121 年 50 萬戶、經費）",
+      "value_in_data": "",
+      "official_value": "116年度租金補貼經費仍由中央政府負擔。／整體對租屋家戶的支持不會縮減。／租金補貼至民國121年目標將下修為50萬戶。",
+      "match": false,
+      "source_url": "https://cna.com.tw/news/aipl/202608170098.aspx",
+      "note": "中央社 2026-08-17，媒體轉述；只看到網頁摘要整理。內政部回應沒有直接確認或否認 50 萬戶，與任務說的「否認」有落差，已照原文寫"
+    },
+    {
+      "field": "deadline.extra_lines、how_to_apply 舊戶、faqs 去年有領",
+      "value_in_data": "",
+      "official_value": "(一)舊戶：經本署直接帶入申請，無須特別再提出申請，惟受補貼者應於租賃契約消滅3個月內檢附…且於116年仍有效之新租賃契約。／5、舊戶：指公告指定時間仍有核撥紀錄，並已檢附116年有效租賃契約者。（公告指定時間為115年8月）／（公告指定時間為115年9月1日至115年12月31日）",
+      "match": false,
+      "source_url": "https://rent-allowance.udd.gov.taipei/documents/grade/%E5%85%A7%E6%94%BF%E9%83%A8%E5%9C%8B%E5%9C%9F%E7%BD%B2%E5%85%AC%E5%91%8A.pdf",
+      "note": "掃描檔第 2、6-7 頁；第二點(一)5、7，第四點(一)"
+    },
+    {
+      "field": "deadline.extra_lines（續撥）",
+      "value_in_data": "",
+      "official_value": "受補貼者應於租賃契約消滅三個月內檢附符合第五點及第六點第二款規定之新租賃契約供地方主辦機關審核合格後，由中央主辦機關自起租日起，按月續撥租金補貼",
+      "match": false,
+      "source_url": "https://thd.taichung.gov.tw/media/1305401/%E9%99%84%E4%BB%B62-115-300%E5%84%84%E7%A7%9F%E9%87%91%E8%A3%9C%E8%B2%BC%E4%BD%9C%E6%A5%AD%E8%A6%8F%E5%AE%9A.pdf",
+      "note": "115 年作業規定第十一點(一)（本機先前下載的全文）。到期當月停撥只見於 113-07-05 住宅審議會會議紀錄，已列入 unverified_fields；116 年版作業規定未取得"
+    },
+    {
+      "field": "late_consequence",
+      "value_in_data": "",
+      "official_value": "1、租賃契約於申請日已起租者，自申請日起撥入申請人之金融機構帳戶。2、租賃契約於申請日尚未起租者，自起租日起撥入申請人之金融機構帳戶。",
+      "match": false,
+      "source_url": "https://rent-allowance.udd.gov.taipei/documents/grade/%E5%85%A7%E6%94%BF%E9%83%A8%E5%9C%8B%E5%9C%9F%E7%BD%B2%E5%85%AC%E5%91%8A.pdf",
+      "note": "掃描檔第 8 頁，116 公告第六點(三)。行政院公報 115 年公告與臺中市轉載的 115 年作業規定第十點(一)有同文；116 公告掃描檔是臺北市轉載（gov.taipei，不是 gov.tw），所以 gov.tw 來源用公報與臺中市兩筆"
+    },
+    {
+      "field": "eligibility（頂加舊戶）",
+      "value_in_data": "",
+      "official_value": "（七）本專案計畫115年核定租金補貼，以同一租賃地址經舊戶帶入本專案計畫116年度申請案者，依下列規定辦理：1、申請人具有住宅法第4條第2項所定之經濟或社會弱勢身分且專案報經內政部同意者，不受第1項第1款規定之限制。但於116年度補貼期間變更租賃地址者，變更後之租賃房屋應符合第1項第1款規定。",
+      "match": false,
+      "source_url": "https://rent-allowance.udd.gov.taipei/documents/grade/%E5%85%A7%E6%94%BF%E9%83%A8%E5%9C%8B%E5%9C%9F%E7%BD%B2%E5%85%AC%E5%91%8A.pdf",
+      "note": "掃描檔第 6 頁，第二點(七)1；括號「例如頂樓加蓋」是對「未保存登記建物」的舉例，公告未寫頂樓加蓋四字"
+    },
+    {
+      "field": "eligibility（6.88 平方公尺）",
+      "value_in_data": "",
+      "official_value": "9、以同一租賃地址申請補貼者，申請戶數未超過以房屋稅籍總面積除以6.88平方公尺所得之整數（未滿一戶之餘數，不予計入）計算該租賃地址得核定租金補貼之最高戶數。／(六)…限期協議由部分申請人撤回申請…屆期未達成協議者，同時申請之案件均予駁回。／2、於原租賃契約租賃期間內，不受第1項第9款規定之限制。但於原租賃契約租賃期間屆滿後另訂或續訂租賃契約，或於原租賃契約租賃期間內變更租賃地址者，另訂、續訂或變更後租賃契約所載之租賃房屋，應符合第1項第9款規定。",
+      "match": false,
+      "source_url": "https://rent-allowance.udd.gov.taipei/documents/grade/%E5%85%A7%E6%94%BF%E9%83%A8%E5%9C%8B%E5%9C%9F%E7%BD%B2%E5%85%AC%E5%91%8A.pdf",
+      "note": "掃描檔第 6 頁，第二點(五)9、(六)、(七)2"
+    },
+    {
+      "field": "eligibility（所得門檻）",
+      "value_in_data": "",
+      "official_value": "附表一：臺北市 六萬二千二百三十二元／七萬二千六百零四元；新北市 五萬三千二百五十元／六萬二千一百二十五元；桃園市 五萬一千五百五十八元／六萬零一百五十一元；臺中市 四萬九千二百九十三元／五萬七千五百零九元；臺南市 四萬六千五百四十五元／五萬四千三百零三元；高雄市 五萬零九百十元／五萬九千三百九十五元；金門縣、連江縣 四萬五千五百十九元／五萬三千一百零六元；其餘縣（市）四萬六千五百四十五元／五萬四千三百零三元。／(1)審查基準日在116年6月30日前之新戶及舊戶以114年度綜合所得稅各類所得…(2)審查基準日在116年7月1日後之新戶以115年綜合所得…",
+      "match": false,
+      "source_url": "https://rent-allowance.udd.gov.taipei/documents/grade/%E5%85%A7%E6%94%BF%E9%83%A8%E5%9C%8B%E5%9C%9F%E7%BD%B2%E5%85%AC%E5%91%8A.pdf",
+      "note": "附表一（第 11 頁文字層）與第四點(一)3（第 4 頁）；本項超出任務指定的 eligibility 範圍，因舊文字是 115 年數字，改為 116 數字。conditions 未動，已列入 unverified_fields"
+    },
+    {
+      "field": "amount.text",
+      "value_in_data": "每月補貼上限依縣市分三級：第一級（2 人以上含低收入戶，或 3 人以上含中低收入戶）、第二級（一般）、第三級（1 人且未滿 40 歲、無弱勢身分）。台北市 8,000／5,000／3,000 元；新北市 19 區（板橋、三重、中和、永和、新莊、新店、土城、蘆洲、汐止、樹林、鶯歌、三峽、淡水、林口、五股、泰山、八里、深坑）5,000／4,000／2,400 元，其餘 11 區 3,600／3,200…（共 855 字）",
+      "official_value": "附表五、附表六（金額表、加碼表）：新婚 一百十五年一月一日後（含本日）登記結婚 一點五倍；一百十五年一月一日後（含本日）有新生兒出生 一人：二倍／二人：二點五倍／三人：三倍／逾三人者：每增生育一名未成年子女，補貼金額加碼倍數增加零點五倍；一百十四年十二月三十一日前 一點三倍、一點四／一點六／一點八倍、逾三人每增零點二倍；經濟弱勢 一點四倍、社會弱勢 一點二倍、單身青年 一點二倍。註1：同時符合二種以上補貼金額加碼身分者，補貼金額擇高補貼。",
+      "match": false,
+      "source_url": "https://rent-allowance.udd.gov.taipei/documents/grade/%E5%85%A7%E6%94%BF%E9%83%A8%E5%9C%8B%E5%9C%9F%E7%BD%B2%E5%85%AC%E5%91%8A.pdf",
+      "note": "第 15、16 頁；各縣市分區金額與 115 年版逐區核對相同（新北 19／11 區、台中 17／12 區、台南 19／18 區、高雄 30／8 區）。附表三（第 13 頁圖）：經濟弱勢只有低收／中低收，其餘為社會弱勢，並列有「因懷孕或生育而遭遇困境之未成年人（限申請人）」，已加進 amount.text。原 unverified_fields 的倍數與 3.5 倍項已拿掉"
+    },
+    {
+      "field": "documents（起租日）",
+      "value_in_data": "",
+      "official_value": "於申請日已起租或自申請日起六十日內起租之定期租賃契約影本或電子契約，且起租日不得超過計畫年度。",
+      "match": false,
+      "source_url": "https://rent-allowance.udd.gov.taipei/documents/grade/%E5%85%A7%E6%94%BF%E9%83%A8%E5%9C%8B%E5%9C%9F%E7%BD%B2%E5%85%AC%E5%91%8A.pdf",
+      "note": "掃描檔第 8 頁，第八點(二)"
+    },
+    {
+      "field": "how_to_apply 臨櫃窗口、同一家庭一件申請",
+      "value_in_data": "",
+      "official_value": "七、受理申請及審查機關：租賃房屋所在地之直轄市、縣（市）政府，如附表七。／(四)同一家庭以提出一件申請為限，申請二件以上者，地方主辦機關應書面限期七日內擇一申請，屆期未擇一者，地方主辦機關應全部駁回。",
+      "match": false,
+      "source_url": "https://rent-allowance.udd.gov.taipei/documents/grade/%E5%85%A7%E6%94%BF%E9%83%A8%E5%9C%8B%E5%9C%9F%E7%BD%B2%E5%85%AC%E5%91%8A.pdf",
+      "note": "第 8、10 頁，第七點、第九點(四)；窗口地址在附表七（第 17-18 頁）"
+    },
+    {
+      "field": "pitfalls 分期、faqs 溢領",
+      "value_in_data": "",
+      "official_value": "溢領租金補貼返還期限以一年為限；地方主辦機關得依溢領租金補貼者之經濟狀況協議分期返還或延長返還期限，延長返還期限以二年為限。返還溢領之租金補貼不予計算利息。溢領本專案計畫租金補貼者應先行返還或依協議按期返還，方得申請或接受以後年度之租金補貼。",
+      "match": false,
+      "source_url": "https://thd.taichung.gov.tw/media/1305401/%E9%99%84%E4%BB%B62-115-300%E5%84%84%E7%A7%9F%E9%87%91%E8%A3%9C%E8%B2%BC%E4%BD%9C%E6%A5%AD%E8%A6%8F%E5%AE%9A.pdf",
+      "note": "115 年作業規定第十三點第四項（本機先前下載的全文）；116 公告第九點(七)寫「作業規定第13點」的停止補貼與返還規定，但未載條文"
+    },
+    {
+      "field": "pitfalls 補件、faqs 送出以後",
+      "value_in_data": "",
+      "official_value": "資料不全者，應一次書面通知限期於七日內補正。／補正項目涉及補貼金額者，不予採計。補正項目涉及補貼資格有無者，駁回申請案件。／應於受理申請後三個月內完成審查作業及核發核定函或駁回申請案件，必要時得視實際情形延長之。",
+      "match": false,
+      "source_url": "https://thd.taichung.gov.tw/media/1305401/%E9%99%84%E4%BB%B62-115-300%E5%84%84%E7%A7%9F%E9%87%91%E8%A3%9C%E8%B2%BC%E4%BD%9C%E6%A5%AD%E8%A6%8F%E5%AE%9A.pdf",
+      "note": "115 年作業規定第七點。「書面通知寄到申請時填的地址、搬家或換手機要向縣市政府申請變更聯絡資料」是任務指定的寫法，兩份原文都沒有，已列入 unverified_fields"
+    },
+    {
+      "field": "faqs 送出以後（遷居、出租人死亡）",
+      "value_in_data": "",
+      "official_value": "十二、租金補貼期間遷居至其他直轄市、縣（市）另行租賃房屋，應於遷居後三個月內，檢附符合第五點及第六點第二款規定之新租賃契約，以書面方式向遷移後租賃房屋所在地之直轄市、縣（市）主管機關提出租金補貼遷移申請。／十一…（一）申請人或受補貼戶應於出租人死亡之日起六個月內檢附新租賃契約供地方主辦機關審核。但租金補貼期間於出租人死亡之日起六個月內屆滿者，免檢附。",
+      "match": false,
+      "source_url": "https://thd.taichung.gov.tw/media/1305401/%E9%99%84%E4%BB%B62-115-300%E5%84%84%E7%A7%9F%E9%87%91%E8%A3%9C%E8%B2%BC%E4%BD%9C%E6%A5%AD%E8%A6%8F%E5%AE%9A.pdf",
+      "note": "115 年作業規定第十二點、第十一點第二項"
+    },
+    {
+      "field": "faqs 送出以後（訴願）",
+      "value_in_data": "",
+      "official_value": "訴願之提起，應自行政處分達到或公告期滿之次日起三十日內為之。／訴願之提起，以原行政處分機關或受理訴願機關收受訴願書之日期為準。",
+      "match": false,
+      "source_url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=A0030020&flno=14",
+      "note": "訴願法第 14 條第 1、3 項，全國法規資料庫"
+    },
+    {
+      "field": "faqs 去年有領（舊戶款項核發時點）",
+      "value_in_data": "",
+      "official_value": "舊戶之租金補貼，中央主辦機關應於前年度補貼期限屆滿後，始核發次年度租金補貼。",
+      "match": false,
+      "source_url": "https://thd.taichung.gov.tw/media/1305401/%E9%99%84%E4%BB%B62-115-300%E5%84%84%E7%A7%9F%E9%87%91%E8%A3%9C%E8%B2%BC%E4%BD%9C%E6%A5%AD%E8%A6%8F%E5%AE%9A.pdf",
+      "note": "115 年作業規定第十點第三項"
     }
   ],
   "corrections": [],
   "official_url_ok": true,
-  "file_path": "/home/user/haosuan/research/patches/rent-subsidy-central-300b.json",
-  "summary": "看了行政院公報的國土署 115 年受理公告（114 年 9 月 16 日）與新北市城鄉局轉載的 115 年度申請書：基本金額 2,000～8,000 元、分級金額表、基本加碼倍數、受理期間 115 年 1 月 1 日上午 9 時至 12 月 31 日下午 5 時、計畫戶數 75 萬戶，都與資料相同。搜尋未找到 116 年度受理公告或 115 年度停止受理的公告，資料不需修正；新婚 1.5 倍、新生兒 2 倍仍沒有官方條文可對照，維持在 unverified_fields。"
+  "summary": "讀了 116 公告掃描檔 18 頁（第 1-10 頁看圖，第 11-18 頁附表看文字層，第 13 頁附表三再看圖）、行政院公報 115 年公告、訴願法第 14 條、115 年作業規定（本機先前下載的全文）、中央社 2026-08-17 報導。改了名稱、摘要、受理期間、戶數、所得門檻與基準年度、舊戶頂加與 6.88 規則、起撥日、pitfalls 兩句、新增「送出以後」問答，並新增 late_consequence。116 年版作業規定全文兩次下載都失敗（連線被重置、WebFetch 503），點次引用 115 年版；116 公告掃描檔是臺北市轉載，不在 gov.tw 網域。"
 }

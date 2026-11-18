@@ -1,0 +1,57 @@
+{
+ "id": "taipei-electric-scooter-subsidy-2026",
+ "checked": [
+  {
+   "field": "deadline.end_year/end_month/end_day",
+   "value_in_data": "",
+   "official_value": "應於申請補助年度隔年1月10日前提出申請，逾期不予受理。",
+   "match": false,
+   "source_url": "https://www.dep.gov.taipei/News_Content.aspx?n=ACEFA960B5A4ACD7&sms=87415A8B9CE81B16&s=F4CB3476F66572CF",
+   "note": "Q&A Q7。補助專區頁與 2026-04-02 新聞稿頁沒寫申請截止日，只有 Q&A 有。內容經網頁擷取工具摘出，未逐頁讀 PDF 版。"
+  },
+  {
+   "field": "deadline.note",
+   "value_in_data": "115 年度補助期間 2026-01-01 至 2026-12-31（購車、報廢須在期間內完成），申請最晚 2027-01-10。每年預算約 1.565 億元依申請順序用罄為止。113～115 年計畫到 2026 年底結束，2027 年方案未公告。",
+   "official_value": "於115年12月25日報廢及回收老舊機車，並於115年12月26日購買電動機車並完成掛牌，最晚應於116年1月10日前至本局線上申請補助系統提出申請。",
+   "match": false,
+   "source_url": "https://www.dep.gov.taipei/News_Content.aspx?n=ACEFA960B5A4ACD7&sms=87415A8B9CE81B16&s=F4CB3476F66572CF",
+   "note": "Q&A Q7 舉例。"
+  },
+  {
+   "field": "deadline.extra_lines",
+   "value_in_data": "",
+   "official_value": "於115年1月1日至115年12月31日間新購或汰購電動機車",
+   "match": false,
+   "source_url": "https://www.dep.gov.taipei/News_Content.aspx?n=CE8746C01243996C&s=9B373391D9A680F0&sms=18E59B21BD8494A1",
+   "note": "補助專區頁，加碼補助的購車期間。"
+  },
+  {
+   "field": "deadline.extra_lines",
+   "value_in_data": "",
+   "official_value": "新購電動機車的發票開立日期與登記掛牌日期需與提出申請補助同一年度",
+   "match": false,
+   "source_url": "https://www.dep.gov.taipei/News_Content.aspx?n=CB6D5C560DE4D2DD&s=4F42D332497D01CC",
+   "note": "2026-04-02 新聞稿頁。"
+  },
+  {
+   "field": "deadline.budget_limited",
+   "value_in_data": "",
+   "official_value": "依申請順序用罄為止",
+   "match": false,
+   "source_url": "https://www.dep.gov.taipei/News_Content.aspx?n=ACEFA960B5A4ACD7&sms=87415A8B9CE81B16&s=F4CB3476F66572CF",
+   "note": "Q&A Q5，每年預算約 1.565 億元。"
+  },
+  {
+   "field": "deadline.note（116 年）",
+   "value_in_data": "",
+   "official_value": "補助期間：113年1月1日起至115年12月31日止。",
+   "match": false,
+   "source_url": "https://www.dep.gov.taipei/News_Content.aspx?n=CE8746C01243996C&s=9B373391D9A680F0&sms=18E59B21BD8494A1",
+   "note": "頁面沒有 116 年續辦的說明，所以寫「未公告」。"
+  }
+ ],
+ "corrections": [],
+ "verdict": "corrected",
+ "verified_at": "2026-11-18",
+ "summary": "看了臺北市環保局補助專區、2026-04-02 新聞稿頁與 113～115 年 Q&A。Q&A 寫申請最晚是隔年 1 月 10 日，所以 end 改 2027-01-10，購車期間寫進 extra_lines。三頁都沒有額滿或提前結束公告。"
+}

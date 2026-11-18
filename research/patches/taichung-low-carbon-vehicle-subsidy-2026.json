@@ -1,0 +1,33 @@
+{
+ "id": "taichung-low-carbon-vehicle-subsidy-2026",
+ "checked": [
+  {
+   "field": "deadline.end_*",
+   "value_in_data": "",
+   "official_value": "本計畫補助期間自115年1月1日至115年12月31日止；於116年1月10日以前提出申請",
+   "match": false,
+   "source_url": "https://green.epb.taichung.gov.tw/page/news/show.aspx?num=1865",
+   "note": "第五條。這句是網頁擷取工具摘出的條文，兩段原文合併成一句，逐字以條文 PDF 為準；條文 PDF 本次回 503/連線重設，沒讀到。"
+  },
+  {
+   "field": "deadline.extra_lines",
+   "value_in_data": "",
+   "official_value": "須於115年1月1日至116年1月10日間完成領牌作業",
+   "match": false,
+   "source_url": "https://green.epb.taichung.gov.tw/page/news/show.aspx?num=1865",
+   "note": "第七條第二款。老舊機車「115年1月1日至115年12月31日間完成報廢及回收作業」出自第五條，同頁。"
+  },
+  {
+   "field": "deadline.budget_limited",
+   "value_in_data": "",
+   "official_value": "主管機關依申請先後順序辦理補助案件，當年度補助經費用罄時，得不予補助。",
+   "match": false,
+   "source_url": "https://green.epb.taichung.gov.tw/page/news/show.aspx?num=1865",
+   "note": "第十條。頁面沒有額滿或提前結束公告，也沒有 116 年的說明。"
+  }
+ ],
+ "corrections": [],
+ "verdict": "corrected",
+ "verified_at": "2026-11-18",
+ "summary": "臺中市條文 PDF 兩次抓取失敗（503、連線重設），改看臺中市環保局低碳排車輛補助網的公告頁，讀到第五、七、十條。條文與舊資料的日期一致，deadline 改 end 2027-01-10。"
+}

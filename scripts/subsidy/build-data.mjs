@@ -43,6 +43,23 @@ const CONFIDENCES = ["high", "medium", "low"];
 // 和 src/lib/subsidy/types.ts 的 TAIWAN_CITIES 同一份清單；資料一律寫「台」不寫「臺」，試算是用字串比對縣市
 const TAIWAN_CITIES = ["台北市", "新北市", "桃園市", "台中市", "台南市", "高雄市", "基隆市", "新竹市", "嘉義市", "新竹縣", "苗栗縣", "彰化縣", "南投縣", "雲林縣", "嘉義縣", "屏東縣", "宜蘭縣", "花蓮縣", "台東縣", "澎湖縣", "金門縣", "連江縣"];
 const okMonth = (v) => Number.isInteger(v) && v >= 1 && v <= 12;
+const isDate = (v) => typeof v === "string" && /^\d{4}-\d{2}-\d{2}$/.test(v);
+const isMonthDay = (v) => typeof v === "string" && /^(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/.test(v);
+// 「錯過會怎樣」與年底卡會放在期限卡第一屏、跟著提醒進到通知：一定要有法條原文（全國法規資料庫），
+// 或至少 minGov 筆主管機關（gov.tw）來源。新聞與第三方整理不算
+function officialSourcesOk(sources, minGov) {
+  if (!Array.isArray(sources) || sources.length === 0) return false;
+  const hosts = sources.map((s) => {
+    try {
+      return new URL(s?.url).hostname;
+    } catch {
+      return "";
+    }
+  });
+  if (hosts.includes("law.moj.gov.tw")) return true;
+  // 臺北市政府的網域是 gov.taipei
+  return hosts.filter((h) => h.endsWith(".gov.tw") || h.endsWith(".gov.taipei")).length >= minGov;
+}
 const okDay = (v) => Number.isInteger(v) && v >= 1 && v <= 31;
 const EXCEPTION_KEYS = ["age", "must_rent", "no_home_ownership", "must_own_home", "children", "is_pregnant_or_newborn", "is_married", "has_labor_insurance", "has_national_pension", "is_disabled", "low_income", "is_student", "is_unemployed", "is_employed", "income", "vehicle"];
 const DEADLINE_TYPES = ["fixed_annual", "rolling", "window", "budget_until_exhausted", "event_based", "varies", "ended", "unknown"];
@@ -102,6 +119,37 @@ function validateItem(item, origin) {
     check(okMonth(w.start_month) && okDay(w.start_day) && okMonth(w.end_month) && okDay(w.end_day), `${where}: deadline.extra_windows 的月日不完整`);
   }
   check(!(dl.extra_windows?.length && dl.end_year), `${where}: deadline.extra_windows 不能和 end_year 一起用`);
+  // 期限補充行（購買期限、已經在領的人要盯的規則）：最多 3 行，標籤和內容都要有字
+  if (dl.extra_lines != null) {
+    check(
+      Array.isArray(dl.extra_lines) &&
+        dl.extra_lines.length <= 3 &&
+        dl.extra_lines.every((l) => typeof l?.label === "string" && l.label.trim() !== "" && typeof l?.text === "string" && l.text.trim() !== ""),
+      `${where}: deadline.extra_lines 要是最多 3 行的 {label, text}`,
+    );
+  }
+  check(dl.budget_limited == null || typeof dl.budget_limited === "boolean", `${where}: deadline.budget_limited 要是 true／false`);
+  check(dl.last_checked == null || isDate(dl.last_checked), `${where}: deadline.last_checked 要是 YYYY-MM-DD`);
+  const lc = item.late_consequence;
+  if (lc != null) {
+    check(typeof lc.text === "string" && lc.text.trim() !== "", `${where}: late_consequence.text 是空的`);
+    check(
+      typeof lc.short === "string" && lc.short.trim() !== "" && [...lc.short].length <= 24,
+      `${where}: late_consequence.short 要有字、24 字以內（會接在通知的期限日期後面）`,
+    );
+    check(typeof lc.apply_now === "boolean", `${where}: late_consequence.apply_now 要是 true／false`);
+    check(officialSourcesOk(lc.sources, 2), `${where}: late_consequence 要有一筆 law.moj.gov.tw 的法條，或兩筆 gov.tw 來源`);
+  }
+  const yn = item.year_end_notice;
+  if (yn != null) {
+    check(isMonthDay(yn.from) && isMonthDay(yn.to), `${where}: year_end_notice.from／to 要是 MM-DD`);
+    check(typeof yn.title === "string" && yn.title.trim() !== "", `${where}: year_end_notice.title 是空的`);
+    check(
+      Array.isArray(yn.lines) && yn.lines.length > 0 && yn.lines.every((l) => typeof l === "string" && l.trim() !== ""),
+      `${where}: year_end_notice.lines 要是有字的字串陣列`,
+    );
+    check(officialSourcesOk(yn.sources, 1), `${where}: year_end_notice 至少要一筆 gov.tw 來源`);
+  }
   // conditions.exceptions 的鍵打錯字會靜靜失效，在這裡擋
   for (const key of Object.keys(item.conditions?.exceptions ?? {})) {
     check(EXCEPTION_KEYS.includes(key), `${where}: conditions.exceptions 的鍵「${key}」不在清單`);
@@ -142,16 +190,40 @@ function normalizeItem(item) {
       // 一年有兩段以上申請期間時的第二段以後（見 research/README.md）
       extra_windows: d.extra_windows ?? null,
       note: d.note ?? "",
+      extra_lines: d.extra_lines ?? null,
+      budget_limited: d.budget_limited ?? null,
+      last_checked: d.last_checked ?? null,
     },
     faqs: (item.faqs ?? []).map((f) => ({ q: f.q, a: f.a, source_url: f.source_url ?? null })),
     pitfalls: item.pitfalls ?? [],
     related_calculator: item.related_calculator ?? null,
-    sources: (item.sources ?? []).map((s) => ({ url: s.url, title: s.title, publisher: s.publisher ?? null, accessed: s.accessed ?? null })),
+    sources: (item.sources ?? []).map(normalizeSource),
     last_known_update: item.last_known_update ?? null,
     unverified_fields: item.unverified_fields ?? [],
     verified_at: item.verified_at ?? null,
     verification_summary: item.verification_summary ?? null,
+    late_consequence: item.late_consequence
+      ? {
+          text: item.late_consequence.text,
+          short: item.late_consequence.short,
+          apply_now: item.late_consequence.apply_now,
+          sources: (item.late_consequence.sources ?? []).map(normalizeSource),
+        }
+      : null,
+    year_end_notice: item.year_end_notice
+      ? {
+          from: item.year_end_notice.from,
+          to: item.year_end_notice.to,
+          title: item.year_end_notice.title,
+          lines: item.year_end_notice.lines,
+          sources: (item.year_end_notice.sources ?? []).map(normalizeSource),
+        }
+      : null,
   };
+}
+
+function normalizeSource(s) {
+  return { url: s.url, title: s.title, publisher: s.publisher ?? null, accessed: s.accessed ?? null };
 }
 
 // 1. 讀 topics
@@ -350,7 +422,8 @@ for (const out of ["src/data/subsidies.json", "public/data/subsidies.json"]) {
 
 // 列表、試算、時程表只需要這些欄位。完整資料約 1 MB，若整包當 props 傳給 client component，
 // 每個列表頁的 HTML 都會被撐到 900 KB 以上；精簡索引讓它們共用一個約四分之一大小的 chunk。
-const INDEX_FIELDS = ["id", "name", "short_name", "category", "level", "city", "agency", "summary", "eligibility", "amount", "conditions", "deadline", "status_2026", "confidence", "topic"];
+// year_end_notice 只有少數項目有，補助首頁和時程表要拿它組年底卡
+const INDEX_FIELDS = ["id", "name", "short_name", "category", "level", "city", "agency", "summary", "eligibility", "amount", "conditions", "deadline", "status_2026", "confidence", "topic", "year_end_notice"];
 const index = {
   version,
   generated_at: generatedAt,

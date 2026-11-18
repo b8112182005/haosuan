@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import Link from "next/link";
 import { HelpCircle, CalendarDays } from "lucide-react";
 import SubsidyBrowser from "@/components/subsidy/SubsidyBrowser";
+import YearEndNotices from "@/components/subsidy/YearEndNotices";
 import { getAllSubsidies, DATA_VERSION } from "@/lib/subsidy/data";
 
 export const metadata: Metadata = {
@@ -39,6 +40,7 @@ export default function SubsidyIndexPage() {
           </Link>
         </div>
       </div>
+      <YearEndNotices />
       {/* useSearchParams 在靜態輸出需要 Suspense 邊界 */}
       <Suspense fallback={<div className="h-40 animate-pulse rounded-2xl bg-muted/40" />}>
         <SubsidyBrowser />
