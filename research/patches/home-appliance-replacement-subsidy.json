@@ -1,0 +1,57 @@
+{
+ "id": "home-appliance-replacement-subsidy",
+ "checked": [
+  {
+   "field": "deadline.end_year/end_month/end_day",
+   "value_in_data": "",
+   "official_value": "三、申請補助期間：自112年2月1日起至116年1月31日止。",
+   "match": false,
+   "source_url": "https://save3000.moeaea.gov.tw/subsidy02/news/upt.aspx?p0=13",
+   "note": "經濟部能源署公告（頁面最後修改 2025/12/29）；申請最後一天 116-01-31 = 2027-01-31"
+  },
+  {
+   "field": "deadline.extra_lines",
+   "value_in_data": "",
+   "official_value": "二、補助購買期間：自112年1月1日起至115年12月31日止。",
+   "match": false,
+   "source_url": "https://save3000.moeaea.gov.tw/subsidy02/news/upt.aspx?p0=13",
+   "note": "購買（發票日）最後一天 2026-12-31"
+  },
+  {
+   "field": "deadline.budget_limited",
+   "value_in_data": "",
+   "official_value": "補助購買期間屆滿前，如補助經費即將用罄，本部得公告終止補助及提前截止受理申請補助。",
+   "match": false,
+   "source_url": "https://save3000.moeaea.gov.tw/subsidy02/news/upt.aspx?p0=13",
+   "note": "同頁，經費用完會提前截止"
+  },
+  {
+   "field": "deadline.last_checked / status_2026",
+   "value_in_data": "",
+   "official_value": "【發票日期】 112 / 01 / 01 至 115 / 12 / 31；【申請期間】 112 / 02 / 01 至 116 / 01 / 31；如經費用罄，將提前結束；家電補助倒數計時！請把握最後申請機會 ，購買期限到115/12/31止。",
+   "match": false,
+   "source_url": "https://save3000.moeaea.gov.tw/subsidy02/index/index.aspx",
+   "note": "2026-11-18 讀官網首頁（工具摘要引句，非逐字截圖）；沒有用罄或暫停受理公告，所以 status_2026 維持 active"
+  },
+  {
+   "field": "deadline.note（額度）",
+   "value_in_data": "",
+   "official_value": "能源署提醒，目前補助額度剩不到2成，呼籲民眾把握時間，盡速辦理相關補助。",
+   "match": false,
+   "source_url": "https://cna.com.tw/news/afe/202610100027.aspx",
+   "note": "中央社 2026/10/10。新聞，只當線索；該篇沒有提到「不再展延」，所以 summary 的「不再展延」已刪"
+  },
+  {
+   "field": "deadline.note（116 年）",
+   "value_in_data": "",
+   "official_value": "經濟部表示，為期4年的「住宅家電汰舊換新節能補助」已邁入最後一年，民眾應把握今年底前的最後機會。",
+   "match": false,
+   "source_url": "https://save3000.moeaea.gov.tw/subsidy02/index/index.aspx",
+   "note": "官網首頁新聞標題「家電汰舊換新補助倒數計時！經濟部籲把握最後機會」，只看到摘要，新聞日期欄只有「今(13)日」。沒有看到 116 年續辦公告"
+  }
+ ],
+ "corrections": [],
+ "verdict": "corrected",
+ "verified_at": "2026-11-18",
+ "summary": "讀了能源署官網首頁、受理期間公告頁、中央社 2026-10-10 報導。申請最後一天 2027-01-31、發票最後一天 2026-12-31 原文確認；經費用罄公告沒有找到，所以 status_2026 維持 active。刪掉查不到的「不再展延」說法；116 年續辦沒有公告。"
+}

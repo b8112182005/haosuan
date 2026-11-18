@@ -1,0 +1,41 @@
+{
+ "id": "old-vehicle-replacement-moenv",
+ "checked": [
+  {
+   "field": "deadline.end_year/end_month/end_day, extra_lines",
+   "value_in_data": "",
+   "official_value": "補助期間至中華民國一百十五年十二月三十一日止。申請補助者應於中華民國一百十六年一月十日前提出申請，逾期不予受理。",
+   "match": false,
+   "source_url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020134&flno=5",
+   "note": "全國法規資料庫第 5 條（2026-11-18 讀取）。送件最後一天 2027-01-10。條文只寫「補助期間」，沒有寫是以購車或報廢哪一日計，所以 extra_lines 照條文寫補助期間"
+  },
+  {
+   "field": "deadline.note（溫室氣體）",
+   "value_in_data": "",
+   "official_value": "符合Q1及Q2申請條件者，於老舊車輛回收報廢及購買新車皆完成之日起2年內於平台提出申請，逾期不受理。",
+   "match": false,
+   "source_url": "https://mobile.moenv.gov.tw/EPAMobileETP/Home/QnA",
+   "note": "環境部媒合平臺常見問題，只看到摘要，不是整頁原文"
+  },
+  {
+   "field": "deadline.note（空污期間）",
+   "value_in_data": "",
+   "official_value": "空污抵換媒合補助時間為114年1月1日至115年12月31日。",
+   "match": false,
+   "source_url": "https://mobile.moenv.gov.tw/EPAMobileETP/Home/QnA",
+   "note": "同頁，只看到摘要"
+  },
+  {
+   "field": "late_consequence",
+   "value_in_data": "",
+   "official_value": "申請補助者應於中華民國一百十六年一月十日前提出申請，逾期不予受理。",
+   "match": false,
+   "source_url": "https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=O0020134&flno=5",
+   "note": "law.moj.gov.tw 法條一筆，符合 sources 規則；apply_now=false，因為不是越早送領越多"
+  }
+ ],
+ "corrections": [],
+ "verdict": "corrected",
+ "verified_at": "2026-11-18",
+ "summary": "讀了全國法規資料庫第 5 條與媒合平臺常見問題。補助期間 2026-12-31、申請 2027-01-10 原文確認，deadline 改成 2027-01-10。發現原 summary 把 1/10 當成全部申請期限，但溫室氣體部分平臺寫的是完成後 2 年內，已改。budget_limited 與 last_checked 沒填：平臺沒有即時額滿或受理狀態可看。"
+}

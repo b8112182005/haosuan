@@ -47,8 +47,10 @@ export default function NextStepCta({
   secondaryLabel,
   secondaryHref,
 }: NextStepCtaProps) {
+  // 只在網站顯示：這些按鈕導向付費模板與 LINE 方案，放在 Play 上架的 app 裡會被當成導去 Play 以外的管道買數位內容，
+  // 商店說明寫的「無廣告」也會不成立。app 使用者要的下一步是 app 內的提醒。
   return (
-    <section className="mb-12 rounded-2xl border border-slate-200 bg-slate-50 p-5 sm:p-6 dark:border-slate-800 dark:bg-slate-950/40">
+    <section className="web-only mb-12 rounded-2xl border border-slate-200 bg-slate-50 p-5 sm:p-6 dark:border-slate-800 dark:bg-slate-950/40">
       <p className="text-xs font-semibold tracking-wide text-slate-500">{eyebrow}</p>
       <div className="mt-2 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>

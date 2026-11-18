@@ -32,6 +32,8 @@ export interface AddReminderButtonProps {
   source: ReminderSource;
   defaultDaysBefore?: number[];
   repeatYearly?: boolean;
+  /** 日期是使用者自己挑的辦理日，不是主管機關的截止日：欄位標籤、通知與行事曆都不寫「截止」 */
+  planned?: boolean;
   className?: string;
   variant?: 'primary' | 'ghost';
   /**
@@ -65,6 +67,7 @@ export default function AddReminderButton({
   source,
   defaultDaysBefore,
   repeatYearly = false,
+  planned = false,
   className,
   variant = 'primary',
   onOpenChange,
@@ -131,7 +134,9 @@ export default function AddReminderButton({
     // 每次打開都從 props 重設，避免上次沒送出的輸入殘留
     setTitleValue(title);
     setNoteValue(note ?? '');
-    setDateValue(targetDate ?? '');
+    // 屬性有日期（主管機關期限）就以它為準；沒有的話沿用使用者上次自己挑的，
+    // 不然已加入的項目再打開面板，日期欄是空的，直接按「更新提醒」會被擋
+    setDateValue(targetDate ?? existing?.targetDate ?? '');
     const nextYearly = existing?.repeatYearly ?? repeatYearly;
     setSelectedDays(existing?.daysBefore ?? pickDefaultDaysBefore(baseDefaults, targetDate, nextYearly));
     setYearly(nextYearly);
@@ -157,7 +162,7 @@ export default function AddReminderButton({
       return;
     }
     if (!dateValue) {
-      setError('請選擇截止日期');
+      setError(planned ? '請選擇哪一天去辦' : '請選擇截止日期');
       return;
     }
     if (!yearly && daysUntil(dateValue) < 0) {
@@ -194,6 +199,7 @@ export default function AddReminderButton({
         url,
         source,
         repeatYearly: yearly,
+        planned,
       });
       await vibrateSuccess();
 
@@ -289,7 +295,7 @@ export default function AddReminderButton({
                 )}
 
                 <div className="space-y-2">
-                  <Label htmlFor={dateInputId}>截止日期</Label>
+                  <Label htmlFor={dateInputId}>{planned ? '哪一天去辦' : '截止日期'}</Label>
                   <Input
                     id={dateInputId}
                     type="date"
@@ -407,7 +413,7 @@ export default function AddReminderButton({
                     <div className="min-w-0">
                       <p className="font-medium leading-snug">{saved.title}</p>
                       <p className="mt-0.5 text-sm text-muted-foreground">
-                        期限 {formatDate(saved.targetDate)}
+                        {saved.planned ? '預定' : '期限'} {formatDate(saved.targetDate)}
                       </p>
                     </div>
                   </div>

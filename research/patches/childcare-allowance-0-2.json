@@ -1,7 +1,7 @@
 {
   "id": "childcare-allowance-0-2",
-  "verdict": "confirmed",
-  "verified_at": "2026-11-11",
+  "verdict": "corrected",
+  "verified_at": "2026-11-18",
   "checked": [
     {
       "field": "amount.text / amount.min / amount.max",
@@ -9,13 +9,6 @@
       "official_value": "補助金額：第1名子女5,000元/月、第2名子女6,000元/月、第3名(含)以上子女7,000元/月。（育兒津貼，112年1月1日起適用；頁面更新時間 115-07-13）",
       "match": true,
       "source_url": "https://www.mohw.gov.tw/cp-5130-58003-1.html"
-    },
-    {
-      "field": "deadline.type / deadline.note",
-      "value_in_data": "rolling；全年隨到隨辦，出生後60天內完成戶籍登記並申請可從出生月份起算，超過60天從申請當月起發",
-      "official_value": "兒童出生後 60 日內完成出生或初設戶籍登記並申請者，得追溯自出生月份發給（衛生福利部109年5月7日衛授家字第1090600430號函引述作業要點）；官方專區未列任何申請截止日",
-      "match": true,
-      "source_url": "https://laws.gov.taipei/Law/Interpretation/Content/FE349458"
     },
     {
       "field": "status_2026",
@@ -30,10 +23,65 @@
       "official_value": "HTTP 200，頁面標題《未滿2歲幼兒照顧政策：育兒津貼、托育補助，不排富，全照顧》專區",
       "match": true,
       "source_url": "https://www.mohw.gov.tw/cp-5130-58003-1.html"
+    },
+    {
+      "field": "deadline.note / faqs[0] / pitfalls[1]",
+      "value_in_data": "",
+      "official_value": "（三）經審核符合資格者，其津貼依下列規定發放：1. 兒童出生當年度申請者，溯自出生月份起發給。2. 未於兒童出生當年度申請者，溯自申請當年度一月份起發給。但兒童於每年十一月二日至十二月三十一日期間出生，且於出生後六十日內完成出生登記或初設戶籍登記並提出申請者，得溯自出生月份發給。",
+      "match": false,
+      "source_url": "https://www.banqiao.ntpc.gov.tw/userfiles/3010500/files/20250411-12.pdf",
+      "note": "要點第六點(三)，板橋區公所公告全文，我自己下載並讀過；第十二點記 112-01-01 修正生效前依舊規定"
+    },
+    {
+      "field": "deadline.note / late_consequence / year_end_notice",
+      "value_in_data": "",
+      "official_value": "五、(一) 申請人應於兒童未滿二歲前填具申請書…（二）文件、資料未齊備者，鄉（鎮、市、區）公所應…通知申請人於十四個工作天內補正，並以申請人檢附完整資料之日為受理申請日；屆期未補正者，應以書面駁回。",
+      "match": false,
+      "source_url": "https://www.banqiao.ntpc.gov.tw/userfiles/3010500/files/20250411-12.pdf",
+      "note": "第五點(一)(二)"
+    },
+    {
+      "field": "year_end_notice.lines[5] / eligibility",
+      "value_in_data": "",
+      "official_value": "二、(四) 未接受公共化或準公共托育服務。前項第四款所稱公共化或準公共托育服務，指與政府簽訂合作契約之居家托育人員、社區公共托育家園、托嬰中心。",
+      "match": false,
+      "source_url": "https://www.banqiao.ntpc.gov.tw/userfiles/3010500/files/20250411-12.pdf",
+      "note": "第二點第一項第四款，不能同時領的依據"
+    },
+    {
+      "field": "documents[2] / pitfalls[0]",
+      "value_in_data": "[\"育兒津貼申請表（公所或各縣市社會局網站下載）\", \"申請人（父母雙方或監護人）及兒童的身分證明文件，例如戶口名簿影本\", \"申請人其中一方的郵局或地方政府指定金融機構存摺封面影本（台北市限郵局或台北富邦銀行）\", \"申請人為在臺無戶籍、大陸地區人民或外籍人士者，另附居留證影本\", \"第3名以上子女、育嬰留停等情形，公所初審後可能另要求證明文件\"]",
+      "official_value": "（四）經審核符合發放資格者，核定機關應將本津貼按月撥入申請人或兒童帳戶。",
+      "match": false,
+      "source_url": "https://www.banqiao.ntpc.gov.tw/userfiles/3010500/files/20250411-12.pdf",
+      "note": "第六點(四)：要點允許申請人或兒童帳戶；沒有全國統一的郵局／銀行或正本／影本規定"
+    },
+    {
+      "field": "documents / pitfalls[0] / year_end_notice.lines[4]",
+      "value_in_data": "",
+      "official_value": "5、 郵局存簿封面影本(兒童或兒童之父或母其中一方)。… 四、（四）衛福部育兒津貼線上申請（https://twbaby.sfaa.gov.tw）。… 六、（一）…11 月 2 日至 12 月 31 日出生之兒童，於出生 60 日內完成戶籍登記並提出申請者，得溯自出生月份發給。兒童滿 2 歲後不得申請。（二）…受理日以資料補齊日為準。",
+      "match": false,
+      "source_url": "https://www.east.taichung.gov.tw/media/1328498/育有未滿二歲兒童育兒津貼一次告知單.pdf",
+      "note": "臺中市東區區公所一次告知單，讀的是之前下載的文字檔（taichung_east.txt）；這次重新下載被連線重設。網址 twbaby 只在此看到"
+    },
+    {
+      "field": "sources / unverified_fields",
+      "value_in_data": "",
+      "official_value": "（二）查本件幼童於 112 年○○月○○日出生…113 年 4 月 19 日始完成初設戶籍登記…與行為時作業要點第 6 點第 5 款規定不符，並無違誤。",
+      "match": false,
+      "source_url": "https://laws.gov.taipei/law/LawDecision/ContentPrint?id=1592-041",
+      "note": "我這次重新抓取並讀到：臺北市政府 113.07.17 府訴一字第1136083246號訴願決定，松山區公所否准 112 年 10～12 月；決定書引的「行為時」條文為「出生後六十日內…得自出生月份發給」，與板橋檔第六點(三)字句不同"
+    },
+    {
+      "field": "unverified_fields[0]",
+      "value_in_data": "[\"deadline.note（出生後60天內申請可追溯的規定，未在申領作業要點原文核對）\"]",
+      "official_value": "（records.json 內轉述）臺北市民政局單一窗口 Q&A 第 5 題寫育兒津貼「會從申請日開始核發……不能回溯」",
+      "match": false,
+      "source_url": "https://ca.gov.taipei/News_Content.aspx?n=59F2E04A34FDA3E8&sms=87415A8B9CE81B16&s=7CFAB551F7DA3852",
+      "note": "只看到上一輪 records.json 的轉述，這次沒重新打開該頁；頁面更新日期在資料中有 115-09-15、115-11-07、115-11-16 三種寫法"
     }
   ],
   "corrections": [],
   "official_url_ok": true,
-  "file_path": "/home/user/haosuan/research/patches/childcare-allowance-0-2.json",
-  "summary": "看了衛福部未滿2歲幼兒照顧政策專區（115-07-13更新，HTTP 200）與衛福部109年衛授家字第1090600430號函：金額5,000／6,000／7,000元/月、全年受理、115年仍辦理都對得上，沒有修正。60日內申請可追溯到出生月份有衛福部函文佐證，但社家署網站連線被重設，現行作業要點（搜尋結果顯示113年5月31日修正）原文這次沒打開；搜尋未見116年調整金額的公告。"
+  "summary": "讀了板橋區公所轉載的育兒津貼要點全文（第二、五、六點）、臺中市東區區公所一次告知單（本機已存文字檔）、臺北市 113-07-17 訴願決定（重新抓取成功）。把 deadline.note、documents 存摺列、pitfalls 兩條、faqs 第一題改成現行第六點(三)規則，新增 late_consequence 與 year_end_notice，unverified_fields 改成記北市問答不一致等四項。社家署 sfaa.gov.tw 與 twbaby、東區區公所網站這次連線被重設，沒打開。"
 }

@@ -1,0 +1,33 @@
+{
+ "id": "electric-scooter-purchase-subsidy-moea",
+ "checked": [
+  {
+   "field": "deadline.note",
+   "value_in_data": "補助期間 2022-12-11 至 2026-12-31；2026 年度購車須於 2026-12-10 前透過經銷商提出申請，逾期不補助。2027 年以後是否有新一期計畫尚未公告。",
+   "official_value": "補助期間 111.12.11–115.12.31 可適用於外籍人士 (請於115/12/10前提出申請)",
+   "match": false,
+   "source_url": "https://meid.nat.gov.tw/lev/subsidy/city",
+   "note": "curl 下載頁面原文，頁面「更新日期：115/10/07」。這是「中央補助 經濟部產業發展署」格內的文字；括號緊接在「可適用於外籍人士」後面，可能只指外籍人士，也可能指全部申請，頁面沒說"
+  },
+  {
+   "field": "deadline（不改日期的原因）",
+   "value_in_data": "",
+   "official_value": "乙方如逾中華民國115年12月10日而仍未依本要點完成補助審核者。",
+   "match": false,
+   "source_url": "https://meid.nat.gov.tw/lev/download/6/1320",
+   "note": "工研院《受認可電動機車購買補助契約（適用大量購車申請者）》解除事由，12/10 在這裡是「完成補助審核」的日期，對象是大量購車法人；與民眾購車的 12/10 是否同義未確認"
+  },
+  {
+   "field": "deadline.note（要點）",
+   "value_in_data": "",
+   "official_value": "依經濟部 114 年 12 月 23 日經產字第 11451034390 號「經濟部提升電動機車產業補助實施要點」",
+   "match": false,
+   "source_url": "https://meid.nat.gov.tw/lev/download/4/1431",
+   "note": "要點文號只在工研院文件中引用；law.moea.gov.tw 要點頁回 403，ida.gov.tw 2025-06-17 新聞稿沒有期限文字，所以 12/10 的定義查不到原條文"
+  }
+ ],
+ "corrections": [],
+ "verdict": "corrected",
+ "verified_at": "2026-11-18",
+ "summary": "讀了電動機車產業網補助資訊頁、工研院的兩份文件、產發署 2025-06-17 新聞稿；要點全文（law.moea.gov.tw）回 403。只確認網站寫「請於115/12/10前提出申請」，沒有確認 12/10 是購車、發票還是送件日，所以不改 end 日期、不填 extra_lines、budget_limited、last_checked。confidence 降為 medium，補上 unverified_fields。"
+}

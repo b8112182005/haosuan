@@ -1,0 +1,17 @@
+{
+ "id": "disability-living-allowance",
+ "checked": [
+  {
+   "field": "late_consequence.text / deadline.note",
+   "value_in_data": "",
+   "official_value": "第7條第2項：經審核符合補助資格者，溯至備齊文件之當月生效。",
+   "match": false,
+   "source_url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=D0050189",
+   "note": "全國法規資料庫整部法規頁，修正日期民國108年12月27日。第7條共5項：第1項書面通知、第2項溯至備齊文件當月生效、第3項情事變更提高補助自事實發生當月起、第4項減少或停發自事實發生次月、第5項重新核定依第1項辦理。所以是第2項，不是第3項。"
+  }
+ ],
+ "corrections": [],
+ "verdict": "corrected",
+ "verified_at": "2026-11-18",
+ "summary": "到全國法規資料庫看〈身心障礙者生活補助費發給辦法〉，確認第7條第2項是「溯至備齊文件之當月生效」，修正日108-12-27，第3項是情事變更提高補助的規定；新增 late_consequence，deadline.note 補條號。其他欄位沒動。"
+}

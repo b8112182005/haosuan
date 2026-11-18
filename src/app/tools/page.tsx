@@ -5,7 +5,7 @@ import { getEnabledTools } from "@/lib/tools-registry";
 export const metadata: Metadata = {
   title: "計算工具",
   description:
-    "30 種台灣常用計算機：房貸、所得稅、勞健保費、加班費、電費、BMI、坪數換算、油漆用量。輸入即算，免費無廣告。",
+    "30 種台灣常用計算機：房貸、所得稅、勞健保費、加班費、電費、BMI、坪數換算、油漆用量。輸入即算，免費。",
   alternates: { canonical: "/tools" },
 };
 

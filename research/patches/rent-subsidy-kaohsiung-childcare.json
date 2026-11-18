@@ -1,0 +1,17 @@
+{
+ "id": "rent-subsidy-kaohsiung-childcare",
+ "checked": [
+  {
+   "field": "deadline.note",
+   "value_in_data": "收到都發局確認信函次日起 3 個星期內回覆申請意願，逾期視為放棄。115 年度計畫執行 1 年，依預算滾動檢討。",
+   "official_value": "執行期程為1年",
+   "match": false,
+   "source_url": "https://hs.kcg.gov.tw/HSF/web_download/115%E5%B9%B4%E8%82%B2%E5%85%92%E7%A7%9F%E9%87%91%E8%A3%9C%E8%B2%BC%E5%85%AC%E5%91%8A.pdf",
+   "note": "只看到搜尋摘要；搜尋未見 116 年度公告或實施計畫，高雄 116 年度總預算新聞（中央社 2026-08-18）沒提這項"
+  }
+ ],
+ "corrections": [],
+ "verdict": "corrected",
+ "verified_at": "2026-11-18",
+ "summary": "高雄這項是 event_based，app 本來就顯示「依事件計算期限」，不會推算日期，所以只在 note 補「116 年度是否續辦、日期未公告」。查不到 116 年資料。"
+}

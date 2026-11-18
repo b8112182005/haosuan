@@ -23,7 +23,7 @@ export default function AboutPage() {
       <p>
         {APP_NAME}把三件常被拖延的事放在一起：<strong>查補助</strong>（我符合什麼、能領多少、何時截止）、
         <strong>記期限</strong>（截止前 30、14、3 天通知）、<strong>算數字</strong>（{toolCount} 種台灣常用計算機）。
-        不需要帳號，免費，沒有廣告。
+        不需要帳號，免費，不接廣告。
       </p>
 
       <h2>怎麼用</h2>

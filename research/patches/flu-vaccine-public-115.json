@@ -1,0 +1,25 @@
+{
+ "id": "flu-vaccine-public-115",
+ "checked": [
+  {
+   "field": "deadline.note",
+   "value_in_data": "115 年 10 月 1 日第一階段開打，11 月 2 日第二階段（50～64 歲無高風險慢性病成人），接種至疫苗用罄為止。疾管署 2026-11-03 新聞稿：截至 11 月 2 日已接種逾 474.7 萬人次。",
+   "official_value": "第一階段對象於 115 年 10 月 1 日開打，第二階段對象於 115 年 11 月 2 日開打，至疫苗用罄止，惟倘疫苗短缺，將另行公布開打日期。",
+   "match": false,
+   "source_url": "https://health.tainan.gov.tw/warehouse/462FECE7-F544-4B90-9799-DC3EB3631D9C/F_1788062819315e.pdf",
+   "note": "衛福部 115 年度流感疫苗接種計畫（臺南市衛生局轉載），下載後用 pdftotext 讀全文；同檔「12 月 31 日」是縣市獎勵的計算期間，不是接種截止日"
+  },
+  {
+   "field": "deadline.note",
+   "value_in_data": "115 年 10 月 1 日第一階段開打，11 月 2 日第二階段（50～64 歲無高風險慢性病成人），接種至疫苗用罄為止。疾管署 2026-11-03 新聞稿：截至 11 月 2 日已接種逾 474.7 萬人次。",
+   "official_value": "11月2日起已開放第二階段接種。",
+   "match": false,
+   "source_url": "https://www.cdc.gov.tw/Bulletin/Detail/57M9H7NQtbjNyO5ygCgNiA?typeid=9",
+   "note": "疾管署新聞稿；已接種逾 474.7 萬人次同頁"
+  }
+ ],
+ "corrections": [],
+ "verdict": "corrected",
+ "verified_at": "2026-11-18",
+ "summary": "讀 115 年度計畫全文與疾管署新聞稿，結束條件是「至疫苗用罄止」，沒有固定結束日；deadline 維持 budget_until_exhausted，2027-01-02 顯示「額滿即止」，不含推算日期；note 補原文。"
+}

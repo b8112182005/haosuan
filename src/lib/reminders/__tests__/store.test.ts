@@ -170,6 +170,49 @@ describe('store：新增與讀取', () => {
   });
 });
 
+describe('store：planned（使用者自己挑的辦理日）', () => {
+  it('新增時帶 planned，讀出來還在；沒帶的不會多出這個欄位', async () => {
+    const target = addDays(todayLocal(), 20);
+    const a = await addReminder({ title: 'A', targetDate: target, source: { type: 'subsidy', id: 'a' }, planned: true });
+    const b = await addReminder({ title: 'B', targetDate: target, source: { type: 'subsidy', id: 'b' } });
+    const c = await addReminder({ title: 'C', targetDate: target });
+    expect(a.planned).toBe(true);
+    const list = await listReminders();
+    expect(list.find((r) => r.id === a.id)?.planned).toBe(true);
+    expect('planned' in list.find((r) => r.id === b.id)!).toBe(false);
+    expect('planned' in list.find((r) => r.id === c.id)!).toBe(false);
+  });
+
+  it('updateReminder 改日期、標記完成之後 planned 還在', async () => {
+    const target = addDays(todayLocal(), 20);
+    const a = await addReminder({ title: 'A', targetDate: target, source: { type: 'subsidy', id: 'a' }, planned: true });
+    const moved = await updateReminder(a.id, { targetDate: addDays(todayLocal(), 30) });
+    expect(moved?.planned).toBe(true);
+    const done = await markDone(a.id, true);
+    expect(done?.planned).toBe(true);
+    expect((await getReminder(a.id))?.planned).toBe(true);
+  });
+
+  it('同一個補助再加入一次（更新）可以帶 planned', async () => {
+    const target = addDays(todayLocal(), 20);
+    await addReminder({ title: 'A', targetDate: target, source: { type: 'subsidy', id: 'a' }, planned: true });
+    const again = await addReminder({ title: 'A', targetDate: addDays(todayLocal(), 25), source: { type: 'subsidy', id: 'a' }, planned: true });
+    expect(again.planned).toBe(true);
+    expect(await listReminders()).toHaveLength(1);
+  });
+
+  it('舊資料沒有 planned 欄位：照常讀出，行為不變', async () => {
+    memory.set(
+      STORAGE_KEY,
+      JSON.stringify([
+        { id: 'old', title: '舊的', targetDate: addDays(todayLocal(), 5), daysBefore: [3, 0], source: { type: 'custom' }, repeatYearly: false, createdAt: '2026-01-01T00:00:00.000Z', done: false },
+      ]),
+    );
+    const [r] = await listReminders();
+    expect(r.planned).toBeUndefined();
+  });
+});
+
 describe('store：更新、刪除、完成', () => {
   it('update 改標題與日期；空標題會丟錯；不存在回傳 null', async () => {
     const created = await addReminder({ title: '驗車', targetDate: addDays(todayLocal(), 5) });

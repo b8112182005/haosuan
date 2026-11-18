@@ -1,0 +1,33 @@
+{
+ "id": "tainan-electric-two-wheeler-subsidy-2026",
+ "checked": [
+  {
+   "field": "deadline.end_*",
+   "value_in_data": "",
+   "official_value": "四、本補助方案實施期間為115年1月1日起至115年12月31日止，補助受理期限至116年1月10日止。",
+   "match": false,
+   "source_url": "https://w3fs.tainan.gov.tw/002/FS01/82/relfile/11857/8827147/c5ee4820-89d6-483d-8b2b-79b9d415ea30.pdf",
+   "note": "公告及附件修正對照表，標示「未修正」，由 PDF 轉文字讀到。"
+  },
+  {
+   "field": "deadline.extra_lines",
+   "value_in_data": "",
+   "official_value": "申請補助者應於 115 年 12 月 31 日前（含）購買新車（舊車報廢），且於 116 年 1 月 10 日（含）前完成新車領牌（舊車回收），請於完成上揭程序後將相關申請補助文件提出線上申請，逾期或限定補助項目額度用罄，不予補助。",
+   "match": false,
+   "source_url": "https://w3fs.tainan.gov.tw/002/FS01/82/relfile/11857/8827147/c5ee4820-89d6-483d-8b2b-79b9d415ea30.pdf",
+   "note": "附件「本項補助申請期限」，標示「本點未修正」。"
+  },
+  {
+   "field": "deadline.note（件數上限）",
+   "value_in_data": "",
+   "official_value": "92 年 12 月 31 日前出廠：1,000 元。(限 1,500 件)。 93 年 1 月 1 日至 96 年 6 月 30 日期間出廠：500 元。(限 5,000 件)。",
+   "match": false,
+   "source_url": "https://w3fs.tainan.gov.tw/002/FS01/82/relfile/11857/8827147/c5ee4820-89d6-483d-8b2b-79b9d415ea30.pdf",
+   "note": "原文是出廠日期，note 的年份寫法沿用舊資料，與原文相符。"
+  }
+ ],
+ "corrections": [],
+ "verdict": "corrected",
+ "verified_at": "2026-11-18",
+ "summary": "下載臺南市公告 PDF 轉文字，讀到受理至 2027-01-10、購車 2026-12-31 前、領牌 2027-01-10 前。搜尋「額滿」「提前截止」沒找到臺南市公告。deadline 改 end 2027-01-10。"
+}

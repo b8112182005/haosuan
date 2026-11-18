@@ -1,0 +1,41 @@
+{
+ "id": "new-taipei-electric-scooter-subsidy-2026",
+ "checked": [
+  {
+   "field": "deadline.note",
+   "value_in_data": "第一階段線上登錄 2026-01-01 至 2026-12-31；第二階段補件最晚 2027-01-10。早鳥 4,500 名、雙汰舊 1,000 名、新購 7,000 名依順序用罄即止；官網 2026 年已提示早鳥名額將額滿。",
+   "official_value": "申請者於115年1月1日至115年12月31日期間，於本局線上申請系統完成『一階段申請』填寫基本資料並完成上傳",
+   "match": false,
+   "source_url": "https://motor.ntpc.gov.tw/Home/News?id=1132",
+   "note": "第一階段登錄期間，deadline 維持 2026-12-31。"
+  },
+  {
+   "field": "deadline.extra_lines",
+   "value_in_data": "",
+   "official_value": "最後申請期限為隔年度1月10日，逾期即不予受理。",
+   "match": false,
+   "source_url": "https://motor.ntpc.gov.tw/Home/News?id=1132",
+   "note": "第二階段補件期限，115 年度對應 2027-01-10。「隔年度」換算成 2027 是依年度推出，頁面沒直接寫 116 年。"
+  },
+  {
+   "field": "deadline.budget_limited",
+   "value_in_data": "",
+   "official_value": "另本局115年度補助名額及加碼名額有限，依申請順序用罄為止",
+   "match": false,
+   "source_url": "https://motor.ntpc.gov.tw/Home/News?id=1132",
+   "note": "頁面沒有目前額滿或剩餘名額的資訊。"
+  },
+  {
+   "field": "deadline.note（116 年）",
+   "value_in_data": "",
+   "official_value": "修正補助計畫將於實行前公告",
+   "match": false,
+   "source_url": "https://motor.ntpc.gov.tw/Home/News?id=1132",
+   "note": "頁面只講 115 年計畫，沒有 116 年。"
+  }
+ ],
+ "corrections": [],
+ "verdict": "corrected",
+ "verified_at": "2026-11-18",
+ "summary": "看了新北市環保局電動機車申請資訊頁（motor.ntpc.gov.tw）。第一階段登錄到 2026-12-31、第二階段補件到隔年 1 月 10 日，deadline 維持登錄截止日，補件日寫進 extra_lines。舊 note 的「官網 2026 年已提示早鳥名額將額滿」今天的頁面讀不到，已拿掉。"
+}

@@ -58,6 +58,7 @@ export default function InsurancePage() {
       faqs={faqs}
       relatedTools={relatedTools}
       jsonLd={jsonLd}
+      notice="116 年 1 月 1 日起，勞保普通事故保險費率由 11.5% 調為 12%（加就業保險 1% 合計 13%），每月最低工資調為 30,900 元。116 年的勞保投保薪資分級表與健保投保金額分級表還沒公告，這個計算機目前用 115 年的數字，公告後更新。"
     >
       <NextStepCta
         eyebrow="算完下一步"

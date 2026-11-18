@@ -11,10 +11,15 @@ import PlatformScript from "@/components/app/PlatformScript";
 import NativeBridge from "@/components/app/NativeBridge";
 import Script from "next/script";
 import { SITE_URL, APP_NAME } from "@/lib/site";
-import { isAppBuild } from "@/lib/platform";
+import { isAppBuild, searchConsoleVerification } from "@/lib/platform";
 
 const GA_ID = isAppBuild ? undefined : process.env.NEXT_PUBLIC_GA_ID;
-const GSC_VERIFICATION = process.env.NEXT_PUBLIC_GSC_VERIFICATION;
+// Search Console 驗證碼只放網頁版（判斷在 searchConsoleVerification，兩個環境變數都會擋）
+const GSC_VERIFICATION = searchConsoleVerification(
+  isAppBuild,
+  process.env.GOOGLE_SITE_VERIFICATION,
+  process.env.NEXT_PUBLIC_GSC_VERIFICATION,
+);
 
 const notoSansTC = Noto_Sans_TC({
   variable: "--font-sans",
@@ -33,7 +38,7 @@ export const metadata: Metadata = {
     template: `%s | ${APP_NAME}`,
   },
   description:
-    "回答幾個問題，列出你可能符合的政府補助與申請截止日；加入提醒在截止前 30、14、3 天通知你；內建 30 種台灣常用計算機。免費、無廣告。",
+    "回答幾個問題，列出你可能符合的政府補助與申請截止日；加入提醒在截止前 30、14、3 天通知你；內建 30 種台灣常用計算機。免費，不接廣告。",
   metadataBase: new URL(SITE_URL),
   verification: GSC_VERIFICATION ? { google: GSC_VERIFICATION } : undefined,
   openGraph: {

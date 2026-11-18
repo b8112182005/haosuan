@@ -1,7 +1,7 @@
 {
   "id": "culture-coin-youth-2026",
-  "verdict": "confirmed",
-  "verified_at": "2026-11-14",
+  "verdict": "corrected",
+  "verified_at": "2026-11-18",
   "checked": [
     {
       "field": "amount.text / amount.min",
@@ -18,20 +18,6 @@
       "source_url": "https://twcp.moc.gov.tw/prec-u/download/cp_download/115CP_mannual_s_v2.pdf"
     },
     {
-      "field": "deadline.start_month / start_day",
-      "value_in_data": "1月1日（上午8點起開放領取）",
-      "official_value": "領取使用期間自115年1月1日至12月31日止。特別提醒，元旦上午8點起正式開領。",
-      "match": true,
-      "source_url": "https://twcp.moc.gov.tw/prec-u/news/content/316a0af7ddf4494297749ec93651424f"
-    },
-    {
-      "field": "deadline.end_month / end_day",
-      "value_in_data": "12月31日（逾期失效）",
-      "official_value": "請於115年12月31日前使用完畢，逾期失效",
-      "match": true,
-      "source_url": "https://twcp.moc.gov.tw/prec-u/download/cp_download/115CP_mannual_s_v2.pdf"
-    },
-    {
       "field": "status_2026",
       "value_in_data": "active",
       "official_value": "115年文化禮金領取使用期間115年1月1日至12月31日；出生日期93年1月1日至102年12月31日；官網查無停辦或提前截止公告",
@@ -44,10 +30,25 @@
       "official_value": "HTTP 200，文化幣官網首頁",
       "match": true,
       "source_url": "https://twcp.moc.gov.tw/"
+    },
+    {
+      "field": "deadline.end_year / deadline.note",
+      "value_in_data": "",
+      "official_value": "領取使用期間自115年1月1日至12月31日止。",
+      "match": false,
+      "source_url": "https://twcp.moc.gov.tw/prec-u/qa/qualifications",
+      "note": "文化幣官網常見問題 Q1；同頁寫「元旦上午8點起正式開領」；頁面沒有 116 年的公告或安排"
+    },
+    {
+      "field": "deadline.note（刪去「已宣布常態化」）",
+      "value_in_data": "",
+      "official_value": "（頁面未提及文化禮金常態化的規劃）",
+      "match": false,
+      "source_url": "https://twcp.moc.gov.tw/prec-u/qa/qualifications",
+      "note": "常態化一句只在搜尋摘要見到，來源不是 gov.tw 原文，所以從 note 拿掉並列入 unverified_fields"
     }
   ],
   "corrections": [],
   "official_url_ok": true,
-  "file_path": "/home/user/haosuan/research/patches/culture-coin-youth-2026.json",
-  "summary": "看了文化幣官網的領取資格問答、2025-12-31最新消息與115年使用手冊PDF：1,200點、獨立書店加碼上限600點、115年1月1日上午8點開領、12月31日前用完，都與資料相符，官網回200。116年的發放日期與點數搜尋不到公告，資料裡的 deadline.note 已如實註明，不需修改。"
+  "summary": "讀文化幣官網問答頁，115 年領取使用期間 1/1 至 12/31 確認；116 年無公告。加 start_year/end_year 2026，改 window，2027-01-02 起顯示「已截止」而不是剩 363 天；常態化說法查不到原文，移到未驗證。"
 }

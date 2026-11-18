@@ -1,0 +1,17 @@
+{
+ "id": "rent-subsidy-taichung-childcare",
+ "checked": [
+  {
+   "field": "deadline.end_year",
+   "value_in_data": "",
+   "official_value": "受理期間為115年1月1日至12月31日，公告日期為2025-12-12 ~ 2026-12-31",
+   "match": false,
+   "source_url": "https://www.tc.edu.tw/page/6ea0d0a0-c3e7-4485-9925-ac95271ad618/news-content?id=237513",
+   "note": "只看到搜尋摘要（臺中市住宅發展工程處 115 年度受理公告的轉載）；搜尋未見 116 年度受理公告，116 年度臺中市總預算案文件也未見該項金額"
+  }
+ ],
+ "corrections": [],
+ "verdict": "corrected",
+ "verified_at": "2026-11-18",
+ "summary": "搜尋 116 年度臺中育兒租金補貼公告，只查到 115 年度（1/1 至 12/31）；加 start_year/end_year 2026 並改 window，2027-01-02 起顯示已截止；note 加「116 年度是否續辦、日期未公告」。"
+}

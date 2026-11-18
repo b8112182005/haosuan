@@ -1,0 +1,25 @@
+{
+ "id": "mid-low-income-elderly-allowance",
+ "checked": [
+  {
+   "field": "late_consequence.text / deadline.note / pitfalls[2]",
+   "value_in_data": "",
+   "official_value": "第7條第2項：津貼發給之起始時間，溯自備齊文件、資料之當月起算。",
+   "match": false,
+   "source_url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=D0050045",
+   "note": "全國法規資料庫整部法規頁，修正日期民國110年11月9日。第7條共2項：第1項為審核結果書面通知，第2項為起算時間，確認是第2項。"
+  },
+  {
+   "field": "pitfalls[2]",
+   "value_in_data": "[\"一次領的退休金、保險給付、賣屋所得都會被當存款或收入計算，拿到大筆錢那年很可能不符合，隔年再申請。\", \"每年重新調查，子女加薪、孫子女搬進同戶籍都可能讓你從第一級掉到第二級或停發，卻沒人提醒。\", \"津貼自「備齊文件當月」起算，公所通知補件沒在期限內補齊會被不受理，要重新送件。\", \"出境超過183天（例如到國外幫忙帶孫子）會喪失資格，回國後要重新申請。\", \"與老農津貼擇一時，老農津貼11…（共 242 字）",
+   "official_value": "第6條第1項：……文件、資料未備齊者，鄉（鎮、市、區）公所應以書面通知限期補正，屆期未補正者，不予受理。",
+   "match": false,
+   "source_url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=D0050045",
+   "note": "舊句「補件沒在期限內補齊會被不受理」大意相符，改寫成寫明書面通知、條號。第6條第2項另規定公所於備齊文件之日起一個月內完成調查初審。"
+  }
+ ],
+ "corrections": [],
+ "verdict": "corrected",
+ "verified_at": "2026-11-18",
+ "summary": "到全國法規資料庫看〈中低收入老人生活津貼發給辦法〉整部頁面，確認第6、7條原文與110-11-09修正日；新增 late_consequence，deadline.note 與 pitfalls 第3句補條號。沒有改金額、門檻。"
+}

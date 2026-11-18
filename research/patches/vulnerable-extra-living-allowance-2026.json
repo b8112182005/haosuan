@@ -1,0 +1,17 @@
+{
+ "id": "vulnerable-extra-living-allowance-2026",
+ "checked": [
+  {
+   "field": "deadline.end_year / deadline.note",
+   "value_in_data": "",
+   "official_value": "將自115年1月起至116年1月止，按月加發生活補助金",
+   "match": false,
+   "source_url": "https://www.mohw.gov.tw/cp-16-83786-1.html",
+   "note": "衛福部新聞稿 114-09-11；金額 1,000／750／500 元與 13,000／9,750／6,500 元合計同頁；頁面沒說 116 年 1 月後是否續發或併入調增"
+  }
+ ],
+ "corrections": [],
+ "verdict": "corrected",
+ "verified_at": "2026-11-18",
+ "summary": "確認發放到 116 年 1 月（end_year 2027、1 月沒錯）；原文只寫月份，1/31 是月底推算，已列未驗證。116 年是否續發查不到，note 補一句；app 在 2027-01-02 顯示剩 29 天，是這個月底日期的倒數。"
+}

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import DeadlineCalendar from "@/components/subsidy/DeadlineCalendar";
+import YearEndNotices from "@/components/subsidy/YearEndNotices";
 
 export const metadata: Metadata = {
   title: "年度時程表：報稅、牌照稅、補助申請月份",
@@ -16,6 +17,7 @@ export default function SubsidyCalendarPage() {
           未來 12 個月有固定截止日的項目，依月份排列。隨到隨辦的補助不在這裡，到「全部補助」查。
         </p>
       </div>
+      <YearEndNotices />
       <DeadlineCalendar />
     </div>
   );

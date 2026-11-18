@@ -19,6 +19,8 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 const { chromium } = require("playwright");
+// 期限卡的新欄位檢查要知道資料裡哪個項目有這些欄位；資料還沒有時整段略過
+const SUBSIDY_DATA = require("../../src/data/subsidies.json");
 
 const ROOT = path.resolve(__dirname, "../..");
 const OUT = path.join(ROOT, "out");
@@ -794,6 +796,109 @@ async function main() {
   });
   await firstLoad.close();
 
+  // 14b. 期限卡的新欄位（晚送後果、經費用完、年底提醒卡）────────────────────────────────────────
+  // 資料裡找不到帶這些欄位的項目就略過，不算失敗：欄位是選填，沒有欄位時畫面要和以前一樣
+  console.log("\n# 期限卡的新欄位");
+  const subsidyItems = SUBSIDY_DATA.items || [];
+  const skipNewField = (label) => console.log("略過", label, "→ 略過（資料還沒有這個欄位）");
+
+  const applyNowItem = subsidyItems.find((i) => i.late_consequence && i.late_consequence.apply_now === true);
+  if (!applyNowItem) skipNewField("晚送會怎樣、現在去申請、提醒預設值（late_consequence.apply_now）");
+  else {
+    const lateShort = applyNowItem.late_consequence.short;
+    await page.goto(`${ORIGIN}/subsidy/${applyNowItem.id}/`, { waitUntil: "networkidle" });
+    await settle(800);
+    const lateDetailPath = pathNow();
+    await check(`${applyNowItem.id}：詳情頁看得到「晚送會怎樣」`, async () =>
+      (await page.getByText("晚送會怎樣：").first().isVisible()) || "沒有「晚送會怎樣：」");
+    await check(`${applyNowItem.id}：主按鈕是「現在去申請」，連結仍是官方申請頁`, async () => {
+      const link = page.getByRole("link", { name: "現在去申請" }).first();
+      const href = await link.getAttribute("href");
+      return ((await link.isVisible()) && href === applyNowItem.official_url) || { href };
+    });
+    await check(`${applyNowItem.id}：期限卡寫「現在就能送件」`, async () =>
+      (await page.getByText("現在就能送件").first().isVisible()) || "沒有「現在就能送件」");
+    await page.getByRole("button", { name: "加入提醒" }).first().click();
+    await check(`${applyNowItem.id}：加入提醒面板的日期欄是空的，標籤是「哪一天去辦」不是「截止日期」`, async () => {
+      await page.locator('[role="dialog"]').waitFor({ state: "visible", timeout: 3000 });
+      const value = await page.getByLabel("哪一天去辦").inputValue();
+      const oldLabel = await page.getByLabel("截止日期").count();
+      return (value === "" && oldLabel === 0) || { value, oldLabel };
+    });
+    await back(true);
+    await settle(400);
+    await check(`${applyNowItem.id}：面板開著按返回鍵只關面板，不換頁`, async () =>
+      (!(await page.locator('[role="dialog"]').isVisible()) && pathNow() === lateDetailPath) || pathNow());
+    // 補助項目的提醒面板沒有備註欄，備註在確認加入時一起存；所以挑一天、存下來，再看存下的備註
+    await page.evaluate(() => localStorage.setItem("__perm", "granted"));
+    await page.getByRole("button", { name: "加入提醒" }).first().click();
+    await page.getByRole("button", { name: "確認加入" }).click();
+    await check(`${applyNowItem.id}：沒選日期按確認，錯誤訊息是「請選擇哪一天去辦」`, async () =>
+      (await page.getByRole("alert").filter({ hasText: "請選擇" }).first().innerText()) === "請選擇哪一天去辦");
+    await page.getByLabel("哪一天去辦").fill("2099-03-01");
+    await page.getByRole("button", { name: "確認加入" }).click();
+    await settle(1200);
+    await check(`${applyNowItem.id}：存下的提醒備註是 late_consequence.short`, async () => {
+      const saved = (await storedReminders()).find((r) => r.source && r.source.id === applyNowItem.id);
+      return (!!saved && saved.note === lateShort) || (saved ? { note: saved.note, expected: lateShort } : "沒有存下提醒");
+    });
+    // 自己挑的辦理日不是主管機關的截止日：通知不能寫「截止」，不然使用者以為那天一過就不能申請
+    await check(`${applyNowItem.id}：存下的提醒標記為使用者自己訂的辦理日（planned）`, async () => {
+      const saved = (await storedReminders()).find((r) => r.source && r.source.id === applyNowItem.id);
+      return (!!saved && saved.planned === true) || (saved ? { planned: saved.planned } : "沒有存下提醒");
+    });
+    await check(`${applyNowItem.id}：排程的通知標題含「要辦」、內文以「預定」開頭，沒有「截止」「期限」`, async () => {
+      const mine = (await pendingNow()).filter((n) => n.extra && n.extra.url && n.extra.url.includes(applyNowItem.id));
+      if (mine.length === 0) return "沒有排出這筆提醒的通知";
+      const bad = mine.filter((n) => !n.title.includes("要辦") || !n.body.startsWith("預定") || /截止|期限/.test(n.title + n.body));
+      return bad.length === 0 || bad.map((n) => ({ title: n.title, body: n.body }));
+    });
+    // 日期存在提醒裡、屬性沒有日期：再打開面板日期欄不能被清空，不然直接按「更新提醒」會被擋
+    await page.getByRole("button", { name: "已加入提醒" }).first().click();
+    await check(`${applyNowItem.id}：已加入後重新打開面板，日期欄還是剛才選的日期`, async () => {
+      await page.locator('[role="dialog"]').waitFor({ state: "visible", timeout: 3000 });
+      const value = await page.getByLabel("哪一天去辦").inputValue();
+      return value === "2099-03-01" || value;
+    });
+    await page.getByRole("button", { name: "更新提醒" }).click();
+    await settle(800);
+    await check(`${applyNowItem.id}：不改日期直接按「更新提醒」可以存下，planned 還在`, async () => {
+      const saved = (await storedReminders()).find((r) => r.source && r.source.id === applyNowItem.id);
+      return (!!saved && saved.targetDate === "2099-03-01" && saved.planned === true) || saved || "沒有存下提醒";
+    });
+  }
+
+  const budgetItem = subsidyItems.find((i) => i.deadline && i.deadline.budget_limited === true);
+  if (!budgetItem) skipNewField("經費用完會提前結束（deadline.budget_limited）");
+  else {
+    await page.goto(`${ORIGIN}/subsidy/${budgetItem.id}/`, { waitUntil: "networkidle" });
+    await settle(800);
+    await check(`${budgetItem.id}：詳情頁看得到「經費用完會提前結束」`, async () =>
+      (await page.getByText("經費用完會提前結束").first().isVisible()) || "沒有「經費用完會提前結束」");
+  }
+
+  // 用台北時間的今天，和 app 裡 useToday 用的裝置日期一致
+  const taipeiToday = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Taipei" }).format(new Date()).split("-").map(Number);
+  const todayKey = taipeiToday[1] * 100 + taipeiToday[2];
+  const monthDay = (v) => {
+    const m = /^(\d\d)-(\d\d)$/.exec(v);
+    return m ? Number(m[1]) * 100 + Number(m[2]) : NaN;
+  };
+  const noticeItem = subsidyItems.find((i) => {
+    const n = i.year_end_notice;
+    if (!n || i.status_2026 === "ended") return false;
+    const from = monthDay(n.from);
+    const to = monthDay(n.to);
+    return from <= to ? todayKey >= from && todayKey <= to : todayKey >= from || todayKey <= to;
+  });
+  if (!noticeItem) skipNewField("年底提醒卡（year_end_notice 且今天在區間內）");
+  else {
+    await page.goto(`${ORIGIN}/subsidy/`, { waitUntil: "networkidle" });
+    await settle(800);
+    await check(`${noticeItem.id}：/subsidy 看得到年底提醒卡標題`, async () =>
+      (await page.getByText(noticeItem.year_end_notice.title, { exact: true }).first().isVisible()) || `沒有「${noticeItem.year_end_notice.title}」`);
+  }
+
   await check("全程沒有未捕捉的 JS 錯誤", async () => pageErrors.length === 0 || pageErrors.slice(0, 5));
 
   // 15. WebView 太舊（沒有 @layer，Chrome 99 以前）：蓋一層說明，不留壞掉的畫面 ─────────────────────
@@ -818,6 +923,21 @@ async function main() {
   await oldContext.close();
 
   // 16. 網頁版（沒有原生橋接）：提醒頁空清單加第一筆 ─────────────────────────────────────────────
+  // Play 上架的 app 不能導去 Play 以外的管道買數位內容，商店說明也寫「無廣告」：推廣與導購只留在網站
+  console.log("\n# app 內沒有推廣與導購");
+  await page.setViewportSize({ width: 390, height: 844 });
+  for (const path of ["/renovation/paint/", "/finance/insurance/", "/life/electricity/"]) {
+    await page.goto(`${ORIGIN}${path}`, { waitUntil: "networkidle" });
+    await settle(400);
+    await check(`${path}：看不到瑀墨推廣、模板包連結`, async () => {
+      const promo = await page.getByText("瑀墨室內設計裝潢").first().isVisible().catch(() => false);
+      const links = await page
+        .locator('a[href*="/templates/"], a[href*="/free-template"]')
+        .evaluateAll((els) => els.filter((el) => el.offsetParent !== null).map((el) => el.getAttribute("href")));
+      return (!promo && links.length === 0) || { promo, links };
+    });
+  }
+
   console.log("\n# 網頁版");
   const webContext = await browser.newContext({ viewport: { width: 390, height: 844 }, locale: "zh-TW", timezoneId: "Asia/Taipei" });
   const webPage = await webContext.newPage();
@@ -837,6 +957,9 @@ async function main() {
   await webPage.waitForTimeout(500);
   await check("按「完成」之後看到清單裡剛加的那一筆", async () =>
     ((await webPage.locator('[role="dialog"]').count()) === 0 && (await webPage.getByText("驗車").first().isVisible()) && webErrors.length === 0) || webErrors);
+  await webPage.goto(`${ORIGIN}/renovation/paint/index.html`, { waitUntil: "networkidle" });
+  await check("網頁版的油漆計算機仍顯示瑀墨推廣與下一步按鈕", async () =>
+    (await webPage.getByText("瑀墨室內設計裝潢").first().isVisible()) && (await webPage.locator('a[href*="/templates/"]').first().isVisible()));
   await webContext.close();
 
   await browser.close();

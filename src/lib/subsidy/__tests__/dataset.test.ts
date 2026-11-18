@@ -1,7 +1,8 @@
 import { describe, it, expect } from "vitest";
 import dataset from "../../../data/subsidies.json";
 import { evaluate, evaluateAll } from "../eligibility";
-import { resolveDeadline } from "../deadline";
+import { isProjected, parseDateString, resolveDeadline } from "../deadline";
+import { reminderPreset } from "../reminderPreset";
 import { EMPTY_PROFILE, type Profile } from "../profile";
 import type { Subsidy } from "../types";
 import { tools } from "../../tools-registry";
@@ -131,11 +132,34 @@ describe("期限顯示（以 2026-11-15 為今天）", () => {
     }
   });
 
-  it("只辦 115 年度的方案過了截止日顯示已截止，不會滾到 2027 年", () => {
-    const afterNewYear = { y: 2027, m: 1, d: 5 };
+  // 期限填的是送件的最後一天。購買、報廢的最後一天（多半是 12/31）比它早，寫在 extra_lines：
+  // 以前填早的那一天，12/28 買車、1/5 來查的人會看到「已截止」，其實還能送件。
+  it("只辦 115 年度的購車與家電補助：送件截止日之前不顯示已截止，過了也不會滾到下一年", () => {
+    const lastDay: Record<string, [number, number, number]> = {
+      "electric-scooter-purchase-subsidy-moea": [2026, 12, 10],
+      "new-taipei-electric-scooter-subsidy-2026": [2026, 12, 31],
+      "old-vehicle-replacement-moenv": [2027, 1, 10],
+      "taipei-electric-scooter-subsidy-2026": [2027, 1, 10],
+      "taoyuan-electric-scooter-subsidy-2026": [2027, 1, 10],
+      "taichung-low-carbon-vehicle-subsidy-2026": [2027, 1, 10],
+      "tainan-electric-two-wheeler-subsidy-2026": [2027, 1, 10],
+      "home-appliance-replacement-subsidy": [2027, 1, 31],
+    };
+    for (const [id, [y, m, d]] of Object.entries(lastDay)) {
+      const deadline = byId(id).deadline;
+      expect(state(id).kind, `${id} 今天應該還在期間內`).toBe("upcoming");
+      const onLastDay = resolveDeadline(deadline, { y, m, d });
+      expect(onLastDay.kind === "upcoming" && onLastDay.daysLeft, `${id} 最後一天`).toBe(0);
+      const dayAfter = new Date(y, m - 1, d + 1);
+      const after = { y: dayAfter.getFullYear(), m: dayAfter.getMonth() + 1, d: dayAfter.getDate() };
+      expect(resolveDeadline(deadline, after).kind, `${id} 隔天`).toBe("ended");
+      expect(resolveDeadline(deadline, { y: 2027, m: 6, d: 1 }).kind, `${id} 半年後`).toBe("ended");
+    }
+  });
+
+  it("購買期限比送件期限早的項目，購買期限寫在補充行；經費用完就停的有標示", () => {
     for (const id of [
       "home-appliance-replacement-subsidy",
-      "electric-scooter-purchase-subsidy-moea",
       "old-vehicle-replacement-moenv",
       "taipei-electric-scooter-subsidy-2026",
       "taoyuan-electric-scooter-subsidy-2026",
@@ -143,9 +167,62 @@ describe("期限顯示（以 2026-11-15 為今天）", () => {
       "tainan-electric-two-wheeler-subsidy-2026",
       "new-taipei-electric-scooter-subsidy-2026",
     ]) {
-      expect(resolveDeadline(byId(id).deadline, afterNewYear).kind, id).toBe("ended");
-      expect(state(id).kind, `${id} 今天應該還在期間內`).toBe("upcoming");
+      const lines = byId(id).deadline.extra_lines ?? [];
+      expect(lines.length, id).toBeGreaterThan(0);
+      expect(lines.map((l) => l.text).join(" "), id).toMatch(/2026\/12\/31|2027\/1\/10/);
     }
+    for (const s of items) {
+      // 有填最後核對日的，一定是經費用完就停的項目，而且日期不會比資料版本晚
+      if (s.deadline.last_checked) {
+        expect(s.deadline.budget_limited, s.id).toBe(true);
+        expect(s.deadline.last_checked <= (dataset as { version: string }).version, s.id).toBe(true);
+      }
+    }
+  });
+
+  it("從申請日或備齊文件當月起算的項目：晚送的後果有法條或政府來源", () => {
+    const applyNow = items.filter((s) => s.late_consequence?.apply_now);
+    expect(applyNow.map((s) => s.id).sort()).toEqual(
+      ["childcare-allowance-0-2", "disability-living-allowance", "mid-low-income-elderly-allowance", "rent-subsidy-central-300b"].sort(),
+    );
+    for (const s of items) {
+      const lc = s.late_consequence;
+      if (!lc) continue;
+      expect([...lc.short].length, s.id).toBeLessThanOrEqual(24);
+      const hosts = lc.sources.map((x) => new URL(x.url).hostname);
+      const gov = hosts.filter((h) => h.endsWith(".gov.tw") || h.endsWith(".gov.taipei")).length;
+      expect(hosts.includes("law.moj.gov.tw") || gov >= 2, s.id).toBe(true);
+    }
+  });
+
+  // 兩個年度不能併成一段：115 年度只收到 12/31 下午 5 時，補貼從申請日起算，
+  // 12 月來看的人要看到這一期的最後一天，不是 116 年底
+  it("租金補貼：12 月看到的是今年度的 12/31，1/1 起換成下一年度，不標成推算", () => {
+    const rent = byId("rent-subsidy-central-300b");
+    expect(rent.name).toContain("116");
+    const dataDate = parseDateString((dataset as { version: string }).version)!;
+    const dec = resolveDeadline(rent.deadline, { y: 2026, m: 12, d: 20 });
+    expect(dec.kind === "upcoming" && [dec.date.y, dec.date.m, dec.date.d, dec.daysLeft]).toEqual([2026, 12, 31, 11]);
+    const jan = resolveDeadline(rent.deadline, { y: 2027, m: 1, d: 1 });
+    expect(jan.kind === "upcoming" && [jan.date.y, jan.date.m, jan.date.d]).toEqual([2027, 12, 31]);
+    // 116 年度是 115-10-13 公告的確定日期
+    expect(isProjected(rent.deadline, jan, dataDate)).toBe(false);
+    // 117 年度還沒公告，到時候要標成推算
+    const y2028 = resolveDeadline(rent.deadline, { y: 2028, m: 1, d: 2 });
+    expect(isProjected(rent.deadline, y2028, dataDate)).toBe(true);
+    expect((rent.deadline.extra_lines ?? []).some((l) => l.label === "已經在領")).toBe(true);
+    // 提醒不會回到每年 12/31：從申請日起算的項目由使用者自己挑辦理日
+    const preset = reminderPreset({ deadline: rent.deadline, lateConsequence: rent.late_consequence, state: dec });
+    expect([preset.targetDate, preset.repeatYearly, preset.planned]).toEqual([undefined, false, true]);
+  });
+
+  it("育兒津貼：不再寫已廢止的「出生 60 天內申請才從出生月起算」，年底卡在 11/1～12/31", () => {
+    const s = byId("childcare-allowance-0-2");
+    const text = JSON.stringify([s.deadline.note, s.pitfalls, s.faqs.map((f) => f.a), s.summary]);
+    expect(text).not.toMatch(/超過60天則從申請當月|60天內送件，前面的月份不補|出生後60天內報戶口並送件，津貼會從出生那個月起算/);
+    expect(s.deadline.note).toContain("第六點");
+    expect(s.year_end_notice?.from).toBe("11-01");
+    expect(s.year_end_notice?.to).toBe("12-31");
   });
 
   it("各縣市、各校自訂期限的項目不顯示倒數", () => {
@@ -318,14 +395,26 @@ describe("旗艦項目不能被誤判成不符合", () => {
     notHidden("toddler-care-subsidy-0-2", secondChild);
   });
 
-  it("2027 年 1 月 5 日：只辦 115 年度的購車與家電補助不再列為相符", () => {
-    const rows = evaluateAll(items.filter((s) => s.status_2026 !== "ended"), { ...renter, ownsVehicle: "both" }, { y: 2027, m: 1, d: 5 });
-    const expired = ["home-appliance-replacement-subsidy", "electric-scooter-purchase-subsidy-moea", "old-vehicle-replacement-moenv", "taipei-electric-scooter-subsidy-2026"];
-    for (const id of expired) {
-      const row = rows.find((r) => r.subsidy.id === id);
+  it("跨年後的試算：送件期限還沒到的購車與家電補助仍列為相符，過了才排除", () => {
+    const profile = { ...renter, ownsVehicle: "both" as const };
+    const active = items.filter((s) => s.status_2026 !== "ended");
+    const verdictOn = (today: { y: number; m: number; d: number }, id: string) => evaluateAll(active, profile, today).find((r) => r.subsidy.id === id);
+    // 1/5：經濟部（12/10 截止）已過；家電（1/31）、環境部與臺北（1/10）還能送件
+    const jan5 = { y: 2027, m: 1, d: 5 };
+    expect(verdictOn(jan5, "electric-scooter-purchase-subsidy-moea")?.failed.join(" ")).toContain("申請期限已過");
+    for (const id of ["home-appliance-replacement-subsidy", "old-vehicle-replacement-moenv", "taipei-electric-scooter-subsidy-2026"]) {
+      expect(verdictOn(jan5, id)?.failed.join(" "), id).not.toContain("申請期限已過");
+    }
+    // 1/11：環境部與臺北過了，家電還有
+    const jan11 = { y: 2027, m: 1, d: 11 };
+    for (const id of ["old-vehicle-replacement-moenv", "taipei-electric-scooter-subsidy-2026"]) {
+      const row = verdictOn(jan11, id);
       expect(row?.verdict, id).toBe("not_eligible");
       expect(row?.failed.join(" "), id).toContain("申請期限已過");
     }
+    expect(verdictOn(jan11, "home-appliance-replacement-subsidy")?.failed.join(" ")).not.toContain("申請期限已過");
+    // 2/1：家電也過了
+    expect(verdictOn({ y: 2027, m: 2, d: 1 }, "home-appliance-replacement-subsidy")?.failed.join(" ")).toContain("申請期限已過");
   });
 
   it("桃園市原住民族租金補貼還在辦：桃園租屋族看得到，並標明限原住民", () => {

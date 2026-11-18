@@ -1,0 +1,33 @@
+{
+ "id": "taoyuan-electric-scooter-subsidy-2026",
+ "checked": [
+  {
+   "field": "deadline.end_*",
+   "value_in_data": "",
+   "official_value": "申請期限，自115年1月11日起至116年1月10日止(以本府環保局受理日期認定)。",
+   "match": false,
+   "source_url": "https://tydep.tycg.gov.tw/News_Content.aspx?n=20028&s=1601363",
+   "note": "桃園市環保局「115 年桃園市電動機車補助計畫」頁。"
+  },
+  {
+   "field": "deadline.extra_lines",
+   "value_in_data": "",
+   "official_value": "購車期限：自115年1月1日起至115年12月31日止(以購車發票日認定)。",
+   "match": false,
+   "source_url": "https://tydep.tycg.gov.tw/News_Content.aspx?n=20028&s=1601363",
+   "note": "同頁。"
+  },
+  {
+   "field": "deadline.note",
+   "value_in_data": "購車發票日 2026-01-01 至 2026-12-31；申請受理 2026-01-11 至 2027-01-10（以環保局受理日為準）。新購 6,000 名、各專案名額有限，用罄即止，剩餘名額可在申辦系統查詢。",
+   "official_value": "補助剩餘名額請至「桃園市電動機車補助申辦系統 」確認。",
+   "match": false,
+   "source_url": "https://tydep.tycg.gov.tw/News_Content.aspx?n=20028&s=1601363",
+   "note": "頁面沒有額滿公告，也沒有 116 年的說明。"
+  }
+ ],
+ "corrections": [],
+ "verdict": "corrected",
+ "verified_at": "2026-11-18",
+ "summary": "看了桃園市環保局 115 年電動機車補助計畫頁。受理到 2027-01-10、購車發票到 2026-12-31 兩個日期都有原文，deadline 改 end 2027-01-10。額滿公告與剩餘名額頁面沒有，系統要登入才看得到。"
+}

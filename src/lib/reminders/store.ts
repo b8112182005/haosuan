@@ -116,6 +116,7 @@ function sanitize(raw: unknown): Reminder | null {
     url: normalizeUrl(r.url),
     source: normalizeSource(r.source),
     repeatYearly: r.repeatYearly === true,
+    ...(r.planned === true ? { planned: true } : {}),
     createdAt: typeof r.createdAt === 'string' ? r.createdAt : new Date().toISOString(),
     done: r.done === true,
     doneAt: typeof r.doneAt === 'string' ? r.doneAt : undefined,
@@ -228,6 +229,8 @@ export async function addReminder(input: NewReminderInput): Promise<Reminder> {
       url: normalizeUrl(input.url),
       source,
       repeatYearly,
+      // 沒傳就不寫欄位：舊資料與自訂提醒的形狀不變
+      ...(input.planned === true ? { planned: true } : {}),
       createdAt: existing?.createdAt ?? new Date().toISOString(),
       done: keepDone,
       doneAt: keepDone ? existing?.doneAt : undefined,
@@ -260,6 +263,8 @@ export function updateReminder(id: string, patch: ReminderPatch): Promise<Remind
       url: 'url' in patch ? normalizeUrl(patch.url) : current.url,
       source: patch.source === undefined ? current.source : normalizeSource(patch.source),
       repeatYearly: patch.repeatYearly === undefined ? current.repeatYearly : patch.repeatYearly === true,
+      // ...current 已帶著 planned；只有 patch 明確給值才改
+      ...(patch.planned === undefined ? {} : patch.planned === true ? { planned: true } : { planned: undefined }),
       done: patch.done === undefined ? current.done : patch.done === true,
       doneAt: 'doneAt' in patch ? (typeof patch.doneAt === 'string' ? patch.doneAt : undefined) : current.doneAt,
     };

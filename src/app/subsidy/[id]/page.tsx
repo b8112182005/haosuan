@@ -23,11 +23,13 @@ import { getAllSubsidies, getSubsidyById, getSubsidyIds, getRelatedSubsidies } f
 import { CATEGORY_LABELS } from "@/lib/subsidy/types";
 import type { SubsidyChannel } from "@/lib/subsidy/types";
 import { describeWindow } from "@/lib/subsidy/deadline";
+import { applyLinkLabel } from "@/lib/subsidy/reminderPreset";
 import { amountHeadline, amountNeedsDetail } from "@/lib/subsidy/format";
 import { tools } from "@/lib/tools-registry";
 import { serializeJsonLd } from "@/lib/json-ld";
 import DeadlineCard from "@/components/subsidy/DeadlineCard";
 import LiveUpdateNotice from "@/components/subsidy/LiveUpdateNotice";
+import YearEndNotices from "@/components/subsidy/YearEndNotices";
 import ShareAppButton from "@/components/app/ShareAppButton";
 import { SITE_URL } from "@/lib/site";
 
@@ -97,6 +99,15 @@ export default async function SubsidyDetailPage({ params }: { params: Promise<{ 
   const calc = s.related_calculator ? tools.find((t) => t.slug === s.related_calculator) : undefined;
   const allCount = getAllSubsidies().length;
 
+  // 晚送後果與年底提醒卡引用的來源可能不在主要來源清單裡；用網址去重，補在後面，讓畫面上每一句規則都找得到出處
+  const sources = [...s.sources];
+  const seenUrls = new Set(sources.map((src) => src.url));
+  for (const src of [...(s.late_consequence?.sources ?? []), ...(s.year_end_notice?.sources ?? [])]) {
+    if (seenUrls.has(src.url)) continue;
+    seenUrls.add(src.url);
+    sources.push(src);
+  }
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "GovernmentService",
@@ -143,6 +154,7 @@ export default async function SubsidyDetailPage({ params }: { params: Promise<{ 
       </header>
 
       <LiveUpdateNotice subsidy={{ id: s.id, amount: s.amount, deadline: s.deadline, status_2026: s.status_2026, official_url: s.official_url }} />
+      <YearEndNotices only={s.id} />
 
       {/* 金額 + 期限 */}
       <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -176,7 +188,17 @@ export default async function SubsidyDetailPage({ params }: { params: Promise<{ 
             </Link>
           )}
         </section>
-        <DeadlineCard subsidy={{ id: s.id, name: s.name, short_name: s.short_name, deadline: s.deadline }} />
+        <DeadlineCard
+          subsidy={{
+            id: s.id,
+            name: s.name,
+            short_name: s.short_name,
+            deadline: s.deadline,
+            late_consequence: s.late_consequence
+              ? { text: s.late_consequence.text, short: s.late_consequence.short, apply_now: s.late_consequence.apply_now }
+              : null,
+          }}
+        />
       </div>
 
       {/* 主要行動 */}
@@ -187,7 +209,7 @@ export default async function SubsidyDetailPage({ params }: { params: Promise<{ 
           rel="noopener noreferrer"
           className="inline-flex h-11 items-center gap-2 rounded-full bg-primary px-5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
         >
-          前往官方申請頁 <ExternalLink className="h-4 w-4" />
+          {applyLinkLabel({ applyNow: s.late_consequence?.apply_now, status: s.status_2026, deadlineType: s.deadline.type })} <ExternalLink className="h-4 w-4" />
         </a>
         <ShareAppButton title={s.name} text={`${s.name}：${amountHeadline(s.amount)}。${describeWindow(s.deadline)}。`} url={`${SITE_URL}/subsidy/${s.id}`} label="分享這項補助" />
       </div>
@@ -332,7 +354,7 @@ export default async function SubsidyDetailPage({ params }: { params: Promise<{ 
           {s.last_known_update && ` · 官方最後更新 ${s.last_known_update}`}
         </p>
         <ul className="mt-2 space-y-1">
-          {s.sources.map((src, i) => (
+          {sources.map((src, i) => (
             <li key={i}>
               <a href={src.url} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:text-foreground">
                 {src.title}

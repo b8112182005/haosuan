@@ -11,7 +11,7 @@ import UpcomingDeadlines from "@/components/subsidy/UpcomingDeadlines";
 export const metadata: Metadata = {
   title: `${APP_NAME} — 補助查詢、期限提醒、生活計算工具`,
   description:
-    "回答幾個問題找出你可能符合的政府補助，截止前 30、14、3 天提醒你；內建房貸、所得稅、電費、BMI 等 30 種台灣常用計算機。免費、無廣告、不用註冊。",
+    "回答幾個問題找出你可能符合的政府補助，截止前 30、14、3 天提醒你；內建房貸、所得稅、電費、BMI 等 30 種台灣常用計算機。免費、不用註冊，不接廣告。",
 };
 
 const entries = [
@@ -58,7 +58,7 @@ export default function Home() {
           查補助、記期限、算數字
         </h1>
         <p className="mt-2 max-w-xl text-sm text-muted-foreground sm:text-base">
-          {subsidies.length} 項政府補助的資格、金額與截止日，整理成一般人看得懂的版本；加上提醒與 30 種計算機。不用註冊，沒有廣告。
+          {subsidies.length} 項政府補助的資格、金額與截止日，整理成一般人看得懂的版本；加上提醒與 30 種計算機。不用註冊，不接廣告。
         </p>
       </section>
 
