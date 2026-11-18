@@ -81,5 +81,6 @@ export function toSummary(s: Subsidy): SubsidySummary {
     topic: s.topic,
     year_end_notice: s.year_end_notice,
     late_consequence: s.late_consequence,
+    needs_purchase: s.needs_purchase,
   };
 }

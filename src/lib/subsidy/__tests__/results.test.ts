@@ -166,6 +166,10 @@ describe("buildResultsView：用內建資料跑一組條件", () => {
       ["rent-subsidy-central-300b", "apply_now"],
     ]);
     expect(new Set(view.picks.map((p) => p.row.evaluation.subsidy.id)).size).toBe(view.picks.length);
+    // 新北市電動機車補助、環境部汰舊換新在 60 天內截止，但要先買車或報廢舊車，不催
+    expect(view.picks.map((p) => p.row.evaluation.subsidy.id)).not.toContain("new-taipei-electric-scooter-subsidy-2026");
+    expect(view.picks.map((p) => p.row.evaluation.subsidy.id)).not.toContain("old-vehicle-replacement-moenv");
+    expect(ids(group("energy_transport")?.rows ?? [])).toContain("old-vehicle-replacement-moenv");
     for (const p of view.picks) {
       expect(["match", "check"]).toContain(p.row.status);
       if (p.why === "closing") expect(p.row.daysLeft).toBeLessThanOrEqual(PICK_CLOSING_DAYS);
@@ -197,6 +201,52 @@ describe("buildResultsView：邊界", () => {
     ];
     const view = buildResultsView(evaluateAll(items, { ...EMPTY_PROFILE, age: 30 }, today), today);
     expect(view.picks.map((p) => p.row.evaluation.subsidy.id)).toEqual(["in-59"]);
+  });
+
+  it("要先買東西才領得到的補助不放進「先處理」，照常列在分類裡", () => {
+    const soon = { type: "window" as const, start_month: null, start_day: null, end_month: 12, end_day: 31, end_year: 2026, note: "" };
+    const items = [
+      makeSummary({ id: "buy-scooter", category: "energy_transport", conditions: { min_age: 18 }, deadline: soon, needs_purchase: true }),
+      makeSummary({ id: "culture-coin", category: "youth", conditions: { min_age: 18 }, deadline: soon }),
+    ];
+    const view = buildResultsView(evaluateAll(items, { ...EMPTY_PROFILE, age: 30 }, today), today);
+    expect(view.picks.map((p) => p.row.evaluation.subsidy.id)).toEqual(["culture-coin"]);
+    expect(view.benefits.flatMap((g) => ids(g.rows))).toContain("buy-scooter");
+  });
+
+  it("要確認的項目只差一條才放進「先處理」；差兩條以上多半是題目沒答完", () => {
+    const soon = { type: "window" as const, start_month: null, start_day: null, end_month: 12, end_day: 31, end_year: 2026, note: "" };
+    const items = [
+      makeSummary({ id: "one-left", conditions: { min_age: 18, income_limit_type: "household_monthly", income_limit_note: "全家每人每月平均所得" }, deadline: soon }),
+      makeSummary({ id: "two-left", conditions: { min_age: 18, must_rent: true, has_children: true }, deadline: soon }),
+    ];
+    const view = buildResultsView(evaluateAll(items, { ...EMPTY_PROFILE, age: 30 }, today), today);
+    expect(view.picks.map((p) => p.row.evaluation.subsidy.id)).toEqual(["one-left"]);
+  });
+
+  it("限特定縣市的項目，縣市對上才放進「先處理」：只填年齡的人不會被催別的縣市的敬老卡", () => {
+    const soon = { type: "window" as const, start_month: null, start_day: null, end_month: 12, end_day: 31, end_year: 2026, note: "" };
+    const card = makeSummary({ id: "senior-card", city: "台北市", level: "local", conditions: { min_age: 65 }, deadline: soon });
+    const onlyAge = buildResultsView(evaluateAll([card], { ...EMPTY_PROFILE, age: 70 }, today), today);
+    expect(onlyAge.picks).toEqual([]);
+    const taipei = buildResultsView(evaluateAll([card], { ...EMPTY_PROFILE, age: 70, city: "台北市" }, today), today);
+    expect(taipei.picks.map((p) => p.row.evaluation.subsidy.id)).toEqual(["senior-card"]);
+  });
+
+  it("須知與工具的數字等於展開後列出的列數；最近的繳費期限剩幾天", () => {
+    const soon = { type: "window" as const, start_month: null, start_day: null, end_month: 11, end_day: 30, end_year: 2026, note: "" };
+    const items = [
+      makeSummary({ id: "guide", kind: "info" }),
+      makeSummary({ id: "guide-identity", kind: "info", conditions: { special_identity: "原住民" } }),
+      makeSummary({ id: "tax-soon", kind: "obligation", deadline: soon }),
+      makeSummary({ id: "tax-anytime", kind: "obligation" }),
+    ];
+    const view = buildResultsView(evaluateAll(items, { ...EMPTY_PROFILE, age: 30 }, today), today);
+    expect(view.counts.info).toBe(2);
+    expect([...view.info.rows, ...view.info.unlikely].length).toBe(2);
+    expect(view.obligationsNearestDays).toBe(11);
+    const none = buildResultsView(evaluateAll([items[3]], { ...EMPTY_PROFILE, age: 30 }, today), today);
+    expect(none.obligationsNearestDays).toBeNull();
   });
 
   it("最多挑 5 項，近的在前", () => {

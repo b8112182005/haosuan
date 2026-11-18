@@ -153,6 +153,7 @@ function validateItem(item, origin) {
   check(dl.confirmed_through == null || dl.type === "fixed_annual", `${where}: deadline.confirmed_through 只用在 type=fixed_annual`);
   // 未來的日期代表還沒確認就先寫了「已確認」，貼文的 14 天新鮮度判斷會被騙過去
   check(!isRealDate(dl.last_checked) || dl.last_checked <= today, `${where}: deadline.last_checked ${dl.last_checked} 晚於建置當天（台灣 ${today}）`);
+  check(item.needs_purchase == null || typeof item.needs_purchase === "boolean", `${where}: needs_purchase 要是 true／false`);
   const lc = item.late_consequence;
   if (lc != null) {
     check(typeof lc.text === "string" && lc.text.trim() !== "", `${where}: late_consequence.text 是空的`);
@@ -460,8 +461,9 @@ for (const out of ["src/data/subsidies.json", "public/data/subsidies.json"]) {
 // 列表、試算、時程表只需要這些欄位。完整資料約 1 MB，若整包當 props 傳給 client component，
 // 每個列表頁的 HTML 都會被撐到 900 KB 以上；精簡索引讓它們共用一個約四分之一大小的 chunk。
 // year_end_notice 只有少數項目有，補助首頁和時程表要拿它組年底卡
-// kind、late_consequence 給試算結果頁：前者分「可以領的／要繳要辦的／須知」，後者挑出「現在就能送件」的項目
-const INDEX_FIELDS = ["id", "name", "short_name", "category", "kind", "level", "city", "agency", "summary", "eligibility", "amount", "conditions", "deadline", "status_2026", "confidence", "topic", "year_end_notice", "late_consequence"];
+// kind、late_consequence、needs_purchase 給試算結果頁：分「可以領的／要繳要辦的／須知」、挑出「現在就能送件」的項目、
+// 不把要先買東西才領得到的補助放進「先處理」
+const INDEX_FIELDS = ["id", "name", "short_name", "category", "kind", "level", "city", "agency", "summary", "eligibility", "amount", "conditions", "deadline", "status_2026", "confidence", "topic", "year_end_notice", "late_consequence", "needs_purchase"];
 const index = {
   version,
   generated_at: generatedAt,

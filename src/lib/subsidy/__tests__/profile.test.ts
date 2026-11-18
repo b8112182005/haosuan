@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { EMPTY_PROFILE, PROFILE_STEPS, answeredCount, unansweredSteps, type Profile } from "../profile";
 
 const FULL: Profile = {
@@ -46,5 +46,19 @@ describe("answeredCount", () => {
     expect(answeredCount(EMPTY_PROFILE)).toBe(0);
     expect(answeredCount(FULL)).toBe(7);
     expect(answeredCount({ ...EMPTY_PROFILE, city: "台北市" })).toBe(1);
+  });
+});
+
+describe("peekProfile：不等 Preferences 就拿得到這次存過的條件", () => {
+  it("還沒讀過是 undefined；存過之後馬上拿得到；清除後是 null", async () => {
+    vi.resetModules();
+    const fresh = await import("../profile");
+    expect(fresh.peekProfile()).toBeUndefined();
+    await fresh.saveProfile({ ...fresh.EMPTY_PROFILE, city: "新北市", age: 32 });
+    expect(fresh.peekProfile()?.city).toBe("新北市");
+    expect(await fresh.loadProfile()).toEqual(fresh.peekProfile());
+    await fresh.clearProfile();
+    expect(fresh.peekProfile()).toBeNull();
+    expect(await fresh.loadProfile()).toBeNull();
   });
 });

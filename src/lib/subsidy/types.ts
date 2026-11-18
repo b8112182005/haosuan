@@ -226,6 +226,11 @@ export interface Subsidy {
   topic?: string;
   late_consequence?: LateConsequence | null;
   year_end_notice?: YearEndNotice | null;
+  /**
+   * 要先買車、買家電或報廢舊車才領得到（電動機車補助、汰舊換新、節能家電退稅）。
+   * 試算結果的「先處理」不催這一類：截止日再近，也不該替還沒決定要不要買的人倒數。
+   */
+  needs_purchase?: boolean | null;
 }
 
 /**
@@ -252,6 +257,7 @@ export type SubsidySummary = Pick<
   | "topic"
   | "year_end_notice"
   | "late_consequence"
+  | "needs_purchase"
 >;
 
 export interface GeneralFaq {

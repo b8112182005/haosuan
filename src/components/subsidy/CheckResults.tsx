@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import {
   Accessibility,
@@ -83,17 +83,34 @@ function readStored(): Stored {
   }
 }
 
+/** 每次寫入都記下當時在哪一筆瀏覽紀錄、幾點：回來時用這兩個判斷要不要照上次的樣子擺 */
 function writeStored(patch: Partial<Stored>) {
   try {
-    window.sessionStorage.setItem(STORE_KEY, JSON.stringify({ ...readStored(), ...patch }));
+    window.sessionStorage.setItem(STORE_KEY, JSON.stringify({ ...readStored(), ...patch, entry: entryKey(), at: Date.now() }));
   } catch {
     // 存不了就算了，只是回來時不會停在原位
   }
 }
 
-/** 精靈存檔、重填、進修改模式時呼叫：條件變了，舊的捲動位置對不上新的清單。分類與展開狀態留著 */
-export function clearResultsScroll() {
-  writeStored({ y: 0 });
+/**
+ * 存的畫面狀態能不能用在這一次：要在 30 分鐘內，而且是按返回回到同一筆瀏覽紀錄。
+ * 從補助列表再點進來是新的一筆，應該從「全部」、最上面開始，不該還停在上次篩的那個分類。
+ * 沒有 Navigation API 的瀏覽器分不出來，只看時間。
+ */
+function storedForThisVisit(): Stored {
+  const stored = readStored();
+  const here = entryKey();
+  const sameEntry = stored.entry === null || here === null || stored.entry === here;
+  return sameEntry && Date.now() - stored.at < RESTORE_WINDOW_MS ? stored : DEFAULT_STORED;
+}
+
+/** 精靈存檔、重填時呼叫：條件變了，上次選的分類、展開的區塊、捲動位置都對不上新的清單 */
+export function resetResultsView() {
+  try {
+    window.sessionStorage.removeItem(STORE_KEY);
+  } catch {
+    // 清不掉時下次頂多停在舊的分類
+  }
 }
 
 /* ---------- 小元件 ---------- */
@@ -131,12 +148,13 @@ const SCROLL_MARGIN = { scrollMarginTop: "calc(3.5rem + var(--safe-top) + 0.5rem
 function StatusIcon({ row }: { row: ResultRow }) {
   const { kind } = row.evaluation.subsidy;
   const cls = "mt-0.5 h-5 w-5 shrink-0";
-  if (row.status === "no") return <XCircle className={`${cls} text-muted-foreground`} aria-label="不符合" />;
-  if (kind === "obligation") return <CalendarClock className={`${cls} text-muted-foreground`} aria-label="繳費或辦理期限" />;
-  if (kind === "info") return <Info className={`${cls} text-muted-foreground`} aria-label="須知" />;
-  if (row.status === "match") return <CheckCircle2 className={`${cls} text-emerald-600`} aria-label="條件相符" />;
-  if (row.status === "situational") return <Circle className={`${cls} text-muted-foreground`} aria-label="遇到才用得上" />;
-  return <HelpCircle className={`${cls} text-amber-600`} aria-label="要再確認" />;
+  // role="img"：svg 只有 aria-label 時，TalkBack 不一定會把它當成有名稱的圖唸出來
+  if (row.status === "no") return <XCircle role="img" className={`${cls} text-muted-foreground`} aria-label="不符合" />;
+  if (kind === "obligation") return <CalendarClock role="img" className={`${cls} text-muted-foreground`} aria-label="繳費或辦理期限" />;
+  if (kind === "info") return <Info role="img" className={`${cls} text-muted-foreground`} aria-label="須知" />;
+  if (row.status === "match") return <CheckCircle2 role="img" className={`${cls} text-emerald-600`} aria-label="條件相符" />;
+  if (row.status === "situational") return <Circle role="img" className={`${cls} text-muted-foreground`} aria-label="遇到才用得上" />;
+  return <HelpCircle role="img" className={`${cls} text-amber-600`} aria-label="要再確認" />;
 }
 
 const TONE_CLASS = {
@@ -146,7 +164,7 @@ const TONE_CLASS = {
   no: "text-muted-foreground",
 } as const;
 
-function Row({ row, today, onOpen, showLateShort }: { row: ResultRow; today: LocalDate | null; onOpen: () => void; showLateShort?: boolean }) {
+function Row({ row, today, showLateShort }: { row: ResultRow; today: LocalDate | null; showLateShort?: boolean }) {
   const { subsidy } = row.evaluation;
   const reason = reasonLine(row);
   const light = row.status === "situational" || row.status === "unlikely" || row.status === "no";
@@ -154,7 +172,6 @@ function Row({ row, today, onOpen, showLateShort }: { row: ResultRow; today: Loc
   return (
     <Link
       href={`/subsidy/${subsidy.id}`}
-      onClick={onOpen}
       data-row={subsidy.id}
       data-status={row.status}
       className="flex items-start gap-3 px-4 py-3 active:bg-accent"
@@ -202,7 +219,7 @@ function ExpandRow({ open, onToggle, children }: { open: boolean; onToggle: () =
       aria-expanded={open}
       className="flex w-full items-center justify-between gap-2 px-4 py-3 text-left text-xs text-muted-foreground active:bg-accent"
     >
-      <span className="line-clamp-2 leading-relaxed">{children}</span>
+      <span className="leading-relaxed">{children}</span>
       <ChevronDown className={`h-4 w-4 shrink-0 transition-transform ${open ? "rotate-180" : ""}`} aria-hidden="true" />
     </button>
   );
@@ -213,7 +230,8 @@ function ExpandRow({ open, onToggle, children }: { open: boolean; onToggle: () =
 interface Props {
   profile: Profile;
   evaluations: Evaluation[] | null;
-  onEdit: (step?: ProfileStep) => void;
+  /** fill＝從「補答」進去：下一題只跳到還沒回答的題目 */
+  onEdit: (step?: ProfileStep, options?: { fill?: boolean }) => void;
   onReset: () => void;
 }
 
@@ -222,7 +240,9 @@ export default function CheckResults({ profile, evaluations, onEdit, onReset }: 
   const view = useMemo(() => (evaluations && today ? buildResultsView(evaluations, today) : null), [evaluations, today]);
 
   // 這個元件只在 client 掛載後才 render（精靈先讀完條件才會切到結果），所以可以直接在 lazy initializer 讀 sessionStorage
-  const [ui, setUi] = useState<Stored>(readStored);
+  const [ui, setUi] = useState<Stored>(storedForThisVisit);
+  // 「重填」會清掉 7 題的答案，按下去先問一次
+  const [confirmingReset, setConfirmingReset] = useState(false);
   const update = (patch: Partial<Stored>) => {
     setUi((u) => ({ ...u, ...patch }));
     writeStored(patch);
@@ -234,20 +254,31 @@ export default function CheckResults({ profile, evaluations, onEdit, onReset }: 
   useLayoutEffect(() => {
     if (!view || restored.current) return;
     restored.current = true;
-    const { y, at, entry } = readStored();
+    // 存的位置屬於另一筆瀏覽紀錄時 storedForThisVisit 回的是預設值（y 是 0）：這次是從別的連結走進來的，留在最上面。
+    // 那一筆的位置先留著不動，之後按返回回到那一筆時還用得到
+    const { y } = storedForThisVisit();
     if (y <= 0) return;
-    const here = entryKey();
-    // 存的位置屬於另一筆瀏覽紀錄：這次是從別的連結走進來的，留在最上面。位置先留著，之後按返回回到那一筆時還用得到
-    if (entry !== null && here !== null && entry !== here) return;
-    if (Date.now() - at < RESTORE_WINDOW_MS) requestAnimationFrame(() => window.scrollTo(0, y));
+    requestAnimationFrame(() => window.scrollTo(0, y));
     writeStored({ y: 0 });
   }, [view]);
+
+  // 離開這一頁不只點清單裡的一列：底部分頁列、頁首、頁尾的連結也算。點任何連結的當下記位置，按返回回來時才有得還原。
+  // 用點擊而不是卸載時讀 scrollY：卸載那一刻頁面可能已經被捲到新頁面的位置
+  useEffect(() => {
+    const onClick = (event: MouseEvent) => {
+      if (event.target instanceof Element && event.target.closest("a[href]")) writeStored({ y: window.scrollY });
+    };
+    document.addEventListener("click", onClick, true);
+    return () => document.removeEventListener("click", onClick, true);
+  }, []);
 
   if (!view) return <div className="h-64 animate-pulse rounded-2xl bg-muted/40" aria-busy="true" />;
 
   const { counts } = view;
-  const category = ui.category !== "all" && view.benefits.some((g) => g.category === ui.category) ? ui.category : "all";
-  const benefitTotal = view.benefits.reduce((n, g) => n + g.rows.length, 0);
+  // 只有收合項目（限特定身分）的分類不出籤：籤上會寫「生育育兒 0」，點進去只有一行。它在「全部」裡照常出現
+  const chipGroups = view.benefits.filter((g) => g.rows.length > 0);
+  const category = ui.category !== "all" && chipGroups.some((g) => g.category === ui.category) ? ui.category : "all";
+  const benefitTotal = chipGroups.reduce((n, g) => n + g.rows.length, 0);
   const unanswered = unansweredSteps(profile);
   const noneAnswered = unanswered.length === PROFILE_STEPS.length;
 
@@ -270,7 +301,6 @@ export default function CheckResults({ profile, evaluations, onEdit, onReset }: 
   chip(profile.lowIncome === "low" ? "低收" : profile.lowIncome === "mid_low" ? "中低收" : null, "status");
   chip(profile.ownsVehicle === "scooter" ? "有機車" : profile.ownsVehicle === "car" ? "有汽車" : profile.ownsVehicle === "both" ? "有汽機車" : null, "vehicle");
 
-  const rememberPosition = () => writeStored({ y: window.scrollY, at: Date.now(), entry: entryKey() });
   const jumpTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
   const jumpToObligations = () => jumpTo("results-obligations");
   const jumpToInfo = () => {
@@ -291,7 +321,7 @@ export default function CheckResults({ profile, evaluations, onEdit, onReset }: 
     update({ unlikelyOpen: ui.unlikelyOpen.includes(key) ? ui.unlikelyOpen.filter((k) => k !== key) : [...ui.unlikelyOpen, key] });
 
   const rowOf = (row: ResultRow, extra?: { showLateShort?: boolean }) => (
-    <Row key={row.evaluation.subsidy.id} row={row} today={today} onOpen={rememberPosition} showLateShort={extra?.showLateShort} />
+    <Row key={row.evaluation.subsidy.id} row={row} today={today} showLateShort={extra?.showLateShort} />
   );
 
   const renderList = (list: RowList, key: string, unlikelyText: string, split = false) => {
@@ -319,8 +349,16 @@ export default function CheckResults({ profile, evaluations, onEdit, onReset }: 
   const shownBenefits = category === "all" ? view.benefits : view.benefits.filter((g) => g.category === category);
   const hasObligations = view.obligations.rows.length > 0 || view.obligations.unlikely.length > 0;
   const hasInfo = view.info.rows.length > 0 || view.info.unlikely.length > 0;
-  const extraParts: Array<{ text: string; onClick: () => void }> = [];
-  if (counts.obligations > 0) extraParts.push({ text: `${counts.obligations} 項要繳、要辦的期限`, onClick: jumpToObligations });
+  // 繳費期限排在整份補助清單後面：最近的一個快到時在這裡先講，不然剩 11 天的地價稅要捲過 35 列才看得到
+  const nearest = view.obligationsNearestDays;
+  const extraParts: Array<{ text: string; note?: string; onClick: () => void }> = [];
+  if (counts.obligations > 0) {
+    extraParts.push({
+      text: `${counts.obligations} 項要繳、要辦的期限`,
+      note: nearest !== null && nearest <= 30 ? (nearest === 0 ? "最近的今天截止" : `最近的剩 ${nearest} 天`) : undefined,
+      onClick: jumpToObligations,
+    });
+  }
   if (counts.info > 0) extraParts.push({ text: `${counts.info} 項須知與工具`, onClick: jumpToInfo });
 
   return (
@@ -329,23 +367,41 @@ export default function CheckResults({ profile, evaluations, onEdit, onReset }: 
       <div className="rounded-2xl border border-border bg-card p-4">
         <div className="flex items-center justify-between gap-3">
           <p className="text-sm text-muted-foreground">你的條件</p>
-          <div className="flex shrink-0 gap-1.5">
-            <button type="button" onClick={() => onEdit()} aria-label="修改條件" className="inline-flex h-9 items-center gap-1 rounded-full border border-border px-3 text-xs hover:bg-accent">
+          <div className="flex shrink-0 gap-2">
+            <button type="button" onClick={() => onEdit()} aria-label="修改條件" className="inline-flex h-10 items-center gap-1 rounded-full border border-border px-3.5 text-xs hover:bg-accent">
               <Pencil className="h-3.5 w-3.5" aria-hidden="true" /> 修改
             </button>
-            <button type="button" onClick={onReset} aria-label="清除重填" className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border hover:bg-accent">
-              <RotateCcw className="h-4 w-4" aria-hidden="true" />
+            <button
+              type="button"
+              onClick={() => setConfirmingReset(true)}
+              aria-label="清除重填"
+              className="inline-flex h-10 items-center gap-1 rounded-full border border-border px-3.5 text-xs text-muted-foreground hover:bg-accent"
+            >
+              <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" /> 重填
             </button>
           </div>
         </div>
-        <div className="mt-2 flex flex-wrap gap-1.5">
+        {confirmingReset && (
+          <div role="alertdialog" aria-label="清除重填" className="mt-3 flex flex-wrap items-center justify-between gap-2 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs dark:border-red-900 dark:bg-red-950/30">
+            <span>7 題的答案都會清掉，要從第 1 題重填。</span>
+            <span className="flex gap-2">
+              <button type="button" onClick={() => setConfirmingReset(false)} className="h-9 rounded-full border border-border bg-background px-3.5">
+                不清除
+              </button>
+              <button type="button" onClick={onReset} className="h-9 rounded-full bg-red-600 px-3.5 font-medium text-white hover:bg-red-700">
+                清除
+              </button>
+            </span>
+          </div>
+        )}
+        <div className="mt-2 flex flex-wrap gap-2">
           {noneAnswered ? (
             <span className="text-sm text-muted-foreground">沒有填任何條件，有門檻的項目都會列在「要再確認」。</span>
           ) : chips.length === 0 ? (
             <span className="text-sm text-muted-foreground">已回答 {answeredCount(profile)} 題</span>
           ) : (
             chips.map((c) => (
-              <button key={c.label} type="button" onClick={() => onEdit(c.step)} className="rounded-full bg-muted px-2.5 py-1 text-xs hover:bg-accent">
+              <button key={c.label} type="button" onClick={() => onEdit(c.step)} aria-label={`修改：${c.label}`} className="inline-flex h-9 items-center rounded-full bg-muted px-3 text-xs hover:bg-accent">
                 {c.label}
               </button>
             ))
@@ -354,7 +410,7 @@ export default function CheckResults({ profile, evaluations, onEdit, onReset }: 
         {unanswered.length > 0 && !noneAnswered && (
           <div className="mt-3 flex items-center justify-between gap-3 text-xs text-muted-foreground">
             <span>還有 {unanswered.length} 題沒回答。補答之後，要再確認的項目會變少。</span>
-            <button type="button" onClick={() => onEdit(unanswered[0])} className="h-8 shrink-0 rounded-full border border-border px-3 text-foreground hover:bg-accent">
+            <button type="button" onClick={() => onEdit(unanswered[0], { fill: true })} className="h-9 shrink-0 rounded-full border border-border px-3.5 text-foreground hover:bg-accent">
               補答
             </button>
           </div>
@@ -365,18 +421,15 @@ export default function CheckResults({ profile, evaluations, onEdit, onReset }: 
           <Stat kind="situational" icon={<Circle className="h-4 w-4 text-muted-foreground" aria-hidden="true" />} n={counts.situational} label="遇到才用得上" />
         </div>
         {extraParts.length > 0 && (
-          <p className="mt-3 text-xs text-muted-foreground">
-            另外有{" "}
-            {extraParts.map((p, i) => (
-              <span key={p.text}>
-                {i > 0 && "，"}
-                <button type="button" onClick={p.onClick} className="underline underline-offset-4 hover:text-foreground">
-                  {p.text}
-                </button>
-              </span>
+          <div className="mt-3 flex flex-wrap items-center gap-2 text-xs">
+            <span className="text-muted-foreground">另外有</span>
+            {extraParts.map((p) => (
+              <button key={p.text} type="button" onClick={p.onClick} className="inline-flex min-h-9 items-center gap-1.5 rounded-full border border-border px-3 py-1 text-left hover:bg-accent">
+                <span>{p.text}</span>
+                {p.note && <span className="font-medium text-amber-700 dark:text-amber-400">{p.note}</span>}
+              </button>
             ))}
-            。
-          </p>
+          </div>
         )}
       </div>
 
@@ -399,7 +452,7 @@ export default function CheckResults({ profile, evaluations, onEdit, onReset }: 
               <CategoryChip active={category === "all"} id="all" onClick={() => pickCategory("all")}>
                 全部 {benefitTotal}
               </CategoryChip>
-              {view.benefits.map((g) => (
+              {chipGroups.map((g) => (
                 <CategoryChip key={g.category} active={category === g.category} id={g.category} onClick={() => pickCategory(g.category)}>
                   {CATEGORY_LABELS[g.category]} {g.rows.length}
                 </CategoryChip>

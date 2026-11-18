@@ -1,7 +1,7 @@
 {
   "version": "2026-11-19",
-  "generated_at": "2026-11-18T17:06:40.459Z",
-  "hash": "f7368057922c46eb",
+  "generated_at": "2026-11-18T23:16:23.390Z",
+  "hash": "72901fd559305cd4",
   "items": [
     {
       "id": "rent-subsidy-central-300b",
@@ -8031,6 +8031,7 @@
       "verification_summary": null,
       "late_consequence": null,
       "year_end_notice": null,
+      "needs_purchase": true,
       "kind": "benefit"
     },
     {
@@ -8184,6 +8185,7 @@
       "verification_summary": null,
       "late_consequence": null,
       "year_end_notice": null,
+      "needs_purchase": true,
       "kind": "benefit"
     },
     {
@@ -17953,6 +17955,7 @@
       "verification_summary": "讀了能源署官網首頁、受理期間公告頁、中央社 2026-10-10 報導。申請最後一天 2027-01-31、發票最後一天 2026-12-31 原文確認；經費用罄公告沒有找到，所以 status_2026 維持 active。刪掉查不到的「不再展延」說法；116 年續辦沒有公告。",
       "late_consequence": null,
       "year_end_notice": null,
+      "needs_purchase": true,
       "kind": "benefit"
     },
     {
@@ -18253,6 +18256,7 @@
       "verification_summary": "讀了電動機車產業網補助資訊頁、工研院的兩份文件、產發署 2025-06-17 新聞稿；要點全文（law.moea.gov.tw）回 403。只確認網站寫「請於115/12/10前提出申請」，沒有確認 12/10 是購車、發票還是送件日，所以不改 end 日期、不填 extra_lines、budget_limited、last_checked。confidence 降為 medium，補上 unverified_fields。",
       "late_consequence": null,
       "year_end_notice": null,
+      "needs_purchase": true,
       "kind": "benefit"
     },
     {
@@ -18780,6 +18784,7 @@
         ]
       },
       "year_end_notice": null,
+      "needs_purchase": true,
       "kind": "benefit"
     },
     {
@@ -18970,6 +18975,7 @@
       "verification_summary": null,
       "late_consequence": null,
       "year_end_notice": null,
+      "needs_purchase": true,
       "kind": "benefit"
     },
     {
@@ -19308,6 +19314,7 @@
       "verification_summary": "臺中市條文 PDF 兩次抓取失敗（503、連線重設），改看臺中市環保局低碳排車輛補助網的公告頁，讀到第五、七、十條。條文與舊資料的日期一致，deadline 改 end 2027-01-10。",
       "late_consequence": null,
       "year_end_notice": null,
+      "needs_purchase": true,
       "kind": "benefit"
     },
     {
@@ -19490,6 +19497,7 @@
       "verification_summary": "看了臺北市環保局補助專區、2026-04-02 新聞稿頁與 113～115 年 Q&A。Q&A 寫申請最晚是隔年 1 月 10 日，所以 end 改 2027-01-10，購車期間寫進 extra_lines。三頁都沒有額滿或提前結束公告。",
       "late_consequence": null,
       "year_end_notice": null,
+      "needs_purchase": true,
       "kind": "benefit"
     },
     {
@@ -19661,6 +19669,7 @@
       "verification_summary": "下載臺南市公告 PDF 轉文字，讀到受理至 2027-01-10、購車 2026-12-31 前、領牌 2027-01-10 前。搜尋「額滿」「提前截止」沒找到臺南市公告。deadline 改 end 2027-01-10。",
       "late_consequence": null,
       "year_end_notice": null,
+      "needs_purchase": true,
       "kind": "benefit"
     },
     {
@@ -19827,6 +19836,7 @@
       "verification_summary": "看了桃園市環保局 115 年電動機車補助計畫頁。受理到 2027-01-10、購車發票到 2026-12-31 兩個日期都有原文，deadline 改 end 2027-01-10。額滿公告與剩餘名額頁面沒有，系統要登入才看得到。",
       "late_consequence": null,
       "year_end_notice": null,
+      "needs_purchase": true,
       "kind": "benefit"
     },
     {
@@ -19987,6 +19997,7 @@
       "verification_summary": null,
       "late_consequence": null,
       "year_end_notice": null,
+      "needs_purchase": true,
       "kind": "benefit"
     },
     {
@@ -20158,6 +20169,7 @@
       "verification_summary": "看了新北市環保局電動機車申請資訊頁（motor.ntpc.gov.tw）。第一階段登錄到 2026-12-31、第二階段補件到隔年 1 月 10 日，deadline 維持登錄截止日，補件日寫進 extra_lines。舊 note 的「官網 2026 年已提示早鳥名額將額滿」今天的頁面讀不到，已拿掉。",
       "late_consequence": null,
       "year_end_notice": null,
+      "needs_purchase": true,
       "kind": "benefit"
     },
     {

@@ -8,26 +8,17 @@ import {
   EMPTY_PROFILE,
   PROFILE_STEPS,
   loadProfile,
+  peekProfile,
   saveProfile,
   clearProfile,
+  unansweredSteps,
   type Profile,
   type ProfileStep,
 } from "@/lib/subsidy/profile";
 import { evaluateAll, type Evaluation } from "@/lib/subsidy/eligibility";
 import { useToday } from "@/lib/subsidy/useToday";
 import { useBackHandler } from "@/lib/useBackHandler";
-import CheckResults, { clearResultsScroll } from "./CheckResults";
-
-/**
- * 這次載入頁面後讀過的條件。undefined = 還沒讀過，null = 讀過、沒有存過。
- * 站內返回（項目頁 → 試算）時元件重新掛載，條件要等 Preferences 非同步讀完，第一次 render 只有骨架，
- * 瀏覽器沒辦法把捲動位置還原到還沒長出來的清單。有快取就第一次 render 直接是結果。
- * 整頁載入時模組剛載入、值是 undefined，第一次 render 仍是骨架，和靜態 HTML 一致，不會有 hydration 不一致。
- */
-let cachedProfile: Profile | null | undefined;
-function rememberProfile(p: Profile | null) {
-  cachedProfile = p;
-}
+import CheckResults, { resetResultsView } from "./CheckResults";
 
 type Step = ProfileStep;
 const STEPS = PROFILE_STEPS;
@@ -55,21 +46,25 @@ const AGE_CHIPS = [20, 25, 30, 35, 40, 45, 55, 65];
 
 export default function CheckWizard() {
   const today = useToday();
-  const [profile, setProfile] = useState<Profile>(cachedProfile ?? EMPTY_PROFILE);
+  // 這次載入頁面後已經讀過條件（peekProfile 不是 undefined）就直接用：從項目頁返回時第一次 render 就是結果，
+  // 捲動位置才有得還原。整頁載入時一定是 undefined，第一次 render 是骨架，和靜態 HTML 一致
+  const [profile, setProfile] = useState<Profile>(() => peekProfile() ?? EMPTY_PROFILE);
   const [stepIndex, setStepIndex] = useState(0);
-  const [mode, setMode] = useState<"loading" | "wizard" | "results">(
-    cachedProfile === undefined ? "loading" : cachedProfile ? "results" : "wizard",
-  );
+  const [mode, setMode] = useState<"loading" | "wizard" | "results">(() => {
+    const known = peekProfile();
+    return known === undefined ? "loading" : known ? "results" : "wizard";
+  });
   // 從結果頁按「修改條件」進來的：這時第 1 題按返回鍵要回結果頁，而不是離開試算
   const [editing, setEditing] = useState(false);
+  // 從「補答」進來的：下一題只跳到還沒回答的題目，不用把答過的 7 題再走一遍
+  const [filling, setFilling] = useState(false);
   const cityTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   // 上次填過就直接顯示結果（條件還能改）。已經讀過一次就不用再讀
   useEffect(() => {
-    if (cachedProfile !== undefined) return;
+    if (peekProfile() !== undefined) return;
     let alive = true;
     loadProfile().then((saved) => {
-      rememberProfile(saved);
       if (!alive) return;
       if (saved) {
         setProfile(saved);
@@ -96,29 +91,33 @@ export default function CheckWizard() {
   };
 
   const finish = async () => {
-    rememberProfile(profile);
-    clearResultsScroll();
+    // 剛選完縣市就按「直接看結果」時，250ms 的自動跳題還沒觸發：不清掉的話結果頁會被它捲回最上面
+    clearTimeout(cityTimer.current);
+    // 條件變了，上次選的分類、展開的區塊、捲動位置都對不上新的清單
+    resetResultsView();
     await saveProfile(profile);
     setEditing(false);
+    setFilling(false);
     setMode("results");
     window.scrollTo({ top: 0 });
   };
 
   const reset = async () => {
-    rememberProfile(null);
-    clearResultsScroll();
+    clearTimeout(cityTimer.current);
+    resetResultsView();
     await clearProfile();
     setProfile(EMPTY_PROFILE);
     setStepIndex(0);
     setEditing(false);
+    setFilling(false);
     setMode("wizard");
     window.scrollTo({ top: 0 });
   };
 
-  const startEdit = (target?: ProfileStep) => {
-    clearResultsScroll();
+  const startEdit = (target?: ProfileStep, options?: { fill?: boolean }) => {
     setStepIndex(target ? Math.max(0, STEPS.indexOf(target)) : 0);
     setEditing(true);
+    setFilling(options?.fill === true);
     setMode("wizard");
     window.scrollTo({ top: 0 });
   };
@@ -131,7 +130,16 @@ export default function CheckWizard() {
     cityTimer.current = setTimeout(() => goTo(1), 250);
   };
 
-  const next = () => (editing ? void finish() : goTo(stepIndex + 1));
+  // 修改模式的「下一題」：補答時只去還沒回答的題目，一般修改照順序。沒有下一題時是 undefined
+  const pending = filling ? unansweredSteps(profile).map((s) => STEPS.indexOf(s)).find((i) => i > stepIndex) : undefined;
+  const nextIndex = filling ? pending : stepIndex < STEPS.length - 1 ? stepIndex + 1 : undefined;
+  // 數字題按 Enter：第一次填是下一題；補答時去下一個沒答的，沒有了就存檔看結果；一般修改是存檔看結果
+  const enterGoesNext = !editing || (filling && nextIndex !== undefined);
+  const next = () => {
+    if (!editing) goTo(stepIndex + 1);
+    else if (filling && nextIndex !== undefined) goTo(nextIndex);
+    else void finish();
+  };
 
   // Android 返回鍵：第一次填的人答到第 2 題以後按返回是回上一題，第 1 題照常離開試算。
   // 修改條件的人不論第幾題都是存檔回結果頁（不存的話改了等於沒改）。
@@ -192,6 +200,7 @@ export default function CheckWizard() {
               max={120}
               placeholder="例如 32"
               onEnter={next}
+              enterHint={enterGoesNext ? "next" : "done"}
             />
             <div className="flex flex-wrap gap-2">
               {AGE_CHIPS.map((a) => (
@@ -214,6 +223,7 @@ export default function CheckWizard() {
               step={1000}
               placeholder="例如 38000"
               onEnter={next}
+              enterHint={enterGoesNext ? "next" : "done"}
             />
             <div className="flex flex-wrap gap-2">
               {INCOME_CHIPS.map((n) => (
@@ -315,10 +325,10 @@ export default function CheckWizard() {
         </button>
         {editing ? (
           <>
-            {stepIndex < STEPS.length - 1 && (
+            {nextIndex !== undefined && (
               <button
                 type="button"
-                onClick={() => goTo(stepIndex + 1)}
+                onClick={() => goTo(nextIndex)}
                 className="inline-flex h-11 items-center gap-1 rounded-full border border-border px-4 text-sm"
               >
                 下一題 <ArrowRight className="h-4 w-4" />
@@ -389,6 +399,7 @@ function NumberField({
   step,
   placeholder,
   onEnter,
+  enterHint = "next",
 }: {
   label: string;
   value: number | null;
@@ -398,6 +409,8 @@ function NumberField({
   step?: number;
   placeholder?: string;
   onEnter?: () => void;
+  /** 手機鍵盤右下角那顆鍵的字：會去下一題是「下一步」，會存檔看結果是「完成」 */
+  enterHint?: "next" | "done";
 }) {
   return (
     <label className="block">
@@ -410,7 +423,7 @@ function NumberField({
         max={max}
         step={step}
         placeholder={placeholder}
-        enterKeyHint="next"
+        enterKeyHint={enterHint}
         onKeyDown={(e) => {
           if (e.key === "Enter" && onEnter) {
             e.preventDefault();

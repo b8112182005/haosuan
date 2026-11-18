@@ -449,3 +449,17 @@ describe("三分類（research/kinds.json）", () => {
     expect(byId("senior-high-tuition-free").kind).toBe("benefit");
   });
 });
+
+describe("要先買東西才領得到的補助（needs_purchase）", () => {
+  it("電動機車補助、汰舊換新、家電汰舊換新都有標", () => {
+    for (const id of ["electric-scooter-purchase-subsidy-moea", "old-vehicle-replacement-moenv", "home-appliance-replacement-subsidy", "new-taipei-electric-scooter-subsidy-2026", "taipei-electric-scooter-subsidy-2026"]) {
+      expect(byId(id).needs_purchase, id).toBe(true);
+    }
+  });
+
+  it("不用買東西的補助沒有標：租金補貼、育兒津貼、文化幣", () => {
+    for (const id of ["rent-subsidy-central-300b", "childcare-allowance-0-2", "culture-coin-youth-2026"]) {
+      expect(byId(id).needs_purchase ?? false, id).toBe(false);
+    }
+  });
+});

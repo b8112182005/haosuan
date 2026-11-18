@@ -56,7 +56,7 @@ export interface ExcludedGroup {
 }
 
 /**
- * 放進「有時間壓力」的原因：
+ * 放進「先處理」的原因：
  * - apply_now：從申請日起算，越晚送領得越少
  * - closing：60 天內截止
  */
@@ -74,7 +74,9 @@ export interface ResultsView {
   benefits: CategoryGroup[];
   /** 要繳、要辦的期限，近的在前 */
   obligations: RowList;
-  /** 須知與工具 */
+  /** 跟這個人有關的繳費、辦理期限裡，最近的一個還剩幾天；都沒有日期時是 null */
+  obligationsNearestDays: number | null;
+  /** 須知與工具。整區收合、展開後全部列出，所以不再另外分「少數情形」（unlikely 一律是空的） */
   info: RowList;
   /** 不符合的，三種都算 */
   excluded: ExcludedGroup[];
@@ -147,6 +149,23 @@ function split(rows: ResultRow[], compare: (a: ResultRow, b: ResultRow) => numbe
   };
 }
 
+/**
+ * 能不能放進「先處理」。這一區放在結果頁最上面，挑錯一項比漏掉一項傷：
+ * - 相符的可以；要確認的只收「只差一條」的（租金補貼只差全家所得）。差好幾條的多半是題目沒答完，
+ *   只因為對上「18 歲以上」就被排到最前面，等於叫人去趕一個不相干的截止日
+ * - 限特定縣市的項目，縣市要對得上（沒填縣市的人不會同時被催台北和高雄的敬老卡）
+ * - 要先買東西才領得到的不放（needs_purchase）
+ */
+function canPick(row: ResultRow): boolean {
+  const { subsidy, matched, unknown } = row.evaluation;
+  if (subsidy.needs_purchase === true) return false;
+  if (matched.length === 0) return false;
+  if (row.status !== "match" && !(row.status === "check" && unknown.length === 1)) return false;
+  // 引擎對上縣市時寫的是「設籍或居住<縣市>」
+  if (subsidy.city && !matched.some((text) => text.includes(subsidy.city as string))) return false;
+  return true;
+}
+
 function pickRows(candidates: ResultRow[]): ResultPick[] {
   const picks: ResultPick[] = [];
   const taken = new Set<string>();
@@ -195,19 +214,17 @@ export function buildResultsView(evaluations: Evaluation[], today: LocalDate): R
     return state.kind === "upcoming" ? state.daysLeft : FAR;
   };
   const obligations = split(ofKind("obligation"), (a, b) => nextDate(a) - nextDate(b));
-  const info = split(ofKind("info"), compareRows);
+  const openDays = obligations.rows.map((r) => r.daysLeft).filter((d): d is number => d !== null);
+  const info: RowList = { rows: ofKind("info").sort(compareRows), unlikely: [] };
 
-  // 只從相符和要確認的補助裡挑，而且至少要對上一條：遇到才用得上的項目、整題沒填的項目都和這個人填的條件無關，
-  // 不替他決定哪個急（什麼都沒填的人，挑出來的會是五個不相干的截止日）
-  const picks = pickRows(
-    benefitRows.filter((r) => (r.status === "match" || r.status === "check") && r.evaluation.matched.length > 0),
-  );
+  const picks = pickRows(benefitRows.filter(canPick));
 
   const sum = (pick: (g: CategoryGroup) => number) => benefits.reduce((n, g) => n + pick(g), 0);
   return {
     picks,
     benefits,
     obligations,
+    obligationsNearestDays: openDays.length > 0 ? Math.min(...openDays) : null,
     info,
     excluded,
     counts: {

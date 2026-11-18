@@ -572,10 +572,11 @@ async function main() {
     return ((await page.locator('[data-section="benefits"]').isVisible()) && y < 50) || { y };
   });
 
-  // 點條件標籤改縣市
+  // 點條件標籤改縣市（標籤的名稱是「修改：新北市」，畫面上只寫縣市）
+  const chip = (label) => page.getByRole("button", { name: `修改：${label}`, exact: true });
   await page.evaluate(() => window.scrollTo(0, 0));
   await settle(200);
-  await exactButton("新北市").click();
+  await chip("新北市").click();
   await settle(400);
   await check("點條件標籤「新北市」：進到第 1 題", async () => (await progress()).startsWith("第 1 /") || (await progress()));
   await shot("check-edit-mode");
@@ -585,10 +586,51 @@ async function main() {
   await back(true);
   await settle(700);
   await check("修改模式按返回鍵：回結果頁，條件標籤變成「台北市」", async () =>
-    ((await page.locator('[data-section="benefits"]').isVisible()) && (await exactButton("台北市").isVisible()) && !(await exactButton("新北市").count())) || pathNow());
+    ((await page.locator('[data-section="benefits"]').isVisible()) && (await chip("台北市").isVisible()) && !(await chip("新北市").count())) || pathNow());
+  await check("改完條件：分類籤回到「全部」，不留在改之前選的「居住」", async () =>
+    (await page.locator('[data-category="all"]').getAttribute("aria-pressed")) === "true");
+
+  // 重填先問一次
+  await page.getByRole("button", { name: "清除重填" }).click();
+  await settle(300);
+  await check("按「重填」：先問一次，條件還在", async () =>
+    ((await page.getByRole("alertdialog").isVisible()) && (await chip("台北市").isVisible())) || pathNow());
+  await exactButton("不清除").click();
+  await settle(300);
+  await check("按「不清除」：留在結果頁，條件沒變", async () =>
+    ((await page.getByRole("alertdialog").count()) === 0 && (await chip("台北市").isVisible()) && (await page.locator('[data-section="benefits"]').isVisible())) || pathNow());
+  await page.getByRole("button", { name: "清除重填" }).click();
+  await settle(300);
+  await exactButton("清除").click();
+  await settle(500);
+  await check("按「清除」：回到第 1 題", async () => (await progress()).startsWith("第 1 /") || (await progress()));
+
+  // 只答兩題就看結果，再用「補答」把沒答的補上
+  await exactButton("新北市").click();
+  await settle(600);
+  await page.getByLabel("年齡（歲）").fill("32");
+  await exactButton("直接看結果").click();
+  await page.locator('[data-section="benefits"]').waitFor({ state: "visible", timeout: 5000 });
+  await settle(400);
+  await check("只答縣市和年齡：結果頁寫還有 5 題沒回答，並有「補答」", async () =>
+    ((await page.getByText("還有 5 題沒回答").isVisible()) && (await exactButton("補答").isVisible())) || pathNow());
+  await check("只答兩題：頁面最上面沒有被自動跳題捲走的痕跡，仍是結果頁", async () => (await page.getByText(/第 \d+ \/ \d+ 題/).count()) === 0);
+  await exactButton("補答").click();
+  await settle(400);
+  await check("按「補答」：到第一個沒答的題目（第 3 題收入）", async () => (await progress()).startsWith("第 3 /") || (await progress()));
+  await page.getByLabel(/每月收入/).fill("42000");
+  await page.getByLabel(/每月收入/).press("Enter");
+  await settle(400);
+  await check("補答時按 Enter：到下一個沒答的題目（第 4 題），不是直接回結果頁", async () => (await progress()).startsWith("第 4 /") || (await progress()));
+  await exactButton("看結果").click();
+  await page.locator('[data-section="benefits"]').waitFor({ state: "visible", timeout: 5000 });
+  await settle(400);
+  await check("補了一題再看結果：剩 4 題沒回答", async () => (await page.getByText("還有 4 題沒回答").isVisible()) || pathNow());
 
   // 清掉條件，讓後面的檢查從沒有條件的狀態開始
   await page.getByRole("button", { name: "清除重填" }).click();
+  await settle(300);
+  await exactButton("清除").click();
   await settle(500);
   await check("清除重填：回到第 1 題", async () => (await progress()).startsWith("第 1 /") || (await progress()));
 

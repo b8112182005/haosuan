@@ -76,27 +76,48 @@ function sanitize(raw: unknown): Profile {
   };
 }
 
+/**
+ * 這次載入頁面後讀到或存過的條件。undefined＝還沒讀過，null＝讀過、沒有存過。
+ *
+ * Preferences 是非同步的：站內換頁時元件重新掛載，等它讀完之前第一次 render 只有骨架，
+ * 瀏覽器沒辦法把捲動位置還原到還沒長出來的清單，項目頁的條件比對也會晚一拍才冒出來把內容往下推。
+ * 讀過或存過一次就留在這裡，之後的元件第一次 render 就拿得到，試算結果和項目頁看到的也一定是同一份。
+ * 整頁載入時模組剛載入、值是 undefined，第一次 render 和靜態 HTML 一致，不會有 hydration 不一致。
+ */
+let memo: Profile | null | undefined;
+
+/** 不等 Preferences：這次載入頁面後讀過或存過就回那一份，還沒有就回 undefined */
+export function peekProfile(): Profile | null | undefined {
+  return memo;
+}
+
 export async function loadProfile(): Promise<Profile | null> {
+  if (memo !== undefined) return memo;
   try {
     const { Preferences } = await import("@capacitor/preferences");
     const { value } = await Preferences.get({ key: KEY });
-    if (!value) return null;
-    return sanitize(JSON.parse(value));
+    memo = value ? sanitize(JSON.parse(value)) : null;
+    return memo;
   } catch {
+    // 讀不到時不記：下一個元件掛載時再試一次
     return null;
   }
 }
 
 export async function saveProfile(profile: Profile): Promise<void> {
+  const clean = sanitize(profile);
+  // 先記在記憶體再寫入：寫入失敗時這次填的條件仍然在，結果頁和項目頁照常比對
+  memo = clean;
   try {
     const { Preferences } = await import("@capacitor/preferences");
-    await Preferences.set({ key: KEY, value: JSON.stringify(sanitize(profile)) });
+    await Preferences.set({ key: KEY, value: JSON.stringify(clean) });
   } catch {
     // 儲存失敗時使用者這次填的條件還在記憶體，不影響本次結果
   }
 }
 
 export async function clearProfile(): Promise<void> {
+  memo = null;
   try {
     const { Preferences } = await import("@capacitor/preferences");
     await Preferences.remove({ key: KEY });
