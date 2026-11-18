@@ -1986,10 +1986,11 @@
     "conditions": {
       "owns_vehicle": "汽車",
       "exceptions": {
-        "vehicle_kind": "只有機車的人：150cc 以上的機車才課牌照稅，150cc 以下免徵"
-      }
+        "vehicle_kind": "150cc 以上的機車也要繳牌照稅；150cc 以下免徵（試算沒問排氣量）"
+      },
+      "show_exceptions": true
     },
-    "_why": "2026-11-19：誰可以申請第 1、3 條：150cc 以下機車免徵。原本只有機車的人也顯示相符"
+    "_why": "2026-11-19：誰可以申請第 1、3 條：150cc 以下機車免徵。原本只有機車的人也顯示相符；2026-11-19：回歸審查指出只有機車的人被收成一行，但 150cc 以上機車要繳（誰可以申請第 1 條），這類車主不少。加 show_exceptions，列在要再確認"
   },
   "motorcycle-emission-inspection-annual": {
     "conditions": {

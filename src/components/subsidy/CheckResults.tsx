@@ -83,10 +83,15 @@ function readStored(): Stored {
   }
 }
 
-/** 每次寫入都記下當時在哪一筆瀏覽紀錄、幾點：回來時用這兩個判斷要不要照上次的樣子擺 */
-function writeStored(patch: Partial<Stored>) {
+/**
+ * 把畫面現在的樣子整份寫進去，並記下當時在哪一筆瀏覽紀錄、幾點（回來時用這兩個判斷要不要照樣擺回去）。
+ * 一律整份寫，不拿已經存的那一份來補：存的可能是另一筆瀏覽紀錄留下的。
+ * 曾經這樣出過錯：上一次篩了「居住」，這次從別的連結走進來是「全部」，點連結離開時只寫位置，
+ * 分類就被補成上一次的「居住」，按返回回來變成被篩過的短清單、位置對不上。
+ */
+function persist(state: Stored) {
   try {
-    window.sessionStorage.setItem(STORE_KEY, JSON.stringify({ ...readStored(), ...patch, entry: entryKey(), at: Date.now() }));
+    window.sessionStorage.setItem(STORE_KEY, JSON.stringify({ ...state, entry: entryKey(), at: Date.now() }));
   } catch {
     // 存不了就算了，只是回來時不會停在原位
   }
@@ -191,7 +196,7 @@ const TONE_CLASS = {
   no: "text-muted-foreground",
 } as const;
 
-function Row({ row, today, showLateShort }: { row: ResultRow; today: LocalDate | null; showLateShort?: boolean }) {
+function Row({ row, today, showLateShort, full }: { row: ResultRow; today: LocalDate | null; showLateShort?: boolean; full?: boolean }) {
   const { subsidy } = row.evaluation;
   const reason = reasonLine(row);
   const light = row.status === "situational" || row.status === "unlikely" || row.status === "no";
@@ -234,7 +239,8 @@ function Row({ row, today, showLateShort }: { row: ResultRow; today: LocalDate |
         {subsidy.kind === "info" && reason.tone === "plain" ? (
           <p className="mt-1 line-clamp-1 text-xs leading-relaxed text-muted-foreground">{subsidy.summary}</p>
         ) : (
-          <p className={`mt-1 line-clamp-2 text-xs leading-relaxed ${isNo ? "text-foreground/80" : TONE_CLASS[reason.tone]}`}>{reason.text}</p>
+          // full：使用者特地展開來看「為什麼收在這裡」的列。重點在例外那一句，截成兩行會剛好把它切掉
+          <p className={`mt-1 text-xs leading-relaxed ${full ? "" : "line-clamp-2"} ${isNo ? "text-foreground/80" : TONE_CLASS[reason.tone]}`}>{reason.text}</p>
         )}
       </div>
       <ChevronRight className="h-4 w-4 shrink-0 self-center text-muted-foreground" aria-hidden="true" />
@@ -279,11 +285,18 @@ export default function CheckResults({ profile, evaluations, onEdit, onReset }: 
   // 「重填」會清掉 7 題的答案，按下去先問一次
   const [confirmingReset, setConfirmingReset] = useState(false);
   const update = (patch: Partial<Stored>) => {
-    setUi((u) => ({ ...u, ...patch }));
-    writeStored(patch);
+    // 位置在點連結離開的當下才記；改分類、展開收合時存 0
+    const next = { ...ui, ...patch, y: 0 };
+    setUi(next);
+    persist(next);
   };
   const benefitsRef = useRef<HTMLElement>(null);
   const restored = useRef(false);
+  // 點連結的處理函式要拿到畫面當下的狀態，又不想每次改分類就重新掛一次監聽
+  const uiRef = useRef(ui);
+  useLayoutEffect(() => {
+    uiRef.current = ui;
+  }, [ui]);
 
   // 等一個 frame 再捲：站內換頁時 Next 會在同一個 commit 把頁面捲到最上面，還原要排在它後面
   useLayoutEffect(() => {
@@ -291,17 +304,18 @@ export default function CheckResults({ profile, evaluations, onEdit, onReset }: 
     restored.current = true;
     // 存的位置屬於另一筆瀏覽紀錄時 storedForThisVisit 回的是預設值（y 是 0）：這次是從別的連結走進來的，留在最上面。
     // 那一筆的位置先留著不動，之後按返回回到那一筆時還用得到
-    const { y } = storedForThisVisit();
-    if (y <= 0) return;
-    requestAnimationFrame(() => window.scrollTo(0, y));
-    writeStored({ y: 0 });
+    const stored = storedForThisVisit();
+    if (stored.y <= 0) return;
+    requestAnimationFrame(() => window.scrollTo(0, stored.y));
+    // 只還原一次：位置歸零，分類與展開的區塊照舊
+    persist({ ...stored, y: 0 });
   }, [view]);
 
   // 離開這一頁不只點清單裡的一列：底部分頁列、頁首、頁尾的連結也算。點任何連結的當下記位置，按返回回來時才有得還原。
   // 用點擊而不是卸載時讀 scrollY：卸載那一刻頁面可能已經被捲到新頁面的位置
   useEffect(() => {
     const onClick = (event: MouseEvent) => {
-      if (event.target instanceof Element && event.target.closest("a[href]")) writeStored({ y: window.scrollY });
+      if (event.target instanceof Element && event.target.closest("a[href]")) persist({ ...uiRef.current, y: window.scrollY });
     };
     document.addEventListener("click", onClick, true);
     return () => document.removeEventListener("click", onClick, true);
@@ -365,8 +379,8 @@ export default function CheckResults({ profile, evaluations, onEdit, onReset }: 
   const toggleUnlikely = (key: string) =>
     update({ unlikelyOpen: ui.unlikelyOpen.includes(key) ? ui.unlikelyOpen.filter((k) => k !== key) : [...ui.unlikelyOpen, key] });
 
-  const rowOf = (row: ResultRow, extra?: { showLateShort?: boolean }) => (
-    <Row key={row.evaluation.subsidy.id} row={row} today={today} showLateShort={extra?.showLateShort} />
+  const rowOf = (row: ResultRow, extra?: { showLateShort?: boolean; full?: boolean }) => (
+    <Row key={row.evaluation.subsidy.id} row={row} today={today} showLateShort={extra?.showLateShort} full={extra?.full} />
   );
 
   const renderList = (list: RowList, key: string, unlikelyText: string, split = false) => {
@@ -386,7 +400,7 @@ export default function CheckResults({ profile, evaluations, onEdit, onReset }: 
             另有 {list.unlikely.length} 項，{unlikelyText}：{list.unlikely.map((r) => r.evaluation.subsidy.short_name || r.evaluation.subsidy.name).join("、")}
           </ExpandRow>
         )}
-        {open && <div className="divide-y divide-border bg-muted/30">{list.unlikely.map((r) => rowOf(r))}</div>}
+        {open && <div className="divide-y divide-border bg-muted/30">{list.unlikely.map((r) => rowOf(r, { full: true }))}</div>}
       </ListCard>
     );
   };

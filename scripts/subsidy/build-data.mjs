@@ -176,6 +176,8 @@ function validateItem(item, origin) {
   }
   const also = item.conditions?.also_requires;
   check(also == null || (typeof also === "string" && also.trim() !== "" && also.length <= 40), `${where}: conditions.also_requires 要是 40 字以內的短句（會直接顯示在試算結果的一行裡）`);
+  const showEx = item.conditions?.show_exceptions;
+  check(showEx == null || typeof showEx === "boolean", `${where}: conditions.show_exceptions 要是 true／false`);
   for (const key of item.conditions?.any_of ?? []) {
     check(["low_income", "is_disabled"].includes(key), `${where}: conditions.any_of 只能放 low_income、is_disabled，收到「${key}」`);
   }

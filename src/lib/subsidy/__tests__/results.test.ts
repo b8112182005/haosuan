@@ -83,7 +83,7 @@ describe("toRow：一項補助在結果頁算哪一種", () => {
   it("試算沒問的硬條件（also_requires）：要確認，照常列出來，不收成一行", () => {
     const row = rowOf(makeSummary({ conditions: { min_age: 18, also_requires: "勞保年資合計滿 15 年" } }), adult);
     expect(row.status).toBe("check");
-    expect(reasonLine(row).text).toBe("要確認：勞保年資合計滿 15 年（試算沒有問，請自己確認）");
+    expect(reasonLine(row).text).toBe("要確認：勞保年資合計滿 15 年（試算沒問）");
   });
 
   it("有條件沒填：要確認", () => {
@@ -100,6 +100,16 @@ describe("toRow：一項補助在結果頁算哪一種", () => {
     expect(evaluation.verdict).toBe("maybe");
     expect(evaluation.excepted).toBe(1);
     expect(toRow(evaluation, today).status).toBe("unlikely");
+  });
+
+  it("靠例外才適用的項目：原因先講一般不適用，再講例外；例外常見的（show_exceptions）照常列出並直接講例外", () => {
+    const conditions = { is_unemployed: true, exceptions: { is_unemployed: "打工月收入沒超過基本工資仍可以領" } };
+    const rare = rowOf(makeSummary({ conditions }), adult);
+    expect(rare.status).toBe("unlikely");
+    expect(reasonLine(rare).text).toBe("一般不適用：限目前沒有工作（待業或失業）的人。例外：打工月收入沒超過基本工資仍可以領");
+    const common = rowOf(makeSummary({ conditions: { ...conditions, show_exceptions: true } }), adult);
+    expect(common.status).toBe("check");
+    expect(reasonLine(common).text).toBe("要確認：打工月收入沒超過基本工資仍可以領");
   });
 
   it("確定不符：不符合", () => {
@@ -156,8 +166,12 @@ describe("buildResultsView：用內建資料跑一組條件", () => {
     expect(benefitIds).not.toContain("vehicle-license-tax-april");
     expect(ids(view.info.rows)).toContain("rental-standard-lease-tenant-protections");
     expect(ids(view.obligations.rows)).toContain("income-tax-filing-2026");
-    // 這個人只有機車：150cc 以下免徵牌照稅，所以牌照稅收在「少數情形才跟你有關」，不直接列出來
-    expect(ids(view.obligations.unlikely)).toContain("vehicle-license-tax-april");
+    // 這個人只有機車：150cc 以上的機車也要繳牌照稅，騎這種車的人不少，所以列在要再確認，不收成一行
+    const tax = view.obligations.rows.find((r) => r.evaluation.subsidy.id === "vehicle-license-tax-april");
+    expect(tax?.status).toBe("check");
+    expect(reasonLine(tax as ResultRow).text).toBe("要確認：150cc 以上的機車也要繳牌照稅；150cc 以下免徵（試算沒問排氣量）");
+    // 汽車定期檢驗的例外（大型重型機車）少見，維持收成一行
+    expect(ids(view.obligations.unlikely)).toContain("car-periodic-inspection-schedule");
     for (const g of view.benefits) expect(g.rows.every((r) => r.evaluation.subsidy.kind === "benefit")).toBe(true);
   });
 
@@ -173,7 +187,7 @@ describe("buildResultsView：用內建資料跑一組條件", () => {
   it("試算沒問的硬條件：紓困貸款要勞保年資 15 年，有勞保的 32 歲不算條件相符", () => {
     const row = group("labor")?.rows.find((r) => r.evaluation.subsidy.id === "labor-insurance-relief-loan");
     expect(row?.status).toBe("check");
-    expect(reasonLine(row as ResultRow).text).toBe("要確認：勞保年資滿 15 年（試算沒有問，請自己確認）");
+    expect(reasonLine(row as ResultRow).text).toBe("要確認：勞保年資滿 15 年（試算沒問）");
   });
 
   it("還沒開辦的成長津貼列在要確認，不算條件相符", () => {

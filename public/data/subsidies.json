@@ -1,7 +1,7 @@
 {
   "version": "2026-11-19",
-  "generated_at": "2026-11-18T23:33:14.597Z",
-  "hash": "b5fa56cc4e9f0d48",
+  "generated_at": "2026-11-18T23:51:48.248Z",
+  "hash": "bb08b30a98bf4eab",
   "items": [
     {
       "id": "rent-subsidy-central-300b",
@@ -7268,8 +7268,9 @@
         "owns_vehicle": "汽車",
         "other": "以每年開徵日車籍登記所有人為納稅義務人；年中過戶或報廢按日比例計算。",
         "exceptions": {
-          "vehicle_kind": "只有機車的人：150cc 以上的機車才課牌照稅，150cc 以下免徵"
-        }
+          "vehicle_kind": "150cc 以上的機車也要繳牌照稅；150cc 以下免徵（試算沒問排氣量）"
+        },
+        "show_exceptions": true
       },
       "documents": [
         "繳款書（紙本或電子繳款書）；未收到可持車牌號碼＋身分證字號線上查繳或申請補發",

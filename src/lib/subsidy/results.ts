@@ -1,4 +1,4 @@
-import type { Evaluation } from "./eligibility";
+import { EXCEPTION_MARK, type Evaluation } from "./eligibility";
 import { resolveSubsidyDeadline, type LocalDate } from "./deadline";
 import { showApplyNow } from "./reminderPreset";
 import { CATEGORY_ORDER, type SubsidyCategory } from "./types";
@@ -114,7 +114,7 @@ export function toRow(evaluation: Evaluation, today: LocalDate): ResultRow {
         ? matched.length > 0 && subsidy.needs_purchase !== true
           ? "match"
           : "situational"
-        : special || excepted > 0
+        : special || (excepted > 0 && subsidy.conditions?.show_exceptions !== true)
           ? "unlikely"
           : "check";
   return {
@@ -267,5 +267,16 @@ export function reasonLine(row: ResultRow): ReasonLine {
     return { tone: "plain", text: who ? `對象：${who}` : "沒有年齡、縣市、身分門檻" };
   }
   const rest = unknown.length - 1;
-  return { tone: "ask", text: `要確認：${shortUnknown(unknown[0] ?? "申請條件")}${rest > 0 ? `（另有 ${rest} 條）` : ""}` };
+  const more = rest > 0 ? `（另有 ${rest} 條）` : "";
+  const first = unknown[0] ?? "申請條件";
+  const cut = first.indexOf(EXCEPTION_MARK);
+  if (cut >= 0) {
+    const note = first.slice(cut + EXCEPTION_MARK.length);
+    // 例外很常見的項目直接講例外（150cc 以上的機車也要繳牌照稅）。
+    // 其餘先講一般不適用：寫成「要確認：限低收入戶，你不是」的話，前後兩句互相打架
+    return row.status === "check"
+      ? { tone: "ask", text: `要確認：${note}${more}` }
+      : { tone: "ask", text: `一般不適用：${first.slice(0, cut)}。例外：${note}${more}` };
+  }
+  return { tone: "ask", text: `要確認：${shortUnknown(first)}${more}` };
 }

@@ -486,6 +486,9 @@ describe("試算沒問的硬條件不列為條件相符", () => {
       expect(r.verdict, id).toBe("maybe");
       expect(r.excepted, id).toBeGreaterThan(0);
     }
+    // 150cc 以上的機車也要繳牌照稅，這種例外常見：資料要標 show_exceptions，結果頁才不會把它收成一行
+    expect(byId("vehicle-license-tax-april").conditions.show_exceptions).toBe(true);
+    expect(byId("car-periodic-inspection-schedule").conditions.show_exceptions ?? false).toBe(false);
     expect(evaluate(byId("vehicle-license-tax-april"), { ...worker, ownsVehicle: "car" }).verdict).toBe("eligible");
     expect(evaluate(byId("vehicle-license-tax-april"), { ...worker, ownsVehicle: "both" }).verdict).toBe("eligible");
     expect(evaluate(byId("vehicle-license-tax-april"), { ...worker, ownsVehicle: "none" }).verdict).toBe("not_eligible");

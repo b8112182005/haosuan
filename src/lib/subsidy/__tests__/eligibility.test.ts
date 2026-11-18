@@ -223,7 +223,7 @@ describe("evaluate：精靈沒有問的身分", () => {
     const r = evaluate(loan, { ...renter, hasLaborInsurance: true });
     expect(r.verdict).toBe("maybe");
     expect(r.matched).toContain("勞保被保險人");
-    expect(r.unknown).toEqual(["勞保年資合計滿 15 年（試算沒有問，請自己確認）"]);
+    expect(r.unknown).toEqual(["勞保年資合計滿 15 年（試算沒問）"]);
     expect(r.excepted).toBe(0);
     // 試算問得到的條件不符時照樣判不符合，不會被這一句拉回來
     expect(evaluate(loan, { ...renter, hasLaborInsurance: false }).verdict).toBe("not_eligible");

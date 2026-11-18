@@ -512,10 +512,15 @@ async function main() {
     const inObligations = await page.locator('[data-section="obligations"] [data-row="income-tax-filing-2026"]').count();
     return (inBenefits === 0 && inObligations === 1) || { inBenefits, inObligations };
   });
-  await check("只有機車的人：牌照稅收在「另有 N 項，少數情形才跟你有關」那一行，名稱寫在上面", async () => {
-    const listed = await page.locator('[data-section="obligations"] [data-row="vehicle-license-tax-april"]').count();
+  await check("只有機車的人：牌照稅列在期限區的要再確認，原因寫 150cc 以上的機車也要繳", async () => {
+    const row = page.locator('[data-section="obligations"] [data-row="vehicle-license-tax-april"]');
+    const text = (await row.count()) === 1 ? await row.innerText() : "";
+    return ((await row.getAttribute("data-status").catch(() => null)) === "check" && text.includes("150cc 以上的機車也要繳")) || { count: await row.count(), text };
+  });
+  await check("只有機車的人：汽車定期檢驗收在「另有 N 項，少數情形才跟你有關」那一行，名稱寫在上面", async () => {
+    const listed = await page.locator('[data-section="obligations"] [data-row="car-periodic-inspection-schedule"]').count();
     const line = await page.locator('[data-section="obligations"] button[aria-expanded]').innerText();
-    return (listed === 0 && line.includes("牌照稅")) || { listed, line };
+    return (listed === 0 && line.includes("汽車定期檢驗")) || { listed, line };
   });
   await check("中央租金補貼在居住那一段、狀態是要再確認", async () => {
     const row = page.locator('[data-category-section="housing"] [data-row="rent-subsidy-central-300b"]');
@@ -575,6 +580,26 @@ async function main() {
   await check("從補助列表的連結走回試算（不是按返回）：停在頁面最上面，不被捲到上次的位置", async () => {
     const y = await page.evaluate(() => window.scrollY);
     return ((await page.locator('[data-section="benefits"]').isVisible()) && y < 50) || { y };
+  });
+
+  // 這一次是「全部」（上一筆瀏覽紀錄篩過「居住」）。點頁尾的連結離開再按返回：分類要留在「全部」，位置要回來。
+  // 曾經出過錯：離開時只寫位置，分類被補成上一次存的「居住」，回來變成被篩過的短清單
+  await check("從別的連結走進來：分類籤是「全部」，不沿用上一筆瀏覽紀錄選的「居住」", async () =>
+    (await page.locator('[data-category="all"]').getAttribute("aria-pressed")) === "true");
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  await settle(300);
+  const yAtFaq = await page.evaluate(() => window.scrollY);
+  // 網站頁尾也有一個疑難雜症連結，app 裡是隱藏的：要點的是結果頁最下面說明文字裡的那一個
+  await page.locator("p", { hasText: "這是依你填的條件" }).locator('a[href*="/subsidy/faq"]').click();
+  await page.waitForURL(/\/subsidy\/faq/);
+  await settle(400);
+  await back(true);
+  await page.waitForURL(/\/subsidy\/check/, { timeout: 5000 }).catch(() => {});
+  await settle(900);
+  await check("點頁尾「疑難雜症」離開再按返回：分類仍是「全部」，位置相差 80px 以內", async () => {
+    const pressed = await page.locator('[data-category="all"]').getAttribute("aria-pressed");
+    const y = await page.evaluate(() => window.scrollY);
+    return (pressed === "true" && Math.abs(y - yAtFaq) <= 80) || { pressed, y, yAtFaq };
   });
 
   // 點條件標籤改縣市（標籤的名稱是「修改：新北市」，畫面上只寫縣市）

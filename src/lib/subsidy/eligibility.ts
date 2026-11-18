@@ -42,6 +42,9 @@ const fmt = (n: number) => n.toLocaleString("zh-TW");
  */
 type Fail = (field: ConditionExceptionKey, text: string) => void;
 
+/** unknown 裡「不符合，但條文有例外」那種句子的接點：前半是哪一條不符，後半是例外。結果頁靠它把兩半拆開來寫 */
+export const EXCEPTION_MARK = "。例外：";
+
 function checkIncome(c: SubsidyConditions, p: Profile, out: Evaluation, fail: Fail) {
   // 條文寫明列冊低收、中低收入戶免審收入與財產：這種人不該被叫去核對全家所得
   if (c.low_income_skips_income_test === true && (p.lowIncome === "low" || p.lowIncome === "mid_low")) {
@@ -281,7 +284,7 @@ export function evaluate<S extends SubsidySummary>(subsidy: S, profile: Profile,
   const fail: Fail = (field, text) => {
     const note = exceptions[field]?.trim();
     if (note) {
-      out.unknown.push(`${text}。例外：${note}`);
+      out.unknown.push(`${text}${EXCEPTION_MARK}${note}`);
       out.excepted++;
     } else out.failed.push(text);
   };
@@ -366,7 +369,8 @@ export function evaluate<S extends SubsidySummary>(subsidy: S, profile: Profile,
   // 每個申請人都要符合、但試算沒問的硬條件（年資、車齡、非自願離職）：不寫出來的話，27 歲的人會看到
   // 要勞保年資 15 年的紓困貸款「條件相符」
   if (c.also_requires && c.also_requires.trim()) {
-    out.unknown.push(`${c.also_requires.trim()}（試算沒有問，請自己確認）`);
+    // 尾巴要短：清單一列只有兩行，「（試算沒有問，請自己確認）」會被截掉一半
+    out.unknown.push(`${c.also_requires.trim()}（試算沒問）`);
   }
 
   // 無法機器判斷的補充條件：只提示，不影響 verdict

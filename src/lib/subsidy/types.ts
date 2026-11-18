@@ -133,6 +133,12 @@ export interface SubsidyConditions {
    * 只在條文明寫例外時用；例外其實是另一類主要對象時，應該把那個條件整個拿掉。
    */
   exceptions?: Partial<Record<ConditionExceptionKey, string>> | null;
+  /**
+   * 例外的情形很常見時設 true：結果頁不把它收成一行，照常列在「要再確認」，原因直接寫例外那一句。
+   * 牌照稅限汽車，但 150cc 以上的機車也要繳，騎這種車的人不少；收成一行等於把一筆逾期要罰的稅藏起來。
+   * 沒設時，靠例外才適用的項目多數人用不到（在職的人看失業給付），收成一行。
+   */
+  show_exceptions?: boolean | null;
   other?: string | null;
 }
 

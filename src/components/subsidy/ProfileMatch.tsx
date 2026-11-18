@@ -51,7 +51,8 @@ export default function ProfileMatch({ subsidy }: { subsidy: SubsidySummary }) {
         ? "這一項沒有年齡、縣市、身分門檻，符合上面「誰可以申請」的情況就能用。"
         : row.status === "no"
           ? "依你填的條件不符合。"
-          : `還有 ${unknown.length} 條要你自己確認。`;
+          : // 最下面的「另需確認」是 app 比對不了的補充條件（租金上限、房東不能是親屬）：只寫「還有 1 條」會讓人以為只剩那一條
+            `還有 ${unknown.length} 條要你自己確認${notes[0] ? "，最下面另有補充條件" : ""}。`;
   // 所得門檻的全文就在這張卡片正上方那一段：這裡再貼一次，租金補貼這類項目會多出 15 行一樣的字
   const incomeNote = subsidy.conditions.income_limit_note?.trim();
   const shorten = (text: string) => (incomeNote && text.includes(incomeNote) ? text.replace(incomeNote, "看上面「所得／財產門檻」那一段") : text);
