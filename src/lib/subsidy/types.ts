@@ -135,6 +135,12 @@ export interface SubsidyDeadline {
   budget_limited?: boolean | null;
   /** 最後一次對照官網確認還在受理的日期（YYYY-MM-DD） */
   last_checked?: string | null;
+  /**
+   * 每年固定的期間裡，主管機關已經公告到哪一天（YYYY-MM-DD）。截止日在這一天以前的那一期不算「照上一期推算」。
+   * 用在下一年度已經公告、但今年度還沒結束的項目（租金補貼 116 年度在 115 年 10 月就公告了）：
+   * 把兩個年度併成一段跨年的期間，今年度的 12/31 會從畫面上消失。
+   */
+  confirmed_through?: string | null;
 }
 
 /**

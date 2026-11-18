@@ -147,6 +147,9 @@ function validateItem(item, origin) {
   }
   check(dl.budget_limited == null || typeof dl.budget_limited === "boolean", `${where}: deadline.budget_limited 要是 true／false`);
   check(dl.last_checked == null || isRealDate(dl.last_checked), `${where}: deadline.last_checked「${dl.last_checked}」要是存在的日期（YYYY-MM-DD）`);
+  check(dl.confirmed_through == null || isRealDate(dl.confirmed_through), `${where}: deadline.confirmed_through「${dl.confirmed_through}」要是存在的日期（YYYY-MM-DD）`);
+  // 只有每年固定的期間會被標成「照上一期推算」，其他型別填這個欄位沒有作用，多半是填錯地方
+  check(dl.confirmed_through == null || dl.type === "fixed_annual", `${where}: deadline.confirmed_through 只用在 type=fixed_annual`);
   // 未來的日期代表還沒確認就先寫了「已確認」，貼文的 14 天新鮮度判斷會被騙過去
   check(!isRealDate(dl.last_checked) || dl.last_checked <= today, `${where}: deadline.last_checked ${dl.last_checked} 晚於建置當天（台灣 ${today}）`);
   const lc = item.late_consequence;
@@ -212,6 +215,7 @@ function normalizeItem(item) {
       extra_lines: d.extra_lines ?? null,
       budget_limited: d.budget_limited ?? null,
       last_checked: d.last_checked ?? null,
+      confirmed_through: d.confirmed_through ?? null,
     },
     faqs: (item.faqs ?? []).map((f) => ({ q: f.q, a: f.a, source_url: f.source_url ?? null })),
     pitfalls: item.pitfalls ?? [],

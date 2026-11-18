@@ -1,7 +1,8 @@
 import { describe, it, expect } from "vitest";
 import dataset from "../../../data/subsidies.json";
 import { evaluate, evaluateAll } from "../eligibility";
-import { resolveDeadline } from "../deadline";
+import { isProjected, parseDateString, resolveDeadline } from "../deadline";
+import { reminderPreset } from "../reminderPreset";
 import { EMPTY_PROFILE, type Profile } from "../profile";
 import type { Subsidy } from "../types";
 import { tools } from "../../tools-registry";
@@ -194,15 +195,25 @@ describe("期限顯示（以 2026-11-15 為今天）", () => {
     }
   });
 
-  it("租金補貼：1/1 換年度不會變成已截止，也不會給 12/31 的每年提醒", () => {
+  // 兩個年度不能併成一段：115 年度只收到 12/31 下午 5 時，補貼從申請日起算，
+  // 12 月來看的人要看到這一期的最後一天，不是 116 年底
+  it("租金補貼：12 月看到的是今年度的 12/31，1/1 起換成下一年度，不標成推算", () => {
     const rent = byId("rent-subsidy-central-300b");
     expect(rent.name).toContain("116");
-    for (const today of [{ y: 2026, m: 12, d: 31 }, { y: 2027, m: 1, d: 1 }, { y: 2027, m: 12, d: 31 }]) {
-      expect(resolveDeadline(rent.deadline, today).kind, JSON.stringify(today)).toBe("upcoming");
-    }
-    expect(resolveDeadline(rent.deadline, { y: 2028, m: 1, d: 1 }).kind).toBe("ended");
-    expect(rent.deadline.type).not.toBe("fixed_annual");
+    const dataDate = parseDateString((dataset as { version: string }).version)!;
+    const dec = resolveDeadline(rent.deadline, { y: 2026, m: 12, d: 20 });
+    expect(dec.kind === "upcoming" && [dec.date.y, dec.date.m, dec.date.d, dec.daysLeft]).toEqual([2026, 12, 31, 11]);
+    const jan = resolveDeadline(rent.deadline, { y: 2027, m: 1, d: 1 });
+    expect(jan.kind === "upcoming" && [jan.date.y, jan.date.m, jan.date.d]).toEqual([2027, 12, 31]);
+    // 116 年度是 115-10-13 公告的確定日期
+    expect(isProjected(rent.deadline, jan, dataDate)).toBe(false);
+    // 117 年度還沒公告，到時候要標成推算
+    const y2028 = resolveDeadline(rent.deadline, { y: 2028, m: 1, d: 2 });
+    expect(isProjected(rent.deadline, y2028, dataDate)).toBe(true);
     expect((rent.deadline.extra_lines ?? []).some((l) => l.label === "已經在領")).toBe(true);
+    // 提醒不會回到每年 12/31：從申請日起算的項目由使用者自己挑辦理日
+    const preset = reminderPreset({ deadline: rent.deadline, lateConsequence: rent.late_consequence, state: dec });
+    expect([preset.targetDate, preset.repeatYearly, preset.planned]).toEqual([undefined, false, true]);
   });
 
   it("育兒津貼：不再寫已廢止的「出生 60 天內申請才從出生月起算」，年底卡在 11/1～12/31", () => {

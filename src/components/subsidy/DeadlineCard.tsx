@@ -78,7 +78,11 @@ export default function DeadlineCard({ subsidy }: { subsidy: DeadlineCardSubsidy
           ) : applyNow && state.kind === "upcoming" ? (
             <>
               <p className="mt-0.5 text-lg font-bold leading-tight">現在就能送件</p>
-              <p className="mt-0.5 text-xs text-muted-foreground">最晚 {formatLocalDate(state.date)}</p>
+              {/* 這一期快結束時把剩幾天寫出來：過了這天要等下一期才能送，中間的補貼領不到 */}
+              <p className="mt-0.5 text-xs text-muted-foreground">
+                這一期最晚 {formatLocalDate(state.date)}
+                {state.daysLeft <= 30 && (state.daysLeft === 0 ? "，今天截止" : `，剩 ${state.daysLeft} 天`)}
+              </p>
               {projected && (
                 <p className="mt-0.5 text-xs text-muted-foreground">
                   這一期的日期是照上一期推算的，實際日期以主管機關公告為準。

@@ -130,6 +130,9 @@ export function resolveDeadline(deadline: SubsidyDeadline, today: LocalDate): De
  */
 export function isProjected(deadline: SubsidyDeadline, state: DeadlineState, dataDate: LocalDate): boolean {
   if (state.kind !== "upcoming" || deadline.end_year) return false;
+  // 主管機關已經公告到這一天：截止日在它以前的那一期是確定的日期
+  const confirmed = deadline.confirmed_through ? parseDateString(deadline.confirmed_through) : null;
+  if (confirmed && toUtcMs(state.date) <= toUtcMs(confirmed)) return false;
   if (state.start) return toUtcMs(state.start) > toUtcMs(dataDate);
   return state.date.y > dataDate.y;
 }
