@@ -1,5 +1,5 @@
 import dataset from "@/data/subsidies.json";
-import type { GeneralFaq, Subsidy, SubsidyCategory, SubsidyDataset } from "./types";
+import type { GeneralFaq, Subsidy, SubsidyCategory, SubsidyDataset, SubsidySummary } from "./types";
 import { CATEGORY_ORDER } from "./types";
 
 // 完整資料（約 1 MB）：只給 server component 與測試用。
@@ -55,4 +55,31 @@ export function getRelatedSubsidies(subsidy: Subsidy, limit = 4): Subsidy[] {
     (s) => s.id !== subsidy.id && s.category === subsidy.category && !sameTopic.includes(s)
   );
   return [...sameTopic, ...sameCategory].slice(0, limit);
+}
+
+/**
+ * 傳給 client component 的精簡版。逐欄挑出來，不用展開整個 Subsidy：
+ * 問答、來源、步驟一旦進了 props，會整包序列化進每一頁的 HTML。
+ */
+export function toSummary(s: Subsidy): SubsidySummary {
+  return {
+    id: s.id,
+    name: s.name,
+    short_name: s.short_name,
+    category: s.category,
+    kind: s.kind,
+    level: s.level,
+    city: s.city,
+    agency: s.agency,
+    summary: s.summary,
+    eligibility: s.eligibility,
+    amount: s.amount,
+    conditions: s.conditions,
+    deadline: s.deadline,
+    status_2026: s.status_2026,
+    confidence: s.confidence,
+    topic: s.topic,
+    year_end_notice: s.year_end_notice,
+    late_consequence: s.late_consequence,
+  };
 }

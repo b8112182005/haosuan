@@ -462,6 +462,117 @@ async function main() {
   await page.waitForURL(/\/subsidy\/?$/, { timeout: 5000 }).catch(() => {});
   await check("第 1 題按返回鍵離開試算，回到補助列表", async () => /^\/subsidy\/?$/.test(pathNow()) || pathNow());
 
+  // 7b. 試算結果 ─────────────────────────────────────────────────────────────────────────────
+  console.log("\n# 試算結果");
+  await page.locator('a[href*="/subsidy/check"]').first().click();
+  await page.waitForURL(/\/subsidy\/check/);
+  await settle(600);
+  const exactButton = (name) => page.getByRole("button", { name, exact: true });
+  const toggleAnswer = (label, answer) =>
+    page.locator("div:has(> span)", { hasText: label }).last().getByRole("button", { name: answer, exact: true }).click();
+  await exactButton("新北市").click();
+  await settle(600);
+  await check("選了縣市：自動到第 2 題", async () => (await progress()).startsWith("第 2 /") || (await progress()));
+  await page.getByLabel("年齡（歲）").fill("32");
+  await page.getByLabel("年齡（歲）").press("Enter");
+  await settle(300);
+  await check("年齡按 Enter：到第 3 題", async () => (await progress()).startsWith("第 3 /") || (await progress()));
+  await page.getByLabel(/每月收入/).fill("42000");
+  await page.getByRole("button", { name: /下一題/ }).click();
+  await exactButton("租屋").click();
+  await exactButton("沒有").click();
+  await page.getByRole("button", { name: /下一題/ }).click();
+  await exactButton("已婚").click();
+  await exactButton("沒有").first().click(); // 懷孕
+  await exactButton("有").nth(1).click(); // 子女（第 0 個是懷孕那題的「有」）
+  await exactButton("1 歲").click();
+  await page.getByRole("button", { name: /下一題/ }).click();
+  await toggleAnswer("有勞保", "有");
+  await toggleAnswer("有國民年金", "沒有");
+  await toggleAnswer("領有身心障礙證明", "沒有");
+  await toggleAnswer("在學學生", "沒有");
+  await toggleAnswer("目前沒有工作", "沒有");
+  await exactButton("都不是").click();
+  await page.getByRole("button", { name: /下一題/ }).click();
+  await exactButton("機車").click();
+  await exactButton("看結果").click();
+  await page.locator('[data-section="benefits"]').waitFor({ state: "visible", timeout: 5000 });
+  await settle(400);
+  await shot("check-results-top");
+
+  const benefitRows = (status) => page.locator(`[data-section="benefits"] [data-row][data-status="${status}"]`).count();
+  const headCount = async (kind) => Number(((await page.locator(`[data-count="${kind}"]`).innerText()).match(/\d+/) || [""])[0]);
+  await check("三格數字等於「可以領、可以用的」裡對應狀態的列數", async () => {
+    const got = {};
+    for (const status of ["match", "check", "situational"]) got[status] = { head: await headCount(status), rows: await benefitRows(status) };
+    return Object.values(got).every((g) => g.head === g.rows) || got;
+  });
+  await check("牌照稅不在「可以領、可以用的」，在「要繳、要辦的期限」", async () => {
+    const inBenefits = await page.locator('[data-section="benefits"] [data-row="vehicle-license-tax-april"]').count();
+    const inObligations = await page.locator('[data-section="obligations"] [data-row="vehicle-license-tax-april"]').count();
+    return (inBenefits === 0 && inObligations === 1) || { inBenefits, inObligations };
+  });
+  await check("中央租金補貼在居住那一段、狀態是要再確認", async () => {
+    const row = page.locator('[data-category-section="housing"] [data-row="rent-subsidy-central-300b"]');
+    return ((await row.count()) === 1 && (await row.getAttribute("data-status")) === "check") || (await row.count());
+  });
+  await check("中央租金補貼也在「先處理」", async () => (await page.locator('[data-section="picks"] [data-row="rent-subsidy-central-300b"]').count()) === 1);
+
+  await page.locator('[data-category="housing"]').click();
+  await settle(300);
+  await check("點「居住」分類籤：只剩居住那一段", async () => {
+    const sections = await page.locator("[data-category-section]").evaluateAll((els) => els.map((el) => el.getAttribute("data-category-section")));
+    return (sections.length === 1 && sections[0] === "housing") || sections;
+  });
+
+  // 往下捲、點一列、進項目頁、按返回鍵回來
+  await page.evaluate(() => {
+    window.__yAtClick = null;
+    document.addEventListener("click", () => { window.__yAtClick = window.scrollY; }, true);
+    window.scrollTo(0, 500);
+  });
+  await settle(300);
+  const openedRow = page.locator('[data-section="benefits"] [data-row]').nth(1);
+  const openedId = await openedRow.getAttribute("data-row");
+  await openedRow.click();
+  await page.waitForURL((u) => new URL(u).pathname.startsWith(`/subsidy/${openedId}`));
+  const yBefore = await page.evaluate(() => window.__yAtClick);
+  await check("點一列：進到項目頁，有「你的條件比對」", async () => {
+    await page.locator('[data-testid="profile-match"]').waitFor({ state: "visible", timeout: 5000 });
+    return true;
+  });
+  await check("離開前真的捲過一段（測試本身的前提）", async () => yBefore > 200 || yBefore);
+  await back(true);
+  await page.waitForURL(/\/subsidy\/check/, { timeout: 5000 }).catch(() => {});
+  await settle(900);
+  await check("返回鍵回到試算：直接是結果頁，不是第 1 題", async () =>
+    (pathNow().startsWith("/subsidy/check") && (await page.locator('[data-section="benefits"]').isVisible()) && (await page.getByText(/第 \d+ \/ \d+ 題/).count()) === 0) || pathNow());
+  await check("「居住」分類籤仍是選取狀態", async () => (await page.locator('[data-category="housing"]').getAttribute("aria-pressed")) === "true");
+  await check("捲動位置和離開前相差 80px 以內", async () => {
+    const yAfter = await page.evaluate(() => window.scrollY);
+    return Math.abs(yAfter - yBefore) <= 80 || { yBefore, yAfter };
+  });
+
+  // 點條件標籤改縣市
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await settle(200);
+  await exactButton("新北市").click();
+  await settle(400);
+  await check("點條件標籤「新北市」：進到第 1 題", async () => (await progress()).startsWith("第 1 /") || (await progress()));
+  await shot("check-edit-mode");
+  await exactButton("台北市").click();
+  await settle(600);
+  await check("修改模式改選縣市：不會自動跳題", async () => (await progress()).startsWith("第 1 /") || (await progress()));
+  await back(true);
+  await settle(700);
+  await check("修改模式按返回鍵：回結果頁，條件標籤變成「台北市」", async () =>
+    ((await page.locator('[data-section="benefits"]').isVisible()) && (await exactButton("台北市").isVisible()) && !(await exactButton("新北市").count())) || pathNow());
+
+  // 清掉條件，讓後面的檢查從沒有條件的狀態開始
+  await page.getByRole("button", { name: "清除重填" }).click();
+  await settle(500);
+  await check("清除重填：回到第 1 題", async () => (await progress()).startsWith("第 1 /") || (await progress()));
+
   // 8. 刪除提醒 → 取消通知 ──────────────────────────────────────────────────────────────────
   console.log("\n# 刪除提醒");
   await tab("提醒");

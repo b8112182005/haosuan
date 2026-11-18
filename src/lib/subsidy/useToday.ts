@@ -1,6 +1,6 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { useMemo, useSyncExternalStore } from "react";
 import { todayLocal, toDateString, type LocalDate } from "./deadline";
 
 /**
@@ -40,7 +40,10 @@ function getServerSnapshot(): string | null {
 
 export function useToday(): LocalDate | null {
   const key = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
-  if (!key) return null;
-  const [y, m, d] = key.split("-").map(Number);
-  return { y, m, d };
+  // 同一天回同一個物件：呼叫端拿它當 useMemo 的依賴，不然每次 render 都重算整份試算結果
+  return useMemo(() => {
+    if (!key) return null;
+    const [y, m, d] = key.split("-").map(Number);
+    return { y, m, d };
+  }, [key]);
 }

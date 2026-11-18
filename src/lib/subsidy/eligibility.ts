@@ -370,11 +370,3 @@ export function evaluateAll<S extends SubsidySummary>(subsidies: S[], profile: P
     return daysOf(a.subsidy) - daysOf(b.subsidy);
   });
 }
-
-export function summarize(evaluations: Evaluation[]) {
-  return {
-    eligible: evaluations.filter((e) => e.verdict === "eligible").length,
-    maybe: evaluations.filter((e) => e.verdict === "maybe").length,
-    notEligible: evaluations.filter((e) => e.verdict === "not_eligible").length,
-  };
-}

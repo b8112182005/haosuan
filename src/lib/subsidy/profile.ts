@@ -105,23 +105,30 @@ export async function clearProfile(): Promise<void> {
   }
 }
 
+export type ProfileStep = "city" | "age" | "income" | "housing" | "family" | "status" | "vehicle";
+export const PROFILE_STEPS: ProfileStep[] = ["city", "age", "income", "housing", "family", "status", "vehicle"];
+
+/** 還沒回答的題目，依問答順序。「沒有」「不是」也算回答 */
+export function unansweredSteps(p: Profile): ProfileStep[] {
+  const answered: Record<ProfileStep, boolean> = {
+    city: Boolean(p.city),
+    age: p.age !== null,
+    income: p.monthlyIncome !== null,
+    housing: p.isRenting !== null || p.ownsHome !== null,
+    family: p.hasChildren !== null || p.isMarried !== null || p.isPregnantOrNewborn !== null,
+    status:
+      p.hasLaborInsurance !== null ||
+      p.hasNationalPension !== null ||
+      p.isDisabled !== null ||
+      p.lowIncome !== null ||
+      p.isStudent !== null ||
+      p.isUnemployed !== null,
+    vehicle: p.ownsVehicle !== null,
+  };
+  return PROFILE_STEPS.filter((step) => !answered[step]);
+}
+
 /** 已回答的題數（給進度顯示） */
 export function answeredCount(p: Profile): number {
-  let n = 0;
-  if (p.city) n++;
-  if (p.age !== null) n++;
-  if (p.monthlyIncome !== null) n++;
-  if (p.isRenting !== null || p.ownsHome !== null) n++;
-  if (p.hasChildren !== null || p.isMarried !== null || p.isPregnantOrNewborn !== null) n++;
-  if (
-    p.hasLaborInsurance !== null ||
-    p.hasNationalPension !== null ||
-    p.isDisabled !== null ||
-    p.lowIncome !== null ||
-    p.isStudent !== null ||
-    p.isUnemployed !== null
-  )
-    n++;
-  if (p.ownsVehicle !== null) n++;
-  return n;
+  return PROFILE_STEPS.length - unansweredSteps(p).length;
 }
