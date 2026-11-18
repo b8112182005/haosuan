@@ -5,6 +5,8 @@
 // 為什麼不用 AI 寫：貼文裡的日期和金額要和網站上的資料一字不差，直接從資料產生就不會編出數字。
 // 為什麼要排除「照上一期推算」和期限未驗證的項目：貼文會被轉傳，錯的日期收不回來。
 // 這些項目另外列在「先查證再貼」，查到公告後可以手動補進貼文。
+// 經費用完就提前結束的項目（deadline.budget_limited）在那一行後面註明；
+// 每年固定期間的提醒（year_end_notice）依今天落在哪段日期另列一節。
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -67,7 +69,32 @@ export function buildDigest(items, today, dataVersion) {
   closing.sort(byDays);
   opening.sort((a, b) => a.startsIn - b.startsIn);
   needsCheck.sort(byDays);
-  return { today, urgent, closing, opening, needsCheck };
+  return { today, urgent, closing, opening, needsCheck, yearEnd: buildYearEnd(items, today) };
+}
+
+function parseMonthDay(text) {
+  const match = /^(\d{2})-(\d{2})$/.exec(String(text ?? ""));
+  return match ? Number(match[1]) * 100 + Number(match[2]) : null;
+}
+
+/**
+ * 今天（含頭尾）落在 year_end_notice 的 from～to 之內，而且 status_2026 是 active 的項目。
+ * from、to 是 MM-DD，from 比 to 晚代表跨年（例如 12-01～01-31）。
+ * 區間判斷寫在這裡而不 import src 的檔案：這支腳本只 import 既有的兩個 .ts，維持 CI 的 Node 22 能直接跑。
+ */
+export function buildYearEnd(items, today) {
+  const t = today.m * 100 + today.d;
+  const rows = [];
+  for (const item of items) {
+    const notice = item.year_end_notice;
+    if (item.status_2026 !== "active" || !notice) continue;
+    const from = parseMonthDay(notice.from);
+    const to = parseMonthDay(notice.to);
+    if (from == null || to == null) continue;
+    const inRange = from <= to ? t >= from && t <= to : t >= from || t <= to;
+    if (inRange) rows.push({ item, notice });
+  }
+  return rows;
 }
 
 function label(item) {
@@ -98,7 +125,9 @@ function line(site, row) {
         ? `今天（${formatLocalDate(state.date, false)}）截止`
         : `${formatLocalDate(state.date, false)} 截止，剩 ${state.daysLeft} 天`;
   const money = moneyText(item);
-  return money ? `${label(item)}：${when}；${money}` : `${label(item)}：${when}`;
+  // 經費用完就停：只寫截止日會讓人以為到那天前都領得到
+  const budget = item.deadline?.budget_limited === true ? "（經費用完會提前結束）" : "";
+  return (money ? `${label(item)}：${when}；${money}` : `${label(item)}：${when}`) + budget;
 }
 
 /** Threads／Facebook 一則：最多列 6 項，超過的說「還有 N 項」，避免貼文長到沒人看完 */
@@ -143,6 +172,21 @@ export function renderDigest(digest, site = DEFAULT_SITE) {
   section(`${URGENT_DAYS} 天內截止`, digest.urgent);
   section(`${URGENT_DAYS + 1}～${CLOSING_DAYS} 天內截止`, digest.closing);
   section(`${OPENING_DAYS} 天內開始受理`, digest.opening);
+
+  const yearEnd = digest.yearEnd ?? [];
+  out.push(`## 年底提醒（${yearEnd.length}）`, "");
+  if (yearEnd.length === 0) out.push("無", "");
+  else {
+    yearEnd.forEach(({ item, notice }) => {
+      const post = [
+        notice.title,
+        ...(notice.lines ?? []),
+        `資格與文件：${link(site, item)}`,
+        "這是我整理的免費工具，不是政府網站；申請前以主管機關公告為準。",
+      ];
+      out.push(`### ${label(item)}`, "", "```text", post.join("\n"), "```", "");
+    });
+  }
 
   out.push("## 貼文草稿", "");
   const post = socialPost(site, digest);

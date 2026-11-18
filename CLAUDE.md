@@ -39,6 +39,8 @@ npx cap sync android && cd android && ./gradlew assembleDebug
 - 特定身分有較低年齡門檻（原住民 55 歲）時用 `conditions.lower_age_for`，不要把 `min_age` 寫死成一般門檻就算了。
 - 硬條件在條文裡有例外（退保後 1 年內仍可領、小面積共有房屋不算有房）時用 `conditions.exceptions`；條件只適用方案其中一類對象時整個拿掉。寫法見 `research/README.md`。
 - 期限：跨年度的一次性期間要填 `deadline.end_year`；各縣市、各校自訂或每年不固定的用 `type: "varies"`，不要填概估的月日（寫法見 `research/README.md`）。
+- 期限填送件的最後一天；購買、發票、報廢的最後一天寫在 `deadline.extra_lines`。經費用完就停的項目設 `deadline.budget_limited`，確認還在受理才更新 `last_checked`。
+- 從申請日或文件備齊當月起算的補助用 `late_consequence.apply_now`：不要給它「截止前 30、14、3 天」的預設提醒（`reminderPreset`），那會把人帶到最後才送。`late_consequence` 與 `year_end_notice` 要有法條或 gov.tw 來源，`data:build` 會擋。
 - `capacitor.config.ts` 的 `appId` 上架後不能改。
 - 金鑰（`android/*.jks`、`android/keystore.properties`）不進 git；CI 用 Secrets。
 - 文案繁體中文、白話；禁用抽象形容詞與副詞（非常、極致、完美、輕鬆、優雅等），用具體名詞、動詞、數字、場景。註解寫「為什麼」。
@@ -46,6 +48,12 @@ npx cap sync android && cd android && ./gradlew assembleDebug
 - 計算機裡的法定數字每年會變（勞健保投保級距與費率、住宅電價、所得稅免稅額與級距）。改數字時同步改畫面用的年度標示（`INSURANCE_YEAR_LABEL`、`RATE_EFFECTIVE_LABEL`、`TAX_YEAR_LABEL`）、頁面問答裡的金額與測試；來源網址寫在各檔案開頭的註解，查不到官方原表的部分照實寫出核對到哪裡。
 - 畫面底部的短訊息用 `showToast`（`src/lib/toast.ts`），不要把訊息的 state 放在觸發它的元件裡：元件被卸載時訊息會跟著消失。
 - 通知 id 由（提醒 id、期限年份、提前天數）決定（`notificationId`）；重排通知的取消與排程由 `planSync` 決定，帳本同時記 id 與觸發時間。改這兩處要跑 `npm run qa:native`。
+
+## 分工
+
+- 查主管機關原文、改補助資料：`haoye-data-check` subagent（`.claude/agents/`，Sonnet）。寫貼文與回覆草稿：`haoye-marketing` subagent。主對話留給規則與取捨。
+- 不需要雲端模型的工作留在維護者的電腦上跑（官方頁面監看、用 Ollama 改寫貼文語氣）：`docs/LOCAL_JOBS.md`。本機模型的輸出不直接進資料、不直接發文。
+- 推廣計畫與貼文範本：`docs/MARKETING.md`。
 
 ## 已知事項
 
