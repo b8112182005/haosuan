@@ -22,7 +22,8 @@ const port = Number(args[args.indexOf("--port") + 1] || 4173);
 
 const SHOTS = [
   { file: "phone-01-home.png", url: "/" },
-  { file: "phone-02-check.png", url: "/subsidy/check/" },
+  // 試算那一張拍結果頁：商店上的人要看的是「填完會看到什麼」，不是第 1 題
+  { file: "phone-02-check.png", url: "/subsidy/check/", profile: true },
   { file: "phone-03-subsidy.png", url: "/subsidy/" },
   { file: "phone-04-detail.png", url: "/subsidy/__FIRST__/" },
   { file: "phone-05-calendar.png", url: "/subsidy/calendar/" },
@@ -30,6 +31,27 @@ const SHOTS = [
   { file: "phone-07-tools.png", url: "/tools/" },
   { file: "phone-08-mortgage.png", url: "/finance/mortgage/" },
 ];
+
+// 拍結果頁用的範例條件。存的位置與格式和 app 一樣（Capacitor Preferences 在瀏覽器裡是 localStorage）
+const PROFILE_KEY = "CapacitorStorage.haoti.profile.v1";
+const SAMPLE_PROFILE = {
+  city: "新北市",
+  age: 32,
+  monthlyIncome: 42000,
+  isRenting: true,
+  ownsHome: false,
+  hasChildren: true,
+  childrenAges: [1],
+  isPregnantOrNewborn: false,
+  isMarried: true,
+  hasLaborInsurance: true,
+  hasNationalPension: false,
+  isDisabled: false,
+  lowIncome: "none",
+  isStudent: false,
+  isUnemployed: false,
+  ownsVehicle: "scooter",
+};
 
 async function main() {
   if (!fs.existsSync(path.join(OUT, "index.html"))) {
@@ -47,7 +69,8 @@ async function main() {
   const firstId = (dataset.items.find((i) => i.confidence === "high") || dataset.items[0]).id;
 
   const browser = await chromium.launch();
-  const ctx = await browser.newContext({ viewport: { width: 360, height: 780 }, deviceScaleFactor: 3, locale: "zh-TW" });
+  // 剩幾天、哪些項目快截止都看今天是哪一天：固定用台灣時間，和使用者手機上看到的一致
+  const ctx = await browser.newContext({ viewport: { width: 360, height: 780 }, deviceScaleFactor: 3, locale: "zh-TW", timezoneId: "Asia/Taipei" });
   const page = await ctx.newPage();
   await page.addInitScript(() => {
     document.documentElement.setAttribute("data-platform", "android");
@@ -56,6 +79,8 @@ async function main() {
   try {
     for (const shot of SHOTS) {
       const url = `http://127.0.0.1:${port}${shot.url.replace("__FIRST__", firstId)}`;
+      // localStorage 要先在同一個網域的頁面上才寫得進去；前一張（首頁）已經載入過
+      if (shot.profile) await page.evaluate(([key, value]) => window.localStorage.setItem(key, value), [PROFILE_KEY, JSON.stringify(SAMPLE_PROFILE)]);
       await page.goto(url, { waitUntil: "networkidle" });
       await page.waitForTimeout(500);
       const file = path.join(DEST, shot.file);

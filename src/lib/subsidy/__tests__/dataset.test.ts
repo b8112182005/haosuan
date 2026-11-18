@@ -430,3 +430,88 @@ describe("旗艦項目不能被誤判成不符合", () => {
     expect(evaluate(byId("birth-incentive-taipei"), { ...renter, isPregnantOrNewborn: true }).verdict).not.toBe("not_eligible");
   });
 });
+
+describe("三分類（research/kinds.json）", () => {
+  it("每個項目都有分類", () => {
+    for (const s of items) expect(["benefit", "obligation", "info"], s.id).toContain(s.kind);
+  });
+
+  it("繳費期限和須知不算補助：牌照稅、綜所稅申報、租約必載事項、基本工資", () => {
+    expect(byId("vehicle-license-tax-april").kind).toBe("obligation");
+    expect(byId("income-tax-filing-2026").kind).toBe("obligation");
+    expect(byId("rental-standard-lease-tenant-protections").kind).toBe("info");
+    expect(byId("minimum-wage-2026").kind).toBe("info");
+  });
+
+  it("免費服務、扣除額、免學費是可以用的：長照、房租扣除額、高中職免學費", () => {
+    expect(byId("long-term-care-2").kind).toBe("benefit");
+    expect(byId("income-tax-rent-deduction").kind).toBe("benefit");
+    expect(byId("senior-high-tuition-free").kind).toBe("benefit");
+  });
+});
+
+describe("要先買東西才領得到的補助（needs_purchase）", () => {
+  it("電動機車補助、汰舊換新、家電汰舊換新都有標", () => {
+    for (const id of ["electric-scooter-purchase-subsidy-moea", "old-vehicle-replacement-moenv", "home-appliance-replacement-subsidy", "new-taipei-electric-scooter-subsidy-2026", "taipei-electric-scooter-subsidy-2026"]) {
+      expect(byId(id).needs_purchase, id).toBe(true);
+    }
+  });
+
+  it("不用買東西的補助沒有標：租金補貼、育兒津貼、文化幣", () => {
+    for (const id of ["rent-subsidy-central-300b", "childcare-allowance-0-2", "culture-coin-youth-2026"]) {
+      expect(byId(id).needs_purchase ?? false, id).toBe(false);
+    }
+  });
+});
+
+
+describe("試算沒問的硬條件不列為條件相符", () => {
+  const worker: Profile = { ...base, city: "新北市", age: 27, monthlyIncome: 38000, isRenting: true, ownsHome: false, isStudent: false, isUnemployed: false, isDisabled: false, lowIncome: "none", ownsVehicle: "scooter" };
+
+  it("27 歲有勞保：勞保紓困貸款是可能符合，原因寫年資滿 15 年", () => {
+    const r = evaluate(byId("labor-insurance-relief-loan"), worker);
+    expect(r.verdict).toBe("maybe");
+    expect(r.unknown.join(" ")).toContain("勞保年資滿 15 年");
+  });
+
+  it("沒工作過的待業者：失業給付不是條件相符，原因寫非自願離職與就保年資", () => {
+    const r = evaluate(byId("unemployment-benefit"), { ...worker, isUnemployed: true, hasLaborInsurance: false, monthlyIncome: 0 });
+    expect(r.verdict).toBe("maybe");
+    expect(r.unknown.join(" ")).toContain("非自願離職");
+  });
+
+  it("只有機車的人：汽車定期檢驗與牌照稅不是條件相符，原因寫例外；有汽車的人牌照稅相符", () => {
+    for (const id of ["car-periodic-inspection-schedule", "vehicle-license-tax-april"]) {
+      const r = evaluate(byId(id), worker);
+      expect(r.verdict, id).toBe("maybe");
+      expect(r.excepted, id).toBeGreaterThan(0);
+    }
+    // 150cc 以上的機車也要繳牌照稅，這種例外常見：資料要標 show_exceptions，結果頁才不會把它收成一行
+    expect(byId("vehicle-license-tax-april").conditions.show_exceptions).toBe(true);
+    expect(byId("car-periodic-inspection-schedule").conditions.show_exceptions ?? false).toBe(false);
+    expect(evaluate(byId("vehicle-license-tax-april"), { ...worker, ownsVehicle: "car" }).verdict).toBe("eligible");
+    expect(evaluate(byId("vehicle-license-tax-april"), { ...worker, ownsVehicle: "both" }).verdict).toBe("eligible");
+    expect(evaluate(byId("vehicle-license-tax-april"), { ...worker, ownsVehicle: "none" }).verdict).toBe("not_eligible");
+  });
+
+  it("大學生：高中職免學費是可能符合，不是條件相符", () => {
+    const r = evaluate(byId("senior-high-tuition-free"), { ...worker, age: 19, isStudent: true, monthlyIncome: 0, hasLaborInsurance: false });
+    expect(r.verdict).toBe("maybe");
+    expect(r.unknown.join(" ")).toContain("高中職");
+  });
+
+  it("中低收入戶的身障者：身障生活補助條件相符，不用再核對全家所得；健保費補助也列為相符", () => {
+    const person: Profile = { ...worker, age: 40, isDisabled: true, lowIncome: "mid_low" };
+    const allowance = evaluate(byId("disability-living-allowance"), person);
+    expect(allowance.verdict).toBe("eligible");
+    expect(allowance.matched.join(" ")).toContain("免再審收入與財產");
+    const premium = evaluate(byId("nhi-premium-subsidy-low-income-disability"), person);
+    expect(premium.matched).toEqual(["中低收入戶", "領有身心障礙證明"]);
+  });
+
+  it("成長津貼還沒開辦：有小孩的人是可能符合", () => {
+    const r = evaluate(byId("child-growth-allowance"), { ...worker, hasChildren: true, childrenAges: [3] });
+    expect(r.verdict).toBe("maybe");
+    expect(r.unknown.join(" ")).toContain("還沒開辦");
+  });
+});

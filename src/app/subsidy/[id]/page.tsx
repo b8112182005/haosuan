@@ -19,7 +19,7 @@ import {
   ChevronLeft,
   Info,
 } from "lucide-react";
-import { getAllSubsidies, getSubsidyById, getSubsidyIds, getRelatedSubsidies } from "@/lib/subsidy/data";
+import { getAllSubsidies, getSubsidyById, getSubsidyIds, getRelatedSubsidies, toSummary } from "@/lib/subsidy/data";
 import { CATEGORY_LABELS } from "@/lib/subsidy/types";
 import type { SubsidyChannel } from "@/lib/subsidy/types";
 import { describeWindow } from "@/lib/subsidy/deadline";
@@ -30,6 +30,7 @@ import { serializeJsonLd } from "@/lib/json-ld";
 import DeadlineCard from "@/components/subsidy/DeadlineCard";
 import LiveUpdateNotice from "@/components/subsidy/LiveUpdateNotice";
 import YearEndNotices from "@/components/subsidy/YearEndNotices";
+import ProfileMatch from "@/components/subsidy/ProfileMatch";
 import ShareAppButton from "@/components/app/ShareAppButton";
 import { SITE_URL } from "@/lib/site";
 
@@ -241,9 +242,7 @@ export default async function SubsidyDetailPage({ params }: { params: Promise<{ 
             所得／財產門檻：{s.conditions.income_limit_note}
           </p>
         )}
-        <p className="mt-3 text-xs">
-          <Link href="/subsidy/check" className="underline underline-offset-4">用資格試算比對你的條件</Link>
-        </p>
+        <ProfileMatch subsidy={toSummary(s)} />
       </Section>
 
       {/* 文件 */}

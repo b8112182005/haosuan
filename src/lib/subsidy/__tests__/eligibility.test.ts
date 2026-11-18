@@ -10,6 +10,7 @@ function makeSubsidy(partial: Partial<Subsidy>): Subsidy {
     name: "測試補助",
     short_name: "測試",
     category: "other",
+    kind: "benefit",
     level: "central",
     city: null,
     agency: "測試機關",
@@ -217,6 +218,71 @@ describe("evaluate：真實資料的寫法", () => {
 });
 
 describe("evaluate：精靈沒有問的身分", () => {
+  it("also_requires：試算沒問的硬條件不列為條件相符，並把那一句寫出來", () => {
+    const loan = makeSubsidy({ conditions: { has_labor_insurance: true, also_requires: "勞保年資合計滿 15 年" } });
+    const r = evaluate(loan, { ...renter, hasLaborInsurance: true });
+    expect(r.verdict).toBe("maybe");
+    expect(r.matched).toContain("勞保被保險人");
+    expect(r.unknown).toEqual(["勞保年資合計滿 15 年（試算沒問）"]);
+    expect(r.excepted).toBe(0);
+    // 試算問得到的條件不符時照樣判不符合，不會被這一句拉回來
+    expect(evaluate(loan, { ...renter, hasLaborInsurance: false }).verdict).toBe("not_eligible");
+  });
+
+  it("還沒開辦的項目（status pending）不列為條件相符", () => {
+    const upcoming = makeSubsidy({ status_2026: "pending", conditions: { has_children: true, child_age_max: 18 } });
+    const r = evaluate(upcoming, { ...renter, hasChildren: true, childrenAges: [3] });
+    expect(r.verdict).toBe("maybe");
+    expect(r.unknown.join(" ")).toContain("還沒開辦");
+    expect(evaluate(upcoming, { ...renter, hasChildren: false }).verdict).toBe("not_eligible");
+  });
+
+  it("限在職：有收入或有勞保才算；沒收入也沒勞保的人不算在職，列要確認", () => {
+    const leave = makeSubsidy({ conditions: { is_employed: true } });
+    const base = { ...renter, isUnemployed: false };
+    expect(evaluate(leave, { ...base, monthlyIncome: 40000, hasLaborInsurance: false }).matched).toContain("在職");
+    expect(evaluate(leave, { ...base, monthlyIncome: 0, hasLaborInsurance: true }).matched).toContain("在職");
+    const homemaker = evaluate(leave, { ...base, monthlyIncome: 0, hasLaborInsurance: false });
+    expect(homemaker.verdict).toBe("maybe");
+    expect(homemaker.unknown.join(" ")).toContain("沒有收入也沒有勞保");
+    expect(evaluate(leave, { ...base, isUnemployed: true }).verdict).toBe("not_eligible");
+    const blank = evaluate(leave, { ...EMPTY_PROFILE });
+    expect(blank.unknown).toEqual(["限在職者，你沒填"]);
+  });
+
+  it("列冊低收、中低收入戶免審所得：所得門檻那一條直接算對上", () => {
+    const allowance = makeSubsidy({
+      conditions: { is_disabled: true, income_limit_type: "monthly_per_capita", income_limit_value: 39960, income_limit_note: "每人每月未達最低生活費 2.5 倍", low_income_skips_income_test: true },
+    });
+    const listed = evaluate(allowance, { ...renter, isDisabled: true, lowIncome: "mid_low" });
+    expect(listed.verdict).toBe("eligible");
+    expect(listed.matched).toContain("列冊中低收入戶，免再審收入與財產");
+    // 不是列冊戶的人仍然要自己核對全家所得
+    const other = evaluate(allowance, { ...renter, isDisabled: true, lowIncome: "none" });
+    expect(other.verdict).toBe("maybe");
+    expect(other.unknown.join(" ")).toContain("要用全家資料核對");
+  });
+
+  it("任一身分即可（any_of）：對上的列為條件相符；都沒對上不判不符合", () => {
+    const premium = makeSubsidy({ conditions: { any_of: ["low_income", "is_disabled"] } });
+    expect(evaluate(premium, { ...renter, lowIncome: "low" }).matched).toEqual(["低收入戶"]);
+    expect(evaluate(premium, { ...renter, lowIncome: "none", isDisabled: true }).matched).toEqual(["領有身心障礙證明"]);
+    const neither = evaluate(premium, { ...renter, lowIncome: "none", isDisabled: false });
+    expect(neither.verdict).toBe("eligible");
+    expect(neither.matched).toEqual([]);
+    expect(neither.failed).toEqual([]);
+  });
+
+  it("子女在學的提示：高中以上的項目，國小的孩子不提示", () => {
+    const loan = makeSubsidy({ conditions: { is_student: true, student_child_min_age: 15 } });
+    const parent = { ...renter, isStudent: false, hasChildren: true };
+    expect(evaluate(loan, { ...parent, childrenAges: [7] }).verdict).toBe("not_eligible");
+    const teen = evaluate(loan, { ...parent, childrenAges: [7, 16] });
+    expect(teen.verdict).toBe("maybe");
+    expect(teen.unknown[0]).toContain("16 歲");
+    expect(teen.unknown[0]).not.toContain("7");
+  });
+
   it("special_identity 一律歸可能符合，並說明要自行確認", () => {
     const r = evaluate(makeSubsidy({ conditions: { min_age: 65, special_identity: "農民（農保年資 15 年以上）" } }), { ...renter, age: 70 });
     expect(r.verdict).toBe("maybe");

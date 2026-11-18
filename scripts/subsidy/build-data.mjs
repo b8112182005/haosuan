@@ -10,6 +10,7 @@
  *   <research>/patches/<id>.json    核對員的重點核對結果：corrections（path + 新值）與 verified_at
  *   <research>/overrides.json       人工覆寫（{ "<id>": { ...欄位 } }），最後套用
  *   <research>/removed.json         要排除的 id 清單（跨主題重複、已失效的項目）
+ *   <research>/kinds.json           每個項目是哪一類：benefit（可以領、可以用）、obligation（要繳、要辦的期限）、info（須知與工具）
  *
  * 輸出 src/data/subsidies.json 與 public/data/subsidies.json（兩份相同）、列表用的精簡索引 src/data/subsidies-index.json、
  * 只有 id 的清單 src/data/subsidy-ids.json。
@@ -78,7 +79,7 @@ function officialSourcesOk(sources, minGov) {
   return hosts.filter((h) => h.endsWith(".gov.tw") || h.endsWith(".gov.taipei")).length >= minGov;
 }
 const okDay = (v) => Number.isInteger(v) && v >= 1 && v <= 31;
-const EXCEPTION_KEYS = ["age", "must_rent", "no_home_ownership", "must_own_home", "children", "is_pregnant_or_newborn", "is_married", "has_labor_insurance", "has_national_pension", "is_disabled", "low_income", "is_student", "is_unemployed", "is_employed", "income", "vehicle"];
+const EXCEPTION_KEYS = ["age", "must_rent", "no_home_ownership", "must_own_home", "children", "is_pregnant_or_newborn", "is_married", "has_labor_insurance", "has_national_pension", "is_disabled", "low_income", "is_student", "is_unemployed", "is_employed", "income", "vehicle", "vehicle_kind"];
 const DEADLINE_TYPES = ["fixed_annual", "rolling", "window", "budget_until_exhausted", "event_based", "varies", "ended", "unknown"];
 const CHANNEL_TYPES = ["online", "office", "mail", "phone", "app", "bank", "other"];
 const REQUIRED = [
@@ -152,6 +153,7 @@ function validateItem(item, origin) {
   check(dl.confirmed_through == null || dl.type === "fixed_annual", `${where}: deadline.confirmed_through 只用在 type=fixed_annual`);
   // 未來的日期代表還沒確認就先寫了「已確認」，貼文的 14 天新鮮度判斷會被騙過去
   check(!isRealDate(dl.last_checked) || dl.last_checked <= today, `${where}: deadline.last_checked ${dl.last_checked} 晚於建置當天（台灣 ${today}）`);
+  check(item.needs_purchase == null || typeof item.needs_purchase === "boolean", `${where}: needs_purchase 要是 true／false`);
   const lc = item.late_consequence;
   if (lc != null) {
     check(typeof lc.text === "string" && lc.text.trim() !== "", `${where}: late_consequence.text 是空的`);
@@ -172,6 +174,15 @@ function validateItem(item, origin) {
     );
     check(officialSourcesOk(yn.sources, 1), `${where}: year_end_notice 至少要一筆 gov.tw 來源`);
   }
+  const also = item.conditions?.also_requires;
+  check(also == null || (typeof also === "string" && also.trim() !== "" && also.length <= 40), `${where}: conditions.also_requires 要是 40 字以內的短句（會直接顯示在試算結果的一行裡）`);
+  const showEx = item.conditions?.show_exceptions;
+  check(showEx == null || typeof showEx === "boolean", `${where}: conditions.show_exceptions 要是 true／false`);
+  for (const key of item.conditions?.any_of ?? []) {
+    check(["low_income", "is_disabled"].includes(key), `${where}: conditions.any_of 只能放 low_income、is_disabled，收到「${key}」`);
+  }
+  const childMin = item.conditions?.student_child_min_age;
+  check(childMin == null || (Number.isInteger(childMin) && childMin >= 6 && childMin <= 24), `${where}: conditions.student_child_min_age 要是 6～24 的整數`);
   // conditions.exceptions 的鍵打錯字會靜靜失效，在這裡擋
   for (const key of Object.keys(item.conditions?.exceptions ?? {})) {
     check(EXCEPTION_KEYS.includes(key), `${where}: conditions.exceptions 的鍵「${key}」不在清單`);
@@ -318,6 +329,11 @@ const removedFile = path.join(researchDir, "removed.json");
 const removed = new Set(fs.existsSync(removedFile) ? readJson(removedFile) : []);
 const overridesFile = path.join(researchDir, "overrides.json");
 const overrides = fs.existsSync(overridesFile) ? readJson(overridesFile) : {};
+// 三分類不放在主題檔裡：研究員寫的是內容，「這一項算補助還是繳費期限」是產品上的判斷，集中在一個檔好對照。
+// 試算結果頁靠它把牌照稅、租約須知和「可以領的錢」分開列。
+const KINDS = ["benefit", "obligation", "info"];
+const kindsFile = path.join(researchDir, "kinds.json");
+const kinds = fs.existsSync(kindsFile) ? readJson(kindsFile) : {};
 
 // check-urls.mjs 查到的失效連結（404／410）：來源與問答的連結直接拿掉，官方網址失效則必須用 overrides 換掉
 const deadFile = path.join(researchDir, "dead-urls.json");
@@ -374,6 +390,8 @@ for (const { file, data } of topics) {
       overrideCount++;
     }
     item = dropDeadUrls(item);
+    check(KINDS.includes(kinds[item.id]), `${item.id}: research/kinds.json 沒有這一項的分類，補上 ${KINDS.join("／")} 其中一個（寫法見 research/README.md）`);
+    item = { ...item, kind: kinds[item.id] };
     check(!dead.has(item.official_url), `${item.id}: official_url 在 dead-urls.json 裡，請在 overrides.json 換成有效網址`);
     validateItem(item, path.basename(file));
     if (seen.has(item.id)) {
@@ -394,6 +412,7 @@ for (const { file, data } of topics) {
 }
 
 for (const id of Object.keys(overrides)) check(seen.has(id) || removed.has(id), `overrides.json 的 ${id} 不存在於任何主題檔`);
+for (const id of Object.keys(kinds)) check(seen.has(id) || removed.has(id), `kinds.json 的 ${id} 不存在於任何主題檔`);
 
 if (problems.length > 0) {
   console.error(`資料檢查失敗（${problems.length} 個問題）：`);
@@ -451,7 +470,9 @@ for (const out of ["src/data/subsidies.json", "public/data/subsidies.json"]) {
 // 列表、試算、時程表只需要這些欄位。完整資料約 1 MB，若整包當 props 傳給 client component，
 // 每個列表頁的 HTML 都會被撐到 900 KB 以上；精簡索引讓它們共用一個約四分之一大小的 chunk。
 // year_end_notice 只有少數項目有，補助首頁和時程表要拿它組年底卡
-const INDEX_FIELDS = ["id", "name", "short_name", "category", "level", "city", "agency", "summary", "eligibility", "amount", "conditions", "deadline", "status_2026", "confidence", "topic", "year_end_notice"];
+// kind、late_consequence、needs_purchase 給試算結果頁：分「可以領的／要繳要辦的／須知」、挑出「現在就能送件」的項目、
+// 不把要先買東西才領得到的補助放進「先處理」
+const INDEX_FIELDS = ["id", "name", "short_name", "category", "kind", "level", "city", "agency", "summary", "eligibility", "amount", "conditions", "deadline", "status_2026", "confidence", "topic", "year_end_notice", "late_consequence", "needs_purchase"];
 const index = {
   version,
   generated_at: generatedAt,

@@ -1,18 +1,27 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
-import { ArrowLeft, ArrowRight, RotateCcw, CheckCircle2, HelpCircle, XCircle, Pencil } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { ArrowLeft, ArrowRight, CheckCircle2 } from "lucide-react";
 import { ACTIVE_SUBSIDY_INDEX } from "@/lib/subsidy/index-data";
 import { TAIWAN_CITIES } from "@/lib/subsidy/types";
-import { EMPTY_PROFILE, loadProfile, saveProfile, clearProfile, type Profile } from "@/lib/subsidy/profile";
-import { evaluateAll, summarize, type Evaluation } from "@/lib/subsidy/eligibility";
+import {
+  EMPTY_PROFILE,
+  PROFILE_STEPS,
+  loadProfile,
+  peekProfile,
+  saveProfile,
+  clearProfile,
+  unansweredSteps,
+  type Profile,
+  type ProfileStep,
+} from "@/lib/subsidy/profile";
+import { evaluateAll, type Evaluation } from "@/lib/subsidy/eligibility";
 import { useToday } from "@/lib/subsidy/useToday";
 import { useBackHandler } from "@/lib/useBackHandler";
-import SubsidyCard from "./SubsidyCard";
+import CheckResults, { resetResultsView } from "./CheckResults";
 
-type Step = "city" | "age" | "income" | "housing" | "family" | "status" | "vehicle";
-const STEPS: Step[] = ["city", "age", "income", "housing", "family", "status", "vehicle"];
+type Step = ProfileStep;
+const STEPS = PROFILE_STEPS;
 const STEP_TITLES: Record<Step, string> = {
   city: "你住在哪個縣市？",
   age: "你幾歲？",
@@ -28,7 +37,7 @@ const STEP_HINTS: Record<Step, string> = {
   income: "填稅前月收入（薪資單上的應發金額）。只在你的手機上比對，不會上傳。",
   housing: "租金補貼要租屋；新青安與自購利息補貼要名下無房。",
   family: "子女年齡決定育兒津貼、托育補助、幼兒學前扣除額。",
-  status: "勾選有的就好；不確定可以先略過，結果會標成「可能符合」。",
+  status: "勾選有的就好；不確定可以先略過，結果會標成「要再確認」。",
   vehicle: "機車汰舊換新、牌照稅、燃料費提醒會用到。",
 };
 
@@ -37,14 +46,23 @@ const AGE_CHIPS = [20, 25, 30, 35, 40, 45, 55, 65];
 
 export default function CheckWizard() {
   const today = useToday();
-  const [profile, setProfile] = useState<Profile>(EMPTY_PROFILE);
+  // 這次載入頁面後已經讀過條件（peekProfile 不是 undefined）就直接用：從項目頁返回時第一次 render 就是結果，
+  // 捲動位置才有得還原。整頁載入時一定是 undefined，第一次 render 是骨架，和靜態 HTML 一致
+  const [profile, setProfile] = useState<Profile>(() => peekProfile() ?? EMPTY_PROFILE);
   const [stepIndex, setStepIndex] = useState(0);
-  const [mode, setMode] = useState<"loading" | "wizard" | "results">("loading");
+  const [mode, setMode] = useState<"loading" | "wizard" | "results">(() => {
+    const known = peekProfile();
+    return known === undefined ? "loading" : known ? "results" : "wizard";
+  });
   // 從結果頁按「修改條件」進來的：這時第 1 題按返回鍵要回結果頁，而不是離開試算
   const [editing, setEditing] = useState(false);
+  // 從「補答」進來的：下一題只跳到還沒回答的題目，不用把答過的 7 題再走一遍
+  const [filling, setFilling] = useState(false);
+  const cityTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
-  // 上次填過就直接顯示結果（條件還能改）
+  // 上次填過就直接顯示結果（條件還能改）。已經讀過一次就不用再讀
   useEffect(() => {
+    if (peekProfile() !== undefined) return;
     let alive = true;
     loadProfile().then((saved) => {
       if (!alive) return;
@@ -60,29 +78,79 @@ export default function CheckWizard() {
     };
   }, []);
 
+  useEffect(() => () => clearTimeout(cityTimer.current), []);
+
   const step = STEPS[stepIndex];
   const update = (patch: Partial<Profile>) => setProfile((p) => ({ ...p, ...patch }));
 
+  // 換題一律捲到最上面：縣市題選到最下面的選項再按下一題，下一題的標題會在畫面上方看不到
+  const goTo = (index: number) => {
+    clearTimeout(cityTimer.current);
+    setStepIndex(Math.min(STEPS.length - 1, Math.max(0, index)));
+    window.scrollTo({ top: 0 });
+  };
+
   const finish = async () => {
+    // 剛選完縣市就按「直接看結果」時，250ms 的自動跳題還沒觸發：不清掉的話結果頁會被它捲回最上面
+    clearTimeout(cityTimer.current);
+    // 條件變了，上次選的分類、展開的區塊、捲動位置都對不上新的清單
+    resetResultsView();
     await saveProfile(profile);
     setEditing(false);
+    setFilling(false);
     setMode("results");
-    if (typeof window !== "undefined") window.scrollTo({ top: 0 });
+    window.scrollTo({ top: 0 });
   };
 
   const reset = async () => {
+    clearTimeout(cityTimer.current);
+    resetResultsView();
     await clearProfile();
     setProfile(EMPTY_PROFILE);
     setStepIndex(0);
     setEditing(false);
+    setFilling(false);
     setMode("wizard");
+    window.scrollTo({ top: 0 });
   };
 
-  // Android 返回鍵：答到第 2 題以後按返回是回上一題，不是離開試算。
-  // 第 1 題：第一次填的人照常離開；修改條件的人回結果頁，改過的答案一起存（不存的話改了等於沒改）。
-  useBackHandler(mode === "wizard" && (stepIndex > 0 || editing), () => {
-    if (stepIndex > 0) setStepIndex((i) => Math.max(0, i - 1));
+  const startEdit = (target?: ProfileStep, options?: { fill?: boolean }) => {
+    // 什麼都沒填的人從結果頁按「開始填」是第一次填，不是修改：照第一次填的走法（縣市選完自動到下一題、
+    // 主要按鈕是「下一題」），不要給他「修改條件」和三顆按鈕
+    const nothingAnswered = unansweredSteps(profile).length === STEPS.length;
+    setStepIndex(target ? Math.max(0, STEPS.indexOf(target)) : 0);
+    setEditing(!nothingAnswered);
+    setFilling(!nothingAnswered && options?.fill === true);
+    setMode("wizard");
+    window.scrollTo({ top: 0 });
+  };
+
+  const pickCity = (city: string) => {
+    update({ city });
+    // 修改模式不自動跳：使用者可能只是來換縣市，接著要按「看結果」
+    if (editing) return;
+    clearTimeout(cityTimer.current);
+    cityTimer.current = setTimeout(() => goTo(1), 250);
+  };
+
+  // 修改模式的「下一題」：補答時只去還沒回答的題目，一般修改照順序。沒有下一題時是 undefined
+  const pending = filling ? unansweredSteps(profile).map((s) => STEPS.indexOf(s)).find((i) => i > stepIndex) : undefined;
+  const nextIndex = filling ? pending : stepIndex < STEPS.length - 1 ? stepIndex + 1 : undefined;
+  // 數字題按 Enter：第一次填是下一題；補答時去下一個沒答的，沒有了就存檔看結果；一般修改是存檔看結果
+  const enterGoesNext = !editing || (filling && nextIndex !== undefined);
+  // 補答時還有題目沒答：主要動作是「下一題」，「看結果」退成次要
+  const fillNext = filling && nextIndex !== undefined;
+  const next = () => {
+    if (!editing) goTo(stepIndex + 1);
+    else if (filling && nextIndex !== undefined) goTo(nextIndex);
     else void finish();
+  };
+
+  // Android 返回鍵：第一次填的人答到第 2 題以後按返回是回上一題，第 1 題照常離開試算。
+  // 修改條件的人不論第幾題都是存檔回結果頁（不存的話改了等於沒改）。
+  useBackHandler(mode === "wizard" && (stepIndex > 0 || editing), () => {
+    if (editing) void finish();
+    else goTo(stepIndex - 1);
   });
 
   const evaluations = useMemo<Evaluation[] | null>(() => {
@@ -95,7 +163,7 @@ export default function CheckWizard() {
   }
 
   if (mode === "results") {
-    return <Results evaluations={evaluations} profile={profile} onEdit={() => { setStepIndex(0); setEditing(true); setMode("wizard"); }} onReset={reset} />;
+    return <CheckResults profile={profile} evaluations={evaluations} onEdit={startEdit} onReset={reset} />;
   }
 
   return (
@@ -104,9 +172,14 @@ export default function CheckWizard() {
       <div className="mb-5">
         <div className="mb-1 flex items-center justify-between text-xs text-muted-foreground">
           <span>第 {stepIndex + 1} / {STEPS.length} 題</span>
-          <button type="button" onClick={finish} className="underline underline-offset-4 hover:text-foreground">
-            直接看結果
-          </button>
+          {/* 修改模式底下已有「看結果」：再放一個「直接看結果」會有兩顆去同一處的按鈕，改成標示目前在改條件 */}
+          {editing ? (
+            <span>修改條件</span>
+          ) : (
+            <button type="button" onClick={finish} className="underline underline-offset-4 hover:text-foreground">
+              直接看結果
+            </button>
+          )}
         </div>
         <div className="h-1.5 overflow-hidden rounded-full bg-muted">
           <div className="h-full rounded-full bg-emerald-500 transition-all" style={{ width: `${((stepIndex + 1) / STEPS.length) * 100}%` }} />
@@ -120,7 +193,7 @@ export default function CheckWizard() {
         {step === "city" && (
           <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
             {TAIWAN_CITIES.map((c) => (
-              <Choice key={c} active={profile.city === c} onClick={() => update({ city: c })}>
+              <Choice key={c} active={profile.city === c} onClick={() => pickCity(c)}>
                 {c}
               </Choice>
             ))}
@@ -136,6 +209,8 @@ export default function CheckWizard() {
               min={0}
               max={120}
               placeholder="例如 32"
+              onEnter={next}
+              enterHint={enterGoesNext ? "next" : "done"}
             />
             <div className="flex flex-wrap gap-2">
               {AGE_CHIPS.map((a) => (
@@ -157,6 +232,8 @@ export default function CheckWizard() {
               max={10_000_000}
               step={1000}
               placeholder="例如 38000"
+              onEnter={next}
+              enterHint={enterGoesNext ? "next" : "done"}
             />
             <div className="flex flex-wrap gap-2">
               {INCOME_CHIPS.map((n) => (
@@ -247,19 +324,49 @@ export default function CheckWizard() {
       </div>
 
       {/* 導覽：固定在底部分頁列上方。縣市那一題有 22 個選項，按鈕放在最底下的話選完還要往下捲才找得到 */}
-      <div className="sticky bottom-[calc(var(--tabs-h)+var(--safe-bottom)+0.75rem)] z-10 mt-8 flex items-center justify-between gap-3 rounded-full bg-background/95 p-1.5 ring-1 ring-border backdrop-blur">
+      <div className="sticky bottom-[calc(var(--tabs-h)+var(--safe-bottom)+0.75rem)] z-10 mt-8 flex items-center justify-between gap-2 rounded-full bg-background/95 p-1.5 ring-1 ring-border backdrop-blur">
+        {/* 修改模式一排有三顆按鈕：320 寬放不下三組字，「看結果」會折成三行被切掉。這時「上一題」只留箭頭 */}
         <button
           type="button"
-          onClick={() => setStepIndex((i) => Math.max(0, i - 1))}
+          onClick={() => goTo(stepIndex - 1)}
           disabled={stepIndex === 0}
-          className="inline-flex h-11 items-center gap-1 rounded-full border border-border px-4 text-sm disabled:opacity-40"
+          aria-label="上一題"
+          className={`inline-flex h-11 shrink-0 items-center justify-center gap-1 whitespace-nowrap rounded-full border border-border text-sm disabled:opacity-40 ${editing ? "w-11" : "px-4"}`}
         >
-          <ArrowLeft className="h-4 w-4" /> 上一題
+          <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+          {!editing && "上一題"}
         </button>
-        {stepIndex < STEPS.length - 1 ? (
+        {editing ? (
+          <>
+            {nextIndex !== undefined && (
+              <button
+                type="button"
+                onClick={() => goTo(nextIndex)}
+                className={
+                  fillNext
+                    ? "inline-flex h-11 flex-1 items-center justify-center gap-1 whitespace-nowrap rounded-full bg-primary px-4 text-sm font-medium text-primary-foreground"
+                    : "inline-flex h-11 shrink-0 items-center gap-1 whitespace-nowrap rounded-full border border-border px-4 text-sm"
+                }
+              >
+                下一題 <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={finish}
+              className={
+                fillNext
+                  ? "inline-flex h-11 shrink-0 items-center justify-center gap-1 whitespace-nowrap rounded-full border border-border px-4 text-sm"
+                  : "inline-flex h-11 flex-1 items-center justify-center gap-1 whitespace-nowrap rounded-full bg-emerald-600 px-4 text-sm font-medium text-white hover:bg-emerald-700"
+              }
+            >
+              看結果 <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
+            </button>
+          </>
+        ) : stepIndex < STEPS.length - 1 ? (
           <button
             type="button"
-            onClick={() => setStepIndex((i) => i + 1)}
+            onClick={() => goTo(stepIndex + 1)}
             className="inline-flex h-11 flex-1 items-center justify-center gap-1 rounded-full bg-primary px-5 text-sm font-medium text-primary-foreground"
           >
             下一題 <ArrowRight className="h-4 w-4" />
@@ -274,191 +381,6 @@ export default function CheckWizard() {
           </button>
         )}
       </div>
-    </div>
-  );
-}
-
-/* ---------- 結果 ---------- */
-
-function Results({
-  evaluations,
-  profile,
-  onEdit,
-  onReset,
-}: {
-  evaluations: Evaluation[] | null;
-  profile: Profile;
-  onEdit: () => void;
-  onReset: () => void;
-}) {
-  const today = useToday();
-  const [showNo, setShowNo] = useState(false);
-  if (!evaluations) return <div className="h-64 animate-pulse rounded-2xl bg-muted/40" aria-busy="true" />;
-
-  const sum = summarize(evaluations);
-  // 「符合」再分兩組：有對上你填的條件的，和本來就不限身分的（報稅、疫苗、節能家電…）
-  const eligible = evaluations.filter((e) => e.verdict === "eligible" && e.matched.length > 0);
-  const universal = evaluations.filter((e) => e.verdict === "eligible" && e.matched.length === 0);
-  const maybe = evaluations.filter((e) => e.verdict === "maybe");
-  const no = evaluations.filter((e) => e.verdict === "not_eligible");
-
-  const summaryChips = [
-    profile.city,
-    profile.age !== null ? `${profile.age} 歲` : null,
-    profile.monthlyIncome !== null ? `月收入 ${profile.monthlyIncome.toLocaleString("zh-TW")}` : null,
-    profile.isRenting ? "租屋" : profile.ownsHome ? "有房" : null,
-    profile.isMarried ? "已婚" : null,
-    profile.hasChildren ? `子女 ${profile.childrenAges.length || "有"}` : null,
-    profile.isPregnantOrNewborn ? "懷孕或有新生兒" : null,
-    profile.hasLaborInsurance ? "有勞保" : null,
-    profile.hasNationalPension ? "有國保" : null,
-    profile.isStudent ? "學生" : null,
-    profile.isUnemployed ? "待業中" : null,
-    profile.isDisabled ? "身障" : null,
-    profile.lowIncome === "low" ? "低收" : profile.lowIncome === "mid_low" ? "中低收" : null,
-    profile.ownsVehicle === "scooter" ? "有機車" : profile.ownsVehicle === "car" ? "有汽車" : profile.ownsVehicle === "both" ? "有汽機車" : null,
-  ].filter(Boolean) as string[];
-  // 回答「沒有」「不是」也算有回答，只是不會變成標籤
-  const answered = Object.entries(profile).filter(([key, value]) => key !== "childrenAges" && value !== null && value !== "").length;
-
-  return (
-    <div className="space-y-6">
-      <div className="rounded-2xl border border-border bg-card p-4">
-        <div className="flex items-start justify-between gap-3">
-          <div>
-            <p className="text-sm text-muted-foreground">你的條件</p>
-            <div className="mt-1 flex flex-wrap gap-1.5">
-              {answered === 0 ? (
-                <span className="text-sm text-muted-foreground">沒有填任何條件，有門檻的項目都會列在「可能符合」</span>
-              ) : summaryChips.length === 0 ? (
-                <span className="text-sm text-muted-foreground">已回答 {answered} 題</span>
-              ) : (
-                summaryChips.map((c) => (
-                  <span key={c} className="rounded-full bg-muted px-2.5 py-1 text-xs">{c}</span>
-                ))
-              )}
-            </div>
-          </div>
-          <div className="flex shrink-0 gap-1">
-            <button type="button" onClick={onEdit} aria-label="修改條件" className="rounded-full border border-border p-2 hover:bg-accent">
-              <Pencil className="h-4 w-4" />
-            </button>
-            <button type="button" onClick={onReset} aria-label="清除重填" className="rounded-full border border-border p-2 hover:bg-accent">
-              <RotateCcw className="h-4 w-4" />
-            </button>
-          </div>
-        </div>
-        <div className="mt-4 grid grid-cols-3 gap-2 text-center">
-          <Stat icon={<CheckCircle2 className="h-4 w-4 text-emerald-600" />} n={sum.eligible} label="條件相符" />
-          <Stat icon={<HelpCircle className="h-4 w-4 text-amber-600" />} n={sum.maybe} label="可能符合" />
-          <Stat icon={<XCircle className="h-4 w-4 text-muted-foreground" />} n={sum.notEligible} label="不符合" />
-        </div>
-      </div>
-
-      {eligible.length > 0 && (
-        <Group title={`和你的條件相符（${eligible.length}）`} hint="你填的條件都對得上。每項底下的「另需確認」是 app 無法比對的條件，申請前要自己看一次。">
-          {eligible.map((e) => (
-            <SubsidyCard key={e.subsidy.id} subsidy={e.subsidy} today={today} highlight="eligible" footer={<Reasons e={e} />} />
-          ))}
-        </Group>
-      )}
-
-      {maybe.length > 0 && (
-        <Group title={`可能符合（${maybe.length}）`} hint="有條件你還沒填，或要用全家所得、財產等資料自行確認。">
-          {maybe.map((e) => (
-            <SubsidyCard key={e.subsidy.id} subsidy={e.subsidy} today={today} highlight="maybe" footer={<Reasons e={e} />} />
-          ))}
-        </Group>
-      )}
-
-      {universal.length > 0 && (
-        <Group title={`不限身分（${universal.length}）`} hint="沒有年齡、縣市、身分門檻的項目：報稅、疫苗、節能家電、申辦工具等。">
-          {universal.map((e) => (
-            <SubsidyCard key={e.subsidy.id} subsidy={e.subsidy} today={today} footer={<Reasons e={e} />} />
-          ))}
-        </Group>
-      )}
-
-      {no.length > 0 && (
-        <section>
-          <button
-            type="button"
-            onClick={() => setShowNo((v) => !v)}
-            className="flex w-full items-center justify-between rounded-xl border border-border px-4 py-3 text-left text-sm"
-          >
-            <span>不符合的 {no.length} 項</span>
-            <span className="text-xs text-muted-foreground">{showNo ? "收起" : "展開"}</span>
-          </button>
-          {showNo && (
-            <div className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2">
-              {no.map((e) => (
-                <SubsidyCard key={e.subsidy.id} subsidy={e.subsidy} today={today} highlight="not_eligible" footer={<Reasons e={e} />} />
-              ))}
-            </div>
-          )}
-        </section>
-      )}
-
-      <p className="text-xs leading-relaxed text-muted-foreground">
-        這是依你填的條件與公開資格做的初步比對，不是審核結果。有些補助還看財產、家庭人口、戶籍年限，請到項目頁看「資格條件」與「常見卡關」。想記下截止日，到項目頁按「加入提醒」。
-        不確定怎麼辦？看 <Link href="/subsidy/faq" className="underline underline-offset-4">疑難雜症</Link>。
-      </p>
-    </div>
-  );
-}
-
-function Reasons({ e }: { e: Evaluation }) {
-  const rows: Array<{ kind: "ok" | "no" | "unknown"; text: string }> = [
-    ...e.matched.map((t) => ({ kind: "ok" as const, text: t })),
-    ...e.failed.map((t) => ({ kind: "no" as const, text: t })),
-    ...e.unknown.map((t) => ({ kind: "unknown" as const, text: t })),
-  ];
-  // conditions.other：無法自動比對的補充條件，縮成兩行提示，完整內容在項目頁
-  const note = e.notes[0];
-  if (rows.length === 0)
-    return (
-      <p className="mt-3 line-clamp-2 border-t border-border pt-3 text-xs text-muted-foreground">
-        {note ? `另需確認：${note}` : "沒有額外身分條件，符合基本資格即可申請。"}
-      </p>
-    );
-  return (
-    <ul className="mt-3 space-y-1 border-t border-border pt-3 text-xs">
-      {rows.slice(0, 5).map((r, i) => (
-        <li key={i} className="flex items-start gap-1.5">
-          {r.kind === "ok" ? (
-            <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-600" />
-          ) : r.kind === "no" ? (
-            <XCircle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-red-500" />
-          ) : (
-            <HelpCircle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-amber-600" />
-          )}
-          <span className={r.kind === "no" ? "text-muted-foreground" : ""}>{r.text}</span>
-        </li>
-      ))}
-      {rows.length > 5 && <li className="text-muted-foreground">還有 {rows.length - 5} 條，見項目頁</li>}
-      {note && <li className="line-clamp-2 pt-1 text-muted-foreground">另需確認：{note}</li>}
-    </ul>
-  );
-}
-
-function Group({ title, hint, children }: { title: string; hint: string; children: React.ReactNode }) {
-  return (
-    <section>
-      <h2 className="text-base font-semibold">{title}</h2>
-      <p className="mb-3 text-xs text-muted-foreground">{hint}</p>
-      <div className="grid grid-cols-1 gap-3 md:grid-cols-2">{children}</div>
-    </section>
-  );
-}
-
-function Stat({ icon, n, label }: { icon: React.ReactNode; n: number; label: string }) {
-  return (
-    <div className="rounded-xl bg-muted/50 py-2">
-      <div className="flex items-center justify-center gap-1 text-lg font-bold">
-        {icon}
-        {n}
-      </div>
-      <div className="text-[11px] text-muted-foreground">{label}</div>
     </div>
   );
 }
@@ -497,6 +419,8 @@ function NumberField({
   max,
   step,
   placeholder,
+  onEnter,
+  enterHint = "next",
 }: {
   label: string;
   value: number | null;
@@ -505,6 +429,9 @@ function NumberField({
   max: number;
   step?: number;
   placeholder?: string;
+  onEnter?: () => void;
+  /** 手機鍵盤右下角那顆鍵的字：會去下一題是「下一步」，會存檔看結果是「完成」 */
+  enterHint?: "next" | "done";
 }) {
   return (
     <label className="block">
@@ -517,6 +444,13 @@ function NumberField({
         max={max}
         step={step}
         placeholder={placeholder}
+        enterKeyHint={enterHint}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && onEnter) {
+            e.preventDefault();
+            onEnter();
+          }
+        }}
         onChange={(e) => {
           const n = e.target.value === "" ? null : Number(e.target.value);
           onChange(n === null || Number.isNaN(n) ? null : Math.min(max, Math.max(min, n)));
@@ -530,13 +464,14 @@ function NumberField({
 function Toggle({ label, value, onChange }: { label: string; value: boolean | null; onChange: (v: boolean) => void }) {
   return (
     <div className="flex items-center justify-between gap-3 rounded-xl border border-border px-3 py-2">
-      <span className="text-sm">{label}</span>
-      <div className="flex gap-1">
+      <span className="min-w-0 flex-1 text-sm">{label}</span>
+      {/* whitespace-nowrap：320 寬時「沒有」會折成兩行 */}
+      <div className="flex shrink-0 gap-1">
         <button
           type="button"
           aria-pressed={value === false}
           onClick={() => onChange(false)}
-          className={`h-8 rounded-full px-3 text-xs ${value === false ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"}`}
+          className={`h-10 min-w-12 whitespace-nowrap rounded-full px-3 text-xs ${value === false ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"}`}
         >
           沒有
         </button>
@@ -544,7 +479,7 @@ function Toggle({ label, value, onChange }: { label: string; value: boolean | nu
           type="button"
           aria-pressed={value === true}
           onClick={() => onChange(true)}
-          className={`h-8 rounded-full px-3 text-xs ${value === true ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"}`}
+          className={`h-10 min-w-12 whitespace-nowrap rounded-full px-3 text-xs ${value === true ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"}`}
         >
           有
         </button>
@@ -555,38 +490,50 @@ function Toggle({ label, value, onChange }: { label: string; value: boolean | nu
 
 function ChildrenAges({ ages, onChange }: { ages: number[]; onChange: (ages: number[]) => void }) {
   // 0～24 歲每一歲都要能選：很多門檻卡在特定歲數（17 歲以下、6 歲以下、22 歲以下），
-  // 只給 15、18 的話 17 歲的孩子只能選 18，結果會被判成不符合
-  const options = Array.from({ length: 25 }, (_, age) => age);
+  // 只給 15、18 的話 17 歲的孩子只能選 18，結果會被判成不符合。
+  // 25 代表「25 歲以上」：子女都成年的長者原本選不到年齡，育兒項目就全部變成「你沒填子女年齡」
+  const options = Array.from({ length: 26 }, (_, age) => age);
+  const label = (a: number) => (a === 0 ? "未滿 1 歲" : a >= 25 ? "25 歲以上" : `${a} 歲`);
   return (
     <div>
-      <div className="flex flex-wrap gap-2">
-        {options.map((a) => (
-          <button
-            key={a}
-            type="button"
-            onClick={() => onChange([...ages, a].sort((x, y) => x - y))}
-            className="h-9 rounded-full border border-border bg-card px-3 text-xs hover:border-primary/50"
-          >
-            {a === 0 ? "未滿 1 歲" : `${a} 歲`}
-          </button>
-        ))}
-      </div>
-      {ages.length > 0 && (
-        <div className="mt-2 flex flex-wrap items-center gap-1.5 text-xs">
-          <span className="text-muted-foreground">已加入：</span>
+      {/* 已加入的放在按鈕上面：放下面會被底部固定的按鈕列蓋住，看不出有沒有加成功 */}
+      {ages.length === 0 ? (
+        <p className="mb-2 text-xs text-muted-foreground">每個小孩點一次年齡；同年齡有兩個就點兩次。</p>
+      ) : (
+        <div className="mb-3 flex flex-wrap items-center gap-1.5 text-xs">
+          <span className="text-muted-foreground">已加入（點一下移除）：</span>
           {ages.map((a, i) => (
             <button
               key={`${a}-${i}`}
               type="button"
               onClick={() => onChange(ages.filter((_, j) => j !== i))}
-              className="rounded-full bg-primary/10 px-2.5 py-1 text-primary"
-              aria-label={`移除 ${a} 歲`}
+              className="h-9 rounded-full bg-primary/10 px-3 text-primary"
+              aria-label={`移除 ${label(a)}`}
             >
-              {a === 0 ? "未滿 1 歲" : `${a} 歲`} ×
+              {label(a)} ×
             </button>
           ))}
         </div>
       )}
+      <div className="flex flex-wrap gap-2">
+        {options.map((a) => {
+          const n = ages.filter((x) => x === a).length;
+          return (
+            <button
+              key={a}
+              type="button"
+              onClick={() => onChange([...ages, a].sort((x, y) => x - y))}
+              aria-pressed={n > 0 ? true : undefined}
+              className={`h-9 rounded-full border px-3 text-xs ${
+                n > 0 ? "border-primary bg-primary/10 text-primary" : "border-border bg-card hover:border-primary/50"
+              }`}
+            >
+              {label(a)}
+              {n > 1 && ` ×${n}`}
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }
