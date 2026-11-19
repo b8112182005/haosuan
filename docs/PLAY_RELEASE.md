@@ -2,7 +2,7 @@
 
 對象：持有 Google Play 開發者帳號的你。全部指令用 Git Bash，可直接貼上。
 
-第一次上架只需要瀏覽器：1.1.0 的簽章版 AAB、測試用 APK、上傳金鑰都已交付，照第 0、2、3、4、5 節做。個人帳號從建立封閉測試到能送正式版，最快約 3 週（14 天測試加最多 7 天審查）。
+第一次上架只需要瀏覽器：1.2.0 的簽章版 AAB、測試用 APK、上傳金鑰都已交付，照第 0、2、3、4、5 節做。個人帳號從建立封閉測試到能送正式版，最快約 3 週（14 天測試加最多 7 天審查）。
 之後要自己出新版才需要環境：用 CI 的話只要設 4 個 GitHub Secrets；在本機出的話要裝 Node 20+、JDK 17 或 21、Android Studio（含 SDK Platform 36 與 Build-Tools 36）。
 
 套件名 `com.haosuan.haoti`，上架後不能改。
@@ -43,7 +43,7 @@ cd /c/Users/b8112/Projects/haosuan && base64 -w0 android/upload-keystore.jks | c
 
 ## 1. 產出 AAB（每次發版）
 
-1.1.0 的簽章版 AAB 已經交付，第一次上架可以直接跳到第 2 節。之後的版本用下面兩種方式之一。
+1.2.0 的簽章版 AAB 已經交付，第一次上架可以直接跳到第 2 節。之後的版本用下面兩種方式之一。
 
 本機：
 
@@ -51,13 +51,13 @@ cd /c/Users/b8112/Projects/haosuan && base64 -w0 android/upload-keystore.jks | c
 cd /c/Users/b8112/Projects/haosuan && npm ci && bash scripts/android/build-release.sh 1
 ```
 
-最後一個參數是 versionCode，每次上傳 Play 都要比上一次大。我交付的 `haoye-1.1.0-b8` 是 8，本機再出包從 9 開始。
+最後一個參數是 versionCode，每次上傳 Play 都要比上一次大。我交付的 `haoye-1.2.0-b9` 是 9，本機再出包從 10 開始。
 輸出：`android/app/build/outputs/bundle/release/app-release.aab`。
 
 或者交給 CI：
 
 ```bash
-cd /c/Users/b8112/Projects/haosuan && git tag v1.1.0 && git push origin v1.1.0
+cd /c/Users/b8112/Projects/haosuan && git tag v1.2.0 && git push origin v1.2.0
 ```
 
 GitHub Actions 用 `100 + run_number` 當 versionCode（artifact 名稱結尾的 `v104` 這類數字就是它），一定比本機出過的 1～8 大，兩種方式混用不會被 Play 拒收。AAB 在 workflow 的 Artifacts 裡下載。
@@ -65,7 +65,7 @@ GitHub Actions 用 `100 + run_number` 當 versionCode（artifact 名稱結尾的
 
 ## 1.5 先裝到自己的手機測（10 分鐘）
 
-把交付的 `haoye-1.1.0-b8.apk` 傳到手機，點開安裝（第一次要允許「安裝未知應用程式」）。這幾項只有實機看得到，請走一遍：
+把交付的 `haoye-1.2.0-b9.apk` 傳到手機，點開安裝（第一次要允許「安裝未知應用程式」）。這幾項只有實機看得到，請走一遍：
 
 | 檢查 | 怎麼做 | 應該看到 |
 |---|---|---|
@@ -78,6 +78,9 @@ GitHub Actions 用 `100 + run_number` 當 versionCode（artifact 名稱結尾的
 | 點通知 | 收到通知後點它 | 開到那一筆補助的頁面 |
 | 自己挑辦理日的提醒 | 「中央租金補貼」頁按「加入提醒」，日期選明天，提前天數選「當天」與「前 1 天」 | 面板欄位寫「哪一天去辦」；通知標題是「明天要辦：中央租金補貼」「今天要辦：…」，內文以「預定」開頭，後面接「從申請日起撥，晚送少領」 |
 | 年底提醒卡 | 11/1～12/31 之間開「補助」分頁 | 最上面有「今年出生的寶寶，12/31 前送育兒津貼」卡片；1/1 之後不再出現 |
+| 試算結果回到原位 | 填完 7 題，在結果頁選「居住」分類、往下捲幾列，點一項進去，再按返回鍵 | 回到結果頁時仍是「居住」，停在剛才那一列附近；項目頁有「你的條件比對」 |
+| 試算結果的分類籤 | 在結果頁一路往下捲 | 分類籤那一排黏在頁首下面，沒有蓋到內容，也沒有和底部分頁列重疊 |
+| 重填與補答 | 結果頁按「重填」；另外只答縣市與年齡就按「直接看結果」，再按「補答」 | 「重填」先問一次；「補答」直接到第 3 題（收入），答完按鍵盤的下一步是第 4 題 |
 
 這個 APK 用上傳金鑰簽章，Play 發下來的版本用 Google 的金鑰簽章，兩者不能互相覆蓋：要改裝 Play 的內部測試版時，先把這個解除安裝。
 
