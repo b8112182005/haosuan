@@ -61,4 +61,5 @@ npx cap sync android && cd android && ./gradlew assembleDebug
 
 - `src/lib/reminders` 內部用相對路徑 import（vitest 沒設 alias）。
 - ESLint 忽略 `android/**`（裡面是複製進去的 build 產物）。
+- iOS：`ios/` 不在 repo 裡，`.github/workflows/ios-build.yml` 每次用 `npx cap add ios` 重新產生並對模擬器建置。要上 TestFlight 之前還缺的事在 `docs/IOS.md`。
 - Next/PostCSS 的 moderate audit advisory 已知，等上游修。

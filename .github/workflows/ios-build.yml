@@ -1,0 +1,87 @@
+# 好耶 iOS — 在 GitHub 的 macOS 建置機上產生 iOS 專案、對 iOS 模擬器建置、開起來截圖
+#
+# 為什麼有這支：維護者沒有 Mac。這支用來確認「同一份程式碼不靠 Mac 也建得出 iOS app」，
+# 不簽章、不上傳，所以不需要 Apple Developer 帳號，也不需要任何 Secrets。
+# 公開 repo 用 GitHub 的標準 macOS runner 不計費。
+#
+# ios/ 資料夾不進 git：每次由 `npx cap add ios` 從 capacitor.config.ts 重新產生。
+# 之後真的要上 TestFlight 時，要改成把 ios/ 提交進來（才能放圖示、Info.plist 的設定），並加簽章與上傳步驟。
+#
+# 觸發：手動（workflow_dispatch），或這個檔案本身在 claude/** 分支上有變動時。
+name: iOS Build Check (simulator)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ['claude/**']
+    paths: ['.github/workflows/ios-build.yml']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ios-build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-ios-simulator:
+    runs-on: macos-26
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build web assets (app target)
+        run: npm run build:app
+
+      - name: Xcode version
+        run: xcodebuild -version
+
+      - name: Generate iOS project
+        run: |
+          npx cap add ios
+          npx cap sync ios
+          ls ios/App
+
+      - name: Build for iOS Simulator (no signing)
+        shell: bash
+        run: |
+          set -o pipefail
+          xcodebuild -project ios/App/App.xcodeproj -scheme App -configuration Debug \
+            -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath build/ios CODE_SIGNING_ALLOWED=NO build | tail -60
+
+      - name: Launch in a simulator and take screenshots
+        shell: bash
+        run: |
+          set -euo pipefail
+          APP=$(find build/ios/Build/Products -maxdepth 3 -name "App.app" | head -1)
+          echo "app bundle: $APP"
+          DEVICE=$(xcrun simctl list devices available -j | jq -r '[.devices[][] | select(.name | startswith("iPhone"))][0].udid')
+          xcrun simctl list devices available | grep -m1 "$DEVICE" || true
+          xcrun simctl boot "$DEVICE"
+          xcrun simctl bootstatus "$DEVICE" -b
+          xcrun simctl install "$DEVICE" "$APP"
+          xcrun simctl launch "$DEVICE" com.haosuan.haoti
+          mkdir -p shots
+          # 第一次啟動要等 WebView 載入；隔一段時間各拍一張，看得出有沒有卡在白畫面
+          sleep 15
+          xcrun simctl io "$DEVICE" screenshot shots/ios-01-after-15s.png
+          sleep 20
+          xcrun simctl io "$DEVICE" screenshot shots/ios-02-after-35s.png
+
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-simulator-screenshots
+          path: shots/
+          retention-days: 30
+          if-no-files-found: warn
