@@ -12,7 +12,7 @@
 **已經有一組**：交付的 AAB 是用 2026-11-14 產生的上傳金鑰簽的，金鑰檔（`upload-keystore.jks`、`keystore.properties`）隨 AAB 一起交付，不在 git 裡。
 憑證 SHA-256：`E6:84:EA:8D:A4:3F:89:CC:92:A2:6D:F8:DD:EF:45:AD:D7:57:17:DB:F4:65:E4:C1:7D:9F:CE:3B:2E:22:9F:25`。
 
-1. 把這兩個檔案存進密碼管理器。**先存好再上傳 AAB**：Play 會記住第一次上傳用的金鑰，之後每一版都要用同一把簽。
+1. 把這兩個檔案存進密碼管理器。**先存好再上傳 AAB**：Play 會記住第一次上傳用的金鑰，之後每一版都要用同一把簽。2026-11-19 已另存一份壓縮檔在帳戶持有人自己的 Google 雲端硬碟（沒有分享給任何人）。
 2. 之後要在本機出新版，把兩個檔案放到 repo 的 `android/` 底下（都在 .gitignore）。
 3. 遺失時到 Play Console「應用程式完整性 → 應用程式簽署 → 要求重設上傳金鑰」申請換一把，要等 Google 處理。
 
@@ -171,4 +171,24 @@ GitHub Actions 用 `100 + run_number` 當 versionCode（artifact 名稱結尾的
 
 ## 7. 自動上傳（選用）
 
-想省掉手動上傳：Play Console → 設定 → API 存取 → 建立服務帳戶，給它「發布版本」權限，下載 JSON 金鑰，整個 JSON 內容放到 GitHub Secret `PLAY_SERVICE_ACCOUNT_JSON`。之後每次 push tag，CI 會直接上傳到內部測試軌道。
+CI 能代勞的是第二版以後的上傳。Google 的文件寫明這支 API 只能改「已經存在、而且至少上傳過一個版本」的 app，發行要按的法律同意也只能在後台做（[Edits 說明](https://developers.google.com/android-publisher/edits)，2026-11-21 讀）。所以這三件事一定要本人在 Play Console 做一次：建立 app、上傳第一個 AAB（第 2 節）、填政策表單（第 4 節）。
+
+做完之後設定服務帳戶（[官方步驟](https://developers.google.com/android-publisher/getting_started)）：
+
+1. [Google Cloud Console](https://console.cloud.google.com/) 建一個專案（已有就沿用），啟用「Google Play Android Developer API」。開發人員帳戶不用再和這個專案連結。
+2. 在同一個專案建立服務帳戶，產生 JSON 金鑰並下載。
+3. Play Console →「使用者和權限」→ 邀請新使用者：電子郵件填服務帳戶的地址（結尾是 `iam.gserviceaccount.com`），應用程式選「好耶」，權限勾 Release apps to testing tracks 與 Manage store presence（中文介面的名稱以後台顯示為準）。
+4. GitHub repo → Settings → Secrets and variables → Actions，新增 `PLAY_SERVICE_ACCOUNT_JSON`（貼 JSON 全文），以及 `.github/workflows/app-build.yml` 檔頭列的 4 個 `ANDROID_*`。
+
+之後 push tag 或手動執行「App Build (Android)」，CI 會簽章並上傳到指定軌道（預設內部測試）。
+
+## 8. 帳戶層級：聲明交易商狀態（2027-02-01 前）
+
+Google Play 2026-11-04 寄給所有開發人員的通知：不論所在地，都要在 Play Console 聲明自己是交易商或非交易商；沒在 2027-02-01 前完成，之後不能提交更新，開發人員個人檔案和所有 app 會下架。
+
+位置：Play Console →「管理帳戶」→「帳戶詳細資料」→「個人資訊」→「交易商狀態」。
+
+- 通知原文：透過 app 賺取收益（付費下載、app 內商品、訂閱、廣告）通常會被視為交易商；純粹出於興趣或非商業用途可以聲明為非交易商；沒有在歐洲經濟區或英國發行 app，可以聲明為非交易商。
+- 個人帳戶聲明為交易商，要提供並驗證公開電話，電話和地址會公開顯示在 Google Play。
+- 好耶目前免費、沒有廣告與 app 內購買，發行國家只選台灣時，符合通知寫的非交易商條件。之後如果在 app 裡收費，要回來重新判斷。
+- 不實陳述屬於違反開發人員發行協議，可能下架或停權。這一項由帳戶持有人自己負責判斷。
